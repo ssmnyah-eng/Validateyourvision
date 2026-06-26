@@ -1125,8 +1125,15 @@
       .mobile-drawer { display: flex; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
       .hero-img-wrap video { height: 300px !important; }
-      /* Hide float cards on mobile — they overflow */
-      .hf1, .hf2 { display: none; }
+      /* Float cards: smaller and repositioned on mobile */
+      .hf1 { left: 6px !important; bottom: 12px !important; padding: 9px 12px !important; max-width: 200px; }
+      .hf1-icon { width: 28px !important; height: 28px !important; font-size: 0.75rem !important; }
+      .hf1 strong { font-size: 0.72rem !important; }
+      .hf1 span { font-size: 0.62rem !important; }
+      .hf2 { right: 6px !important; top: 12px !important; min-width: 80px !important; padding: 9px 12px !important; }
+      .hf2 strong { font-size: 1rem !important; }
+      .hf2 span { font-size: 0.6rem !important; }
+      .hf2-stars { font-size: 0.65rem !important; }
       .services-grid { grid-template-columns: 1fr; }
       .reviews-grid { grid-template-columns: 1fr; }
       /* Trust badges: 2-column grid instead of horizontal scroll */
@@ -2025,6 +2032,30 @@
       floatCta.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
     }, { threshold: 0.3 });
     contactObs.observe(document.getElementById('contact'));
+
+    // ===== ROTATING LOCATION IN HERO CARD =====
+    (function() {
+      const locations = [
+        'Fredericksburg, VA · Today',
+        'Stafford, VA · Today',
+        'Spotsylvania, VA · Today',
+        'Woodbridge, VA · Today',
+        'Northern Virginia · Today',
+        'Richmond, VA · Today'
+      ];
+      const el = document.querySelector('.hf1 span');
+      if (!el) return;
+      let i = 0;
+      setInterval(() => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.4s';
+        setTimeout(() => {
+          i = (i + 1) % locations.length;
+          el.textContent = locations[i];
+          el.style.opacity = '1';
+        }, 400);
+      }, 5000);
+    })();
 
     // ===== TOUCH SWIPE: navigate sections on phone =====
     (function() {
