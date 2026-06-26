@@ -1728,7 +1728,7 @@
             <div id="form-body">
               <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Tell Us About Your Move</h3>
               <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your consult.</p>
-              <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+              <form id="contact-form" action="https://formspree.io/f/mwvdowqr" method="POST" onsubmit="handleSubmit(event)" novalidate>
 
                 <div class="form-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
                   <div>
@@ -2015,10 +2015,25 @@
     });
 
     // ===== CONTACT FORM =====
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      document.getElementById('form-body').style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
+      const form = e.target;
+      const data = new FormData(form);
+      try {
+        const res = await fetch('https://formspree.io/f/mwvdowqr', {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('form-body').style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        } else {
+          alert('Something went wrong. Please text us at 540-300-1414.');
+        }
+      } catch {
+        alert('Something went wrong. Please text us at 540-300-1414.');
+      }
     }
 
     function toggleDownsize(show) {
