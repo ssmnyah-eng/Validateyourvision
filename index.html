@@ -299,6 +299,8 @@
       display: flex;
       gap: 32px;
       list-style: none;
+      margin-left: auto;
+      margin-right: 28px;
     }
     .nav-links a {
       color: rgba(236,235,238,0.75);
@@ -564,7 +566,7 @@
     /* ===== STATS ===== */
     #stats {
       background: var(--mp);
-      padding: 72px 0;
+      padding: 48px 0;
     }
     .stats-grid {
       display: grid;
@@ -658,7 +660,7 @@
     /* ===== PAIN POINTS ===== */
     #pain {
       background: var(--lbg);
-      padding: 108px 0;
+      padding: 72px 0;
     }
     .pain-grid {
       display: grid;
@@ -1347,48 +1349,45 @@
           A structured, transparent process,the VYV Moving Management System,so nothing gets missed and nothing's a surprise.
         </p>
       </div>
-      <div class="process-steps">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;position:relative;">
 
-        <div class="ps">
-          <div class="ps-left">
-            <div class="ps-card">
-              <h3>Schedule a Free Consultation</h3>
-              <p>Reach out online or give us a call. We'll learn about your move, your home, and what matters most to you before anything else happens.</p>
+        <!-- Left: Step 1 + Step 3 -->
+        <div style="display:flex;flex-direction:column;gap:28px;">
+          <div class="ps-card reveal" style="background:rgba(255,255,255,0.05);border:1px solid rgba(139,91,199,0.2);border-radius:16px;padding:32px;">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+              <div class="ps-node" style="width:44px;height:44px;font-size:1.1rem;flex-shrink:0;">1</div>
+              <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--lv);">Step One</span>
             </div>
+            <h3 style="color:var(--tw);margin-bottom:10px;">Schedule a Free Consultation</h3>
+            <p style="color:rgba(236,235,238,0.6);line-height:1.75;">Reach out online or text us. We'll learn about your move, your home, and what matters most to you before anything else happens.</p>
           </div>
-          <div class="ps-center">
-            <div class="ps-node">1</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right"></div>
-        </div>
 
-        <div class="ps even">
-          <div class="ps-left"></div>
-          <div class="ps-center">
-            <div class="ps-node">2</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right">
-            <div class="ps-card">
-              <h3>In-Home Walkthrough &amp; Quote</h3>
-              <p>We walk through your space room by room, take notes, and build a customized plan. You get a clear, upfront quote with no surprises.</p>
+          <div class="ps-card reveal" style="background:rgba(255,255,255,0.05);border:1px solid rgba(139,91,199,0.2);border-radius:16px;padding:32px;">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+              <div class="ps-node" style="width:44px;height:44px;font-size:1.1rem;flex-shrink:0;">3</div>
+              <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--lv);">Step Three</span>
             </div>
+            <h3 style="color:var(--tw);margin-bottom:10px;">Moving Day</h3>
+            <p style="color:rgba(236,235,238,0.6);line-height:1.75;">Our crew shows up on time, works the plan, and handles everything with care so you can focus on what's next — not us.</p>
           </div>
         </div>
 
-        <div class="ps">
-          <div class="ps-left">
-            <div class="ps-card">
-              <h3>Moving Day</h3>
-              <p>Our crew shows up on time, works the plan, and handles everything with care so you can focus on what's next.</p>
-            </div>
+        <!-- Right: Step 2 — the differentiator -->
+        <div class="reveal" style="background:linear-gradient(135deg,rgba(74,35,122,0.35),rgba(139,91,199,0.15));border:2px solid rgba(139,91,199,0.45);border-radius:20px;padding:44px 36px;display:flex;flex-direction:column;justify-content:center;">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+            <div class="ps-node" style="width:56px;height:56px;font-size:1.4rem;flex-shrink:0;background:linear-gradient(135deg,var(--lv),var(--ap));">2</div>
+            <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--lv);">Step Two · Our Difference</span>
           </div>
-          <div class="ps-center">
-            <div class="ps-node">3</div>
-            <div class="ps-num">STEP</div>
+          <h3 style="color:var(--tw);font-size:1.5rem;margin-bottom:16px;">In-Home Walkthrough &amp; Quote</h3>
+          <p style="color:rgba(236,235,238,0.75);line-height:1.8;margin-bottom:16px;">
+            We come to your home — before we ever touch a box. We walk through every room, take notes, and build a customized plan around your actual space.
+          </p>
+          <p style="color:rgba(236,235,238,0.75);line-height:1.8;margin-bottom:24px;">
+            You get a clear, upfront quote with no surprises. No guessing, no "we'll figure it out when we get there." Just a plan — and a price — before anything moves.
+          </p>
+          <div style="background:rgba(139,91,199,0.2);border-radius:10px;padding:14px 18px;font-size:0.85rem;color:var(--lv);font-weight:600;letter-spacing:0.02em;">
+            ✓ Most movers skip this step. We never do.
           </div>
-          <div class="ps-right"></div>
         </div>
 
       </div>
@@ -1443,34 +1442,26 @@
   <!-- ===== MOVING DAY IN ACTION ===== -->
   <section id="families" style="background: var(--lbg2); padding: 96px 0;" aria-labelledby="families-heading">
     <div class="container">
-      <p class="section-eyebrow reveal">Real Families. Real Moves.</p>
-      <h2 id="families-heading" class="section-title reveal" style="color:var(--ltxt);">Moving Day<br /><span>Looks Like This.</span></h2>
-      <p class="section-sub reveal" style="margin-bottom:48px;">Every move is different. Every family matters. Here's what it looks like when everything goes right.</p>
-
-      <!-- Full-width video -->
-      <div class="reveal" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);margin-bottom:24px;">
-        <video autoplay muted loop playsinline
-          aria-label="Professional moving crew in action"
-          style="width:100%;height:420px;object-fit:cover;display:block;">
-          <source src="assets/mid-video.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      <!-- 2-photo row -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-        <div class="reveal" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
-          <img
-            src="https://images.pexels.com/photos/4246119/pexels-photo-4246119.jpeg?auto=compress&cs=tinysrgb&w=700"
-            alt="Mother labeling moving boxes with her young children in their new home"
-            style="width:100%;height:380px;object-fit:cover;display:block;"
-            loading="lazy"
-          />
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
+        <div class="reveal-left">
+          <p class="section-eyebrow">Real Families. Real Moves.</p>
+          <h2 id="families-heading" class="section-title" style="color:var(--ltxt);">Moving Day<br /><span>Looks Like This.</span></h2>
+          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
+            Most families dread moving day because they've been through it — the no-shows, the broken promises, things damaged and movers who disappear.
+          </p>
+          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
+            VYV is different. We come to your home before we ever touch a box. We build a plan around your space, your schedule, and your family — so nothing is left to chance.
+          </p>
+          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:32px;">
+            When moving day comes, you don't have to manage us. We already know the plan. And your kids? They can just enjoy the ride.
+          </p>
+          <a href="#contact" class="btn btn-primary">Reserve Your Moving Date</a>
         </div>
-        <div class="reveal" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+        <div class="reveal-right" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
           <img
             src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg?auto=compress&cs=tinysrgb&w=700"
-            alt="Happy family unpacking in new home, child peeking out of a moving box"
-            style="width:100%;height:380px;object-fit:cover;display:block;"
+            alt="Happy family unpacking together in their new home, child joyfully peeking out of a moving box"
+            style="width:100%;height:500px;object-fit:cover;display:block;"
             loading="lazy"
           />
         </div>
@@ -1559,10 +1550,10 @@
         <div class="story-img reveal-right">
           <video
             autoplay muted loop playsinline
-            aria-label="Happy couple celebrating after a smooth move, woman joyfully riding in a moving box"
+            aria-label="Professional moving crew in action"
             style="width:100%;height:460px;object-fit:cover;display:block;"
           >
-            <source src="assets/story-video.mp4" type="video/mp4" />
+            <source src="assets/mid-video.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
