@@ -961,7 +961,7 @@
       overflow: hidden;
       box-shadow: var(--shadow-lg);
     }
-    .story-img img { width: 100%; height: 460px; object-fit: cover; }
+    .story-img img, .story-img video { width: 100%; height: 460px; object-fit: cover; }
 
     /* ===== FINAL CTA ===== */
     #cta {
@@ -1493,12 +1493,13 @@
           <a href="#contact" class="btn btn-primary">Let's Talk About Your Move</a>
         </div>
         <div class="story-img reveal-right">
-          <img
-            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700&q=75"
-            alt="Happy family settled into their new home after a smooth move with VYV in Fredericksburg VA"
-            width="700" height="460"
-            loading="lazy"
-          />
+          <video
+            autoplay muted loop playsinline
+            aria-label="Happy couple celebrating after a smooth move, woman joyfully riding in a moving box"
+            style="width:100%;height:460px;object-fit:cover;display:block;"
+          >
+            <source src="assets/story-video.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
