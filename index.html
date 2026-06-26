@@ -1109,8 +1109,8 @@
         <a href="#hero" class="nav-logo" aria-label="Validate Your Vision Moving Co. home">
           <div class="nav-logo-mark" aria-hidden="true">VYV</div>
           <div>
-            <div class="nav-logo-text">Validate Your Vision</div>
-            <div class="nav-logo-sub">Moving Co.</div>
+            <div class="nav-logo-text">Trusted Movers</div>
+            <div class="nav-logo-sub">Validate Your Vision Moving Co.</div>
           </div>
         </a>
         <ul class="nav-links" role="list">
@@ -1363,25 +1363,36 @@
       </div>
       <div class="services-grid">
         <div class="svc-card reveal" data-d="1">
-          <div class="svc-icon" aria-hidden="true">🏠</div>
-          <h3>Residential Moving</h3>
-          <p>Full-service residential moves handled with care from start to finish. We come prepared with a plan so your moving day goes smoothly.</p>
+          <div class="svc-icon" aria-hidden="true">📦</div>
+          <h3>Packing</h3>
+          <p>Room-by-room packing done carefully and efficiently. Every item wrapped, labeled, and organized before the move even starts.</p>
         </div>
         <div class="svc-card reveal" data-d="2">
-          <div class="svc-icon" aria-hidden="true">📦</div>
-          <h3>Packing &amp; Unpacking</h3>
-          <p>Room-by-room packing done carefully and efficiently. Everything labeled and ready to go. When we arrive, we unpack just as carefully so nothing gets rushed or misplaced.</p>
+          <div class="svc-icon" aria-hidden="true">🏠</div>
+          <h3>Unpacking</h3>
+          <p>We unpack just as carefully as we pack. Nothing rushed, nothing misplaced. Your things end up where they belong.</p>
         </div>
         <div class="svc-card reveal" data-d="3">
           <div class="svc-icon" aria-hidden="true">🚛</div>
           <h3>Moving Labor</h3>
-          <p>Need a crew and not a truck? We handle the heavy lifting, loading, and unloading so you can focus on your family and your next chapter.</p>
+          <p>We bring the crew and handle the heavy lifting, loading, and unloading so you can stay focused on your family and your next chapter.</p>
         </div>
         <div class="svc-card reveal" data-d="4">
+          <div class="svc-icon" aria-hidden="true">🗂️</div>
+          <h3>Organizing</h3>
+          <p>Once everything's in, we help you get it in order. Closets, kitchens, living spaces — organized the way you actually want to live.</p>
+        </div>
+        <div class="svc-card reveal" data-d="5">
           <div class="svc-icon" aria-hidden="true">✨</div>
-          <h3>White Glove Setup</h3>
-          <p>We take it all the way. Everything unpacked, furniture placed, items arranged, and your space set up so it actually feels like home the moment we leave.</p>
+          <h3>White Glove Organizing</h3>
+          <p>We take it all the way. Everything placed, arranged, hung, and styled until your space feels lived-in and like yours — from the moment we leave.</p>
           <span class="svc-note">Premium add-on</span>
+        </div>
+        <div class="svc-card reveal" data-d="1">
+          <div class="svc-icon" aria-hidden="true">🎁</div>
+          <h3>All-Inclusive Package</h3>
+          <p>Packing, moving, and unpacking bundled together. Everything handled start to finish — and because you're doing it all with us, you get a bundled rate.</p>
+          <span class="svc-note">Best value</span>
         </div>
       </div>
     </div>
@@ -1532,54 +1543,140 @@
         <div class="reveal-right">
           <div style="background:var(--lbg);border-radius:20px;padding:44px 36px;box-shadow:var(--shadow);">
             <div id="form-body">
-              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Book Your Consult</h3>
-              <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your call.</p>
+              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Tell Us About Your Move</h3>
+              <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your consult.</p>
               <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
                   <div>
-                    <label for="fname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">First Name</label>
-                    <input id="fname" type="text" placeholder="Jane" required autocomplete="given-name"
+                    <label for="fname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">First Name *</label>
+                    <input id="fname" name="fname" type="text" placeholder="Jane" required autocomplete="given-name"
                       style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
                       onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                   </div>
                   <div>
-                    <label for="lname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Last Name</label>
-                    <input id="lname" type="text" placeholder="Smith" required autocomplete="family-name"
+                    <label for="lname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Last Name *</label>
+                    <input id="lname" name="lname" type="text" placeholder="Smith" required autocomplete="family-name"
                       style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
                       onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                   </div>
                 </div>
+
                 <div style="margin-bottom:14px;">
-                  <label for="email" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Email</label>
-                  <input id="email" type="email" placeholder="jane@email.com" required autocomplete="email"
+                  <label for="phone" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Phone Number (Text Only) *</label>
+                  <input id="phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
                     style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
+
                 <div style="margin-bottom:14px;">
-                  <label for="phone" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Phone / Text</label>
-                  <input id="phone" type="tel" placeholder="(540) 000-0000" autocomplete="tel"
+                  <label for="email" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Email *</label>
+                  <input id="email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email"
                     style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
+
                 <div style="margin-bottom:14px;">
-                  <label for="service" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Service Needed</label>
-                  <select id="service"
+                  <label for="service" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Service Needed *</label>
+                  <select id="service" name="service" required
                     style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
                     <option value="">Select a service...</option>
-                    <option>Packing</option>
-                    <option>Moving Labor</option>
-                    <option>Unpacking &amp; Organizing (add-on)</option>
-                    <option>Full Service (Packing + Moving)</option>
-                    <option>Not sure yet</option>
+                    <optgroup label="Individual Services">
+                      <option>Packing</option>
+                      <option>Unpacking</option>
+                      <option>Moving Labor</option>
+                      <option>Organizing</option>
+                      <option>White Glove Organizing (Premium)</option>
+                    </optgroup>
+                    <optgroup label="Packages">
+                      <option>All-Inclusive Package (Packing + Moving + Unpacking)</option>
+                    </optgroup>
+                    <option>Not sure yet — let's talk</option>
                   </select>
                 </div>
-                <div style="margin-bottom:20px;">
-                  <label for="notes" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Book Your Consult</label>
-                  <textarea id="notes" placeholder="Home size, move date, anything special we should know..." rows="4"
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;resize:vertical;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
+
+                <div style="margin-bottom:14px;">
+                  <label for="pickup" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Pick-Up Address (Current Home) *</label>
+                  <input id="pickup" name="pickup" type="text" placeholder="123 Main St, Fredericksburg, VA" required
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
+
+                <div style="margin-bottom:14px;">
+                  <label for="rooms" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">How Many Rooms/Areas Need to Be Packed &amp; Moved? *</label>
+                  <select id="rooms" name="rooms" required
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
+                    <option value="">Select...</option>
+                    <option>1 room / studio</option>
+                    <option>2 rooms</option>
+                    <option>3 rooms</option>
+                    <option>4 rooms</option>
+                    <option>5 rooms</option>
+                    <option>6+ rooms</option>
+                    <option>Whole house (not sure of room count)</option>
+                  </select>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                  <label style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:10px;">Are You Moving to a Smaller Home Than What You Have Now? *</label>
+                  <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
+                      <input type="radio" name="downsizing" value="yes" onchange="toggleDownsize(true)" style="accent-color:var(--lv);width:16px;height:16px;" /> Yes
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
+                      <input type="radio" name="downsizing" value="no" onchange="toggleDownsize(false)" style="accent-color:var(--lv);width:16px;height:16px;" /> No
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
+                      <input type="radio" name="downsizing" value="same" onchange="toggleDownsize(false)" style="accent-color:var(--lv);width:16px;height:16px;" /> About the same size
+                    </label>
+                  </div>
+                </div>
+
+                <div id="downsize-plan" style="margin-bottom:14px;display:none;">
+                  <label for="downplan" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">What's Your Plan for What Doesn't Fit?</label>
+                  <select id="downplan" name="downplan"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
+                    <option value="">Select...</option>
+                    <option>Donate</option>
+                    <option>Sell</option>
+                    <option>Trash / junk removal</option>
+                    <option>Storage</option>
+                    <option>Not sure yet</option>
+                    <option>Mix of a few of these</option>
+                  </select>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                  <label for="specialty" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Any Large or Specialty Items? *</label>
+                  <input id="specialty" name="specialty" type="text" placeholder="Piano, safe, gym equipment, oversized furniture — or 'None'" required
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+
+                <div style="margin-bottom:14px;">
+                  <label for="movedate" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Ideal Move Date *</label>
+                  <input id="movedate" name="movedate" type="text" placeholder="e.g. July 15th, or 'flexible within 2 weeks'" required
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+
+                <div style="margin-bottom:14px;">
+                  <label for="access" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Stairs, Elevators, or Tight Access Points? *</label>
+                  <input id="access" name="access" type="text" placeholder="e.g. 3rd floor walk-up, elevator available, narrow hallway — or 'No issues'" required
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+
+                <div style="margin-bottom:24px;">
+                  <label for="dropoff" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Drop-Off Address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--lmuted);font-size:0.78rem;">(optional — if known)</span></label>
+                  <input id="dropoff" name="dropoff" type="text" placeholder="New home address, or leave blank if not yet confirmed"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+
                 <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
                   Send My Consultation Request →
                 </button>
@@ -1587,8 +1684,8 @@
             </div>
             <div id="form-success" style="display:none;text-align:center;padding:40px 0;">
               <div style="font-size:3rem;margin-bottom:14px;">✅</div>
-              <h3 style="font-size:1.3rem;color:var(--mp);margin-bottom:10px;">Got it,we'll be in touch soon!</h3>
-              <p style="color:var(--lmuted);font-size:0.93rem;">Expect a call or text within a few hours. Talk soon.</p>
+              <h3 style="font-size:1.3rem;color:var(--mp);margin-bottom:10px;">Got it — we'll be in touch soon!</h3>
+              <p style="color:var(--lmuted);font-size:0.93rem;">Expect a text within a few hours. Talk soon.</p>
             </div>
           </div>
         </div>
@@ -1604,8 +1701,8 @@
           <a href="#hero" class="nav-logo" style="margin-bottom:0;" aria-label="VYV Moving Co. home">
             <div class="nav-logo-mark">VYV</div>
             <div>
-              <div class="nav-logo-text">Validate Your Vision</div>
-              <div class="nav-logo-sub">Moving Co.</div>
+              <div class="nav-logo-text">Trusted Movers</div>
+              <div class="nav-logo-sub">Validate Your Vision Moving Co.</div>
             </div>
           </a>
           <p>Professional Packing, Moving, and Unpacking Services in Fredericksburg, Virginia. Licensed &bull; Professional &bull; Reliable.</p>
@@ -1615,9 +1712,11 @@
           <h4>Services</h4>
           <ul>
             <li><a href="#services">Packing</a></li>
+            <li><a href="#services">Unpacking</a></li>
             <li><a href="#services">Moving Labor</a></li>
-            <li><a href="#services">Unpacking &amp; Organizing</a></li>
-            <li><a href="#contact">Free Consultation</a></li>
+            <li><a href="#services">Organizing</a></li>
+            <li><a href="#services">White Glove Organizing</a></li>
+            <li><a href="#services">All-Inclusive Package</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1727,6 +1826,10 @@
       e.preventDefault();
       document.getElementById('form-body').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
+    }
+
+    function toggleDownsize(show) {
+      document.getElementById('downsize-plan').style.display = show ? 'block' : 'none';
     }
 
     // ===== HIDE FLOAT CTA WHEN CONTACT IN VIEW =====
