@@ -237,18 +237,12 @@
       gap: 11px;
     }
     .nav-logo-mark {
-      width: 40px; height: 40px;
-      background: var(--lv);
+      width: 48px; height: 48px;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Raleway', sans-serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: var(--tw);
-      letter-spacing: -0.02em;
+      overflow: hidden;
+      flex-shrink: 0;
     }
+    .nav-logo-mark svg { display: block; width: 100%; height: 100%; }
     .nav-logo-text {
       font-family: 'Raleway', sans-serif;
       font-weight: 700;
@@ -1108,7 +1102,34 @@
     <div class="container">
       <div class="nav-inner">
         <a href="#hero" class="nav-logo" aria-label="Validate Your Vision Moving Co. home">
-          <div class="nav-logo-mark" aria-hidden="true">VYV</div>
+          <div class="nav-logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VYV logo">
+              <rect width="200" height="200" fill="#210D46"/>
+              <!-- Speed lines / roof left -->
+              <line x1="18" y1="78" x2="68" y2="78" stroke="#e8e4f0" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="22" y1="86" x2="65" y2="86" stroke="#e8e4f0" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <line x1="26" y1="94" x2="62" y2="94" stroke="#e8e4f0" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+              <!-- Roof peak -->
+              <polyline points="60,100 100,55 140,100" fill="none" stroke="#e8e4f0" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Right roof slope extension -->
+              <polyline points="140,100 158,78 175,82" fill="none" stroke="#e8e4f0" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Chimney -->
+              <rect x="125" y="58" width="12" height="16" fill="#e8e4f0" rx="1"/>
+              <!-- Window (4-pane) -->
+              <rect x="88" y="68" width="24" height="20" fill="none" stroke="#e8e4f0" stroke-width="3" rx="1"/>
+              <line x1="100" y1="68" x2="100" y2="88" stroke="#e8e4f0" stroke-width="2"/>
+              <line x1="88" y1="78" x2="112" y2="78" stroke="#e8e4f0" stroke-width="2"/>
+              <!-- VYV letters -->
+              <text x="100" y="152" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="68" fill="#e8e4f0" text-anchor="middle" letter-spacing="-2">VYV</text>
+              <!-- Divider line + dot -->
+              <line x1="42" y1="162" x2="92" y2="162" stroke="#e8e4f0" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="100" cy="162" r="2.5" fill="#e8e4f0" opacity="0.8"/>
+              <line x1="108" y1="162" x2="158" y2="162" stroke="#e8e4f0" stroke-width="1.5" opacity="0.6"/>
+              <!-- Tagline -->
+              <text x="100" y="177" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#e8e4f0" text-anchor="middle" letter-spacing="2.5" opacity="0.85">VALIDATE YOUR VISION</text>
+              <text x="100" y="191" font-family="Arial, sans-serif" font-weight="400" font-size="8.5" fill="#e8e4f0" text-anchor="middle" letter-spacing="2" opacity="0.6">EVERY MOVE AS A PLAN.</text>
+            </svg>
+          </div>
           <div>
             <div class="nav-logo-text">Trusted Movers</div>
             <div class="nav-logo-sub">Validate Your Vision Moving Co.</div>
@@ -1700,7 +1721,26 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#hero" class="nav-logo" style="margin-bottom:0;" aria-label="VYV Moving Co. home">
-            <div class="nav-logo-mark">VYV</div>
+            <div class="nav-logo-mark">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="200" height="200" fill="#210D46"/>
+                <line x1="18" y1="78" x2="68" y2="78" stroke="#e8e4f0" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="22" y1="86" x2="65" y2="86" stroke="#e8e4f0" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+                <line x1="26" y1="94" x2="62" y2="94" stroke="#e8e4f0" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+                <polyline points="60,100 100,55 140,100" fill="none" stroke="#e8e4f0" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+                <polyline points="140,100 158,78 175,82" fill="none" stroke="#e8e4f0" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+                <rect x="125" y="58" width="12" height="16" fill="#e8e4f0" rx="1"/>
+                <rect x="88" y="68" width="24" height="20" fill="none" stroke="#e8e4f0" stroke-width="3" rx="1"/>
+                <line x1="100" y1="68" x2="100" y2="88" stroke="#e8e4f0" stroke-width="2"/>
+                <line x1="88" y1="78" x2="112" y2="78" stroke="#e8e4f0" stroke-width="2"/>
+                <text x="100" y="152" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="68" fill="#e8e4f0" text-anchor="middle" letter-spacing="-2">VYV</text>
+                <line x1="42" y1="162" x2="92" y2="162" stroke="#e8e4f0" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="100" cy="162" r="2.5" fill="#e8e4f0" opacity="0.8"/>
+                <line x1="108" y1="162" x2="158" y2="162" stroke="#e8e4f0" stroke-width="1.5" opacity="0.6"/>
+                <text x="100" y="177" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#e8e4f0" text-anchor="middle" letter-spacing="2.5" opacity="0.85">VALIDATE YOUR VISION</text>
+                <text x="100" y="191" font-family="Arial, sans-serif" font-weight="400" font-size="8.5" fill="#e8e4f0" text-anchor="middle" letter-spacing="2" opacity="0.6">EVERY MOVE AS A PLAN.</text>
+              </svg>
+            </div>
             <div>
               <div class="nav-logo-text">Trusted Movers</div>
               <div class="nav-logo-sub">Validate Your Vision Moving Co.</div>
