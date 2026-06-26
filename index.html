@@ -1125,11 +1125,27 @@
       .mobile-drawer { display: flex; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
       .hero-img-wrap video { height: 300px !important; }
-      .hf1 { left: -10px; }
-      .hf2 { right: -10px; }
+      /* Hide float cards on mobile — they overflow */
+      .hf1, .hf2 { display: none; }
       .services-grid { grid-template-columns: 1fr; }
       .reviews-grid { grid-template-columns: 1fr; }
-      .trust-row { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 0 8px; }
+      /* Trust badges: 2-column grid instead of horizontal scroll */
+      .trust-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        justify-content: unset;
+        overflow-x: unset;
+        flex-wrap: unset;
+        padding: 0;
+      }
+      .trust-badge {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(236,235,238,0.1);
+        padding: 12px 14px;
+        font-size: 0.82rem;
+        justify-content: flex-start;
+      }
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
       .float-cta a span { display: none; }
       .float-cta a { padding: 14px 16px; border-radius: 50%; }
@@ -1139,6 +1155,9 @@
       .ps-center { display: none; }
       .ps-left, .ps-right { padding: 0 !important; }
       .ps-card { margin-bottom: 16px; }
+      /* Pain section: badge repositioned so it doesn't overflow */
+      .pain-img-badge { right: 10px !important; bottom: 10px !important; padding: 12px 16px !important; }
+      .pain-img-badge strong { font-size: 1.5rem !important; }
       /* Why video */
       #why video { height: 260px !important; }
       /* Story */
@@ -1148,9 +1167,14 @@
       #families img { height: 280px !important; }
       /* Contact */
       #contact > .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
-      #contact > .container > div > div:first-child > div[style*="padding:44px"] { padding: 28px 20px !important; }
+      /* Form card padding shrink */
+      .form-card { padding: 28px 20px !important; }
+      /* Form name fields stack */
+      .form-name-row { grid-template-columns: 1fr !important; }
       /* Logo video */
       .nav-logo-mark { width: 40px !important; height: 40px !important; }
+      /* Prevent horizontal overflow bleed */
+      section, #trust, footer { overflow-x: hidden; }
     }
     @media (max-width: 480px) {
       .hero-h1 { font-size: 2.2rem; }
@@ -1161,6 +1185,12 @@
       .btn { font-size: 0.88rem; padding: 13px 22px; }
       #families > .container > div { gap: 24px !important; }
       #families img { height: 240px !important; }
+      /* Trust badges single column on very small phones */
+      .trust-row { grid-template-columns: 1fr !important; }
+      /* Why badges wrap tighter */
+      .why-badge { font-size: 0.82rem; padding: 10px 14px; }
+      /* Contact form full padding shrink */
+      .form-card { padding: 22px 16px !important; }
     }
   </style>
 </head>
@@ -1656,13 +1686,13 @@
         </div>
 
         <div class="reveal-right">
-          <div style="background:var(--lbg);border-radius:20px;padding:48px 52px;box-shadow:var(--shadow);">
+          <div class="form-card" style="background:var(--lbg);border-radius:20px;padding:48px 52px;box-shadow:var(--shadow);">
             <div id="form-body">
               <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Tell Us About Your Move</h3>
               <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your consult.</p>
               <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
 
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                <div class="form-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
                   <div>
                     <label for="fname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">First Name *</label>
                     <input id="fname" name="fname" type="text" placeholder="Jane" required autocomplete="given-name"
@@ -1958,6 +1988,42 @@
       floatCta.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
     }, { threshold: 0.3 });
     contactObs.observe(document.getElementById('contact'));
+
+    // ===== TOUCH SWIPE: navigate sections on phone =====
+    (function() {
+      const SECTIONS = ['hero','trust','about','process','services','families','reviews','why','story','cta','areas','contact'];
+      let tx = 0, ty = 0, swiping = false;
+      document.addEventListener('touchstart', e => {
+        tx = e.touches[0].clientX;
+        ty = e.touches[0].clientY;
+        swiping = true;
+      }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        if (!swiping) return;
+        const dx = Math.abs(e.touches[0].clientX - tx);
+        const dy = Math.abs(e.touches[0].clientY - ty);
+        // If mostly vertical, let normal scroll happen
+        if (dy > dx) swiping = false;
+      }, { passive: true });
+      document.addEventListener('touchend', e => {
+        if (!swiping) return;
+        const dx = e.changedTouches[0].clientX - tx;
+        const dy = e.changedTouches[0].clientY - ty;
+        swiping = false;
+        // Only trigger on clear horizontal swipe (>70px, more horiz than vert)
+        if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx)) return;
+        const els = SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
+        const mid = window.scrollY + window.innerHeight * 0.4;
+        let cur = 0;
+        els.forEach((s, i) => { if (s.offsetTop <= mid) cur = i; });
+        const next = dx < 0
+          ? Math.min(cur + 1, els.length - 1)
+          : Math.max(cur - 1, 0);
+        if (next !== cur) {
+          window.scrollTo({ top: Math.max(0, els[next].offsetTop - 72), behavior: 'smooth' });
+        }
+      }, { passive: true });
+    })();
   </script>
 </body>
 </html>
