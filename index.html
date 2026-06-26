@@ -589,7 +589,7 @@
     /* ===== TRUST BADGES BAR ===== */
     #trust {
       background: var(--mp);
-      padding: 20px 0;
+      padding: 32px 0;
       border-top: 1px solid rgba(139,91,199,0.2);
     }
     .trust-row {
@@ -602,11 +602,11 @@
     .trust-badge {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 28px;
-      color: rgba(236,235,238,0.85);
-      font-size: 0.85rem;
-      font-weight: 500;
+      gap: 10px;
+      padding: 14px 36px;
+      color: rgba(236,235,238,0.9);
+      font-size: 0.9rem;
+      font-weight: 600;
       border-right: 1px solid rgba(236,235,238,0.1);
     }
     .trust-badge:last-child { border-right: none; }
@@ -1106,11 +1106,11 @@
   <nav id="nav" aria-label="Main navigation">
     <div class="container">
       <div class="nav-inner">
-        <a href="#hero" class="nav-logo" aria-label="VYV Moving Co. home">
+        <a href="#hero" class="nav-logo" aria-label="Validate Your Vision Moving Co. home">
           <div class="nav-logo-mark" aria-hidden="true">VYV</div>
           <div>
-            <div class="nav-logo-text">VYV Moving</div>
-            <div class="nav-logo-sub">Validate Your Vision</div>
+            <div class="nav-logo-text">Validate Your Vision</div>
+            <div class="nav-logo-sub">Moving Co.</div>
           </div>
         </a>
         <ul class="nav-links" role="list">
@@ -1122,8 +1122,8 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-right">
-          <a href="tel:+15403001414" class="nav-phone" aria-label="Call VYV Moving">📞 540-300-1414</a>
-          <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+          <a href="sms:+15403001414" class="nav-phone" aria-label="Text VYV Moving">💬 Text Us</a>
+          <a href="#contact" class="btn btn-primary">Book Your Consult</a>
         </div>
         <button class="hamburger" id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -1139,7 +1139,7 @@
     <a href="#process" onclick="toggleNav()">Process</a>
     <a href="#reviews" onclick="toggleNav()">Reviews</a>
     <a href="#contact" onclick="toggleNav()">Contact</a>
-    <a href="#contact" class="btn btn-primary" onclick="toggleNav()">Get a Free Quote</a>
+    <a href="#contact" class="btn btn-primary" onclick="toggleNav()">Book Your Consult</a>
   </div>
 
   <!-- ===== HERO ===== -->
@@ -1162,14 +1162,8 @@
               Proudly serving Fredericksburg, Stafford, Spotsylvania, Northern Virginia &amp; Richmond.
             </p>
             <div class="hero-actions">
-              <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
-              <a href="tel:+15403001414" class="btn btn-outline">Call 540-300-1414</a>
-            </div>
-            <div class="hero-trust-row">
-              <span class="hero-trust-item">Locally Owned</span>
-              <span class="hero-trust-item">Upfront Pricing</span>
-              <span class="hero-trust-item">No Hidden Fees</span>
-              <span class="hero-trust-item">We Show Up On Time</span>
+              <a href="#contact" class="btn btn-primary">Book Your Consult</a>
+              <a href="sms:+15403001414" class="btn btn-outline">Text 540-300-1414</a>
             </div>
           </div>
           <div class="hero-visual reveal-right">
@@ -1276,8 +1270,8 @@
           <div class="pain-img-wrap reveal-left">
             <div class="pain-img-main">
               <img
-                src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=700&q=75"
-                alt="Organized labeled moving boxes ready for a stress-free move in Northern Virginia"
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=75"
+                alt="Family relieved and settled into their new home after a smooth move"
                 width="700" height="420"
                 loading="lazy"
               />
@@ -1294,7 +1288,7 @@
               You don't need movers who show up and just wing it. We talk to you first, walk through your home, and have a plan before anything gets touched. No guessing, no random pricing, no "we'll figure it out when we get there." Just a crew that's organized, on time, and takes care of your stuff like it's theirs.
             </p>
             <br />
-            <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+            <a href="#contact" class="btn btn-primary">Book Your Consult</a>
           </div>
         </div>
       </div>
@@ -1375,8 +1369,8 @@
         </div>
         <div class="svc-card reveal" data-d="2">
           <div class="svc-icon" aria-hidden="true">📦</div>
-          <h3>Packing</h3>
-          <p>Room-by-room packing done carefully and efficiently. Everything labeled, organized, and ready to go before the move even starts.</p>
+          <h3>Packing &amp; Unpacking</h3>
+          <p>Room-by-room packing done carefully and efficiently. Everything labeled and ready to go. When we arrive, we unpack just as carefully so nothing gets rushed or misplaced.</p>
         </div>
         <div class="svc-card reveal" data-d="3">
           <div class="svc-icon" aria-hidden="true">🚛</div>
@@ -1385,9 +1379,9 @@
         </div>
         <div class="svc-card reveal" data-d="4">
           <div class="svc-icon" aria-hidden="true">✨</div>
-          <h3>Unpacking &amp; Organizing</h3>
-          <p>We don't just move boxes into a room and leave. We unpack and organize so you don't have to wait for it to feel like home.</p>
-          <span class="svc-note">Add-on service</span>
+          <h3>White Glove Setup</h3>
+          <p>We take it all the way. Everything unpacked, furniture placed, items arranged, and your space set up so it actually feels like home the moment we leave.</p>
+          <span class="svc-note">Premium add-on</span>
         </div>
       </div>
     </div>
@@ -1462,7 +1456,7 @@
           <p>
             We show up when we say we will, we tell you what it's going to cost before you commit, and we treat your home like it matters, because it does.
           </p>
-          <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+          <a href="#contact" class="btn btn-primary">Book Your Consult</a>
         </div>
         <div class="story-img reveal-right">
           <img
@@ -1484,7 +1478,7 @@
         <h2 id="cta-heading" class="reveal">Ready for a Stress-Free Move?</h2>
         <p class="reveal">Let VYV Moving Co. handle the heavy lifting while you focus on settling into your new home.</p>
         <div class="reveal">
-          <a href="#contact" class="btn btn-primary">Get Your Free Quote</a>
+          <a href="#contact" class="btn btn-primary">Book Your Consult</a>
         </div>
       </div>
     </div>
@@ -1522,7 +1516,7 @@
           <div style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
               <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
-              <a href="tel:+15403001414" style="color:inherit;">Phone / Text: 540-300-1414</a>
+              <a href="sms:+15403001414" style="color:inherit;">Text us: 540-300-1414 (text only)</a>
             </div>
             <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
               <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
@@ -1538,7 +1532,7 @@
         <div class="reveal-right">
           <div style="background:var(--lbg);border-radius:20px;padding:44px 36px;box-shadow:var(--shadow);">
             <div id="form-body">
-              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Tell Us About Your Move</h3>
+              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Book Your Consult</h3>
               <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your call.</p>
               <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
@@ -1581,7 +1575,7 @@
                   </select>
                 </div>
                 <div style="margin-bottom:20px;">
-                  <label for="notes" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Tell Us About Your Move</label>
+                  <label for="notes" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Book Your Consult</label>
                   <textarea id="notes" placeholder="Home size, move date, anything special we should know..." rows="4"
                     style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;resize:vertical;transition:border-color .25s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
@@ -1610,8 +1604,8 @@
           <a href="#hero" class="nav-logo" style="margin-bottom:0;" aria-label="VYV Moving Co. home">
             <div class="nav-logo-mark">VYV</div>
             <div>
-              <div class="nav-logo-text">VYV Moving</div>
-              <div class="nav-logo-sub">Validate Your Vision</div>
+              <div class="nav-logo-text">Validate Your Vision</div>
+              <div class="nav-logo-sub">Moving Co.</div>
             </div>
           </a>
           <p>Professional Packing, Moving, and Unpacking Services in Fredericksburg, Virginia. Licensed &bull; Professional &bull; Reliable.</p>
@@ -1639,7 +1633,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 VYV Moving Co. &mdash; Fredericksburg, VA &middot; <a href="tel:+15403001414" style="color:inherit;">540-300-1414</a> &middot; <a href="mailto:info@vyvmovingco.com" style="color:inherit;">info@vyvmovingco.com</a></p>
+        <p>© 2026 VYV Moving Co. &mdash; Fredericksburg, VA &middot; <a href="sms:+15403001414" style="color:inherit;">540-300-1414 (text)</a> &middot; <a href="mailto:info@vyvmovingco.com" style="color:inherit;">info@vyvmovingco.com</a></p>
         <p style="color:rgba(236,235,238,0.2);font-size:0.75rem;">Locally owned &amp; operated · Serving Northern Virginia &amp; Richmond</p>
       </div>
     </div>
@@ -1648,7 +1642,7 @@
   <!-- Floating CTA -->
   <div class="float-cta">
     <a href="#contact" aria-label="Book a free consultation">
-      📅 <span>Get a Free Quote</span>
+      📅 <span>Book Your Consult</span>
     </a>
   </div>
 
