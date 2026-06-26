@@ -78,7 +78,7 @@
 
   <!-- ===== FONTS: Space Grotesk (headlines) + Inter (body) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ===== RESET ===== */
@@ -89,7 +89,7 @@
       --dp:  #190E2A;   /* dark background purple */
       --mp:  #210D46;   /* primary brand purple */
       --ap:  #4A237A;   /* accent purple */
-      --lv:  #8B5BC7;   /* light lavender — buttons/highlights only */
+      --lv:  #8B5BC7;   /* light lavender,buttons/highlights only */
       --tw:  #ECEBEE;   /* white text / near-white */
       --lbg: #ffffff;
       --lbg2:#F4F0FF;   /* subtle purple-tinted light bg */
@@ -111,7 +111,7 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.12; font-weight: 700; }
+    h1,h2,h3,h4 { font-family: 'Sora', sans-serif; line-height: 1.12; font-weight: 700; }
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
 
@@ -132,7 +132,7 @@
     /* ===== UTILITY ===== */
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
     .section-eyebrow {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.2em;
@@ -160,7 +160,7 @@
       gap: 8px;
       padding: 15px 34px;
       border-radius: 8px;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
@@ -242,14 +242,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-weight: 700;
       font-size: 1.15rem;
       color: var(--tw);
       letter-spacing: -0.02em;
     }
     .nav-logo-text {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-weight: 700;
       font-size: 1.25rem;
       color: var(--tw);
@@ -333,7 +333,7 @@
     }
     .mobile-drawer.open { transform: none; }
     .mobile-drawer a {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--tw);
@@ -547,7 +547,7 @@
     }
     .stat-item:hover { background: rgba(139,91,199,0.1); }
     .stat-num {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: clamp(2.2rem, 3.5vw, 3.4rem);
       font-weight: 700;
       color: var(--lv);
@@ -655,7 +655,7 @@
     }
     .pain-img-badge strong {
       display: block;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 2rem;
       font-weight: 700;
       color: var(--lv);
@@ -744,7 +744,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
       color: var(--tw);
@@ -881,7 +881,7 @@
       margin-bottom: 22px;
     }
     .review-author {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-weight: 600;
       font-size: 0.9rem;
       color: var(--lv);
@@ -1015,7 +1015,7 @@
       font-style: italic;
     }
     .footer-col h4 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -1056,7 +1056,7 @@
       color: var(--tw);
       padding: 13px 22px;
       border-radius: 50px;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-size: 0.88rem;
       font-weight: 600;
       box-shadow: 0 8px 28px rgba(139,91,199,0.42);
@@ -1122,7 +1122,7 @@
         </ul>
         <div class="nav-right">
           <a href="tel:+" class="nav-phone" aria-label="Call VYV Moving">📞 Call Us</a>
-          <a href="#contact" class="btn btn-primary">Book Free Consultation</a>
+          <a href="#contact" class="btn btn-primary">Tell Us About Your Move</a>
         </div>
         <button class="hamburger" id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -1138,7 +1138,7 @@
     <a href="#process" onclick="toggleNav()">Process</a>
     <a href="#reviews" onclick="toggleNav()">Reviews</a>
     <a href="#contact" onclick="toggleNav()">Contact</a>
-    <a href="#contact" class="btn btn-primary" onclick="toggleNav()">Book Free Consultation</a>
+    <a href="#contact" class="btn btn-primary" onclick="toggleNav()">Tell Us About Your Move</a>
   </div>
 
   <!-- ===== HERO ===== -->
@@ -1152,14 +1152,14 @@
           <div>
             <div class="hero-location">Fredericksburg, VA &amp; Northern Virginia</div>
             <h1 id="hero-heading" class="hero-h1">
-              Locally Owned.<br /><span>We Show Up</span><br />and Get It Done.
+              Finally.<br /><span>An Organized Move.</span>
             </h1>
             <p class="hero-sub">
-              Packing and moving help in Fredericksburg, VA and surrounding areas — with a real plan so nothing gets missed and nothing's a surprise.
+              So when the last box is placed, all you have to do is exhale.
             </p>
             <div class="hero-actions">
-              <a href="#contact" class="btn btn-primary">Book Your Free Consultation</a>
-              <a href="#process" class="btn btn-outline">See How It Works</a>
+              <a href="#contact" class="btn btn-primary">Tell Us About Your Move</a>
+              <a href="#contact" class="btn btn-outline">Let's Talk About Your Move</a>
             </div>
             <div class="hero-trust-row">
               <span class="hero-trust-item">Locally Owned</span>
@@ -1181,7 +1181,7 @@
             <div class="hero-float-card hf1">
               <div class="hf1-icon" aria-hidden="true">✅</div>
               <div>
-                <strong>Move Complete — On Time</strong>
+                <strong>Move Complete,On Time</strong>
                 <span>Fredericksburg, VA · Today</span>
               </div>
             </div>
@@ -1290,7 +1290,7 @@
               You don't need movers who show up and just wing it. We talk to you first, walk through your home, and have a plan before anything gets touched. No guessing, no random pricing, no "we'll figure it out when we get there." Just a crew that's organized, on time, and takes care of your stuff like it's theirs.
             </p>
             <br />
-            <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+            <a href="#contact" class="btn btn-primary">Tell Us About Your Move</a>
           </div>
         </div>
       </div>
@@ -1304,7 +1304,7 @@
         <p class="section-eyebrow reveal">How It Works</p>
         <h2 id="process-heading" class="section-title reveal">Our Process</h2>
         <p class="section-sub reveal">
-          A structured, transparent process — the VYV Moving Management System — so nothing gets missed and nothing's a surprise.
+          A structured, transparent process,the VYV Moving Management System,so nothing gets missed and nothing's a surprise.
         </p>
       </div>
       <div class="process-steps">
@@ -1389,7 +1389,7 @@
       <div class="services-header">
         <p class="section-eyebrow reveal">What We Do</p>
         <h2 id="services-heading" class="section-title reveal">Services Built for<br /><span>How You Actually Move</span></h2>
-        <p class="section-sub reveal" style="margin:0 auto">Every service is designed around your situation — not a one-size package that doesn't fit.</p>
+        <p class="section-sub reveal" style="margin:0 auto">Every service is designed around your situation,not a one-size package that doesn't fit.</p>
       </div>
       <div class="services-grid">
         <div class="svc-card reveal" data-d="1">
@@ -1400,12 +1400,12 @@
         <div class="svc-card reveal" data-d="2">
           <div class="svc-icon" aria-hidden="true">🚛</div>
           <h3>Moving Labor</h3>
-          <p>We bring the crew, you handle the truck (or we book it for you, billed at cost — no markup).</p>
+          <p>We bring the crew and handle the heavy lifting. You focus on your family and your new place.</p>
         </div>
         <div class="svc-card reveal" data-d="3">
           <div class="svc-icon" aria-hidden="true">🏠</div>
           <h3>Unpacking &amp; Organizing</h3>
-          <p>Want help settling in too? We've got you.</p>
+          <p>So you don't have to wait for it to feel like home.</p>
           <span class="svc-note">Add-on service</span>
         </div>
         <div class="svc-card reveal" data-d="4">
@@ -1454,7 +1454,7 @@
         <p class="section-eyebrow reveal">Why VYV</p>
         <h2 id="why-heading" class="section-title reveal">Why Choose Us</h2>
         <p class="section-sub reveal">
-          We're not the only movers in Fredericksburg. Here's why customers keep choosing us — and recommending us to people they actually care about.
+          We're not the only movers in Fredericksburg. Here's why customers keep choosing us,and recommending us to people they actually care about.
         </p>
         <div class="why-badges">
           <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🏡</div> Locally Owned</div>
@@ -1482,9 +1482,9 @@
             We started VYV because that's not how it should be. You shouldn't have to brace yourself every time you hire someone to help you move.
           </p>
           <p>
-            We show up when we say we will, we tell you what it's going to cost before you commit, and we treat your home like it matters — because it does.
+            We show up when we say we will, we tell you what it's going to cost before you commit, and we treat your home like it matters,because it does.
           </p>
-          <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+          <a href="#contact" class="btn btn-primary">Tell Us About Your Move</a>
         </div>
         <div class="story-img reveal-right">
           <img
@@ -1506,7 +1506,7 @@
         <h2 id="cta-heading" class="reveal">Ready to Move Without the Headache?</h2>
         <p class="reveal">No pressure, no obligation. Just a real conversation about your move and what it's actually going to take.</p>
         <div class="reveal">
-          <a href="#contact" class="btn btn-primary">Book Your Free Consultation →</a>
+          <a href="#contact" class="btn btn-primary">Tell Us About Your Move</a>
         </div>
       </div>
     </div>
@@ -1518,18 +1518,18 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start;">
         <div class="reveal-left">
           <p class="section-eyebrow">Get In Touch</p>
-          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move</span></h2>
+          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move.</span></h2>
           <p class="section-sub" style="margin-bottom:36px;">
             We serve Fredericksburg, Stafford, Spotsylvania, Woodbridge, Richmond, and surrounding Northern Virginia areas.
           </p>
           <div style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
               <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
-              <span>Phone / Text — insert number</span>
+              <span>Phone / Text,insert number</span>
             </div>
             <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
               <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
-              <span>Email — insert email</span>
+              <span>Email,insert email</span>
             </div>
             <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
               <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📍</div>
@@ -1541,7 +1541,7 @@
         <div class="reveal-right">
           <div style="background:var(--lbg);border-radius:20px;padding:44px 36px;box-shadow:var(--shadow);">
             <div id="form-body">
-              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Book a Free Consultation</h3>
+              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Tell Us About Your Move</h3>
               <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your call.</p>
               <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
@@ -1596,7 +1596,7 @@
             </div>
             <div id="form-success" style="display:none;text-align:center;padding:40px 0;">
               <div style="font-size:3rem;margin-bottom:14px;">✅</div>
-              <h3 style="font-size:1.3rem;color:var(--mp);margin-bottom:10px;">Got it — we'll be in touch soon!</h3>
+              <h3 style="font-size:1.3rem;color:var(--mp);margin-bottom:10px;">Got it,we'll be in touch soon!</h3>
               <p style="color:var(--lmuted);font-size:0.93rem;">Expect a call or text within a few hours. Talk soon.</p>
             </div>
           </div>
@@ -1642,7 +1642,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 VYV Moving Co. — Fredericksburg, VA · [phone] · [email]</p>
+        <p>© 2026 VYV Moving Co.,Fredericksburg, VA · [phone] · [email]</p>
         <p style="color:rgba(236,235,238,0.2);font-size:0.75rem;">Locally owned &amp; operated · Serving Northern Virginia &amp; Richmond</p>
       </div>
     </div>
@@ -1651,7 +1651,7 @@
   <!-- Floating CTA -->
   <div class="float-cta">
     <a href="#contact" aria-label="Book a free consultation">
-      📅 <span>Book Free Consult</span>
+      📅 <span>Tell Us About Your Move</span>
     </a>
   </div>
 
