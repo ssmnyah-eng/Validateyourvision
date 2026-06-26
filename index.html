@@ -11,18 +11,18 @@
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --gold: #C8973A;
-      --gold-light: #F0C96B;
-      --navy: #0D1B2A;
-      --navy-mid: #1A2F45;
-      --cream: #FDF8F2;
-      --warm-gray: #F5F0EB;
-      --text: #2C2C2C;
-      --text-light: #6B7280;
-      --white: #FFFFFF;
+      --gold: #8B5BC7;
+      --gold-light: #A87DD4;
+      --navy: #190E2A;
+      --navy-mid: #210D46;
+      --cream: #F4F0FF;
+      --warm-gray: #ECEBEE;
+      --text: #190E2A;
+      --text-light: #5a4a7a;
+      --white: #ffffff;
       --radius: 16px;
-      --shadow: 0 20px 60px rgba(13,27,42,0.12);
-      --shadow-lg: 0 40px 100px rgba(13,27,42,0.18);
+      --shadow: 0 20px 60px rgba(25,14,42,0.12);
+      --shadow-lg: 0 40px 100px rgba(25,14,42,0.18);
       --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     html { scroll-behavior: smooth; font-size: 16px; }
@@ -91,9 +91,9 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: var(--navy);
-      box-shadow: 0 8px 32px rgba(200,151,58,0.35);
+      box-shadow: 0 8px 32px rgba(139,91,199,0.35);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(200,151,58,0.45); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(139,91,199,0.45); }
     .btn-outline {
       background: transparent;
       color: var(--white);
@@ -103,9 +103,9 @@
     .btn-dark {
       background: var(--navy);
       color: var(--white);
-      box-shadow: 0 8px 32px rgba(13,27,42,0.25);
+      box-shadow: 0 8px 32px rgba(25,14,42,0.25);
     }
-    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(13,27,42,0.35); }
+    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(25,14,42,0.35); }
 
     /* ===== SCROLL REVEAL ===== */
     .reveal {
@@ -148,7 +148,7 @@
       transition: var(--transition);
     }
     #navbar.scrolled {
-      background: rgba(13,27,42,0.97);
+      background: rgba(25,14,42,0.97);
       backdrop-filter: blur(20px);
       padding: 14px 0;
       box-shadow: 0 4px 40px rgba(0,0,0,0.25);
@@ -277,7 +277,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #0D1B2A 0%, #1A3050 50%, #0D1B2A 100%);
+      background: linear-gradient(135deg, #190E2A 0%, #210D46 50%, #190E2A 100%);
     }
     .hero-bg-img {
       position: absolute;
@@ -321,8 +321,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(200,151,58,0.15);
-      border: 1px solid rgba(200,151,58,0.3);
+      background: rgba(139,91,199,0.15);
+      border: 1px solid rgba(139,91,199,0.3);
       color: var(--gold);
       padding: 8px 18px;
       border-radius: 50px;
@@ -407,7 +407,7 @@
     .hero-card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(13,27,42,0.6) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(25,14,42,0.6) 0%, transparent 60%);
     }
     .hero-card-float {
       position: absolute;
@@ -528,7 +528,7 @@
       position: relative;
       transition: background 0.3s;
     }
-    .stat-item:hover { background: rgba(200,151,58,0.08); }
+    .stat-item:hover { background: rgba(139,91,199,0.08); }
     .stat-num {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.5rem, 4vw, 3.8rem);
@@ -590,7 +590,7 @@
     .service-img-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(13,27,42,0.5), transparent);
+      background: linear-gradient(to top, rgba(25,14,42,0.5), transparent);
     }
     .service-body {
       padding: 28px;
@@ -639,8 +639,8 @@
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle at 20% 50%, rgba(200,151,58,0.06) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(200,151,58,0.04) 0%, transparent 40%);
+        radial-gradient(circle at 20% 50%, rgba(139,91,199,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139,91,199,0.04) 0%, transparent 40%);
     }
     .process-header {
       text-align: center;
@@ -691,7 +691,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.6rem;
-      box-shadow: 0 0 0 8px rgba(200,151,58,0.15), 0 0 0 16px rgba(200,151,58,0.06);
+      box-shadow: 0 0 0 8px rgba(139,91,199,0.15), 0 0 0 16px rgba(139,91,199,0.06);
       transition: transform 0.3s;
       flex-shrink: 0;
     }
@@ -712,8 +712,8 @@
       transition: var(--transition);
     }
     .process-card:hover {
-      background: rgba(200,151,58,0.08);
-      border-color: rgba(200,151,58,0.25);
+      background: rgba(139,91,199,0.08);
+      border-color: rgba(139,91,199,0.25);
     }
     .process-card-title {
       font-family: 'Playfair Display', serif;
@@ -735,7 +735,7 @@
       color: var(--gold);
       text-transform: uppercase;
       padding: 4px 10px;
-      background: rgba(200,151,58,0.1);
+      background: rgba(139,91,199,0.1);
       border-radius: 20px;
     }
 
@@ -757,7 +757,7 @@
     .emotional-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(13,27,42,0.88) 0%, rgba(13,27,42,0.65) 100%);
+      background: linear-gradient(135deg, rgba(25,14,42,0.88) 0%, rgba(25,14,42,0.65) 100%);
     }
     .emotional-content {
       position: relative;
@@ -826,7 +826,7 @@
       border-radius: 16px;
       padding: 20px 24px;
       text-align: center;
-      box-shadow: 0 16px 48px rgba(200,151,58,0.35);
+      box-shadow: 0 16px 48px rgba(139,91,199,0.35);
     }
     .why-badge-num {
       font-family: 'Playfair Display', serif;
@@ -944,7 +944,7 @@
     .testimonial-dot {
       width: 10px; height: 10px;
       border-radius: 50%;
-      background: rgba(200,151,58,0.25);
+      background: rgba(139,91,199,0.25);
       cursor: pointer;
       transition: all 0.3s;
     }
@@ -962,7 +962,7 @@
     .testimonial-btn {
       width: 48px; height: 48px;
       border-radius: 50%;
-      border: 2px solid rgba(200,151,58,0.3);
+      border: 2px solid rgba(139,91,199,0.3);
       background: transparent;
       color: var(--gold);
       font-size: 1.1rem;
@@ -1010,7 +1010,7 @@
     .gallery-item-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(13,27,42,0.55), transparent);
+      background: linear-gradient(to top, rgba(25,14,42,0.55), transparent);
       opacity: 0;
       transition: opacity 0.3s;
       display: flex;
@@ -1026,7 +1026,7 @@
 
     /* ===== CTA BANNER ===== */
     #cta-banner {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      background: linear-gradient(135deg, #4A237A 0%, #8B5BC7 100%);
       padding: 80px 0;
     }
     .cta-banner-inner {
@@ -1038,11 +1038,11 @@
     }
     .cta-banner-text h2 {
       font-size: clamp(1.8rem, 3vw, 2.6rem);
-      color: var(--navy);
+      color: var(--white);
       margin-bottom: 10px;
     }
     .cta-banner-text p {
-      color: rgba(13,27,42,0.65);
+      color: rgba(25,14,42,0.65);
       font-size: 1.05rem;
     }
     .cta-banner-actions {
@@ -1139,7 +1139,7 @@
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 4px rgba(200,151,58,0.12);
+      box-shadow: 0 0 0 4px rgba(139,91,199,0.12);
     }
     .form-group textarea { height: 120px; resize: vertical; }
     .form-submit {
@@ -1154,12 +1154,12 @@
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: 0 8px 28px rgba(200,151,58,0.3);
+      box-shadow: 0 8px 28px rgba(139,91,199,0.3);
       margin-top: 8px;
     }
     .form-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(200,151,58,0.4);
+      box-shadow: 0 16px 40px rgba(139,91,199,0.4);
     }
     .form-success {
       display: none;
@@ -1205,7 +1205,7 @@
     .faq-icon {
       width: 28px; height: 28px;
       border-radius: 50%;
-      border: 2px solid rgba(200,151,58,0.3);
+      border: 2px solid rgba(139,91,199,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1313,7 +1313,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      box-shadow: 0 8px 32px rgba(200,151,58,0.45);
+      box-shadow: 0 8px 32px rgba(139,91,199,0.45);
       transition: var(--transition);
       animation: floatCTA 3s ease-in-out infinite;
     }
