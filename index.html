@@ -3,155 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VYV Moving Co. — Your New Chapter Starts Here</title>
-  <meta name="description" content="VYV Moving Company — Professional, caring movers who treat your belongings like family. Local and long-distance moving with white-glove service." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ===== SEO: Title & Meta ===== -->
+  <title>VYV Moving Co. | Packing & Moving Labor | Fredericksburg, VA</title>
+  <meta name="description" content="Locally owned moving & packing company in Fredericksburg, VA. Serving Stafford, Spotsylvania, Northern Virginia & Richmond. Upfront pricing, no hidden fees. Book your free consultation today." />
+  <meta name="keywords" content="movers Fredericksburg VA, moving company Fredericksburg Virginia, packing services Northern Virginia, moving labor Fredericksburg VA, local movers Stafford VA, movers Spotsylvania VA, moving help Richmond VA, affordable movers Northern Virginia" />
+  <link rel="canonical" href="https://ssmnyah-eng.github.io/Validateyourvision/" />
+
+  <!-- ===== SEO: Open Graph ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="VYV Moving Co. | Packing & Moving Labor | Fredericksburg, VA" />
+  <meta property="og:description" content="Locally owned moving & packing company in Fredericksburg, VA. Upfront pricing. No hidden fees. Book your free consultation." />
+  <meta property="og:url" content="https://ssmnyah-eng.github.io/Validateyourvision/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ===== SEO: LocalBusiness + MovingCompany Schema ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MovingCompany",
+    "name": "VYV Moving Co.",
+    "alternateName": "Validate Your Vision Moving",
+    "description": "Locally owned packing and moving labor company in Fredericksburg, VA. Serving Northern Virginia, Stafford, Spotsylvania, and Richmond with a structured Moving Management System.",
+    "url": "https://ssmnyah-eng.github.io/Validateyourvision/",
+    "telephone": "",
+    "email": "",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Fredericksburg",
+      "addressRegion": "VA",
+      "addressCountry": "US"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Fredericksburg", "sameAs": "https://en.wikipedia.org/wiki/Fredericksburg,_Virginia" },
+      { "@type": "City", "name": "Stafford" },
+      { "@type": "City", "name": "Spotsylvania" },
+      { "@type": "City", "name": "Woodbridge" },
+      { "@type": "City", "name": "Richmond" },
+      { "@type": "AdministrativeArea", "name": "Northern Virginia" }
+    ],
+    "priceRange": "$$",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "08:00", "closes": "18:00" }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "3"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Vicki J." },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "Absolutely one of the most professional, accommodating, and hard workers that I have come across!"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Meagan V." },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "Professional, prompt, took care of our stuff… I fully and whole-heartedly recommend them!"
+      },
+      {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "Jessica P." },
+        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+        "reviewBody": "Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"
+      }
+    ],
+    "sameAs": []
+  }
+  </script>
+
+  <!-- ===== FONTS: Space Grotesk (headlines) + Inter (body) ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
-    /* ===== RESET & BASE ===== */
+    /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ===== BRAND TOKENS ===== */
     :root {
-      --gold: #8B5BC7;
-      --gold-light: #A87DD4;
-      --navy: #190E2A;
-      --navy-mid: #210D46;
-      --cream: #F4F0FF;
-      --warm-gray: #ECEBEE;
-      --text: #190E2A;
-      --text-light: #5a4a7a;
-      --white: #ffffff;
-      --radius: 16px;
-      --shadow: 0 20px 60px rgba(25,14,42,0.12);
-      --shadow-lg: 0 40px 100px rgba(25,14,42,0.18);
-      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --dp:  #190E2A;   /* dark background purple */
+      --mp:  #210D46;   /* primary brand purple */
+      --ap:  #4A237A;   /* accent purple */
+      --lv:  #8B5BC7;   /* light lavender — buttons/highlights only */
+      --tw:  #ECEBEE;   /* white text / near-white */
+      --lbg: #ffffff;
+      --lbg2:#F4F0FF;   /* subtle purple-tinted light bg */
+      --ltxt:#190E2A;
+      --ltxt2:#4A237A;
+      --lmuted:#5a4a7a;
+
+      --radius: 14px;
+      --shadow: 0 16px 48px rgba(25,14,42,0.14);
+      --shadow-lg: 0 32px 80px rgba(25,14,42,0.22);
+      --ease: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
     }
+
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
       font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background: var(--white);
+      color: var(--ltxt);
+      background: var(--lbg);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.15; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.12; font-weight: 700; }
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
 
     /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--navy); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--dp); }
+    ::-webkit-scrollbar-thumb { background: var(--lv); border-radius: 3px; }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .parallax-bg { background-attachment: scroll !important; }
+    }
 
     /* ===== UTILITY ===== */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    .section-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
+      color: var(--lv);
+      margin-bottom: 14px;
     }
     .section-title {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: var(--navy);
-      margin-bottom: 20px;
-      line-height: 1.15;
+      font-size: clamp(1.9rem, 3.6vw, 3rem);
+      color: var(--mp);
+      margin-bottom: 18px;
     }
-    .section-title span { color: var(--gold); }
+    .section-title span { color: var(--lv); }
     .section-sub {
-      font-size: 1.1rem;
-      color: var(--text-light);
-      max-width: 600px;
-      line-height: 1.7;
+      font-size: 1.05rem;
+      color: var(--lmuted);
+      line-height: 1.75;
+      max-width: 620px;
     }
+
+    /* ===== BUTTONS ===== */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 16px 36px;
-      border-radius: 50px;
+      gap: 8px;
+      padding: 15px 34px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       border: none;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
+      transition: var(--ease);
+      letter-spacing: 0.01em;
     }
-    .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.12);
-      opacity: 0;
-      transition: var(--transition);
-    }
-    .btn:hover::after { opacity: 1; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--navy);
-      box-shadow: 0 8px 32px rgba(139,91,199,0.35);
+      background: var(--lv);
+      color: var(--tw);
+      box-shadow: 0 6px 24px rgba(139,91,199,0.32);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(139,91,199,0.45); }
+    .btn-primary:hover {
+      background: #9d6fd4;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(139,91,199,0.42);
+    }
     .btn-outline {
       background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,0.5);
+      color: var(--tw);
+      border: 2px solid rgba(236,235,238,0.35);
     }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .btn-outline:hover { border-color: var(--lv); color: var(--lv); transform: translateY(-2px); }
     .btn-dark {
-      background: var(--navy);
-      color: var(--white);
-      box-shadow: 0 8px 32px rgba(25,14,42,0.25);
+      background: var(--mp);
+      color: var(--tw);
+      box-shadow: 0 6px 24px rgba(33,13,70,0.3);
     }
-    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(25,14,42,0.35); }
+    .btn-dark:hover { background: var(--ap); transform: translateY(-2px); }
 
     /* ===== SCROLL REVEAL ===== */
-    .reveal {
+    .reveal, .reveal-left, .reveal-right, .reveal-up {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    .reveal       { transform: translateY(36px); }
+    .reveal-left  { transform: translateX(-44px); }
+    .reveal-right { transform: translateX(44px); }
+    .reveal-up    { transform: translateY(24px); }
+    .reveal.in, .reveal-left.in, .reveal-right.in, .reveal-up.in {
+      opacity: 1;
+      transform: none;
     }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    .reveal-scale {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-scale.visible { opacity: 1; transform: scale(1); }
-    [data-delay="1"] { transition-delay: 0.1s !important; }
-    [data-delay="2"] { transition-delay: 0.2s !important; }
-    [data-delay="3"] { transition-delay: 0.3s !important; }
-    [data-delay="4"] { transition-delay: 0.4s !important; }
-    [data-delay="5"] { transition-delay: 0.5s !important; }
-    [data-delay="6"] { transition-delay: 0.6s !important; }
+    [data-d="1"] { transition-delay: 0.08s; }
+    [data-d="2"] { transition-delay: 0.16s; }
+    [data-d="3"] { transition-delay: 0.24s; }
+    [data-d="4"] { transition-delay: 0.32s; }
+    [data-d="5"] { transition-delay: 0.40s; }
 
     /* ===== NAVBAR ===== */
-    #navbar {
+    #nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      padding: 20px 0;
-      transition: var(--transition);
+      inset: 0 0 auto;
+      z-index: 900;
+      padding: 18px 0;
+      transition: var(--ease);
     }
-    #navbar.scrolled {
-      background: rgba(25,14,42,0.97);
-      backdrop-filter: blur(20px);
-      padding: 14px 0;
-      box-shadow: 0 4px 40px rgba(0,0,0,0.25);
+    #nav.scrolled {
+      background: rgba(25,14,42,0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 12px 0;
+      box-shadow: 0 2px 32px rgba(0,0,0,0.28);
     }
     .nav-inner {
       display: flex;
@@ -161,360 +233,306 @@
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
     .nav-logo-mark {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      border-radius: 12px;
+      width: 40px; height: 40px;
+      background: var(--lv);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: var(--navy);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--tw);
+      letter-spacing: -0.02em;
     }
     .nav-logo-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      color: var(--white);
+      font-size: 1.25rem;
+      color: var(--tw);
       line-height: 1;
     }
-    .nav-logo-text span { color: var(--gold); }
     .nav-logo-sub {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 500;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.14em;
+      color: rgba(236,235,238,0.45);
       text-transform: uppercase;
+      margin-top: 2px;
     }
     .nav-links {
       display: flex;
-      gap: 36px;
+      gap: 32px;
       list-style: none;
     }
     .nav-links a {
-      color: rgba(255,255,255,0.8);
-      font-size: 0.9rem;
+      color: rgba(236,235,238,0.75);
+      font-size: 0.88rem;
       font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.3s;
+      transition: color 0.25s;
       position: relative;
     }
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0; right: 0;
+      bottom: -3px; left: 0; right: 0;
       height: 2px;
-      background: var(--gold);
+      background: var(--lv);
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.3s;
     }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--tw); }
     .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
-    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-phone {
-      color: var(--gold);
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      color: rgba(236,235,238,0.7);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.25s;
     }
+    .nav-phone:hover { color: var(--lv); }
+
+    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
       padding: 4px;
+      background: none;
+      border: none;
     }
     .hamburger span {
       display: block;
-      width: 26px; height: 2px;
-      background: var(--white);
+      width: 24px; height: 2px;
+      background: var(--tw);
       border-radius: 2px;
-      transition: var(--transition);
+      transition: var(--ease);
     }
-    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
-    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-    /* Mobile menu */
-    .mobile-menu {
+    /* Mobile drawer */
+    .mobile-drawer {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--navy);
-      z-index: 999;
+      inset: 0;
+      background: var(--dp);
+      z-index: 890;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 28px;
       transform: translateX(100%);
-      transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      transition: transform 0.38s cubic-bezier(0.77,0,0.175,1);
     }
-    .mobile-menu.open { transform: translateX(0); }
-    .mobile-menu a {
-      color: var(--white);
-      font-size: 1.8rem;
-      font-family: 'Playfair Display', serif;
+    .mobile-drawer.open { transform: none; }
+    .mobile-drawer a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
       font-weight: 700;
-      transition: color 0.3s;
+      color: var(--tw);
+      transition: color 0.25s;
     }
-    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-drawer a:hover { color: var(--lv); }
 
     /* ===== HERO ===== */
     #hero {
       min-height: 100vh;
+      background: var(--dp);
       position: relative;
       display: flex;
       align-items: center;
       overflow: hidden;
     }
-    .hero-bg {
+    .hero-parallax {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #190E2A 0%, #210D46 50%, #190E2A 100%);
-    }
-    .hero-bg-img {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+      background-image: url('https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1600&q=75');
       background-size: cover;
       background-position: center;
-      opacity: 0.18;
+      background-attachment: fixed;
+      opacity: 0.12;
+      will-change: transform;
     }
-    .hero-particles {
+    .hero-gradient {
       position: absolute;
       inset: 0;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--gold);
-      opacity: 0.08;
-      animation: float linear infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.08; }
-      90% { opacity: 0.08; }
-      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+      background: linear-gradient(135deg, rgba(25,14,42,0.92) 0%, rgba(33,13,70,0.75) 60%, rgba(25,14,42,0.88) 100%);
     }
     .hero-content {
       position: relative;
       z-index: 2;
+      padding: 130px 0 90px;
       width: 100%;
-      padding: 120px 0 80px;
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
       align-items: center;
     }
-    .hero-badge {
+    .hero-location {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(139,91,199,0.15);
+      gap: 7px;
+      background: rgba(139,91,199,0.14);
       border: 1px solid rgba(139,91,199,0.3);
-      color: var(--gold);
-      padding: 8px 18px;
-      border-radius: 50px;
-      font-size: 0.8rem;
+      color: var(--lv);
+      padding: 7px 16px;
+      border-radius: 4px;
+      font-size: 0.78rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .hero-badge-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: pulse 2s ease-in-out infinite;
+    .hero-location::before { content: '📍'; font-size: 0.85rem; }
+    .hero-h1 {
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      color: var(--tw);
+      margin-bottom: 24px;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.6; }
-    }
-    .hero-title {
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
-      color: var(--white);
-      margin-bottom: 28px;
-      line-height: 1.08;
-    }
-    .hero-title .gold { color: var(--gold); display: block; }
-    .hero-title .line {
-      display: block;
-      overflow: hidden;
-    }
-    .hero-desc {
-      font-size: 1.15rem;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.75;
-      margin-bottom: 40px;
-      max-width: 500px;
+    .hero-h1 span { color: var(--lv); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(236,235,238,0.65);
+      line-height: 1.72;
+      max-width: 520px;
+      margin-bottom: 38px;
     }
     .hero-actions {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 48px;
+      margin-bottom: 52px;
     }
-    .hero-trust {
+    .hero-trust-row {
       display: flex;
-      gap: 32px;
+      gap: 24px;
       flex-wrap: wrap;
     }
     .hero-trust-item {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(236,235,238,0.55);
+      font-size: 0.82rem;
     }
-    .hero-trust-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .hero-trust-label {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
+    .hero-trust-item::before { content: '✓'; color: var(--lv); font-weight: 700; }
     .hero-visual {
       position: relative;
     }
-    .hero-card-main {
-      border-radius: 24px;
+    .hero-img-wrap {
+      border-radius: 16px;
       overflow: hidden;
       box-shadow: var(--shadow-lg);
       position: relative;
     }
-    .hero-card-main img {
+    .hero-img-wrap img {
       width: 100%;
-      height: 520px;
+      height: 500px;
       object-fit: cover;
       display: block;
     }
-    .hero-card-overlay {
+    .hero-img-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(25,14,42,0.6) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(25,14,42,0.55), transparent 55%);
     }
-    .hero-card-float {
+    .hero-float-card {
       position: absolute;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 16px 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
     }
-    .hero-float-1 {
-      bottom: 32px;
-      left: -32px;
+    .hf1 {
+      bottom: 28px; left: -28px;
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .hero-float-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    .hf1-icon {
+      width: 40px; height: 40px;
+      background: var(--lv);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
-    .hero-float-text strong {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
-    .hero-float-text span {
-      font-size: 0.75rem;
-      color: var(--text-light);
-    }
-    .hero-float-2 {
-      top: 32px;
-      right: -28px;
+    .hf1 strong { display: block; font-size: 0.88rem; font-weight: 700; color: var(--mp); }
+    .hf1 span { font-size: 0.72rem; color: var(--lmuted); }
+    .hf2 {
+      top: 28px; right: -24px;
       text-align: center;
-      min-width: 120px;
+      min-width: 110px;
     }
-    .hero-float-2 .stars { color: #FFB800; font-size: 0.9rem; letter-spacing: 2px; }
-    .hero-float-2 strong { display: block; font-size: 1.4rem; color: var(--navy); font-weight: 800; }
-    .hero-float-2 span { font-size: 0.7rem; color: var(--text-light); }
-    .hero-scroll {
+    .hf2-stars { color: #f59e0b; font-size: 0.8rem; letter-spacing: 2px; }
+    .hf2 strong { display: block; font-size: 1.3rem; font-weight: 700; color: var(--mp); }
+    .hf2 span { font-size: 0.68rem; color: var(--lmuted); }
+
+    /* ===== PARTICLE SYSTEM ===== */
+    .particles {
       position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: rgba(255,255,255,0.4);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      z-index: 2;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-      animation: scrollLine 1.8s ease-in-out infinite;
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--lv);
+      opacity: 0;
+      animation: floatPart linear infinite;
     }
-    @keyframes scrollLine {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(0.6); }
+    @keyframes floatPart {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      8%   { opacity: 0.07; }
+      92%  { opacity: 0.07; }
+      100% { transform: translateY(-120px) rotate(540deg); opacity: 0; }
     }
 
     /* ===== TICKER ===== */
     .ticker-wrap {
-      background: var(--gold);
+      background: var(--lv);
       overflow: hidden;
-      padding: 14px 0;
+      padding: 13px 0;
     }
     .ticker-track {
       display: flex;
       gap: 0;
-      animation: ticker 30s linear infinite;
+      animation: ticker 28s linear infinite;
       white-space: nowrap;
     }
     .ticker-item {
-      padding: 0 40px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--navy);
-      letter-spacing: 0.05em;
+      padding: 0 36px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--tw);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-    .ticker-item::before {
-      content: '✦';
-      font-size: 0.7rem;
-    }
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    .ticker-item::before { content: '◆'; font-size: 0.5rem; opacity: 0.7; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
     /* ===== STATS ===== */
     #stats {
-      background: var(--navy);
-      padding: 80px 0;
+      background: var(--mp);
+      padding: 72px 0;
     }
     .stats-grid {
       display: grid;
@@ -523,1581 +541,1071 @@
     }
     .stat-item {
       text-align: center;
-      padding: 40px 24px;
-      background: rgba(255,255,255,0.04);
-      position: relative;
+      padding: 36px 20px;
+      background: rgba(255,255,255,0.035);
       transition: background 0.3s;
     }
-    .stat-item:hover { background: rgba(139,91,199,0.08); }
+    .stat-item:hover { background: rgba(139,91,199,0.1); }
     .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 4vw, 3.8rem);
-      font-weight: 900;
-      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+      font-weight: 700;
+      color: var(--lv);
       line-height: 1;
       margin-bottom: 8px;
     }
     .stat-label {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem;
+      color: rgba(236,235,238,0.45);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
     }
-    .stat-divider {
-      width: 40px; height: 3px;
-      background: var(--gold);
-      margin: 12px auto 0;
+    .stat-bar {
+      width: 32px; height: 3px;
+      background: var(--lv);
+      margin: 10px auto 0;
       border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    /* Scroll arrow */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(236,235,238,0.35), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:.35;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.6)} }
+
+    /* ===== TRUST BADGES BAR ===== */
+    #trust {
+      background: var(--mp);
+      padding: 20px 0;
+      border-top: 1px solid rgba(139,91,199,0.2);
+    }
+    .trust-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 28px;
+      color: rgba(236,235,238,0.85);
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-right: 1px solid rgba(236,235,238,0.1);
+    }
+    .trust-badge:last-child { border-right: none; }
+    .trust-badge-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(139,91,199,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--lv);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ===== PAIN POINTS ===== */
+    #pain {
+      background: var(--lbg);
+      padding: 108px 0;
+    }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .pain-img-wrap {
+      position: relative;
+    }
+    .pain-img-main {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .pain-img-main img { width: 100%; height: 420px; object-fit: cover; }
+    .pain-img-badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--mp);
+      color: var(--tw);
+      border-radius: 12px;
+      padding: 18px 22px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .pain-img-badge strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--lv);
+      line-height: 1;
+    }
+    .pain-img-badge span {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(236,235,238,0.6);
+      margin-top: 4px;
+      display: block;
+    }
+    .pain-body p {
+      font-size: 1.05rem;
+      color: var(--lmuted);
+      line-height: 1.78;
+      margin-bottom: 16px;
+    }
+    .pain-body p:last-child { margin-bottom: 0; }
+
+    /* ===== PROCESS ===== */
+    #process {
+      background: var(--dp);
+      padding: 120px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    #process::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(139,91,199,0.3) 15%, rgba(139,91,199,0.3) 85%, transparent);
+      transform: translateX(-50%);
+    }
+    .process-header {
+      text-align: center;
+      margin-bottom: 96px;
+      position: relative;
+    }
+    .process-header .section-title { color: var(--tw); }
+    .process-header .section-sub { color: rgba(236,235,238,0.5); margin: 0 auto; }
+    .process-steps {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    /* Each step: alternating left/right */
+    .ps {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0 32px;
+      align-items: center;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .ps.in { opacity: 1; transform: none; }
+    .ps:nth-child(1) { transition-delay: 0.05s; }
+    .ps:nth-child(2) { transition-delay: 0.12s; }
+    .ps:nth-child(3) { transition-delay: 0.19s; }
+    .ps:nth-child(4) { transition-delay: 0.26s; }
+    .ps:nth-child(5) { transition-delay: 0.33s; }
+    .ps:last-child { margin-bottom: 0; }
+    .ps-left  { text-align: right; }
+    .ps-right { text-align: left; }
+    .ps.even .ps-left  { order:3; text-align: left; }
+    .ps.even .ps-center{ order:2; }
+    .ps.even .ps-right { order:1; text-align: right; }
+    .ps-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .ps-node {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ap), var(--lv));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--tw);
+      box-shadow: 0 0 0 8px rgba(139,91,199,0.12), 0 0 0 16px rgba(139,91,199,0.05);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .ps:hover .ps-node { transform: scale(1.1); }
+    .ps-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: rgba(236,235,238,0.25);
+    }
+    .ps-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,91,199,0.12);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      transition: var(--ease);
+    }
+    .ps-card:hover {
+      background: rgba(139,91,199,0.08);
+      border-color: rgba(139,91,199,0.25);
+    }
+    .ps-card h3 {
+      font-size: 1.05rem;
+      color: var(--tw);
+      margin-bottom: 8px;
+    }
+    .ps-card p {
+      font-size: 0.86rem;
+      color: rgba(236,235,238,0.52);
+      line-height: 1.68;
     }
 
     /* ===== SERVICES ===== */
     #services {
-      padding: 120px 0;
-      background: var(--cream);
+      background: var(--lbg2);
+      padding: 112px 0;
     }
     .services-header {
       text-align: center;
-      margin-bottom: 72px;
+      margin-bottom: 64px;
     }
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
     }
-    .service-card {
-      background: var(--white);
+    .svc-card {
+      background: var(--lbg);
       border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      transition: var(--transition);
-      group: true;
-    }
-    .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow);
-    }
-    .service-img {
-      height: 220px;
-      overflow: hidden;
+      padding: 36px 32px;
+      border: 1px solid rgba(74,35,122,0.1);
+      transition: var(--ease);
       position: relative;
+      overflow: hidden;
     }
-    .service-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .service-card:hover .service-img img { transform: scale(1.08); }
-    .service-img-overlay {
+    .svc-card::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(25,14,42,0.5), transparent);
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ap), var(--lv));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
     }
-    .service-body {
-      padding: 28px;
-    }
-    .service-icon {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      border-radius: 14px;
+    .svc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-icon {
+      width: 50px; height: 50px;
+      background: var(--lbg2);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 16px;
-    }
-    .service-title {
-      font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
-      color: var(--navy);
+      margin-bottom: 18px;
+    }
+    .svc-card h3 {
+      font-size: 1.15rem;
+      color: var(--mp);
       margin-bottom: 10px;
     }
-    .service-desc {
-      color: var(--text-light);
-      font-size: 0.92rem;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    .service-link {
-      color: var(--gold);
-      font-weight: 600;
+    .svc-card p {
       font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap 0.3s;
-    }
-    .service-card:hover .service-link { gap: 10px; }
-
-    /* ===== PROCESS — CENTER OF SITE ===== */
-    #process {
-      padding: 140px 0;
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
-    }
-    .process-bg-pattern {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 50%, rgba(139,91,199,0.06) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(139,91,199,0.04) 0%, transparent 40%);
-    }
-    .process-header {
-      text-align: center;
-      margin-bottom: 100px;
-      position: relative;
-    }
-    .process-header .section-title { color: var(--white); }
-    .process-header .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto; }
-    .process-timeline {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .process-line {
-      position: absolute;
-      left: 50%;
-      top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
-      transform: translateX(-50%);
-    }
-    .process-step {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0 40px;
-      margin-bottom: 72px;
-      position: relative;
-      align-items: center;
-    }
-    .process-step:last-child { margin-bottom: 0; }
-    .process-step-left { text-align: right; }
-    .process-step-right { text-align: left; }
-    .process-step.right .process-step-left { order: 3; text-align: left; }
-    .process-step.right .process-step-center { order: 2; }
-    .process-step.right .process-step-right { order: 1; text-align: right; }
-    .process-step-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 2;
-    }
-    .process-node {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      box-shadow: 0 0 0 8px rgba(139,91,199,0.15), 0 0 0 16px rgba(139,91,199,0.06);
-      transition: transform 0.3s;
-      flex-shrink: 0;
-    }
-    .process-step:hover .process-node { transform: scale(1.12); }
-    .process-step-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.15em;
-      margin-top: 10px;
-    }
-    .process-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      padding: 28px 32px;
-      transition: var(--transition);
-    }
-    .process-card:hover {
-      background: rgba(139,91,199,0.08);
-      border-color: rgba(139,91,199,0.25);
-    }
-    .process-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .process-card-desc {
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.55);
+      color: var(--lmuted);
       line-height: 1.7;
     }
-    .process-card-tag {
+    .svc-note {
       display: inline-block;
       margin-top: 12px;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      text-transform: uppercase;
-      padding: 4px 10px;
-      background: rgba(139,91,199,0.1);
-      border-radius: 20px;
+      color: var(--lv);
+      letter-spacing: 0.06em;
     }
 
-    /* ===== EMOTIONAL SECTION ===== */
-    #emotional {
-      padding: 0;
-      min-height: 600px;
-      position: relative;
-      overflow: hidden;
+    /* ===== REVIEWS ===== */
+    #reviews {
+      background: var(--mp);
+      padding: 112px 0;
     }
-    .emotional-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1600&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-    .emotional-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(25,14,42,0.88) 0%, rgba(25,14,42,0.65) 100%);
-    }
-    .emotional-content {
-      position: relative;
-      z-index: 2;
-      padding: 120px 0;
+    .reviews-header {
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+      margin-bottom: 64px;
     }
-    .emotional-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
-      color: var(--white);
-      line-height: 1.4;
-      margin-bottom: 28px;
+    .reviews-header .section-title { color: var(--tw); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .emotional-quote .em { color: var(--gold); font-style: italic; }
-    .emotional-sub {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.75;
-      margin-bottom: 44px;
+    .review-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(236,235,238,0.08);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: var(--ease);
+    }
+    .review-card:hover {
+      background: rgba(139,91,199,0.12);
+      border-color: rgba(139,91,199,0.2);
+      transform: translateY(-4px);
+    }
+    .review-stars { color: #f59e0b; font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 16px; }
+    .review-text {
+      font-size: 0.98rem;
+      color: rgba(236,235,238,0.8);
+      line-height: 1.72;
+      font-style: italic;
+      margin-bottom: 22px;
+    }
+    .review-author {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--lv);
+    }
+    .review-source {
+      font-size: 0.72rem;
+      color: rgba(236,235,238,0.35);
+      margin-top: 2px;
     }
 
     /* ===== WHY CHOOSE US ===== */
     #why {
-      padding: 120px 0;
-      background: var(--white);
+      background: var(--lbg);
+      padding: 112px 0;
     }
-    .why-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+    .why-inner {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
     }
-    .why-image-stack {
-      position: relative;
-      height: 560px;
+    .why-inner .section-sub { margin: 0 auto 52px; }
+    .why-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
     }
-    .why-img-main {
-      position: absolute;
-      right: 0; top: 0;
-      width: 80%;
-      height: 420px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .why-img-main img { width: 100%; height: 100%; object-fit: cover; }
-    .why-img-accent {
-      position: absolute;
-      left: 0; bottom: 0;
-      width: 55%;
-      height: 280px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      border: 6px solid var(--white);
-    }
-    .why-img-accent img { width: 100%; height: 100%; object-fit: cover; }
     .why-badge {
-      position: absolute;
-      right: -24px; bottom: 80px;
-      background: var(--gold);
-      color: var(--navy);
-      border-radius: 16px;
-      padding: 20px 24px;
-      text-align: center;
-      box-shadow: 0 16px 48px rgba(139,91,199,0.35);
-    }
-    .why-badge-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .why-badge-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
-    .why-features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .why-feature {
       display: flex;
-      gap: 14px;
-      align-items: flex-start;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      background: var(--lbg2);
+      border: 1px solid rgba(74,35,122,0.15);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ltxt2);
+      transition: var(--ease);
     }
-    .why-feature-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    .why-badge:hover { background: var(--lv); color: var(--tw); border-color: var(--lv); transform: translateY(-2px); }
+    .why-badge-icon {
+      width: 28px; height: 28px;
+      background: rgba(139,91,199,0.15);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .why-feature-body strong {
-      display: block;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 4px;
-    }
-    .why-feature-body span {
-      font-size: 0.82rem;
-      color: var(--text-light);
-      line-height: 1.6;
+      font-size: 0.85rem;
     }
 
-    /* ===== TESTIMONIALS ===== */
-    #testimonials {
+    /* ===== EMOTIONAL CLOSE ===== */
+    #story {
+      background: var(--dp);
       padding: 120px 0;
-      background: var(--warm-gray);
-    }
-    .testimonials-header {
-      text-align: center;
-      margin-bottom: 72px;
-    }
-    .testimonials-track-wrap {
-      overflow: hidden;
       position: relative;
-    }
-    .testimonials-track {
-      display: flex;
-      gap: 28px;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .testimonial-card {
-      min-width: calc(33.333% - 19px);
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 36px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      flex-shrink: 0;
-    }
-    .testimonial-stars {
-      color: #FFB800;
-      font-size: 1rem;
-      letter-spacing: 3px;
-      margin-bottom: 20px;
-    }
-    .testimonial-text {
-      font-size: 1rem;
-      color: var(--text);
-      line-height: 1.75;
-      font-style: italic;
-      margin-bottom: 28px;
-    }
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .testimonial-avatar {
-      width: 50px; height: 50px;
-      border-radius: 50%;
       overflow: hidden;
-      flex-shrink: 0;
     }
-    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .testimonial-name {
-      font-weight: 700;
-      color: var(--navy);
-      font-size: 0.95rem;
-    }
-    .testimonial-loc {
-      font-size: 0.78rem;
-      color: var(--text-light);
-    }
-    .testimonial-controls {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 44px;
-    }
-    .testimonial-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: rgba(139,91,199,0.25);
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .testimonial-dot.active {
-      background: var(--gold);
-      width: 28px;
-      border-radius: 5px;
-    }
-    .testimonial-btns {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .testimonial-btn {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      border: 2px solid rgba(139,91,199,0.3);
-      background: transparent;
-      color: var(--gold);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-    }
-    .testimonial-btn:hover {
-      background: var(--gold);
-      color: var(--navy);
-      border-color: var(--gold);
-    }
-
-    /* ===== GALLERY ===== */
-    #gallery {
-      padding: 120px 0;
-      background: var(--white);
-    }
-    .gallery-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 280px 280px;
-      gap: 16px;
-    }
-    .gallery-item {
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-    .gallery-item:nth-child(4) { grid-column: span 2; grid-row: span 1; }
-    .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.07); }
-    .gallery-item-overlay {
+    #story::before {
+      content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(25,14,42,0.55), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 20px;
+      background: radial-gradient(circle at 30% 50%, rgba(74,35,122,0.18) 0%, transparent 60%);
     }
-    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
-    .gallery-item-label {
-      color: var(--white);
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    /* ===== CTA BANNER ===== */
-    #cta-banner {
-      background: linear-gradient(135deg, #4A237A 0%, #8B5BC7 100%);
-      padding: 80px 0;
-    }
-    .cta-banner-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .cta-banner-text h2 {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .cta-banner-text p {
-      color: rgba(25,14,42,0.65);
-      font-size: 1.05rem;
-    }
-    .cta-banner-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* ===== CONTACT ===== */
-    #contact {
-      padding: 120px 0;
-      background: var(--cream);
-    }
-    .contact-grid {
+    .story-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: start;
-    }
-    .contact-info-title {
-      font-size: 1.5rem;
-      color: var(--navy);
-      margin-bottom: 16px;
-      margin-top: 40px;
-    }
-    .contact-info-title:first-of-type { margin-top: 0; }
-    .contact-detail {
-      display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-      color: var(--text-light);
-      font-size: 0.95rem;
+      position: relative;
     }
-    .contact-detail-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .story-text .section-title { color: var(--tw); }
+    .story-text p {
       font-size: 1rem;
-      flex-shrink: 0;
+      color: rgba(236,235,238,0.6);
+      line-height: 1.8;
+      margin-bottom: 14px;
     }
-    .contact-form {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 48px;
-      box-shadow: var(--shadow);
-    }
-    .form-title {
-      font-size: 1.6rem;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-    .form-sub {
-      color: var(--text-light);
-      font-size: 0.9rem;
-      margin-bottom: 32px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--navy);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 18px;
-      border: 2px solid #E8E0D8;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: var(--cream);
-      transition: border-color 0.3s, box-shadow 0.3s;
-      outline: none;
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 4px rgba(139,91,199,0.12);
-    }
-    .form-group textarea { height: 120px; resize: vertical; }
-    .form-submit {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--navy);
-      border: none;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 8px 28px rgba(139,91,199,0.3);
-      margin-top: 8px;
-    }
-    .form-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(139,91,199,0.4);
-    }
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: 40px 0;
-    }
-    .form-success-icon {
-      font-size: 3.5rem;
-      margin-bottom: 16px;
-    }
-    .form-success h3 {
-      font-size: 1.5rem;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-    .form-success p {
-      color: var(--text-light);
-    }
-
-    /* ===== FAQ ===== */
-    #faq {
-      padding: 100px 0;
-      background: var(--white);
-    }
-    .faq-header { text-align: center; margin-bottom: 64px; }
-    .faq-list { max-width: 760px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid #E8E0D8;
-    }
-    .faq-question {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 0;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--navy);
-      font-size: 1rem;
-      gap: 16px;
-      transition: color 0.3s;
-    }
-    .faq-question:hover { color: var(--gold); }
-    .faq-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      border: 2px solid rgba(139,91,199,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: var(--gold);
-      flex-shrink: 0;
-      transition: var(--transition);
-    }
-    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold); color: var(--navy); border-color: var(--gold); }
-    .faq-answer {
-      height: 0;
+    .story-text p:last-of-type { margin-bottom: 36px; }
+    .story-img {
+      border-radius: var(--radius);
       overflow: hidden;
-      transition: height 0.4s ease;
+      box-shadow: var(--shadow-lg);
     }
-    .faq-answer-inner {
-      padding: 0 0 24px;
-      color: var(--text-light);
-      font-size: 0.95rem;
-      line-height: 1.75;
+    .story-img img { width: 100%; height: 460px; object-fit: cover; }
+
+    /* ===== FINAL CTA ===== */
+    #cta {
+      background: linear-gradient(135deg, var(--ap), var(--mp));
+      padding: 96px 0;
+    }
+    .cta-inner {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .cta-inner h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--tw);
+      margin-bottom: 16px;
+    }
+    .cta-inner p {
+      color: rgba(236,235,238,0.65);
+      font-size: 1.05rem;
+      margin-bottom: 38px;
+      line-height: 1.7;
     }
 
     /* ===== FOOTER ===== */
     footer {
-      background: var(--navy);
-      padding: 80px 0 0;
+      background: var(--dp);
+      border-top: 1px solid rgba(139,91,199,0.12);
+      padding: 56px 0 0;
     }
     .footer-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 64px;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 56px;
+      padding-bottom: 48px;
     }
     .footer-brand p {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.88rem;
+      font-size: 0.87rem;
+      color: rgba(236,235,238,0.42);
       line-height: 1.7;
-      margin: 20px 0 24px;
+      margin: 16px 0 20px;
       max-width: 280px;
     }
-    .footer-socials {
-      display: flex;
-      gap: 12px;
-    }
-    .footer-social {
-      width: 38px; height: 38px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
-      transition: var(--transition);
-    }
-    .footer-social:hover { background: var(--gold); color: var(--navy); }
-    .footer-col h4 {
-      font-family: 'Inter', sans-serif;
+    .footer-service-area {
       font-size: 0.78rem;
+      color: rgba(236,235,238,0.3);
+      font-style: italic;
+    }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
+      color: var(--lv);
+      margin-bottom: 18px;
     }
     .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li { margin-bottom: 11px; }
     .footer-col ul li a {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.88rem;
-      transition: color 0.3s;
+      font-size: 0.87rem;
+      color: rgba(236,235,238,0.45);
+      transition: color 0.25s;
     }
-    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-col ul li a:hover { color: var(--lv); }
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 24px 0;
+      border-top: 1px solid rgba(236,235,238,0.06);
+      padding: 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
-    .footer-bottom p {
-      color: rgba(255,255,255,0.3);
-      font-size: 0.8rem;
-    }
-    .footer-bottom a { color: var(--gold); }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(236,235,238,0.25); }
 
-    /* ===== FLOATING CTA ===== */
-    .floating-cta {
+    /* Floating CTA */
+    .float-cta {
       position: fixed;
-      bottom: 32px;
-      right: 32px;
+      bottom: 28px; right: 28px;
       z-index: 500;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 12px;
     }
-    .floating-phone {
-      background: var(--gold);
-      color: var(--navy);
-      width: 56px; height: 56px;
-      border-radius: 50%;
+    .float-cta a {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 8px 32px rgba(139,91,199,0.45);
-      transition: var(--transition);
-      animation: floatCTA 3s ease-in-out infinite;
+      gap: 8px;
+      background: var(--lv);
+      color: var(--tw);
+      padding: 13px 22px;
+      border-radius: 50px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 8px 28px rgba(139,91,199,0.42);
+      transition: var(--ease);
+      white-space: nowrap;
     }
-    .floating-phone:hover { transform: scale(1.1); }
-    @keyframes floatCTA {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
+    .float-cta a:hover { background: #9d6fd4; transform: translateY(-2px); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { max-width: 500px; margin: 0 auto; }
-      .hero-float-2 { right: -10px; }
-      .hero-float-1 { left: -10px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .why-grid { grid-template-columns: 1fr; gap: 48px; }
-      .why-image-stack { height: 420px; }
-      .process-line { display: none; }
-      .process-step { grid-template-columns: 1fr; gap: 0; }
-      .process-step-left, .process-step-right { text-align: center !important; order: unset !important; }
-      .process-step-center { flex-direction: row; justify-content: flex-start; gap: 20px; margin-bottom: 16px; }
-      .process-step-num { margin-top: 0; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
-      .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: span 1; }
-      .contact-grid { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { max-width: 480px; margin: 0 auto; }
+      .pain-grid { grid-template-columns: 1fr; gap: 48px; }
+      .story-grid { grid-template-columns: 1fr; gap: 48px; }
+      .reviews-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      #process::before { display: none; }
+      .ps { grid-template-columns: 1fr; gap: 12px; }
+      .ps-left, .ps-right { text-align: left !important; order: unset !important; }
+      .ps-center { flex-direction: row; justify-content: flex-start; }
     }
     @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, .nav-right { display: none; }
       .hamburger { display: flex; }
-      .mobile-menu { display: flex; }
+      .mobile-drawer { display: flex; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
-      .hero-trust { gap: 20px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .hf1 { left: -10px; }
+      .hf2 { right: -10px; }
       .services-grid { grid-template-columns: 1fr; }
-      .testimonial-card { min-width: calc(100% - 0px); }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .cta-banner-inner { flex-direction: column; text-align: center; }
-      .why-features { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .contact-form { padding: 28px 20px; }
-      .hero-card-main img { height: 360px; }
-      .floating-cta { bottom: 20px; right: 20px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .trust-row { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 0 8px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .float-cta a span { display: none; }
+      .float-cta a { padding: 14px 16px; border-radius: 50%; }
     }
     @media (max-width: 480px) {
-      .hero-title { font-size: 2.2rem; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: 2.2rem; }
       .footer-bottom { flex-direction: column; text-align: center; }
+      .why-badges { gap: 10px; }
     }
   </style>
 </head>
 <body>
 
   <!-- ===== NAVBAR ===== -->
-  <nav id="navbar">
+  <nav id="nav" aria-label="Main navigation">
     <div class="container">
       <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          <div class="nav-logo-mark">V</div>
+        <a href="#hero" class="nav-logo" aria-label="VYV Moving Co. home">
+          <div class="nav-logo-mark" aria-hidden="true">VYV</div>
           <div>
-            <div class="nav-logo-text">VYV <span>Moving</span></div>
+            <div class="nav-logo-text">VYV Moving</div>
             <div class="nav-logo-sub">Validate Your Vision</div>
           </div>
         </a>
-        <ul class="nav-links">
+        <ul class="nav-links" role="list">
+          <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#process">Our Process</a></li>
-          <li><a href="#why">Why Us</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#reviews">Reviews</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="nav-cta">
-          <a href="tel:+15551234567" class="nav-phone">📞 (555) 123-4567</a>
-          <a href="#contact" class="btn btn-primary" style="padding:12px 24px; font-size:0.85rem;">Get Free Quote</a>
+        <div class="nav-right">
+          <a href="tel:+" class="nav-phone" aria-label="Call VYV Moving">📞 Call Us</a>
+          <a href="#contact" class="btn btn-primary">Book Free Consultation</a>
         </div>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <button class="hamburger" id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
-        </div>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#services" onclick="toggleMenu()">Services</a>
-    <a href="#process" onclick="toggleMenu()">Our Process</a>
-    <a href="#why" onclick="toggleMenu()">Why Us</a>
-    <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="tel:+15551234567" class="btn btn-primary">📞 Call Now</a>
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
+    <a href="#about" onclick="toggleNav()">About</a>
+    <a href="#services" onclick="toggleNav()">Services</a>
+    <a href="#process" onclick="toggleNav()">Process</a>
+    <a href="#reviews" onclick="toggleNav()">Reviews</a>
+    <a href="#contact" onclick="toggleNav()">Contact</a>
+    <a href="#contact" class="btn btn-primary" onclick="toggleNav()">Book Free Consultation</a>
   </div>
 
   <!-- ===== HERO ===== -->
-  <section id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-bg-img"></div>
-    <div class="hero-particles" id="particles"></div>
+  <section id="hero" aria-labelledby="hero-heading">
+    <div class="hero-parallax parallax-bg" aria-hidden="true"></div>
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="container">
         <div class="hero-grid">
           <div>
-            <div class="hero-badge">
-              <div class="hero-badge-dot"></div>
-              Trusted by 2,000+ families
-            </div>
-            <h1 class="hero-title">
-              <span class="line">Every Move Tells</span>
-              <span class="line">A Story.</span>
-              <span class="line gold">Let's Write</span>
-              <span class="line gold">Yours Right.</span>
+            <div class="hero-location">Fredericksburg, VA &amp; Northern Virginia</div>
+            <h1 id="hero-heading" class="hero-h1">
+              Locally Owned.<br /><span>We Show Up</span><br />and Get It Done.
             </h1>
-            <p class="hero-desc">
-              Moving is more than boxes and trucks — it's your life, your memories, your fresh start. VYV treats every item as irreplaceable, because to you, it is.
+            <p class="hero-sub">
+              Packing and moving help in Fredericksburg, VA and surrounding areas — with a real plan so nothing gets missed and nothing's a surprise.
             </p>
             <div class="hero-actions">
-              <a href="#contact" class="btn btn-primary">Get My Free Quote →</a>
+              <a href="#contact" class="btn btn-primary">Book Your Free Consultation</a>
               <a href="#process" class="btn btn-outline">See How It Works</a>
             </div>
-            <div class="hero-trust">
-              <div class="hero-trust-item">
-                <div class="hero-trust-num counter" data-target="2000">0</div>
-                <div class="hero-trust-label">Happy Families</div>
-              </div>
-              <div class="hero-trust-item">
-                <div class="hero-trust-num counter" data-target="99">0</div>
-                <div class="hero-trust-label">% On-Time</div>
-              </div>
-              <div class="hero-trust-item">
-                <div class="hero-trust-num counter" data-target="12">0</div>
-                <div class="hero-trust-label">Years of Care</div>
-              </div>
+            <div class="hero-trust-row">
+              <span class="hero-trust-item">Locally Owned</span>
+              <span class="hero-trust-item">Upfront Pricing</span>
+              <span class="hero-trust-item">No Hidden Fees</span>
+              <span class="hero-trust-item">We Show Up On Time</span>
             </div>
           </div>
           <div class="hero-visual reveal-right">
-            <div class="hero-card-main">
-              <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=80" alt="Happy family in new home" loading="lazy" />
-              <div class="hero-card-overlay"></div>
+            <div class="hero-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=75"
+                alt="Professional moving crew carefully handling boxes in a Fredericksburg VA home"
+                width="800" height="500"
+                loading="eager"
+              />
+              <div class="hero-img-overlay" aria-hidden="true"></div>
             </div>
-            <div class="hero-card-float hero-float-1">
-              <div class="hero-float-icon">🏠</div>
-              <div class="hero-float-text">
-                <strong>Move Completed!</strong>
-                <span>The Johnson Family · 3 hours ago</span>
+            <div class="hero-float-card hf1">
+              <div class="hf1-icon" aria-hidden="true">✅</div>
+              <div>
+                <strong>Move Complete — On Time</strong>
+                <span>Fredericksburg, VA · Today</span>
               </div>
             </div>
-            <div class="hero-card-float hero-float-2">
-              <div class="stars">★★★★★</div>
-              <strong>4.9</strong>
+            <div class="hero-float-card hf2">
+              <div class="hf2-stars" aria-label="5 stars">★★★★★</div>
+              <strong>5.0</strong>
               <span>Google Rating</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-hint-line"></div>
     </div>
   </section>
 
   <!-- ===== TICKER ===== -->
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track">
-      <div class="ticker-item">Local Moving</div>
-      <div class="ticker-item">Long Distance</div>
-      <div class="ticker-item">Packing Services</div>
-      <div class="ticker-item">Storage Solutions</div>
-      <div class="ticker-item">Piano Moving</div>
-      <div class="ticker-item">Office Relocation</div>
-      <div class="ticker-item">White Glove Service</div>
-      <div class="ticker-item">Senior Moving</div>
-      <!-- duplicate for seamless loop -->
-      <div class="ticker-item">Local Moving</div>
-      <div class="ticker-item">Long Distance</div>
-      <div class="ticker-item">Packing Services</div>
-      <div class="ticker-item">Storage Solutions</div>
-      <div class="ticker-item">Piano Moving</div>
-      <div class="ticker-item">Office Relocation</div>
-      <div class="ticker-item">White Glove Service</div>
-      <div class="ticker-item">Senior Moving</div>
+      <div class="ticker-item">Fredericksburg VA Movers</div>
+      <div class="ticker-item">Upfront Pricing</div>
+      <div class="ticker-item">No Hidden Fees</div>
+      <div class="ticker-item">Locally Owned</div>
+      <div class="ticker-item">Northern Virginia</div>
+      <div class="ticker-item">Stafford VA</div>
+      <div class="ticker-item">Spotsylvania VA</div>
+      <div class="ticker-item">Richmond VA</div>
+      <div class="ticker-item">Free Consultation</div>
+      <div class="ticker-item">Fredericksburg VA Movers</div>
+      <div class="ticker-item">Upfront Pricing</div>
+      <div class="ticker-item">No Hidden Fees</div>
+      <div class="ticker-item">Locally Owned</div>
+      <div class="ticker-item">Northern Virginia</div>
+      <div class="ticker-item">Stafford VA</div>
+      <div class="ticker-item">Spotsylvania VA</div>
+      <div class="ticker-item">Richmond VA</div>
+      <div class="ticker-item">Free Consultation</div>
     </div>
   </div>
 
   <!-- ===== STATS ===== -->
-  <section id="stats">
+  <section id="stats" aria-label="VYV Moving by the numbers">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-item reveal" data-delay="1">
-          <div class="stat-num counter" data-target="2000">0</div>
-          <div class="stat-label">Families Moved</div>
-          <div class="stat-divider"></div>
+        <div class="stat-item reveal" data-d="1">
+          <div class="stat-num counter" data-target="100">0</div>
+          <div class="stat-label">% Upfront Pricing</div>
+          <div class="stat-bar"></div>
         </div>
-        <div class="stat-item reveal" data-delay="2">
-          <div class="stat-num counter" data-target="12">0</div>
-          <div class="stat-label">Years in Business</div>
-          <div class="stat-divider"></div>
+        <div class="stat-item reveal" data-d="2">
+          <div class="stat-num counter" data-target="5">0</div>
+          <div class="stat-label">Star Reviews</div>
+          <div class="stat-bar"></div>
         </div>
-        <div class="stat-item reveal" data-delay="3">
-          <div class="stat-num counter" data-target="99">0</div>
-          <div class="stat-label">% Zero Damage Rate</div>
-          <div class="stat-divider"></div>
+        <div class="stat-item reveal" data-d="3">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Hidden Fees</div>
+          <div class="stat-bar"></div>
         </div>
-        <div class="stat-item reveal" data-delay="4">
-          <div class="stat-num counter" data-target="4.9">0</div>
-          <div class="stat-label">Star Rating</div>
-          <div class="stat-divider"></div>
+        <div class="stat-item reveal" data-d="4">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Real Plan Every Job</div>
+          <div class="stat-bar"></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST BADGES ===== -->
+  <div id="trust" aria-label="Why choose VYV Moving">
+    <div class="container">
+      <div class="trust-row">
+        <div class="trust-badge"><div class="trust-badge-check">✓</div> Locally Owned</div>
+        <div class="trust-badge"><div class="trust-badge-check">✓</div> Fair, Upfront Pricing</div>
+        <div class="trust-badge"><div class="trust-badge-check">✓</div> No Hidden Fees</div>
+        <div class="trust-badge"><div class="trust-badge-check">✓</div> We Show Up When We Say We Will</div>
+        <div class="trust-badge"><div class="trust-badge-check">✓</div> Free Consultation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAIN POINTS / ABOUT ===== -->
+  <section id="about" aria-labelledby="pain-heading">
+    <div id="pain">
+      <div class="container">
+        <div class="pain-grid">
+          <div class="pain-img-wrap reveal-left">
+            <div class="pain-img-main">
+              <img
+                src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=700&q=75"
+                alt="Organized labeled moving boxes ready for a stress-free move in Northern Virginia"
+                width="700" height="420"
+                loading="lazy"
+              />
+            </div>
+            <div class="pain-img-badge">
+              <strong>100%</strong>
+              <span>Upfront Pricing</span>
+            </div>
+          </div>
+          <div class="pain-body reveal-right">
+            <p class="section-eyebrow">Moving Is Stressful Enough.</p>
+            <h2 id="pain-heading" class="section-title">A Crew With a<br /><span>Real Plan</span></h2>
+            <p>
+              You don't need movers who show up and just wing it. We talk to you first, walk through your home, and have a plan before anything gets touched.
+            </p>
+            <p>
+              No guessing, no random pricing, no "we'll figure it out when we get there." Just a crew that's organized, on time, and takes care of your stuff like it's theirs.
+            </p>
+            <p>
+              VYV serves Fredericksburg, Stafford, Spotsylvania, Woodbridge, and the greater Northern Virginia and Richmond areas.
+            </p>
+            <br />
+            <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section id="process" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="process-header">
+        <p class="section-eyebrow reveal">How It Works</p>
+        <h2 id="process-heading" class="section-title reveal">Our Process</h2>
+        <p class="section-sub reveal">
+          A structured, transparent process — the VYV Moving Management System — so nothing gets missed and nothing's a surprise.
+        </p>
+      </div>
+      <div class="process-steps">
+
+        <div class="ps">
+          <div class="ps-left">
+            <div class="ps-card">
+              <h3>Schedule a Free Consultation</h3>
+              <p>Choose a time and provide a few details about your move. Quick, no-pressure, takes two minutes.</p>
+            </div>
+          </div>
+          <div class="ps-center">
+            <div class="ps-node">1</div>
+            <div class="ps-num">STEP</div>
+          </div>
+          <div class="ps-right"></div>
+        </div>
+
+        <div class="ps even">
+          <div class="ps-left"></div>
+          <div class="ps-center">
+            <div class="ps-node">2</div>
+            <div class="ps-num">STEP</div>
+          </div>
+          <div class="ps-right">
+            <div class="ps-card">
+              <h3>Consultation Call</h3>
+              <p>We discuss your home size, downsizing plans, specialty items, and timeline in detail so we understand exactly what you need.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps">
+          <div class="ps-left">
+            <div class="ps-card">
+              <h3>In-Home Walkthrough</h3>
+              <p>Our team conducts a room-by-room assessment using our proprietary Moving Management System to ensure nothing is overlooked.</p>
+            </div>
+          </div>
+          <div class="ps-center">
+            <div class="ps-node">3</div>
+            <div class="ps-num">STEP</div>
+          </div>
+          <div class="ps-right"></div>
+        </div>
+
+        <div class="ps even">
+          <div class="ps-left"></div>
+          <div class="ps-center">
+            <div class="ps-node">4</div>
+            <div class="ps-num">STEP</div>
+          </div>
+          <div class="ps-right">
+            <div class="ps-card">
+              <h3>Quote, Contract &amp; Deposit</h3>
+              <p>You receive a clear, itemized price covering labor, materials, and truck costs before any commitment is made. No surprises.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps">
+          <div class="ps-left">
+            <div class="ps-card">
+              <h3>Move Day</h3>
+              <p>Our crew executes the move according to the agreed plan, with care and efficiency. We show up when we say we will.</p>
+            </div>
+          </div>
+          <div class="ps-center">
+            <div class="ps-node">5</div>
+            <div class="ps-num">STEP</div>
+          </div>
+          <div class="ps-right"></div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- ===== SERVICES ===== -->
-  <section id="services">
+  <section id="services" aria-labelledby="services-heading">
     <div class="container">
       <div class="services-header">
-        <p class="section-label reveal">What We Offer</p>
-        <h2 class="section-title reveal">Moving Services Tailored<br><span>to Your Life</span></h2>
-        <p class="section-sub reveal" style="margin:0 auto">Whatever your move looks like, we have the expertise, equipment, and care to make it flawless.</p>
+        <p class="section-eyebrow reveal">What We Do</p>
+        <h2 id="services-heading" class="section-title reveal">Services Built for<br /><span>How You Actually Move</span></h2>
+        <p class="section-sub reveal" style="margin:0 auto">Every service is designed around your situation — not a one-size package that doesn't fit.</p>
       </div>
       <div class="services-grid">
-        <div class="service-card reveal" data-delay="1">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Local moving" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">🏘️</div>
-            <div class="service-title">Local Moving</div>
-            <p class="service-desc">Same-city moves done right. Our local crews know every neighborhood and work with precision and speed — without rushing what matters.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
+        <div class="svc-card reveal" data-d="1">
+          <div class="svc-icon" aria-hidden="true">📦</div>
+          <h3>Packing</h3>
+          <p>Careful, organized, room by room. We pack with a system so unpacking on the other end actually makes sense — not a pile of unlabeled boxes.</p>
         </div>
-        <div class="service-card reveal" data-delay="2">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80" alt="Long distance moving" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">🗺️</div>
-            <div class="service-title">Long Distance Moving</div>
-            <p class="service-desc">Crossing state lines? We handle every mile with real-time tracking, dedicated drivers, and a commitment that your belongings arrive as they left.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
+        <div class="svc-card reveal" data-d="2">
+          <div class="svc-icon" aria-hidden="true">🚛</div>
+          <h3>Moving Labor</h3>
+          <p>We bring the crew, you handle the truck — or we book it for you, billed at cost with no markup. Honest help without inflated add-ons.</p>
+          <span class="svc-note">Truck rental billed at cost — no markup</span>
         </div>
-        <div class="service-card reveal" data-delay="3">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Packing services" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">📦</div>
-            <div class="service-title">Professional Packing</div>
-            <p class="service-desc">We pack every room like it's a museum exhibit. Custom crating for art, antiques, and fragile heirlooms — nothing gets left to chance.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
+        <div class="svc-card reveal" data-d="3">
+          <div class="svc-icon" aria-hidden="true">🏠</div>
+          <h3>Unpacking &amp; Organizing</h3>
+          <p>Want help settling in too? We've got you. Unpacking and organizing is an add-on service that means your new place actually feels like home — fast.</p>
+          <span class="svc-note">Add-on service — ask about availability</span>
         </div>
-        <div class="service-card reveal" data-delay="1">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80" alt="Storage solutions" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">🏛️</div>
-            <div class="service-title">Secure Storage</div>
-            <p class="service-desc">Climate-controlled, monitored 24/7, with flexible terms. Store for a week or a year — your things stay safe until you're ready.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
-        </div>
-        <div class="service-card reveal" data-delay="2">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Office relocation" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">🏢</div>
-            <div class="service-title">Office Relocation</div>
-            <p class="service-desc">Downtime is money lost. Our commercial teams move offices over weekends and evenings so your business opens Monday like nothing happened.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
-        </div>
-        <div class="service-card reveal" data-delay="3">
-          <div class="service-img">
-            <img src="https://images.unsplash.com/photo-1599153066269-df5ac40cd1f5?w=600&q=80" alt="White glove moving" loading="lazy" />
-            <div class="service-img-overlay"></div>
-          </div>
-          <div class="service-body">
-            <div class="service-icon">🤍</div>
-            <div class="service-title">White Glove Service</div>
-            <p class="service-desc">Our premium experience: full pack, full unpack, furniture assembly, art hanging, and a walkthrough until everything is exactly where you want it.</p>
-            <a href="#contact" class="service-link">Get a Quote <span>→</span></a>
-          </div>
+        <div class="svc-card reveal" data-d="4">
+          <div class="svc-icon" aria-hidden="true">🗓️</div>
+          <h3>Free Consultation</h3>
+          <p>Every job starts with a real conversation. No pressure, no pitch — just us figuring out what you need and whether we're the right fit.</p>
+          <span class="svc-note">No obligation</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== PROCESS — CENTREPIECE ===== -->
-  <section id="process">
-    <div class="process-bg-pattern"></div>
+  <!-- ===== REVIEWS ===== -->
+  <section id="reviews" aria-labelledby="reviews-heading">
     <div class="container">
-      <div class="process-header">
-        <p class="section-label reveal">How It Works</p>
-        <h2 class="section-title reveal" style="color:white">Your Move, <span>Step by Step</span></h2>
-        <p class="section-sub reveal" style="color:rgba(255,255,255,0.55); margin:0 auto">
-          We've perfected our process over 12 years so you never have to wonder what happens next. Simple, transparent, stress-free.
-        </p>
+      <div class="reviews-header">
+        <p class="section-eyebrow reveal" style="color:rgba(139,91,199,0.8)">Real Customers</p>
+        <h2 id="reviews-heading" class="section-title reveal" style="color:var(--tw)">What People Are Saying</h2>
       </div>
-
-      <div class="process-timeline">
-        <div class="process-line"></div>
-
-        <!-- Step 1 -->
-        <div class="process-step reveal">
-          <div class="process-step-left">
-            <div class="process-card">
-              <div class="process-card-title">Tell Us About Your Move</div>
-              <p class="process-card-desc">Fill out our quick quote form or call us. We'll ask the right questions — no hour-long surveys, just the essentials to get you an accurate price.</p>
-              <span class="process-card-tag">⏱ Takes 2 minutes</span>
-            </div>
-          </div>
-          <div class="process-step-center">
-            <div class="process-node">📋</div>
-            <div class="process-step-num">01</div>
-          </div>
-          <div class="process-step-right"></div>
+      <div class="reviews-grid">
+        <div class="review-card reveal" data-d="1">
+          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="review-text">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
+          <div class="review-author">Vicki J.</div>
+          <div class="review-source">Fredericksburg, VA</div>
         </div>
-
-        <!-- Step 2 -->
-        <div class="process-step right reveal">
-          <div class="process-step-left"></div>
-          <div class="process-step-center">
-            <div class="process-node">💰</div>
-            <div class="process-step-num">02</div>
-          </div>
-          <div class="process-step-right">
-            <div class="process-card">
-              <div class="process-card-title">Receive Your Free Quote</div>
-              <p class="process-card-desc">Get a detailed, binding quote within hours — not a ballpark. Our pricing is flat and transparent. No hidden fees. No surprises on moving day.</p>
-              <span class="process-card-tag">✅ No obligation</span>
-            </div>
-          </div>
+        <div class="review-card reveal" data-d="2">
+          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="review-text">"Professional, prompt, took care of our stuff… I fully and whole-heartedly recommend them!"</p>
+          <div class="review-author">Meagan V.</div>
+          <div class="review-source">Northern Virginia</div>
         </div>
-
-        <!-- Step 3 -->
-        <div class="process-step reveal">
-          <div class="process-step-left">
-            <div class="process-card">
-              <div class="process-card-title">We Plan Your Move Together</div>
-              <p class="process-card-desc">Your dedicated move coordinator creates a custom timeline, confirms packing needs, and answers every question — before the truck ever shows up.</p>
-              <span class="process-card-tag">🎯 Fully customized</span>
-            </div>
-          </div>
-          <div class="process-step-center">
-            <div class="process-node">🗓️</div>
-            <div class="process-step-num">03</div>
-          </div>
-          <div class="process-step-right"></div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="process-step right reveal">
-          <div class="process-step-left"></div>
-          <div class="process-step-center">
-            <div class="process-node">🚛</div>
-            <div class="process-step-num">04</div>
-          </div>
-          <div class="process-step-right">
-            <div class="process-card">
-              <div class="process-card-title">Moving Day — We've Got This</div>
-              <p class="process-card-desc">Our uniformed crew arrives on time, protects floors and walls, inventories every item, and loads with military precision. You just watch or relax — it's handled.</p>
-              <span class="process-card-tag">🛡️ Fully insured</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="process-step reveal">
-          <div class="process-step-left">
-            <div class="process-card">
-              <div class="process-card-title">Delivery & Setup</div>
-              <p class="process-card-desc">Every item placed exactly where you want it. Furniture assembled. Boxes stacked where they belong. We don't leave until you're smiling.</p>
-              <span class="process-card-tag">🏠 White-glove finish</span>
-            </div>
-          </div>
-          <div class="process-step-center">
-            <div class="process-node">✅</div>
-            <div class="process-step-num">05</div>
-          </div>
-          <div class="process-step-right"></div>
-        </div>
-
-        <!-- Step 6 -->
-        <div class="process-step right reveal">
-          <div class="process-step-left"></div>
-          <div class="process-step-center">
-            <div class="process-node">❤️</div>
-            <div class="process-step-num">06</div>
-          </div>
-          <div class="process-step-right">
-            <div class="process-card">
-              <div class="process-card-title">Post-Move Care</div>
-              <p class="process-card-desc">We follow up 48 hours after your move, not to check a box — but because we genuinely care that you're settled, comfortable, and loving your new space.</p>
-              <span class="process-card-tag">💬 We check in</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== EMOTIONAL PARALLAX ===== -->
-  <section id="emotional">
-    <div class="emotional-bg"></div>
-    <div class="emotional-overlay"></div>
-    <div class="container">
-      <div class="emotional-content">
-        <p class="section-label reveal" style="text-align:center">Our Promise</p>
-        <h2 class="emotional-quote reveal">
-          "A move isn't just changing your address.<br />
-          It's <span class="em">closing one chapter</span> and<br />
-          bravely <span class="em">beginning the next.</span>"
-        </h2>
-        <p class="emotional-sub reveal">
-          We've carried furniture through doorways and tears through hallways. We've helped newlyweds start their first home together, and helped aging parents downsize a lifetime of memories. We understand the weight of what we carry — every single time.
-        </p>
-        <div class="reveal">
-          <a href="#contact" class="btn btn-primary">Start Your Next Chapter →</a>
+        <div class="review-card reveal" data-d="3">
+          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="review-text">"Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
+          <div class="review-author">Jessica P.</div>
+          <div class="review-source">Stafford, VA</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===== WHY CHOOSE US ===== -->
-  <section id="why">
+  <section id="why" aria-labelledby="why-heading">
     <div class="container">
-      <div class="why-grid">
-        <div class="why-image-stack reveal-left">
-          <div class="why-img-main">
-            <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80" alt="Professional movers at work" loading="lazy" />
-          </div>
-          <div class="why-img-accent">
-            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&q=80" alt="Happy customers" loading="lazy" />
-          </div>
-          <div class="why-badge">
-            <div class="why-badge-num">A+</div>
-            <div class="why-badge-label">BBB Rated</div>
-          </div>
+      <div class="why-inner">
+        <p class="section-eyebrow reveal">Why VYV</p>
+        <h2 id="why-heading" class="section-title reveal">Why Choose Us</h2>
+        <p class="section-sub reveal">
+          We're not the only movers in Fredericksburg. Here's why customers keep choosing us — and recommending us to people they actually care about.
+        </p>
+        <div class="why-badges">
+          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🏡</div> Locally Owned</div>
+          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📋</div> Real Plan Every Job</div>
+          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">💰</div> Fair Pricing</div>
+          <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">🚫</div> No Hidden Fees</div>
+          <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📞</div> Free Consultation</div>
+          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">💬</div> Text Us, No Pressure Calls</div>
         </div>
-        <div class="reveal-right">
-          <p class="section-label">Why VYV</p>
-          <h2 class="section-title">We Don't Just Move Things.<br><span>We Move Lives.</span></h2>
-          <p class="section-sub">
-            Every crew member is background-checked, trained, and actually invested in making your day great. This isn't a side job to us — it's our craft.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING STORY ===== -->
+  <section id="story" aria-labelledby="story-heading">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-text reveal-left">
+          <p class="section-eyebrow">We Know How This Usually Goes.</p>
+          <h2 id="story-heading" class="section-title">Why We<br /><span>Started VYV</span></h2>
+          <p>
+            You book movers. They show up late, or not at all. They quote you one price and charge you another. Things get broken, nobody takes responsibility, and you're left dealing with it on top of everything else moving already throws at you.
           </p>
-          <div class="why-features">
-            <div class="why-feature">
-              <div class="why-feature-icon">🛡️</div>
-              <div class="why-feature-body">
-                <strong>Fully Licensed & Insured</strong>
-                <span>Complete coverage from pickup to delivery. Your belongings are protected every mile.</span>
-              </div>
-            </div>
-            <div class="why-feature">
-              <div class="why-feature-icon">⏰</div>
-              <div class="why-feature-body">
-                <strong>On-Time Guarantee</strong>
-                <span>99% on-time arrival. We respect your schedule because time is everything on moving day.</span>
-              </div>
-            </div>
-            <div class="why-feature">
-              <div class="why-feature-icon">💯</div>
-              <div class="why-feature-body">
-                <strong>Transparent Pricing</strong>
-                <span>Binding quotes. No shock charges. What we quote is what you pay — period.</span>
-              </div>
-            </div>
-            <div class="why-feature">
-              <div class="why-feature-icon">🤝</div>
-              <div class="why-feature-body">
-                <strong>Dedicated Coordinator</strong>
-                <span>One person manages your entire move. Someone you can actually reach and trust.</span>
-              </div>
-            </div>
-            <div class="why-feature">
-              <div class="why-feature-icon">📱</div>
-              <div class="why-feature-body">
-                <strong>Real-Time Tracking</strong>
-                <span>Know exactly where your truck is. No wondering, no anxiety, just peace of mind.</span>
-              </div>
-            </div>
-            <div class="why-feature">
-              <div class="why-feature-icon">♻️</div>
-              <div class="why-feature-body">
-                <strong>Eco-Friendly Packing</strong>
-                <span>Reusable moving blankets, biodegradable materials, and a commitment to leaving things better.</span>
-              </div>
-            </div>
-          </div>
+          <p>
+            We started VYV because that's not how it should be. You shouldn't have to brace yourself every time you hire someone to help you move.
+          </p>
+          <p>
+            We show up when we say we will, we tell you what it's going to cost before you commit, and we treat your home like it matters — because it does.
+          </p>
+          <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+        </div>
+        <div class="story-img reveal-right">
+          <img
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700&q=75"
+            alt="Happy family settled into their new home after a smooth move with VYV in Fredericksburg VA"
+            width="700" height="460"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== TESTIMONIALS ===== -->
-  <section id="testimonials">
+  <!-- ===== FINAL CTA ===== -->
+  <section id="cta" aria-labelledby="cta-heading">
     <div class="container">
-      <div class="testimonials-header">
-        <p class="section-label reveal">Real Stories</p>
-        <h2 class="section-title reveal">What Families Say<br><span>After Moving With Us</span></h2>
-      </div>
-      <div class="testimonials-track-wrap">
-        <div class="testimonials-track" id="testimonialTrack">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"I was terrified about moving my grandmother's antiques across three states. The VYV team custom-crated every piece and called me at every stop. Not a scratch. Not a dent. I cried happy tears when everything arrived perfect."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1494790108755-2616b9e77f8a?w=100&q=80" alt="Sarah M." loading="lazy"/></div>
-              <div><div class="testimonial-name">Sarah M.</div><div class="testimonial-loc">Chicago → Denver</div></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"As a single mom moving with two kids, I was overwhelmed. VYV sent a coordinator who planned everything. On moving day, the crew played with my kids while packing. Who does that? These people have heart."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Jessica T." loading="lazy"/></div>
-              <div><div class="testimonial-name">Jessica T.</div><div class="testimonial-loc">Austin, TX</div></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Our office of 40 people moved over a weekend. Monday morning we opened like nothing happened. Our IT equipment, standing desks, everything was set up exactly as planned. Worth every cent."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Marcus D." loading="lazy"/></div>
-              <div><div class="testimonial-name">Marcus D.</div><div class="testimonial-loc">CFO, TechPath Inc.</div></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"We've moved four times in eight years. VYV is the first company that made us feel like people, not a job number. They remembered our names, asked about our dog, and wrapped our vinyl records by hand. Never going anywhere else."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="David & Priya R." loading="lazy"/></div>
-              <div><div class="testimonial-name">David & Priya R.</div><div class="testimonial-loc">Seattle, WA</div></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"My mom is 78 and moving into assisted living was emotionally hard for our whole family. The VYV team was so gentle with her things and so kind with her. They made a painful day feel manageable. Truly grateful."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="Linda K." loading="lazy"/></div>
-              <div><div class="testimonial-name">Linda K.</div><div class="testimonial-loc">Orlando, FL</div></div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Got three quotes. VYV wasn't the cheapest — but they were the most detailed. Every other company gave ballparks. VYV gave us a real plan. They delivered on every promise. We saved money by not choosing the 'cheap' option."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="Tom B." loading="lazy"/></div>
-              <div><div class="testimonial-name">Tom B.</div><div class="testimonial-loc">New York → Miami</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-btns">
-        <button class="testimonial-btn" onclick="testimonialPrev()">←</button>
-        <button class="testimonial-btn" onclick="testimonialNext()">→</button>
-      </div>
-      <div class="testimonial-controls" id="testimonialDots"></div>
-    </div>
-  </section>
-
-  <!-- ===== GALLERY ===== -->
-  <section id="gallery">
-    <div class="container">
-      <div class="gallery-header">
-        <p class="section-label reveal">Our Work</p>
-        <h2 class="section-title reveal">Moves We're <span>Proud Of</span></h2>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item reveal-scale" data-delay="1">
-          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80" alt="Beautiful home interior" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">Family Home · Austin TX</span></div>
-        </div>
-        <div class="gallery-item reveal-scale" data-delay="2">
-          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" alt="Modern home" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">New Build · Nashville TN</span></div>
-        </div>
-        <div class="gallery-item reveal-scale" data-delay="3">
-          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" alt="Living room setup" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">Apartment · New York NY</span></div>
-        </div>
-        <div class="gallery-item reveal-scale" data-delay="4">
-          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" alt="Luxurious home" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">Estate · Beverly Hills CA</span></div>
-        </div>
-        <div class="gallery-item reveal-scale" data-delay="2">
-          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kitchen setup" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">Full Pack Service</span></div>
-        </div>
-        <div class="gallery-item reveal-scale" data-delay="3">
-          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Modern office" loading="lazy" />
-          <div class="gallery-item-overlay"><span class="gallery-item-label">Office Relocation</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CTA BANNER ===== -->
-  <section id="cta-banner">
-    <div class="container">
-      <div class="cta-banner-inner">
-        <div class="cta-banner-text reveal-left">
-          <h2>Ready to Start Your Move?</h2>
-          <p>Get your free, binding quote today — no commitment, no pressure.</p>
-        </div>
-        <div class="cta-banner-actions reveal-right">
-          <a href="#contact" class="btn btn-dark">Get Free Quote</a>
-          <a href="tel:+15551234567" class="btn btn-dark">📞 Call Us Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAQ ===== -->
-  <section id="faq">
-    <div class="container">
-      <div class="faq-header">
-        <p class="section-label reveal">FAQ</p>
-        <h2 class="section-title reveal">Questions We Hear<br><span>All the Time</span></h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            How far in advance should I book?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">We recommend booking at least 2–4 weeks in advance, especially for summer months (May–September) when demand is highest. That said, we often accommodate last-minute moves — just call us and we'll do our best.</div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Is my binding quote really guaranteed?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Yes, absolutely. A binding quote means the price is locked in based on your inventory and distance. The only time costs change is if you add significant items or services after the quote is finalized — and we'll always discuss that with you first.</div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            What happens if something gets damaged?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">We carry full value protection insurance on every move. In the very rare event of damage, we handle your claim quickly and fairly — no long waits, no runaround. Our 99% damage-free rate speaks to our care, but our insurance coverage means you're protected regardless.</div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Do you move specialty items like pianos or safes?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Yes! We have specialist crews and equipment for pianos, gun safes, pool tables, large artwork, antiques, and other high-value or oversized items. Just let us know in advance so we can bring the right gear and expertise.</div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Do I need to be home during the move?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">We recommend being present at both pickup and delivery to walk through the inventory with us. If you absolutely cannot be there, we can work with a trusted representative — just let your coordinator know in advance.</div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            What should I do with plants and perishables?
-            <div class="faq-icon">+</div>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">We're happy to transport plants for local moves. For long-distance moves, we advise transporting plants personally in your vehicle. Perishable food should be consumed or donated before moving day — we can remind you of this in our pre-move checklist.</div>
-          </div>
+      <div class="cta-inner">
+        <p class="section-eyebrow reveal" style="text-align:center; color:rgba(236,235,238,0.5)">Ready to Move?</p>
+        <h2 id="cta-heading" class="reveal">Ready to Move Without the Headache?</h2>
+        <p class="reveal">No pressure, no obligation. Just a real conversation about your move and what it's actually going to take.</p>
+        <div class="reveal">
+          <a href="#contact" class="btn btn-primary">Book Your Free Consultation →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===== CONTACT ===== -->
-  <section id="contact">
+  <section id="contact" style="background: var(--lbg2); padding: 108px 0;" aria-labelledby="contact-heading">
     <div class="container">
-      <div class="contact-grid">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start;">
         <div class="reveal-left">
-          <p class="section-label">Reach Out</p>
-          <h2 class="section-title">Let's Talk About<br><span>Your Move</span></h2>
-          <p class="section-sub">No pressure, no obligation. Just an honest conversation about where you're going and how we can make it easier.</p>
-
-          <h3 class="contact-info-title">Get in Touch</h3>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">📞</div>
-            <span>(555) 123-4567 — Available 7 days a week, 7am–8pm</span>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">✉️</div>
-            <span>hello@vyvmoving.com</span>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">📍</div>
-            <span>Serving the greater metro area and nationwide long-distance moves</span>
-          </div>
-
-          <h3 class="contact-info-title">Hours</h3>
-          <div class="contact-detail">
-            <div class="contact-detail-icon">🕐</div>
-            <span>Mon–Fri: 7:00 AM – 8:00 PM<br />Sat–Sun: 8:00 AM – 6:00 PM</span>
+          <p class="section-eyebrow">Get In Touch</p>
+          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move</span></h2>
+          <p class="section-sub" style="margin-bottom:36px;">
+            We serve Fredericksburg, Stafford, Spotsylvania, Woodbridge, Richmond, and surrounding Northern Virginia areas.
+          </p>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
+              <span>Phone / Text — insert number</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
+              <span>Email — insert email</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📍</div>
+              <span>Fredericksburg, VA · Northern Virginia · Richmond</span>
+            </div>
           </div>
         </div>
 
         <div class="reveal-right">
-          <div class="contact-form">
-            <div id="contactFormWrap">
-              <h3 class="form-title">Get Your Free Quote</h3>
-              <p class="form-sub">We'll respond within 2 hours during business hours.</p>
-              <form id="contactForm" onsubmit="submitForm(event)">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" placeholder="Jane" required />
+          <div style="background:var(--lbg);border-radius:20px;padding:44px 36px;box-shadow:var(--shadow);">
+            <div id="form-body">
+              <h3 style="font-size:1.4rem;color:var(--mp);margin-bottom:6px;">Book a Free Consultation</h3>
+              <p style="font-size:0.86rem;color:var(--lmuted);margin-bottom:28px;">We'll follow up within a few hours to schedule your call.</p>
+              <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                  <div>
+                    <label for="fname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">First Name</label>
+                    <input id="fname" type="text" placeholder="Jane" required autocomplete="given-name"
+                      style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                   </div>
-                  <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Smith" required />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Email Address</label>
-                  <input type="email" placeholder="jane@example.com" required />
-                </div>
-                <div class="form-group">
-                  <label>Phone Number</label>
-                  <input type="tel" placeholder="(555) 000-0000" />
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Moving From</label>
-                    <input type="text" placeholder="City, State" required />
-                  </div>
-                  <div class="form-group">
-                    <label>Moving To</label>
-                    <input type="text" placeholder="City, State" required />
+                  <div>
+                    <label for="lname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Last Name</label>
+                    <input id="lname" type="text" placeholder="Smith" required autocomplete="family-name"
+                      style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                   </div>
                 </div>
-                <div class="form-group">
-                  <label>Move Date</label>
-                  <input type="date" />
+                <div style="margin-bottom:14px;">
+                  <label for="email" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Email</label>
+                  <input id="email" type="email" placeholder="jane@email.com" required autocomplete="email"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
-                <div class="form-group">
-                  <label>Service Needed</label>
-                  <select>
+                <div style="margin-bottom:14px;">
+                  <label for="phone" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Phone / Text</label>
+                  <input id="phone" type="tel" placeholder="(540) 000-0000" autocomplete="tel"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+                <div style="margin-bottom:14px;">
+                  <label for="service" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Service Needed</label>
+                  <select id="service"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
                     <option value="">Select a service...</option>
-                    <option>Local Move</option>
-                    <option>Long Distance Move</option>
-                    <option>Packing Services</option>
-                    <option>Storage</option>
-                    <option>Office Relocation</option>
-                    <option>White Glove Service</option>
+                    <option>Packing</option>
+                    <option>Moving Labor</option>
+                    <option>Unpacking &amp; Organizing (add-on)</option>
+                    <option>Full Service (Packing + Moving)</option>
+                    <option>Not sure yet</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label>Additional Notes</label>
-                  <textarea placeholder="Tell us anything special — fragile items, access restrictions, tight timelines..."></textarea>
+                <div style="margin-bottom:20px;">
+                  <label for="notes" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Tell Us About Your Move</label>
+                  <textarea id="notes" placeholder="Home size, move date, anything special we should know..." rows="4"
+                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;resize:vertical;transition:border-color .25s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
                 </div>
-                <button type="submit" class="form-submit">Send My Free Quote Request →</button>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
+                  Send My Consultation Request →
+                </button>
               </form>
             </div>
-            <div class="form-success" id="formSuccess">
-              <div class="form-success-icon">🎉</div>
-              <h3>We've got your request!</h3>
-              <p>Expect a call or email from your dedicated coordinator within 2 hours. Welcome to the VYV family.</p>
+            <div id="form-success" style="display:none;text-align:center;padding:40px 0;">
+              <div style="font-size:3rem;margin-bottom:14px;">✅</div>
+              <h3 style="font-size:1.3rem;color:var(--mp);margin-bottom:10px;">Got it — we'll be in touch soon!</h3>
+              <p style="color:var(--lmuted);font-size:0.93rem;">Expect a call or text within a few hours. Talk soon.</p>
             </div>
           </div>
         </div>
@@ -2110,225 +1618,141 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="#" class="nav-logo">
-            <div class="nav-logo-mark">V</div>
+          <a href="#hero" class="nav-logo" style="margin-bottom:0;" aria-label="VYV Moving Co. home">
+            <div class="nav-logo-mark">VYV</div>
             <div>
-              <div class="nav-logo-text">VYV <span>Moving</span></div>
+              <div class="nav-logo-text">VYV Moving</div>
               <div class="nav-logo-sub">Validate Your Vision</div>
             </div>
           </a>
-          <p>We believe every move is a milestone worth celebrating. Our team brings care, precision, and heart to every single job.</p>
-          <div class="footer-socials">
-            <a href="#" class="footer-social" aria-label="Facebook">f</a>
-            <a href="#" class="footer-social" aria-label="Instagram">ig</a>
-            <a href="#" class="footer-social" aria-label="Google">G</a>
-            <a href="#" class="footer-social" aria-label="Yelp">Y</a>
-          </div>
+          <p>Locally owned moving and organizing company in Fredericksburg, VA. Serving Northern Virginia, Stafford, Spotsylvania, and Richmond with a real plan every time.</p>
+          <div class="footer-service-area">Fredericksburg · Stafford · Spotsylvania · Woodbridge · Northern VA · Richmond &amp; surrounding areas</div>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
           <ul>
-            <li><a href="#services">Local Moving</a></li>
-            <li><a href="#services">Long Distance</a></li>
-            <li><a href="#services">Packing & Unpacking</a></li>
-            <li><a href="#services">Secure Storage</a></li>
-            <li><a href="#services">Office Relocation</a></li>
-            <li><a href="#services">White Glove Service</a></li>
+            <li><a href="#services">Packing</a></li>
+            <li><a href="#services">Moving Labor</a></li>
+            <li><a href="#services">Unpacking &amp; Organizing</a></li>
+            <li><a href="#contact">Free Consultation</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
-            <li><a href="#why">About VYV</a></li>
+            <li><a href="#about">About VYV</a></li>
             <li><a href="#process">Our Process</a></li>
-            <li><a href="#testimonials">Reviews</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Careers</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <ul>
-            <li><a href="tel:+15551234567">(555) 123-4567</a></li>
-            <li><a href="mailto:hello@vyvmoving.com">hello@vyvmoving.com</a></li>
-            <li><a href="#contact">Get a Quote</a></li>
-            <li><a href="#contact">Schedule a Call</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Blog</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 VYV Moving Co. All rights reserved. Licensed & Insured.</p>
-        <p><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></p>
+        <p>© 2026 VYV Moving Co. — Fredericksburg, VA · [phone] · [email]</p>
+        <p style="color:rgba(236,235,238,0.2);font-size:0.75rem;">Locally owned &amp; operated · Serving Northern Virginia &amp; Richmond</p>
       </div>
     </div>
   </footer>
 
   <!-- Floating CTA -->
-  <div class="floating-cta">
-    <a href="tel:+15551234567" class="floating-phone" aria-label="Call VYV Moving">📞</a>
+  <div class="float-cta">
+    <a href="#contact" aria-label="Book a free consultation">
+      📅 <span>Book Free Consult</span>
+    </a>
   </div>
 
   <!-- ===== JAVASCRIPT ===== -->
   <script>
-    // ===== NAVBAR SCROLL =====
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
-
-    // ===== MOBILE MENU =====
-    function toggleMenu() {
-      const ham = document.getElementById('hamburger');
-      const menu = document.getElementById('mobileMenu');
-      ham.classList.toggle('open');
-      menu.classList.toggle('open');
-      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    // ===== PARTICLES =====
+    const pWrap = document.getElementById('particles');
+    if (pWrap) {
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const sz = Math.random() * 5 + 2;
+        p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+14}s;animation-delay:${Math.random()*14}s;`;
+        pWrap.appendChild(p);
+      }
     }
 
-    // ===== SCROLL REVEAL =====
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
-      revealObserver.observe(el);
-    });
-
-    // ===== COUNTER ANIMATION =====
-    function animateCounter(el) {
+    // ===== COUNTERS =====
+    function animCount(el) {
       const target = parseFloat(el.dataset.target);
-      const isDecimal = target % 1 !== 0;
-      const duration = 2000;
-      const steps = 60;
-      const increment = target / steps;
-      let current = 0;
-      const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          current = target;
-          clearInterval(interval);
-        }
-        el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString();
-        if (!isDecimal && target >= 1000) el.textContent = Math.floor(current).toLocaleString() + '+';
-      }, duration / steps);
+      const dec = target % 1 !== 0;
+      const steps = 55;
+      let cur = 0;
+      const inc = target / steps;
+      const iv = setInterval(() => {
+        cur = Math.min(cur + inc, target);
+        el.textContent = dec ? cur.toFixed(1) : Math.floor(cur);
+        if (cur >= target) clearInterval(iv);
+      }, 1800 / steps);
     }
-
-    const counterObserver = new IntersectionObserver((entries) => {
+    const cntObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting && !e.target.dataset.animated) {
-          e.target.dataset.animated = 'true';
-          animateCounter(e.target);
+        if (e.isIntersecting && !e.target.dataset.counted) {
+          e.target.dataset.counted = '1';
+          animCount(e.target);
         }
       });
     }, { threshold: 0.5 });
-    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+    document.querySelectorAll('.counter').forEach(el => cntObs.observe(el));
 
-    // ===== PARTICLES =====
-    const particlesEl = document.getElementById('particles');
-    for (let i = 0; i < 20; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const size = Math.random() * 6 + 2;
-      p.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${Math.random()*100}%;
-        animation-duration:${Math.random()*20+15}s;
-        animation-delay:${Math.random()*15}s;
-      `;
-      particlesEl.appendChild(p);
-    }
-
-    // ===== TESTIMONIALS SLIDER =====
-    const track = document.getElementById('testimonialTrack');
-    const cards = track.querySelectorAll('.testimonial-card');
-    let currentSlide = 0;
-    let perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-    const totalSlides = Math.ceil(cards.length / perView);
-
-    function buildDots() {
-      const dotsEl = document.getElementById('testimonialDots');
-      dotsEl.innerHTML = '';
-      for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'testimonial-dot' + (i === currentSlide ? ' active' : '');
-        dot.onclick = () => goToSlide(i);
-        dotsEl.appendChild(dot);
-      }
-    }
-
-    function goToSlide(index) {
-      currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
-      const cardWidth = cards[0].offsetWidth + 28;
-      track.style.transform = `translateX(-${currentSlide * perView * cardWidth}px)`;
-      document.querySelectorAll('.testimonial-dot').forEach((d, i) => {
-        d.classList.toggle('active', i === currentSlide);
-      });
-    }
-
-    function testimonialNext() { goToSlide(currentSlide < totalSlides - 1 ? currentSlide + 1 : 0); }
-    function testimonialPrev() { goToSlide(currentSlide > 0 ? currentSlide - 1 : totalSlides - 1); }
-
-    buildDots();
-
-    window.addEventListener('resize', () => {
-      perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-      buildDots();
-      goToSlide(0);
-    });
-
-    // Auto-advance testimonials
-    setInterval(testimonialNext, 5000);
-
-    // Touch swipe for testimonials
-    let touchStartX = 0;
-    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) diff > 0 ? testimonialNext() : testimonialPrev();
+    // ===== NAVBAR =====
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // ===== FAQ =====
-    function toggleFaq(question) {
-      const item = question.parentElement;
-      const answer = item.querySelector('.faq-answer');
-      const inner = answer.querySelector('.faq-answer-inner');
-      const isOpen = item.classList.contains('open');
-
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(i => {
-        i.classList.remove('open');
-        i.querySelector('.faq-answer').style.height = '0';
-      });
-
-      if (!isOpen) {
-        item.classList.add('open');
-        answer.style.height = inner.offsetHeight + 'px';
-      }
+    // ===== MOBILE NAV =====
+    function toggleNav() {
+      const ham = document.getElementById('ham');
+      const drawer = document.getElementById('drawer');
+      const open = ham.classList.toggle('open');
+      drawer.classList.toggle('open', open);
+      ham.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     }
 
-    // ===== CONTACT FORM =====
-    function submitForm(e) {
-      e.preventDefault();
-      document.getElementById('contactFormWrap').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }
+    // ===== SCROLL REVEAL =====
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up').forEach(el => obs.observe(el));
 
-    // ===== SMOOTH SCROLL for anchor links =====
+    // ===== PROCESS STEP ANIMATION =====
+    const psObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.ps').forEach(el => psObs.observe(el));
+
+    // ===== SMOOTH SCROLL =====
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const target = document.querySelector(a.getAttribute('href'));
         if (target) {
           e.preventDefault();
-          const offset = 80;
-          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+          window.scrollTo({ top: target.offsetTop - 72, behavior: 'smooth' });
         }
       });
     });
+
+    // ===== CONTACT FORM =====
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+
+    // ===== HIDE FLOAT CTA WHEN CONTACT IN VIEW =====
+    const floatCta = document.querySelector('.float-cta');
+    const contactObs = new IntersectionObserver(entries => {
+      floatCta.style.opacity = entries[0].isIntersecting ? '0' : '1';
+      floatCta.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+    }, { threshold: 0.3 });
+    contactObs.observe(document.getElementById('contact'));
   </script>
 </body>
 </html>
