@@ -1104,20 +1104,27 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
       .hero-visual { max-width: 480px; margin: 0 auto; }
+      .hero-img-wrap video { height: 380px !important; }
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
       .story-grid { grid-template-columns: 1fr; gap: 48px; }
+      .story-img video { height: 340px !important; }
       .reviews-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
       #process::before { display: none; }
       .ps { grid-template-columns: 1fr; gap: 12px; }
       .ps-left, .ps-right { text-align: left !important; order: unset !important; }
       .ps-center { flex-direction: row; justify-content: flex-start; }
+      /* Families section */
+      #families > .container > div { grid-template-columns: 1fr !important; gap: 40px !important; }
+      /* Contact section */
+      #contact > .container > div { grid-template-columns: 1fr !important; gap: 40px !important; }
     }
     @media (max-width: 768px) {
       .nav-links, .nav-right { display: none; }
       .hamburger { display: flex; }
       .mobile-drawer { display: flex; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
+      .hero-img-wrap video { height: 300px !important; }
       .hf1 { left: -10px; }
       .hf2 { right: -10px; }
       .services-grid { grid-template-columns: 1fr; }
@@ -1126,11 +1133,34 @@
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
       .float-cta a span { display: none; }
       .float-cta a { padding: 14px 16px; border-radius: 50%; }
+      /* Process steps stack on mobile */
+      .process-steps { max-width: 100%; }
+      .ps { grid-template-columns: 1fr !important; }
+      .ps-center { display: none; }
+      .ps-left, .ps-right { padding: 0 !important; }
+      .ps-card { margin-bottom: 16px; }
+      /* Why video */
+      #why video { height: 260px !important; }
+      /* Story */
+      .story-img video { height: 260px !important; }
+      /* Families */
+      #families > .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+      #families img { height: 280px !important; }
+      /* Contact */
+      #contact > .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+      #contact > .container > div > div:first-child > div[style*="padding:44px"] { padding: 28px 20px !important; }
+      /* Logo video */
+      .nav-logo-mark { width: 40px !important; height: 40px !important; }
     }
     @media (max-width: 480px) {
       .hero-h1 { font-size: 2.2rem; }
+      .hero-img-wrap video { height: 240px !important; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .why-badges { gap: 10px; }
+      .section-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+      .btn { font-size: 0.88rem; padding: 13px 22px; }
+      #families > .container > div { gap: 24px !important; }
+      #families img { height: 240px !important; }
     }
   </style>
 </head>
