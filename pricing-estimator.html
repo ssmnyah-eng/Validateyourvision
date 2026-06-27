@@ -222,6 +222,34 @@ body{
 .copy-ok{font-size:.83rem;color:var(--green);font-weight:600;text-align:center;display:none}
 .copy-ok.show{display:block}
 
+.consult-intro{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:24px}
+.consult-section{border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:16px}
+.consult-section-head{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Raleway',sans-serif}
+.consult-section-sub{font-size:.81rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.consult-radios{display:flex;flex-direction:column;gap:10px}
+.consult-radio{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.87rem;color:var(--navy);padding:10px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .15s,background .15s}
+.consult-radio:hover{border-color:var(--accent);background:var(--accent-lt)}
+.consult-radio input[type=radio]{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0}
+.consult-radio input[type=radio]:checked ~ span{font-weight:600;color:var(--accent)}
+.consult-radio:has(input:checked){border-color:var(--accent);background:var(--accent-lt)}
+.consult-avail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.consult-avail-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;font-family:'Raleway',sans-serif}
+.consult-checks{display:flex;flex-direction:column;gap:8px}
+.consult-check{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;color:var(--navy)}
+.consult-check input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;flex-shrink:0}
+.consult-notes{width:100%;min-height:100px;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:.87rem;font-family:'Inter',sans-serif;color:var(--navy);resize:vertical;line-height:1.6;box-sizing:border-box}
+.consult-notes:focus{outline:none;border-color:var(--accent)}
+.consult-next-blk{background:var(--bg);border-radius:var(--r);padding:18px;margin:16px 0}
+.consult-next-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;font-family:'Raleway',sans-serif}
+.consult-next-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--navy);margin-bottom:8px;line-height:1.5}
+.consult-chk{color:var(--green);font-weight:800;flex-shrink:0}
+.consult-next-note{font-size:.81rem;color:var(--muted);margin-top:10px;line-height:1.6}
+.consult-done-wrap{text-align:center;padding:32px 16px}
+.consult-done-icon{width:60px;height:60px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;margin:0 auto 20px;font-weight:800}
+.consult-done-head{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:12px;font-family:'Playfair Display',serif}
+.consult-done-body{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:10px}
+@media(max-width:480px){.consult-avail-grid{grid-template-columns:1fr}}
+
 .process-blk{border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-top:20px}
 .process-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:18px;font-family:'Raleway',sans-serif}
 .process-steps{display:flex;flex-direction:column;gap:18px}
@@ -619,9 +647,82 @@ body{
       <div class="cta-next-head">What happens next?</div>
       <p class="cta-next-body">Our team will review your information to make sure we have everything needed to provide the most accurate pricing and moving plan. If your move would benefit from an in-home or virtual Move Planning Consultation, we will coordinate that with you.</p>
 
-      <a href="#" class="cta-link">Schedule Your Move Planning Consultation</a>
+      <button class="cta-link" id="btn-consult">Schedule Your Move Planning Consultation</button>
 
       <p class="cta-no-schedule">Prefer not to schedule right now? No problem. A member of our team will review your estimate and contact you within one business day to discuss next steps.</p>
+    </div>
+  </div>
+
+  <!-- Consultation Request Screen -->
+  <div class="screen" id="screen-consult">
+    <h2 class="res-h">Schedule Your Move Planning Consultation</h2>
+    <p class="consult-intro">We'll visit your home to verify your inventory, evaluate your property, answer your questions, and create a detailed moving plan before your moving day. All consultations are currently conducted in person.</p>
+
+    <div class="consult-section">
+      <div class="consult-section-head">When Are You Planning to Move?</div>
+      <p class="consult-section-sub">This helps us prioritize your scheduling.</p>
+      <div class="consult-radios" id="consult-timeline">
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="Immediately (within 24–48 hours)"><span>I need to move immediately (within 24–48 hours)</span></label>
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="Within 3–7 days"><span>Within the next 3–7 days</span></label>
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="Within 1–2 weeks"><span>Within the next 1–2 weeks</span></label>
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="Within 3–4 weeks"><span>Within the next 3–4 weeks</span></label>
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="More than one month away"><span>More than one month away</span></label>
+        <label class="consult-radio"><input type="radio" name="consult-timeline" value="Not sure yet"><span>I'm not sure yet</span></label>
+      </div>
+    </div>
+
+    <div class="consult-section">
+      <div class="consult-section-head">Preferred Consultation Availability</div>
+      <p class="consult-section-sub">Our office will contact you to confirm — this helps us find the right time.</p>
+      <div class="consult-avail-grid">
+        <div>
+          <div class="consult-avail-label">Preferred Days</div>
+          <div class="consult-checks" id="consult-days">
+            <label class="consult-check"><input type="checkbox" value="Monday"><span>Monday</span></label>
+            <label class="consult-check"><input type="checkbox" value="Tuesday"><span>Tuesday</span></label>
+            <label class="consult-check"><input type="checkbox" value="Wednesday"><span>Wednesday</span></label>
+            <label class="consult-check"><input type="checkbox" value="Thursday"><span>Thursday</span></label>
+            <label class="consult-check"><input type="checkbox" value="Friday"><span>Friday</span></label>
+            <label class="consult-check"><input type="checkbox" value="Saturday"><span>Saturday</span></label>
+          </div>
+        </div>
+        <div>
+          <div class="consult-avail-label">Preferred Time</div>
+          <div class="consult-checks" id="consult-times">
+            <label class="consult-check"><input type="checkbox" value="Morning"><span>Morning</span></label>
+            <label class="consult-check"><input type="checkbox" value="Afternoon"><span>Afternoon</span></label>
+            <label class="consult-check"><input type="checkbox" value="Evening"><span>Evening</span></label>
+            <label class="consult-check"><input type="checkbox" value="Flexible"><span>I'm Flexible</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="consult-section">
+      <div class="consult-section-head">Additional Information</div>
+      <p class="consult-section-sub">Anything we should know before contacting you — gated community, closing date, limited availability, urgent timeline, military orders, etc.</p>
+      <textarea class="consult-notes" id="consult-notes" placeholder="Optional — share anything that would help us prepare for your consultation."></textarea>
+    </div>
+
+    <div class="consult-next-blk">
+      <div class="consult-next-head">What Happens Next?</div>
+      <div class="consult-next-item"><span class="consult-chk">&#10003;</span>We'll review your online estimate.</div>
+      <div class="consult-next-item"><span class="consult-chk">&#10003;</span>We'll determine the urgency of your move.</div>
+      <div class="consult-next-item"><span class="consult-chk">&#10003;</span>A member of our team will contact you to schedule your in-person Move Planning Consultation.</div>
+      <p class="consult-next-note">Most customers are contacted within <strong>one business day</strong>. For urgent moves, we will make every effort to contact you as soon as possible.</p>
+    </div>
+
+    <div class="ibox warn hidden mt8" id="consult-err">Please select your expected moving timeframe to continue.</div>
+    <button class="btn-main" id="btn-consult-submit">Submit Consultation Request</button>
+  </div>
+
+  <!-- Consultation Confirmation Screen -->
+  <div class="screen" id="screen-consult-done">
+    <div class="consult-done-wrap">
+      <div class="consult-done-icon">&#10003;</div>
+      <h2 class="consult-done-head">Consultation Request Received</h2>
+      <p class="consult-done-body">Thank you. A member of our team will review your move details and contact you to confirm your Move Planning Consultation.</p>
+      <p class="consult-done-body">Most customers are contacted within one business day. For urgent moves, we will make every effort to reach you as soon as possible.</p>
     </div>
   </div>
 
@@ -1144,6 +1245,47 @@ document.getElementById('btn-reveal').addEventListener('click', ()=>{
   submitLead(n, e, p);
   renderResults();
   show('results');
+});
+
+/* Consultation screen */
+document.getElementById('btn-consult').addEventListener('click', ()=>{
+  document.getElementById('screen-consult').scrollIntoView({behavior:'smooth'});
+  show('consult');
+});
+
+document.getElementById('btn-consult-submit').addEventListener('click', ()=>{
+  const timeline = document.querySelector('input[name="consult-timeline"]:checked');
+  const errEl = document.getElementById('consult-err');
+  if (!timeline) { errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+
+  const days  = [...document.querySelectorAll('#consult-days input:checked')].map(i=>i.value);
+  const times = [...document.querySelectorAll('#consult-times input:checked')].map(i=>i.value);
+  const notes = document.getElementById('consult-notes').value.trim();
+  const name  = document.getElementById('lead-name').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+
+  if (INTEGRATIONS.ZAPIER_WEBHOOK) {
+    fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
+      method:  'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        type:               'consultation_request',
+        customer_name:      name,
+        email,
+        phone,
+        consultation_timeline: timeline.value,
+        preferred_days:     days.join(', '),
+        preferred_times:    times.join(', '),
+        additional_notes:   notes,
+        submitted_at:       new Date().toISOString(),
+      }),
+    }).catch(()=>{});
+  }
+
+  show('consult-done');
+  window.scrollTo({top:0, behavior:'smooth'});
 });
 
 /* ══════════════════════════════════════════
