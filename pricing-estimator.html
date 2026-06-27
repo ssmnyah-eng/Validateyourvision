@@ -211,13 +211,24 @@ body{
 .disclaimer{font-size:.79rem;color:var(--muted);font-style:italic;line-height:1.65}
 
 .cta-blk{background:var(--navy);border-radius:var(--r);padding:28px 24px;text-align:center}
-.cta-blk h3{font-size:1.15rem;font-weight:800;color:#ECEBEE;margin-bottom:8px;font-family:'Playfair Display',serif}
-.cta-blk p{font-size:.85rem;color:rgba(236,235,238,.6);margin-bottom:20px;line-height:1.6}
-.cta-link{display:inline-block;background:var(--accent);color:#ECEBEE;padding:14px 30px;border-radius:var(--r);font-weight:800;font-size:.95rem;text-decoration:none;transition:background .15s;font-family:'Raleway',sans-serif}
+.cta-confirm-head{font-size:1.2rem;font-weight:800;color:#ECEBEE;margin-bottom:8px;font-family:'Playfair Display',serif}
+.cta-confirm-sub{font-size:.85rem;color:rgba(236,235,238,.7);margin-bottom:20px;line-height:1.6}
+.cta-next-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--lavender);margin-bottom:8px;font-family:'Raleway',sans-serif}
+.cta-next-body{font-size:.85rem;color:rgba(236,235,238,.6);margin-bottom:22px;line-height:1.65}
+.cta-link{display:inline-block;background:var(--accent);color:#ECEBEE;padding:14px 30px;border-radius:var(--r);font-weight:800;font-size:.95rem;text-decoration:none;transition:background .15s;font-family:'Raleway',sans-serif;margin-bottom:16px}
 .cta-link:hover{background:var(--navy2)}
+.cta-no-schedule{font-size:.8rem;color:rgba(236,235,238,.45);line-height:1.6;margin-top:4px;margin-bottom:0}
 
 .copy-ok{font-size:.83rem;color:var(--green);font-weight:600;text-align:center;display:none}
 .copy-ok.show{display:block}
+
+.process-blk{border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-top:20px}
+.process-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:18px;font-family:'Raleway',sans-serif}
+.process-steps{display:flex;flex-direction:column;gap:18px}
+.process-step{display:flex;gap:14px;align-items:flex-start}
+.process-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Raleway',sans-serif;margin-top:2px}
+.process-step-head{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Raleway',sans-serif}
+.process-step-body{font-size:.82rem;color:var(--muted);line-height:1.6}
 
 /* ── EDU PANEL ── */
 #edu-panel{
@@ -470,7 +481,7 @@ body{
       <button class="opt" data-val="3" data-rate="150"><span>3 Packers &mdash; $150/hr</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="4" data-rate="200"><span>4 Packers &mdash; $200/hr</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Packing Services</strong>Packing materials — boxes, wrap, tape, and padding — typically range from $180 for smaller homes to $750+ for larger ones, confirmed at your Move Coordination Visit.</div>
+    <div class="tip"><strong>Packing Services</strong>Packing materials — boxes, wrap, tape, and padding — typically range from $180 for smaller homes to $750+ for larger ones, confirmed during your Move Planning Consultation.</div>
   </div>
 
   <!-- Screen 12: Storage -->
@@ -567,11 +578,50 @@ body{
     </div>
     <div class="copy-ok" id="copy-ok">Estimate copied to clipboard.</div>
 
+    <div class="process-blk">
+      <div class="process-title">How Our Estimating Process Works</div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-content">
+            <div class="process-step-head">Complete Your Online Estimate</div>
+            <div class="process-step-body">Answer a few questions about your move, including your home, furniture, and any services you may need. This allows us to prepare a preliminary estimate and better understand your move.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-content">
+            <div class="process-step-head">Personalized Consultation</div>
+            <div class="process-step-body">For larger, more complex, or full-service moves, we schedule a walkthrough consultation with you to confirm inventory, identify specialty items, evaluate access, and build a customized moving plan.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-content">
+            <div class="process-step-head">Review &amp; Book</div>
+            <div class="process-step-body">We review everything with you, answer any questions, and finalize your moving plan. After you approve the estimate and reserve your move, our team begins preparing every detail before moving day.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-content">
+            <div class="process-step-head">Move Day</div>
+            <div class="process-step-body">Our crew arrives with a clear strategy, the right equipment, and a complete understanding of your home, your belongings, and your preferences — reducing surprises and improving efficiency from start to finish.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="cta-blk">
-      <h3>Ready to lock in your move?</h3>
-      <p>Book your Move Coordination Visit and let us map out your home before move day &mdash; so your crew already knows the plan before they arrive.</p>
-      <!-- UPDATE: replace '#' with your booking page URL -->
-      <a href="#" class="cta-link">Book Your Move Coordination Visit</a>
+      <div class="cta-confirm-head">Your Estimate Has Been Received</div>
+      <p class="cta-confirm-sub">Thank you. We have received your moving information and your estimate has been saved.</p>
+
+      <div class="cta-next-head">What happens next?</div>
+      <p class="cta-next-body">Our team will review your information to make sure we have everything needed to provide the most accurate pricing and moving plan. If your move would benefit from an in-home or virtual Move Planning Consultation, we will coordinate that with you.</p>
+
+      <a href="#" class="cta-link">Schedule Your Move Planning Consultation</a>
+
+      <p class="cta-no-schedule">Prefer not to schedule right now? No problem. A member of our team will review your estimate and contact you within one business day to discuss next steps.</p>
     </div>
   </div>
 
