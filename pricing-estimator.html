@@ -636,7 +636,7 @@
         <span class="tooltip-wrap">
           Truck &amp; Travel Fee
           <span class="tooltip-icon">?</span>
-          <span class="tooltip-box">Includes truck rental, fuel, insurance, equipment, travel time, and all transportation costs — not just mileage.</span>
+          <span class="tooltip-box">Includes moving truck, fuel, moving equipment, protective materials, travel expenses, and transportation logistics.</span>
         </span>
       </span>
       <span class="li-value" id="res-truck">—</span>
@@ -644,10 +644,6 @@
     <div class="line-item" id="res-packing-row" style="display:none">
       <span class="li-label">Packing Service (<span id="res-pack-hrs">—</span> hrs &times; <span id="res-pack-rate">—</span>/hr)</span>
       <span class="li-value" id="res-packing">—</span>
-    </div>
-    <div class="line-item">
-      <span class="li-label">Move Coordination Fee</span>
-      <span class="li-value" id="res-visit-line">—</span>
     </div>
 
     <div class="total-row">
@@ -660,15 +656,8 @@
       <span id="deposit-text">—</span>
     </div>
 
-    <div class="info-box mt-10" id="visit-fee-box">
-      <strong>Move Coordination Fee: <span id="res-visit-fee">—</span></strong>
-      &mdash; we map out your home before move day so your crew already knows the plan.
-      <br><br>
-      <em>Most movers run over budget because nobody knew what they were walking into until move day. Our Move Coordination Visit fixes that before your move starts — no guessing, no standing around, no surprise hours added to your bill.</em>
-    </div>
-
     <p class="disclaimer">
-      This is an estimate based on the information provided. Your final price is confirmed at your Move Coordination Visit.
+      This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.
     </p>
 
     <div class="btn-row">
@@ -825,8 +814,6 @@ function render() {
   document.getElementById('res-rate').textContent   = fmt(state.crewRate);
   document.getElementById('res-labor').textContent  = fmtRange(r.laborLo, r.laborHi);
   document.getElementById('res-truck').textContent  = fmt(r.truckFee);
-  document.getElementById('res-visit-line').textContent = fmt(r.visitFee);
-  document.getElementById('res-visit-fee').textContent  = fmt(r.visitFee);
 
   const packRow = document.getElementById('res-packing-row');
   if (r.packLo > 0) {
@@ -1085,7 +1072,6 @@ function buildSummary() {
     `Labor:                  ${fmtRange(r.laborLo, r.laborHi)}`,
     `Truck & Travel:         ${fmt(r.truckFee)}`,
     state.packingOn && r.packLo > 0 ? `Packing:                ${fmtRange(r.packLo, r.packHi)}` : '',
-    `Move Coordination Fee:  ${fmt(r.visitFee)}`,
     '',
     `TOTAL RANGE:            ${fmtRange(r.totalLo, r.totalHi)}`,
     '',
@@ -1182,10 +1168,6 @@ document.getElementById('btn-download').addEventListener('click', async () => {
         <span style="font-size:13px;color:#566779;">Packing Service</span>
         <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.packLo, r.packHi)}</span>
       </div>` : ''}
-      <div style="display:flex;justify-content:space-between;padding:8px 0;">
-        <span style="font-size:13px;color:#566779;">Move Coordination Fee</span>
-        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmt(r.visitFee)}</span>
-      </div>
       <div style="display:flex;justify-content:space-between;padding:14px 0 0;border-top:2px solid #1c2b3a;margin-top:8px;">
         <span style="font-size:15px;font-weight:700;color:#1c2b3a;">Total Estimated Range</span>
         <span style="font-size:20px;font-weight:800;color:#2e6da4;">${fmtRange(r.totalLo, r.totalHi)}</span>
@@ -1199,14 +1181,13 @@ document.getElementById('btn-download').addEventListener('click', async () => {
         <div style="font-size:12px;color:#1e6b4a;margin-top:4px;">Applied toward final labor cost</div>
       </div>
       <div style="background:#eef5fb;border:1px solid #9bbbd9;border-radius:8px;padding:14px;">
-        <div style="font-size:11px;font-weight:700;color:#2e6da4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Move Coordination Fee</div>
-        <div style="font-size:18px;font-weight:800;color:#2e6da4;">${fmt(r.visitFee)}</div>
-        <div style="font-size:12px;color:#2e6da4;margin-top:4px;">Pre-move planning visit</div>
+        <div style="font-size:11px;font-weight:700;color:#2e6da4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Move Coordination</div>
+        <div style="font-size:13px;color:#2e6da4;margin-top:4px;line-height:1.5;">Included in your total estimate. Covers scheduling, routing, logistics, and pre-move planning.</div>
       </div>
     </div>
 
     <div style="font-size:12px;color:#566779;font-style:italic;border-top:1px solid #ccd6de;padding-top:14px;line-height:1.6;">
-      This is an estimate based on the information provided. Your final price is confirmed at your Move Coordination Visit.
+      This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.
     </div>
   `;
 
