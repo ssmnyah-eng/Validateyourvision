@@ -42,12 +42,12 @@ body{
     display:grid;
     grid-template-rows:auto 1fr;
     grid-template-columns:1fr 340px;
-    grid-template-areas:"hdr hdr" "main snap";
+    grid-template-areas:"hdr hdr" "main edu";
     min-height:100vh;
   }
   #prog-hdr{grid-area:hdr}
   #main{grid-area:main}
-  #snap{grid-area:snap}
+  #edu-panel{grid-area:edu}
 }
 
 /* ── PROGRESS HEADER ── */
@@ -76,12 +76,10 @@ body{
 /* ── MAIN ── */
 #main{
   display:flex;flex-direction:column;
-  padding:28px 24px 140px;
+  padding:28px 24px 120px;
 }
-@media(min-width:900px){
-  #main{padding:52px 60px 52px;max-width:660px}
-}
-@media(max-width:480px){#main{padding:20px 16px 160px}}
+@media(min-width:900px){#main{padding:52px 60px 52px;max-width:660px}}
+@media(max-width:480px){#main{padding:20px 16px 120px}}
 
 /* ── SCREENS ── */
 .screen{display:none;flex-direction:column;gap:22px}
@@ -101,7 +99,7 @@ body{
 /* Options */
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{
-  width:100%;padding:16px 20px;
+  width:100%;padding:14px 20px;
   border:2px solid var(--border);border-radius:var(--r);
   background:var(--white);text-align:left;cursor:pointer;
   font-size:1rem;font-weight:600;color:var(--navy);
@@ -112,22 +110,18 @@ body{
 .opt:hover{border-color:var(--accent);background:var(--accent-lt)}
 .opt.sel{border-color:var(--navy);background:var(--navy);color:var(--white)}
 .opt.multi.sel{border-color:var(--accent);background:var(--accent-lt);color:var(--navy)}
+.opt small{display:block;font-size:.76rem;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.4}
+.opt:hover small{color:var(--accent)}
+.opt.sel small{color:#7a9bb5}
+.opt.multi.sel small{color:var(--muted)}
 .chk{
   width:22px;height:22px;border-radius:50%;
   border:2px solid var(--border);flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   font-size:.65rem;font-weight:800;transition:all .15s;
+  margin-left:12px;
 }
 .opt.sel .chk,.opt.multi.sel .chk{background:var(--accent);border-color:var(--accent);color:var(--white)}
-
-/* Tip */
-.tip{
-  background:var(--white);
-  border:1px solid var(--border);border-left:4px solid var(--accent);
-  border-radius:8px;padding:14px 16px;
-  font-size:.84rem;color:var(--muted);line-height:1.6;
-}
-.tip strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:3px}
 
 /* Buttons */
 .btn-main{
@@ -160,8 +154,9 @@ body{
 /* Info boxes */
 .ibox{background:var(--accent-lt);border:1px solid #9bbbd9;border-radius:8px;padding:12px 16px;font-size:.88rem;color:var(--accent);font-weight:600}
 .ibox.warn{background:#fff8ec;border-color:#e8c070;color:#7a5010;font-weight:400}
+.ibox.ok{background:var(--green-lt);border-color:#9dd0b4;color:var(--green)}
 
-/* Lead screen */
+/* Lead */
 .lead-h{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;color:var(--navy);line-height:1.2}
 .lead-p{font-size:.95rem;color:var(--muted);line-height:1.6}
 
@@ -189,6 +184,9 @@ body{
 .invest-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#7a9bb5;font-weight:700;margin-bottom:8px}
 .invest-amt{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1px;line-height:1.1}
 .invest-note{font-size:.76rem;color:#7a9bb5;margin-top:6px}
+.invest-hrs{font-size:.8rem;color:#5a8ab0;margin-top:4px}
+
+.conf-msg{background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px;margin-top:12px;font-size:.82rem;color:#8fb3cf;line-height:1.6;font-style:italic}
 
 .incl-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px}
 .incl-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px}
@@ -212,57 +210,56 @@ body{
 .copy-ok{font-size:.83rem;color:var(--green);font-weight:600;text-align:center;display:none}
 .copy-ok.show{display:block}
 
-/* ── SNAPSHOT PANEL ── */
-#snap{
-  background:var(--white);
-  border-left:1px solid var(--border);
-  padding:28px 22px;
+/* ── EDU PANEL ── */
+#edu-panel{
+  background:var(--navy);
+  padding:52px 36px;
   overflow-y:auto;
-  position:sticky;top:61px;
+  position:sticky;
+  top:61px;
   height:calc(100vh - 61px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
-@media(max-width:899px){
-  #snap{
-    position:fixed;bottom:0;left:0;right:0;z-index:200;
-    border-left:none;border-top:1px solid var(--border);
-    border-radius:16px 16px 0 0;
-    height:auto;max-height:85vh;overflow-y:auto;
-    box-shadow:0 -4px 24px rgba(28,43,58,.15);
-    transform:translateY(calc(100% - 52px));
-    transition:transform .35s ease;
-    padding:0 22px 28px;
-  }
-  #snap.open{transform:translateY(0)}
+@media(max-width:899px){#edu-panel{display:none}}
+
+.edu-inner{animation:panelFade .4s ease}
+@keyframes panelFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.edu-tag{
+  font-size:.68rem;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;color:#5a8ab0;margin-bottom:18px;
+}
+.edu-head{
+  font-size:clamp(1.25rem,2vw,1.65rem);font-weight:800;
+  color:var(--white);line-height:1.22;letter-spacing:-.3px;margin-bottom:16px;
+}
+.edu-body{font-size:.9rem;color:#8fb3cf;line-height:1.75}
+.edu-fact{
+  margin-top:22px;background:rgba(255,255,255,.07);
+  border-left:3px solid var(--accent);border-radius:6px;
+  padding:14px 16px;font-size:.82rem;color:#b8d0e3;line-height:1.6;font-style:italic;
 }
 
-.snap-handle{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 0;cursor:pointer;user-select:none;
+/* Mobile tip (replaces edu panel on small screens) */
+.tip{
+  background:var(--white);
+  border:1px solid var(--border);border-left:4px solid var(--accent);
+  border-radius:8px;padding:14px 16px;
+  font-size:.84rem;color:var(--muted);line-height:1.6;
 }
-.snap-bar{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 10px}
-.snap-toggle-lbl{font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em}
-.snap-arrow{font-size:.7rem;color:var(--muted);transition:transform .3s}
-#snap.open .snap-arrow{transform:rotate(180deg)}
-@media(min-width:900px){.snap-handle{display:none}.snap-bar{display:none}}
-
-.snap-title{font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:16px;padding-top:2px}
-@media(max-width:899px){.snap-title{display:none}}
-
-.snap-rows{display:flex;flex-direction:column;gap:8px}
-.snap-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 11px;background:var(--mist);border-radius:8px;font-size:.83rem}
-.snap-lbl{color:var(--muted);font-weight:600;white-space:nowrap}
-.snap-val{color:var(--navy);font-weight:700;text-align:right}
-.snap-val.empty{color:var(--border);font-weight:400;font-style:italic}
-
-.snap-est{margin-top:14px;background:var(--navy);color:var(--white);border-radius:10px;padding:14px;text-align:center}
-.snap-est-lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:#7a9bb5;font-weight:700;margin-bottom:4px}
-.snap-est-amt{font-size:1.25rem;font-weight:800}
-.snap-crew{margin-top:8px;background:var(--accent-lt);border-radius:8px;padding:9px 12px;font-size:.8rem;color:var(--accent);font-weight:600;text-align:center}
+.tip strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:3px}
+@media(min-width:900px){.tip{display:none}}
 
 /* Utils */
 .hidden{display:none!important}
 .mt8{margin-top:8px}
 .mt16{margin-top:16px}
+.mt22{margin-top:22px}
+
+/* pac-container (Google autocomplete dropdown) z-index fix */
+.pac-container{z-index:9999}
 </style>
 </head>
 <body>
@@ -284,7 +281,7 @@ body{
       <div>
         <div class="badge">Validate Your Vision &mdash; Fredericksburg, VA</div>
         <h1 class="welcome-h">Let's Build<br>Your Move Plan</h1>
-        <p class="welcome-p" style="margin-top:14px">Moving can be stressful enough. Answer a few questions and we'll create a personalized moving estimate based on your specific move.</p>
+        <p class="welcome-p" style="margin-top:14px">Moving can be stressful enough. Answer a few questions and we'll create a personalized moving estimate based on your specific situation.</p>
         <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Start My Move Plan</button>
       </div>
     </div>
@@ -299,7 +296,7 @@ body{
       <button class="opt" data-val="townhome"><span>Townhome</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="house"><span>Single Family Home</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Every move is different. Understanding your home's layout helps us recommend the right crew and equipment.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Property type tells us what to expect before your crew arrives — elevator access, parking policies, and building rules all affect how a move is planned.</div>
   </div>
 
   <!-- Screen 2: Bedrooms -->
@@ -312,19 +309,31 @@ body{
       <button class="opt" data-val="3br"><span>3 Bedrooms</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="4br"><span>4+ Bedrooms</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Bedroom count helps estimate labor time, but access, distance, and inventory can all affect the final recommendation.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Bedroom count is the starting point — furnishing level, stair access, and layout all shape the final recommendation.</div>
   </div>
 
   <!-- Screen 3: Furnishing -->
   <div class="screen" id="screen-3">
     <p class="q-label">How furnished is your home?</p>
     <div class="opts" id="s3">
-      <button class="opt" data-val="light" data-mod="-1"><span>Lightly Furnished</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="average" data-mod="0"><span>Average Furnished</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="full" data-mod="1"><span>Fully Furnished</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="veryfull" data-mod="2"><span>Very Full / Heavy Contents</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="light" data-mod="-1">
+        <span>Lightly Furnished<small>Minimal furniture, few boxes, mostly empty rooms, or recently moved in</small></span>
+        <span class="chk">&#10003;</span>
+      </button>
+      <button class="opt" data-val="average" data-mod="0">
+        <span>Average Furnished<small>Typical home — beds, dressers, couch, dining table, normal closets and boxes</small></span>
+        <span class="chk">&#10003;</span>
+      </button>
+      <button class="opt" data-val="full" data-mod="1">
+        <span>Fully Furnished<small>Every room fully furnished — multiple TVs, bookshelves, office furniture, several large pieces</small></span>
+        <span class="chk">&#10003;</span>
+      </button>
+      <button class="opt" data-val="veryfull" data-mod="2">
+        <span>Very Full / Heavy Contents<small>Packed garage or basement, large collections, many boxes, years of accumulated belongings</small></span>
+        <span class="chk">&#10003;</span>
+      </button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Two homes with the same number of bedrooms can require very different moving times depending on the amount of furniture and belongings.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Two homes with the same bedroom count can take very different amounts of time based on how full they are. Be as accurate as possible here.</div>
   </div>
 
   <!-- Screen 4: Extra Spaces (multi) -->
@@ -338,19 +347,14 @@ body{
       <button class="opt" data-val="none" id="s4-none"><span>None of these</span><span class="chk">&#10003;</span></button>
     </div>
     <button class="btn-main" id="s4-cont">Continue</button>
-    <div class="tip"><strong>Move Planning Tip</strong>Additional spaces are one of the most overlooked parts of moving estimates and can significantly affect loading time.</div>
+    <div class="tip"><strong>Common Oversight</strong>Garages, basements, and attics are the most frequently overlooked parts of any move — and the most common cause of move-day surprises.</div>
   </div>
 
-  <!-- Screen 5: Stairs (question/options updated dynamically based on property type) -->
+  <!-- Screen 5: Stairs (rebuilt dynamically by JS) -->
   <div class="screen" id="screen-5">
     <p class="q-label" id="s5-q">How many flights of stairs are involved?</p>
-    <div class="opts" id="s5">
-      <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
-    </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Stairs can increase loading and unloading time, especially when moving large furniture.</div>
+    <div id="s5"></div>
+    <div class="tip"><strong>Move Planning Tip</strong>Stairs are one of the biggest time factors in any move — especially when moving large furniture or appliances.</div>
   </div>
 
   <!-- Screen 6: Long Carry -->
@@ -358,12 +362,12 @@ body{
     <p class="q-label">How far will the movers need to walk between the truck and your front door?</p>
     <p class="q-sub">Think about where the moving truck will be able to park</p>
     <div class="opts" id="s6">
-      <button class="opt" data-val="close" data-mod="0"><span>Right at the door &mdash; truck parks directly at my entrance</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk &mdash; across a parking lot or short driveway</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="long" data-mod="1"><span>Moderate walk &mdash; down a hallway, around a building, or through a complex</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="verylong" data-mod="2"><span>Long walk &mdash; across a large complex, parking structure, or gated area</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance — driveway or building door</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Every extra step adds up. The longer the carry, the more time it takes to load and unload &mdash; especially with heavy furniture.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Every extra step adds up. Long carries can add more time to a move than almost any other single factor.</div>
   </div>
 
   <!-- Screen 7: Specialty Items (multi) -->
@@ -383,45 +387,106 @@ body{
       <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
     </div>
     <button class="btn-main" id="s7-cont">Continue</button>
-    <div class="tip"><strong>Move Planning Tip</strong>Specialty items require additional planning, equipment, and labor to move safely.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Specialty items require specific equipment and planning. Identifying them now means your crew arrives fully prepared.</div>
   </div>
 
-  <!-- Screen 8: Distance -->
+  <!-- Screen 8: Disassembly (multi) -->
   <div class="screen" id="screen-8">
+    <p class="q-label">Will you need help disassembling or reassembling any furniture?</p>
+    <p class="q-sub">Select all that apply &mdash; our team handles all tools</p>
+    <div class="opts" id="s8">
+      <button class="opt multi" data-val="beds"><span>Beds</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="bunkbeds"><span>Bunk Beds</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="diningtable"><span>Dining Tables</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="desks"><span>Office Desks</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="sectional"><span>Sectional Sofas</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="tvmount"><span>TV Wall Mounts</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="shelving"><span>Shelving Units</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="cribs"><span>Cribs</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="exercise"><span>Exercise Equipment</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="other_da"><span>Other</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="none" id="s8-none"><span>None Needed</span><span class="chk">&#10003;</span></button>
+    </div>
+    <button class="btn-main" id="s8-cont">Continue</button>
+    <div class="tip"><strong>Save Time on Move Day</strong>Our team can safely disassemble and reassemble many household items so you do not have to.</div>
+  </div>
+
+  <!-- Screen 9: Distance -->
+  <div class="screen" id="screen-9">
     <p class="q-label">Where are you moving?</p>
+    <p class="q-sub">Start typing and select your address from the suggestions</p>
     <div class="frow">
       <label>Current Address</label>
-      <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA">
+      <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA" autocomplete="off">
     </div>
     <div class="frow">
       <label>Destination Address</label>
-      <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA">
+      <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA" autocomplete="off">
     </div>
-    <button class="btn-main" id="btn-calc">Calculate Distance</button>
     <div class="ibox hidden mt8" id="dist-res"></div>
-    <button class="btn-main hidden mt8" id="s8-cont">Continue</button>
-    <div class="tip"><strong>Move Planning Tip</strong>We use real driving distance to create more accurate transportation estimates.</div>
+    <button class="btn-main hidden mt8" id="s9-cont">Continue</button>
+    <button class="btn-sec mt8" id="btn-calc" style="font-size:.85rem">Address not showing up? Calculate manually</button>
+    <div class="tip"><strong>The VYV Difference</strong>We calculate your actual driving distance — not a rough estimate by zip code — so your transportation cost reflects exactly where you are going.</div>
   </div>
 
-  <!-- Screen 9: Packing -->
-  <div class="screen" id="screen-9">
-    <p class="q-label">Would you like professional packing services?</p>
-    <div class="opts" id="s9">
-      <button class="opt" data-val="no"><span>No Packing Needed</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="yes"><span>Packing Assistance Needed</span><span class="chk">&#10003;</span></button>
-    </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Professional packing can save time and reduce the risk of damage during transit.</div>
-  </div>
-
-  <!-- Screen 10: Packer Count (conditional) -->
+  <!-- Screen 10: Packing Type -->
   <div class="screen" id="screen-10">
-    <p class="q-label">How many packers would you like?</p>
+    <p class="q-label">What type of packing assistance would you like?</p>
     <div class="opts" id="s10">
+      <button class="opt" data-val="none"><span>No Packing Needed<small>I will handle all packing before move day</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="fragile"><span>A Few Fragile Items<small>Glassware, dishes, artwork, or other delicate pieces</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="kitchen"><span>Kitchen Only<small>Full kitchen pack — dishes, glassware, pantry items</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="rooms"><span>Several Rooms<small>Multiple rooms need professional packing assistance</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="full"><span>Full Home Packing<small>Our team handles everything — fully hands-off experience</small></span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Packing Services</strong>Professional packing reduces damage risk and move-day stress. Our team uses professional-grade materials and techniques.</div>
+  </div>
+
+  <!-- Screen 11: Packer Count (conditional) -->
+  <div class="screen" id="screen-11">
+    <p class="q-label">How many professional packers would you like?</p>
+    <div class="opts" id="s11">
       <button class="opt" data-val="2" data-rate="100"><span>2 Packers &mdash; $100/hr</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="3" data-rate="150"><span>3 Packers &mdash; $150/hr</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="4" data-rate="200"><span>4 Packers &mdash; $200/hr</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Packing Materials</strong>Materials typically range from $180 (1BR) to $750+ (3BR+) and are confirmed at your Move Coordination Visit.</div>
+    <div class="tip"><strong>Packing Services</strong>Packing materials — boxes, wrap, tape, and padding — typically range from $180 for smaller homes to $750+ for larger ones, confirmed at your Move Coordination Visit.</div>
+  </div>
+
+  <!-- Screen 12: Storage -->
+  <div class="screen" id="screen-12">
+    <p class="q-label">Does your move involve a storage unit?</p>
+    <div class="opts" id="s12">
+      <button class="opt" data-val="no"><span>No</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="pickup"><span>Picking up from a storage unit<small>We will collect items from your storage before the main move</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="dropoff"><span>Dropping off to a storage unit<small>Some or all items go to storage before your final destination</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="both"><span>Both pickup and delivery<small>Collecting from one storage and delivering to another</small></span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Storage Stops</strong>Storage stops add time and coordination to any move. Telling us now means we plan for it from the start — nothing gets rushed or missed.</div>
+  </div>
+
+  <!-- Screen 13: Move Date -->
+  <div class="screen" id="screen-13">
+    <p class="q-label">When are you planning to move?</p>
+    <div class="opts" id="s13">
+      <button class="opt" data-val="week"><span>Within 7 Days<small>I need to move very soon</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="month"><span>Within 30 Days<small>My move is coming up in the next few weeks</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="quarter"><span>1 to 3 Months<small>I have some time to plan but want to start early</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="planning"><span>Just Planning Ahead<small>No set date yet — exploring my options</small></span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Timing Matters</strong>The earlier you plan, the more flexibility you have on crew availability and scheduling. Most customers who plan further out report a smoother overall experience.</div>
+  </div>
+
+  <!-- Screen 14: Confidence -->
+  <div class="screen" id="screen-14">
+    <p class="q-label">How confident are you that you have included everything being moved?</p>
+    <p class="q-sub">This helps us calibrate how to present your estimate</p>
+    <div class="opts" id="s14">
+      <button class="opt" data-val="very"><span>Very Confident<small>I have thought through everything — rooms, garage, storage, all of it</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="mostly"><span>Mostly Confident<small>I covered the main things but may have missed a few details</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="unsure"><span>Not Sure<small>I may have missed things — there is a lot to think about</small></span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Almost There</strong>Your estimate is only as accurate as the information provided. If anything is missing, our team reviews everything with you before confirming your final plan.</div>
   </div>
 
   <!-- Lead Capture -->
@@ -453,16 +518,18 @@ body{
       <div class="invest-lbl">Estimated Investment</div>
       <div class="invest-amt" id="res-total">—</div>
       <div class="invest-note">Price range based on your move details</div>
+      <div class="invest-hrs" id="res-hrs"></div>
+      <div class="conf-msg hidden" id="conf-msg"></div>
     </div>
 
     <div class="incl-box">
       <div class="incl-title">Included in Your Estimate</div>
       <div class="incl-item"><span class="incl-chk">&#10003;</span>Professional Movers</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Transportation &amp; Equipment</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Equipment</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Truck &amp; Transportation</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Equipment &amp; Supplies</div>
       <div class="incl-item"><span class="incl-chk">&#10003;</span>Travel Costs</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Move Planning</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Scheduling Coordination</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Move Planning &amp; Coordination</div>
+      <div class="incl-item hidden" id="incl-da"><span class="incl-chk">&#10003;</span>Furniture Disassembly &amp; Reassembly</div>
       <div class="incl-item hidden" id="incl-pack"><span class="incl-chk">&#10003;</span>Professional Packing</div>
     </div>
 
@@ -490,28 +557,12 @@ body{
 
 </div><!-- /main -->
 
-<!-- SNAPSHOT -->
-<aside id="snap">
-  <div class="snap-handle" id="snap-toggle">
-    <div><div class="snap-bar"></div><span class="snap-toggle-lbl">Your Move Plan So Far</span></div>
-    <span class="snap-arrow">&#9650;</span>
-  </div>
-  <div class="snap-title">Your Move Plan</div>
-  <div class="snap-rows">
-    <div class="snap-row"><span class="snap-lbl">Property</span><span class="snap-val empty" id="sn-prop">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Bedrooms</span><span class="snap-val empty" id="sn-size">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Furnishing</span><span class="snap-val empty" id="sn-furn">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Extra Areas</span><span class="snap-val empty" id="sn-spaces">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Stairs</span><span class="snap-val empty" id="sn-stairs">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Walk Distance</span><span class="snap-val empty" id="sn-carry">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Specialty</span><span class="snap-val empty" id="sn-spec">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Distance</span><span class="snap-val empty" id="sn-dist">—</span></div>
-    <div class="snap-row"><span class="snap-lbl">Packing</span><span class="snap-val empty" id="sn-pack">—</span></div>
-  </div>
-  <div class="snap-crew hidden" id="sn-crew"></div>
-  <div class="snap-est hidden" id="sn-est">
-    <div class="snap-est-lbl">Estimated Investment</div>
-    <div class="snap-est-amt" id="sn-amt">—</div>
+<!-- EDUCATIONAL PANEL -->
+<aside id="edu-panel">
+  <div class="edu-inner" id="edu-inner">
+    <div class="edu-tag">The VYV Difference</div>
+    <div class="edu-head">A moving estimate built around your actual move.</div>
+    <div class="edu-body">Most companies estimate your move using only bedroom count. We consider your entire home, route, crew needs, and access details — so your estimate reflects your actual situation.</div>
   </div>
 </aside>
 
@@ -521,46 +572,87 @@ body{
 
 <script>
 /* ══════════════════════════════════════════
-   CONFIG — edit values here as needed
+   CONFIG
    ══════════════════════════════════════════ */
 const C = {
-  TRUCK_BASE:    176.55,   // UPDATE: adjust when rental rates change
-  TRUCK_MILE:    1.59,
-  MIN_HRS:       3,
-  STAIR_HRS:     0.75,
-  CREW_RATES:    {2:123, 3:185, 4:235},
-  PACKER_RATES:  {2:100, 3:150, 4:200},
-  BASE_HRS:      {studio:[2,3],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,12]},
-  PACK_HRS:      {studio:[3,4],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,10]},
-  VISIT:         {studio:45,'1br':45,'2br':55,'3br':65,'4br':75},
-  DEPOSIT:       {studio:370,'1br':370,'2br':370,'3br':370,'4br':400},
-  CARRY_MOD:     {close:0,medium:.5,long:1,verylong:2},
-  FURNISH_MOD:   {light:-1,average:0,full:1,veryfull:2},
-  REC_CREW:      {studio:2,'1br':2,'2br':3,'3br':3,'4br':4},
-  MAPS_KEY:      'AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0',
+  TRUCK_BASE:      176.55,
+  TRUCK_MILE:      1.59,
+  MIN_HRS:         3,
+  STAIR_HRS:       0.75,
+  DISASSEMBLY_HRS: 0.5,
+  CREW_RATES:      {2:123, 3:185, 4:235},
+  PACKER_RATES:    {2:100, 3:150, 4:200},
+  BASE_HRS:        {studio:[2,3],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,12]},
+  PACK_HRS:        {studio:[3,4],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,10]},
+  PACK_MOD:        {fragile:.35, kitchen:.5, rooms:.75, full:1},
+  VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75},
+  DEPOSIT:         {studio:370,'1br':370,'2br':370,'3br':370,'4br':400},
+  CARRY_MOD:       {close:0, medium:.5, long:1, verylong:2},
+  FURNISH_MOD:     {light:-1, average:0, full:1, veryfull:2},
+  REC_CREW:        {studio:2,'1br':2,'2br':3,'3br':3,'4br':4},
 };
 
 /* ══════════════════════════════════════════
    STATE
    ══════════════════════════════════════════ */
 const S = {
-  propType:   null,
-  homeSize:   null,
-  furnish:    null, furnMod:  0,
-  spaces:     [],
-  aptFloor:   null,   // apartment floor label (display only)
-  stairs:     null,   // actual flights count (drives pricing)
-  carry:      null, carryMod: 0,
-  specialty:  [],
-  miles:      0,
-  packingOn:  null,
-  packers:    null, packerRate: 0,
-  crewSize:   null, crewRate:   0,
+  propType:    null,
+  homeSize:    null,
+  furnish:     null, furnMod:    0,
+  spaces:      [],
+  aptFloor:    null,
+  stairs:      null,
+  carry:       null, carryMod:   0,
+  specialty:   [],
+  disassembly: [],
+  miles:       0,
+  packType:    null,
+  packingOn:   null,
+  packers:     null, packerRate: 0,
+  storage:     null,
+  moveDate:    null,
+  confidence:  null,
+  crewSize:    null, crewRate:   0,
 };
+
+/* ══════════════════════════════════════════
+   EDUCATIONAL PANEL CONTENT
+   ══════════════════════════════════════════ */
+const PANELS = {
+  welcome:{tag:'The VYV Difference',head:'A moving estimate built around your actual move.',body:'Most companies estimate using only bedroom count. We consider your entire home, route, crew needs, and access details — so your estimate reflects your actual situation.'},
+  '1':{tag:'Did You Know',head:'Property type affects more than you might think.',body:'Apartments, condos, and houses each come with different access requirements — elevator policies, parking restrictions, long hallways, and building rules all affect how a move is planned.',fact:'Move-day delays are most commonly caused by access issues that were not identified during the original estimate.'},
+  '2':{tag:'Move Planning Insight',head:'Bedroom count is just the starting point.',body:'Two homes with the same number of bedrooms can require very different amounts of time and crew depending on furnishing level, stair access, and how the home is laid out.',fact:'Choosing the right crew size is one of the most impactful decisions in the entire moving process.'},
+  '3':{tag:'Why This Matters',head:'Furnishing level is the single biggest variable in any estimate.',body:'A lightly furnished studio can take less time to move than a fully packed one-bedroom. Being as accurate as possible here gives you the most reliable estimate.',fact:'Homes are consistently underestimated when furnishing level is not accounted for from the start.'},
+  '4':{tag:'Common Oversight',head:'Extra spaces are what estimates get wrong most often.',body:'Garages, attics, and basements are frequently overlooked during estimates — and then discovered on move day. Including them now protects both your timeline and your budget.',fact:'Most move-day overruns are tied directly to spaces that were left out of the original plan.'},
+  '5':{tag:'Move Planning Tip',head:'Stairs are one of the biggest time factors in any move.',body:'Every additional trip up a flight of stairs adds labor time — especially with large furniture or appliances. Accurate stair information helps us staff your move correctly from the start.'},
+  '6':{tag:'Move Planning Tip',head:'Long carries add up faster than most people expect.',body:'When a truck has to park far from your entrance, every single trip takes longer. This one factor can add hours to a move that would otherwise be straightforward.'},
+  '7':{tag:'Specialty Items',head:'Some items require more than just extra hands.',body:'Pianos, safes, fish tanks, and antiques require specific handling, equipment, and sometimes a larger crew. Identifying them now means we come fully prepared on move day.'},
+  '8':{tag:'Hands-Off Moving',head:'We handle the heavy work — including the setup.',body:'Beds, desks, wall mounts, and sectional sofas often need to be disassembled to fit through doorways. Our team can handle this as part of your move so you do not have to.',fact:'Furniture disassembly and reassembly is one of the most frequently requested add-ons for customers who want a fully hands-off experience.'},
+  '9':{tag:'The VYV Difference',head:'We calculate your real driving distance — not a rough estimate.',body:'Some moving companies estimate mileage by zip code or general region. We use your actual addresses to calculate your real driving route, so your transportation cost reflects exactly where you are going.'},
+  '10':{tag:'Packing Services',head:'Professional packing protects what matters most.',body:'From a handful of fragile items to your entire home, our packing team uses professional-grade materials and proven techniques. Everything is packed to arrive safely.',fact:'Most packing-related damage happens because items were not individually wrapped or boxes were not fully packed to prevent shifting in transit.'},
+  '11':{tag:'Packing Services',head:'More packers means a faster, smoother packing day.',body:'A larger packing crew finishes the job more quickly and reduces the window of exposure for your belongings. We will recommend a starting point based on your home size and packing scope.'},
+  '12':{tag:'Storage Stops',head:'We plan for every stop — not just the main one.',body:'Whether you are picking up from a storage unit, dropping off before your destination, or both, we factor that into your move plan so no stop is rushed or overlooked.'},
+  '13':{tag:'Timing Matters',head:'The earlier you plan, the smoother your move.',body:'Your move timeline helps us check crew and truck availability so we can give you the most accurate scheduling options.',fact:'Planning ahead is consistently cited as the single biggest factor in a low-stress moving experience.'},
+  '14':{tag:'Almost There',head:'Your estimate is only as accurate as the details you provide.',body:'If you are unsure about something, that is okay. Our team reviews every move plan with you before anything is confirmed — this estimate is your starting point, not your final number.'},
+  lead:{tag:'Your Move Plan Is Ready',head:'One last step before you see your estimate.',body:'We use your contact information to follow up about your move and to send your estimate summary. Your information is never shared with third parties.'},
+};
+
+function updatePanel(id) {
+  const p = PANELS[id];
+  if (!p) return;
+  const el = document.getElementById('edu-inner');
+  el.outerHTML = `<div class="edu-inner" id="edu-inner">
+    <div class="edu-tag">${p.tag}</div>
+    <div class="edu-head">${p.head}</div>
+    <div class="edu-body">${p.body}</div>
+    ${p.fact ? `<div class="edu-fact">${p.fact}</div>` : ''}
+  </div>`;
+}
 
 /* ══════════════════════════════════════════
    NAVIGATION
    ══════════════════════════════════════════ */
+const APT_TYPES = ['apartment','condo'];
 let cur = 'welcome';
 
 function show(id) {
@@ -569,23 +661,28 @@ function show(id) {
   cur = id;
   if (id === '5') buildStairsScreen();
   updateProg();
+  updatePanel(id);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-const TOTAL = 10;
-const STEP_MAP = {welcome:0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,lead:10,results:10};
+const TOTAL = 14;
+const STEP_MAP = {
+  welcome:0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,
+  '8':8,'9':9,'10':10,'11':11,'12':12,'13':13,'14':14,
+  lead:14,results:14
+};
 
 function updateProg() {
   const n = STEP_MAP[cur] || 0;
   document.getElementById('prog-fill').style.width = (n / TOTAL * 100) + '%';
-  document.getElementById('step-cnt').textContent  = (cur === 'welcome' || cur === 'results') ? '' : `${n} of ${TOTAL}`;
-  document.getElementById('back-btn').classList.toggle('hide', cur === 'welcome' || cur === 'results');
+  document.getElementById('step-cnt').textContent = (cur==='welcome'||cur==='results') ? '' : `${n} of ${TOTAL}`;
+  document.getElementById('back-btn').classList.toggle('hide', cur==='welcome'||cur==='results');
 }
 
 document.getElementById('back-btn').addEventListener('click', () => {
-  const order = ['welcome','1','2','3','4','5','6','7','8','9'];
-  if (S.packingOn) order.push('10');
-  order.push('lead');
+  const order = ['welcome','1','2','3','4','5','6','7','8','9','10'];
+  if (S.packingOn) order.push('11');
+  order.push('12','13','14','lead');
   const i = order.indexOf(cur);
   if (i > 0) show(order[i - 1]);
 });
@@ -600,37 +697,43 @@ function next() {
   if (cur === '6')  return show('7');
   if (cur === '7')  return show('8');
   if (cur === '8')  return show('9');
-  if (cur === '9')  return S.packingOn ? show('10') : show('lead');
-  if (cur === '10') return show('lead');
+  if (cur === '9')  return show('10');
+  if (cur === '10') return S.packingOn ? show('11') : show('12');
+  if (cur === '11') return show('12');
+  if (cur === '12') return show('13');
+  if (cur === '13') return show('14');
+  if (cur === '14') return show('lead');
 }
 
 /* ══════════════════════════════════════════
    CALC
    ══════════════════════════════════════════ */
-const fmt      = n  => '$' + Math.round(n).toLocaleString();
+const fmt      = n => '$' + Math.round(n).toLocaleString();
 const fmtR     = (a,b) => fmt(a) + ' – ' + fmt(b);
-const roundUp5 = n  => Math.ceil(n / 5) * 5;
+const roundUp5 = n => Math.ceil(n / 5) * 5;
 
 function calc() {
   if (!S.homeSize || !S.crewSize) return null;
   const base  = C.BASE_HRS[S.homeSize];
   const sadd  = (S.stairs || 0) * C.STAIR_HRS;
+  const dadd  = S.disassembly.length * C.DISASSEMBLY_HRS;
   const spadd = S.spaces.length;
   const fm    = S.furnMod;
   const cm    = S.carryMod;
-  const lo    = Math.max(C.MIN_HRS, base[0] + sadd + spadd + fm + cm);
-  const hi    = Math.max(C.MIN_HRS, base[1] + sadd + spadd + fm + cm);
+  const lo    = Math.max(C.MIN_HRS, base[0] + sadd + dadd + spadd + fm + cm);
+  const hi    = Math.max(C.MIN_HRS, base[1] + sadd + dadd + spadd + fm + cm);
   const llab  = lo * S.crewRate;
   const hlab  = hi * S.crewRate;
   const truck = roundUp5(C.TRUCK_BASE + S.miles * C.TRUCK_MILE);
   let lp = 0, hp = 0;
-  if (S.packingOn && S.packers) {
+  if (S.packingOn && S.packers && S.packType) {
     const ph = C.PACK_HRS[S.homeSize];
-    lp = ph[0] * S.packerRate;
-    hp = ph[1] * S.packerRate;
+    const pm = C.PACK_MOD[S.packType] || 1;
+    lp = ph[0] * pm * S.packerRate;
+    hp = ph[1] * pm * S.packerRate;
   }
   const visit = C.VISIT[S.homeSize];
-  const extra = sadd + spadd + fm + cm;
+  const extra = sadd + dadd + spadd + fm + cm;
   return {
     lo, hi, llab, hlab, truck, lp, hp, visit,
     totalLo: llab + truck + lp + visit,
@@ -641,76 +744,28 @@ function calc() {
 }
 
 /* ══════════════════════════════════════════
-   SNAPSHOT
+   LABELS
    ══════════════════════════════════════════ */
-const APT_TYPES = ['apartment','condo'];
-const PL = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Single Family Home'};
-const SL = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
-const FL = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
-const CL = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
-const SPECL = {piano:'Piano',safe:'Safe / Gun Safe',pool:'Pool Table',fishtank:'Fish Tank / Aquarium',glass:'Large Glass / Mirrors',hottub:'Hot Tub / Spa',clock:'Grandfather Clock',artwork:'Large Artwork / Antiques',commercial:'Commercial Equipment'};
-
-function sv(id, val, empty) {
-  const el = document.getElementById('sn-' + id);
-  if (!el) return;
-  el.textContent = val;
-  el.classList.toggle('empty', !!empty);
-}
-
-function updateSnap() {
-  sv('prop',   S.propType  ? PL[S.propType]  : '—', !S.propType);
-  sv('size',   S.homeSize  ? SL[S.homeSize]  : '—', !S.homeSize);
-  sv('furn',   S.furnish   ? FL[S.furnish]   : '—', !S.furnish);
-  sv('spaces', S.spaces.length ? S.spaces.map(s=>s[0].toUpperCase()+s.slice(1)).join(', ') : 'None', false);
-  const isApt2 = APT_TYPES.includes(S.propType);
-  let stairsLabel = '—';
-  if (isApt2) {
-    if (S.aptFloor && S.stairs !== null) {
-      stairsLabel = `${S.aptFloor} · ${S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight'+(S.stairs===1?'':'s')}`;
-    } else if (S.aptFloor) {
-      stairsLabel = S.aptFloor;
-    }
-  } else if (S.stairs !== null) {
-    stairsLabel = S.stairs===0?'None':(S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s');
-  }
-  sv('stairs', stairsLabel, stairsLabel==='—');
-  sv('carry',  S.carry     ? CL[S.carry]     : '—', !S.carry);
-  sv('spec',   S.specialty.length ? S.specialty.map(s=>SPECL[s]||s).join(', ') : 'None', false);
-  sv('dist',   S.miles > 0 ? (S.miles/2).toFixed(1)+' mi one way' : '—', S.miles===0);
-  sv('pack',   S.packingOn===null ? '—' : !S.packingOn ? 'Not needed' : S.packers ? `${S.packers} Packers @ $${S.packerRate}/hr` : 'Needed', S.packingOn===null);
-
-  const crewEl = document.getElementById('sn-crew');
-  if (S.homeSize && S.crewSize) {
-    const rec = C.REC_CREW[S.homeSize];
-    crewEl.textContent = `${S.crewSize} Movers (${S.crewSize===rec?'Recommended':'Adjusted'})`;
-    crewEl.classList.remove('hidden');
-  } else {
-    crewEl.classList.add('hidden');
-  }
-
-  const r = calc();
-  const estEl = document.getElementById('sn-est');
-  if (r) {
-    estEl.classList.remove('hidden');
-    document.getElementById('sn-amt').textContent = fmtR(r.totalLo, r.totalHi);
-  } else {
-    estEl.classList.add('hidden');
-  }
-}
+const PL   = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Single Family Home'};
+const SL   = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
+const FL   = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
+const CL   = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
+const SPECL= {piano:'Piano',safe:'Safe / Gun Safe',pool:'Pool Table',fishtank:'Fish Tank / Aquarium',glass:'Large Glass / Mirrors',hottub:'Hot Tub / Spa',clock:'Grandfather Clock',artwork:'Large Artwork / Antiques',commercial:'Commercial Equipment'};
+const PTL  = {none:'None',fragile:'Fragile Items',kitchen:'Kitchen Only',rooms:'Several Rooms',full:'Full Home'};
+const STL  = {no:'No',pickup:'Pickup from storage',dropoff:'Dropoff to storage',both:'Both'};
+const DTL  = {week:'Within 7 Days',month:'Within 30 Days',quarter:'1–3 Months',planning:'Just Planning Ahead'};
 
 /* ══════════════════════════════════════════
    SCREEN HANDLERS
    ══════════════════════════════════════════ */
 
-/* Auto-advance single-select */
 function single(containerId, cb) {
   document.getElementById(containerId).addEventListener('click', e => {
     const btn = e.target.closest('.opt');
     if (!btn || btn.classList.contains('multi')) return;
-    document.querySelectorAll('#'+containerId+' .opt').forEach(b=>b.classList.remove('sel'));
+    document.querySelectorAll('#'+containerId+' .opt').forEach(b => b.classList.remove('sel'));
     btn.classList.add('sel');
     if (cb) cb(btn);
-    updateSnap();
     const atClick = cur;
     setTimeout(() => { if (cur === atClick) next(); }, 320);
   });
@@ -732,17 +787,16 @@ single('s2', btn => {
 /* S3: Furnishing */
 single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.dataset.mod); });
 
-/* S4: Extra Spaces (multi) */
+/* S4: Extra Spaces */
 (()=>{
   const none = document.getElementById('s4-none');
   document.getElementById('s4').addEventListener('click', e => {
     const btn = e.target.closest('.opt');
     if (!btn) return;
     if (btn.id === 's4-none') {
-      document.querySelectorAll('#s4 .opt.multi').forEach(b=>b.classList.remove('sel'));
+      document.querySelectorAll('#s4 .opt.multi').forEach(b => b.classList.remove('sel'));
       S.spaces = [];
       none.classList.add('sel');
-      updateSnap();
       setTimeout(()=>{ if(cur==='4') next(); },320);
       return;
     }
@@ -751,20 +805,17 @@ single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.da
     const v = btn.dataset.val;
     if (btn.classList.contains('sel')) { if(!S.spaces.includes(v)) S.spaces.push(v); }
     else { S.spaces = S.spaces.filter(x=>x!==v); }
-    updateSnap();
   });
   document.getElementById('s4-cont').addEventListener('click', ()=>next());
 })();
 
-/* S5: Stairs — apartment/condo shows floor picker; house/townhome shows flights */
+/* S5: Stairs — context-aware */
 function buildStairsScreen() {
   const isApt = APT_TYPES.includes(S.propType);
   const qEl   = document.getElementById('s5-q');
   const s5    = document.getElementById('s5');
-
-  // Reset apt state when rebuilding
-  S.aptFloor = null;
-  S.stairs   = null;
+  S.aptFloor  = null;
+  S.stairs    = null;
 
   if (isApt) {
     qEl.textContent = 'What floor are you on?';
@@ -776,7 +827,7 @@ function buildStairsScreen() {
         <button class="opt" data-floor="4th Floor or Higher"><span>4th Floor or Higher</span><span class="chk">&#10003;</span></button>
       </div>
       <div id="s5-flights-wrap" style="display:none;margin-top:22px">
-        <p class="q-label" style="font-size:1.1rem;margin-bottom:12px">How many flights of stairs do you walk to reach your floor?</p>
+        <p class="q-label" style="font-size:1.05rem;margin-bottom:12px">How many flights of stairs do you walk to reach your floor?</p>
         <div class="opts" id="s5-flights">
           <button class="opt" data-val="0"><span>None &mdash; elevator or ground-level entry</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
@@ -786,7 +837,6 @@ function buildStairsScreen() {
         </div>
       </div>`;
 
-    // Floor picker — reveal flights section on selection
     document.getElementById('s5-floor').addEventListener('click', e => {
       const btn = e.target.closest('.opt');
       if (!btn) return;
@@ -794,17 +844,14 @@ function buildStairsScreen() {
       btn.classList.add('sel');
       S.aptFloor = btn.dataset.floor;
       document.getElementById('s5-flights-wrap').style.display = 'block';
-      updateSnap();
     });
 
-    // Flights picker — auto-advance after selection
     document.getElementById('s5-flights').addEventListener('click', e => {
       const btn = e.target.closest('.opt');
       if (!btn) return;
       document.querySelectorAll('#s5-flights .opt').forEach(b => b.classList.remove('sel'));
       btn.classList.add('sel');
       S.stairs = parseInt(btn.dataset.val);
-      updateSnap();
       const atClick = cur;
       setTimeout(() => { if (cur === atClick) next(); }, 320);
     });
@@ -812,18 +859,18 @@ function buildStairsScreen() {
   } else {
     qEl.textContent = 'How many flights of stairs are involved at either location?';
     s5.innerHTML = `
-      <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>`;
-
-    s5.addEventListener('click', e => {
+      <div class="opts" id="s5-house">
+        <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
+      </div>`;
+    document.getElementById('s5-house').addEventListener('click', e => {
       const btn = e.target.closest('.opt');
       if (!btn) return;
-      s5.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+      document.querySelectorAll('#s5-house .opt').forEach(b => b.classList.remove('sel'));
       btn.classList.add('sel');
       S.stairs = parseInt(btn.dataset.val);
-      updateSnap();
       const atClick = cur;
       setTimeout(() => { if (cur === atClick) next(); }, 320);
     });
@@ -833,17 +880,16 @@ function buildStairsScreen() {
 /* S6: Carry */
 single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dataset.mod); });
 
-/* S7: Specialty (multi) */
+/* S7: Specialty */
 (()=>{
   const none = document.getElementById('s7-none');
   document.getElementById('s7').addEventListener('click', e => {
     const btn = e.target.closest('.opt');
     if (!btn) return;
     if (btn.id === 's7-none') {
-      document.querySelectorAll('#s7 .opt.multi').forEach(b=>b.classList.remove('sel'));
+      document.querySelectorAll('#s7 .opt.multi').forEach(b => b.classList.remove('sel'));
       S.specialty = [];
       none.classList.add('sel');
-      updateSnap();
       setTimeout(()=>{ if(cur==='7') next(); },320);
       return;
     }
@@ -852,35 +898,46 @@ single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dat
     const v = btn.dataset.val;
     if (btn.classList.contains('sel')) { if(!S.specialty.includes(v)) S.specialty.push(v); }
     else { S.specialty = S.specialty.filter(x=>x!==v); }
-    updateSnap();
   });
   document.getElementById('s7-cont').addEventListener('click', ()=>next());
 })();
 
-/* S8: Distance — uses Maps JS SDK (avoids CORS block on direct REST call) */
-document.getElementById('btn-calc').addEventListener('click', ()=>{
+/* S8: Disassembly */
+(()=>{
+  const none = document.getElementById('s8-none');
+  document.getElementById('s8').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    if (btn.id === 's8-none') {
+      document.querySelectorAll('#s8 .opt.multi').forEach(b => b.classList.remove('sel'));
+      S.disassembly = [];
+      none.classList.add('sel');
+      setTimeout(()=>{ if(cur==='8') next(); },320);
+      return;
+    }
+    none.classList.remove('sel');
+    btn.classList.toggle('sel');
+    const v = btn.dataset.val;
+    if (btn.classList.contains('sel')) { if(!S.disassembly.includes(v)) S.disassembly.push(v); }
+    else { S.disassembly = S.disassembly.filter(x=>x!==v); }
+  });
+  document.getElementById('s8-cont').addEventListener('click', ()=>next());
+})();
+
+/* S9: Distance */
+function runDistanceCalc() {
   const orig  = document.getElementById('pickup-addr').value.trim();
   const dest  = document.getElementById('dropoff-addr').value.trim();
   const resEl = document.getElementById('dist-res');
-  const contB = document.getElementById('s8-cont');
-  const btn   = document.getElementById('btn-calc');
+  const contB = document.getElementById('s9-cont');
 
-  resEl.classList.add('hidden'); contB.classList.add('hidden');
-  resEl.classList.remove('warn');
+  if (!orig || !dest) return;
+  if (typeof google === 'undefined' || !google.maps || !google.maps.DistanceMatrixService) return;
 
-  if (!orig || !dest) {
-    resEl.textContent = 'Please enter both addresses.';
-    resEl.classList.remove('hidden'); resEl.classList.add('warn');
-    return;
-  }
-
-  if (typeof google === 'undefined' || !google.maps || !google.maps.DistanceMatrixService) {
-    resEl.textContent = 'Maps service is still loading — please try again in a moment.';
-    resEl.classList.remove('hidden'); resEl.classList.add('warn');
-    return;
-  }
-
-  btn.textContent = 'Calculating...'; btn.disabled = true;
+  resEl.classList.remove('hidden','warn','ok');
+  resEl.textContent = 'Calculating driving distance...';
+  resEl.classList.remove('hidden');
+  contB.classList.add('hidden');
 
   const svc = new google.maps.DistanceMatrixService();
   svc.getDistanceMatrix({
@@ -889,33 +946,41 @@ document.getElementById('btn-calc').addEventListener('click', ()=>{
     travelMode:   google.maps.TravelMode.DRIVING,
     unitSystem:   google.maps.UnitSystem.IMPERIAL,
   }, (res, status) => {
-    btn.textContent = 'Recalculate Distance'; btn.disabled = false;
-
     if (status !== 'OK' || !res.rows[0] || res.rows[0].elements[0].status !== 'OK') {
       resEl.textContent = 'Could not calculate distance — please check both addresses and try again.';
-      resEl.classList.remove('hidden'); resEl.classList.add('warn');
+      resEl.classList.add('warn');
       return;
     }
-
-    const el   = res.rows[0].elements[0];
-    const ow   = el.distance.value / 1609.344;   // meters → miles
-    S.miles    = ow * 2;
+    const el = res.rows[0].elements[0];
+    const ow = el.distance.value / 1609.344;
+    S.miles  = ow * 2;
     resEl.innerHTML = `<strong>${el.distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip`;
-    resEl.classList.remove('hidden', 'warn');
+    resEl.classList.add('ok');
     contB.classList.remove('hidden');
-    updateSnap();
   });
-});
-document.getElementById('s8-cont').addEventListener('click', ()=>next());
+}
 
-/* S9: Packing */
-single('s9', btn => {
-  S.packingOn = btn.dataset.val === 'yes';
-  if (!S.packingOn) { S.packers=null; S.packerRate=0; }
+document.getElementById('btn-calc').addEventListener('click', runDistanceCalc);
+document.getElementById('s9-cont').addEventListener('click', ()=>next());
+
+/* S10: Packing Type */
+single('s10', btn => {
+  S.packType  = btn.dataset.val;
+  S.packingOn = S.packType !== 'none';
+  if (!S.packingOn) { S.packers = null; S.packerRate = 0; }
 });
 
-/* S10: Packer count */
-single('s10', btn => { S.packers=parseInt(btn.dataset.val); S.packerRate=parseInt(btn.dataset.rate); });
+/* S11: Packer Count */
+single('s11', btn => { S.packers = parseInt(btn.dataset.val); S.packerRate = parseInt(btn.dataset.rate); });
+
+/* S12: Storage */
+single('s12', btn => { S.storage = btn.dataset.val; });
+
+/* S13: Move Date */
+single('s13', btn => { S.moveDate = btn.dataset.val; });
+
+/* S14: Confidence */
+single('s14', btn => { S.confidence = btn.dataset.val; });
 
 /* Lead capture */
 document.getElementById('btn-reveal').addEventListener('click', ()=>{
@@ -932,6 +997,12 @@ document.getElementById('btn-reveal').addEventListener('click', ()=>{
 /* ══════════════════════════════════════════
    RESULTS
    ══════════════════════════════════════════ */
+const CONF_MSG = {
+  very:   'Based on the details you provided, this estimate is expected to closely reflect your final moving cost.',
+  mostly: 'This estimate is based on the information provided. Our team will review your move details with you before confirming the final plan.',
+  unsure: 'Based on the information provided, this estimate is intended as a planning guide. Our team will review your full move details with you before confirming your final cost.',
+};
+
 function renderResults() {
   const r = calc();
   if (!r) return;
@@ -941,13 +1012,23 @@ function renderResults() {
   document.getElementById('cx-badge').innerHTML = `<span class="complexity ${cls}">${lbl}</span>`;
 
   document.getElementById('res-total').textContent = fmtR(r.totalLo, r.totalHi);
+  document.getElementById('res-hrs').textContent   = `Estimated labor time: ${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hours`;
   document.getElementById('res-dep').textContent   = fmt(r.deposit);
+
+  const confEl = document.getElementById('conf-msg');
+  if (S.confidence && CONF_MSG[S.confidence]) {
+    confEl.textContent = CONF_MSG[S.confidence];
+    confEl.classList.remove('hidden');
+  } else {
+    confEl.classList.add('hidden');
+  }
+
   document.getElementById('incl-pack').classList.toggle('hidden', !S.packingOn);
+  document.getElementById('incl-da').classList.toggle('hidden', S.disassembly.length === 0);
 
   document.querySelectorAll('.crew-opt').forEach(c => {
     c.classList.toggle('sel', parseInt(c.dataset.crew) === S.crewSize);
   });
-  updateSnap();
 }
 
 /* Crew adjust on results */
@@ -960,54 +1041,57 @@ document.getElementById('crew-grid').addEventListener('click', e => {
   const r = calc();
   if (r) {
     document.getElementById('res-total').textContent = fmtR(r.totalLo, r.totalHi);
-    document.getElementById('sn-amt').textContent    = fmtR(r.totalLo, r.totalHi);
+    document.getElementById('res-hrs').textContent   = `Estimated labor time: ${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hours`;
   }
-  updateSnap();
-});
-
-/* ══════════════════════════════════════════
-   MOBILE SNAPSHOT DRAWER
-   ══════════════════════════════════════════ */
-document.getElementById('snap-toggle').addEventListener('click', ()=>{
-  document.getElementById('snap').classList.toggle('open');
 });
 
 /* ══════════════════════════════════════════
    COPY
    ══════════════════════════════════════════ */
 function buildText() {
-  const r    = calc();
+  const r = calc();
   if (!r) return '';
   const name = document.getElementById('lead-name').value.trim();
   const em   = document.getElementById('lead-email').value.trim();
   const ph   = document.getElementById('lead-phone').value.trim();
   const spec = S.specialty.map(s=>SPECL[s]||s).join(', ') || 'None';
+  const da   = S.disassembly.length ? S.disassembly.join(', ') : 'None';
+  const isApt= APT_TYPES.includes(S.propType);
+  const stairsStr = isApt && S.aptFloor
+    ? S.aptFloor + (S.stairs!==null ? ' · ' + (S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight(s)') : '')
+    : S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)';
+
   return [
     'VALIDATE YOUR VISION — MOVE PLAN & ESTIMATE',
-    '='.repeat(44), '',
-    `Name:    ${name}`, `Email:   ${em}`, `Phone:   ${ph}`, '',
+    '='.repeat(44),'',
+    `Name:    ${name}`,`Email:   ${em}`,`Phone:   ${ph}`,'',
     `From:    ${document.getElementById('pickup-addr').value||'—'}`,
     `To:      ${document.getElementById('dropoff-addr').value||'—'}`,
-    `Distance: ${(S.miles/2).toFixed(1)} mi one way (${S.miles.toFixed(1)} mi round trip)`, '',
+    `Distance: ${(S.miles/2).toFixed(1)} mi one way (${S.miles.toFixed(1)} mi round trip)`,'',
     `Property:    ${PL[S.propType]||'—'}`,
     `Size:        ${SL[S.homeSize]||'—'}`,
     `Furnishing:  ${FL[S.furnish]||'—'}`,
     S.spaces.length ? `Extra areas: ${S.spaces.join(', ')}` : '',
-    `Stairs:      ${APT_TYPES.includes(S.propType)&&S.aptFloor ? S.aptFloor+(S.stairs!==null?' · '+(S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight(s)'):'') : S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)'}`,
+    `Stairs:      ${stairsStr}`,
     `Walk/carry:  ${CL[S.carry]||'—'}`,
     `Specialty:   ${spec}`,
+    `Disassembly: ${da}`,
     `Crew:        ${S.crewSize} movers @ $${S.crewRate}/hr`,
-    S.packingOn ? `Packing:     ${S.packers} packers @ $${S.packerRate}/hr` : '', '',
+    `Packing:     ${PTL[S.packType]||'None'}${S.packingOn&&S.packers?' · '+S.packers+' packers @ $'+S.packerRate+'/hr':''}`,
+    `Storage:     ${STL[S.storage]||'—'}`,
+    `Move date:   ${DTL[S.moveDate]||'—'}`,'',
     'ESTIMATED INVESTMENT', '-'.repeat(44),
-    fmtR(r.totalLo, r.totalHi), '',
-    'INCLUDED:', '  Professional Movers', '  Transportation & Equipment',
-    '  Moving Equipment', '  Travel Costs', '  Move Planning', '  Scheduling Coordination',
-    S.packingOn ? '  Professional Packing' : '', '',
+    fmtR(r.totalLo, r.totalHi),
+    `Estimated labor time: ${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hours`,'',
+    'INCLUDED:','  Professional Movers','  Moving Truck & Transportation',
+    '  Moving Equipment & Supplies','  Travel Costs','  Move Planning & Coordination',
+    S.disassembly.length ? '  Furniture Disassembly & Reassembly' : '',
+    S.packingOn ? '  Professional Packing' : '','',
     '-'.repeat(44),
-    `Booking Deposit: ${fmt(r.deposit)} (applied toward final balance)`, '',
+    `Booking Deposit: ${fmt(r.deposit)} (applied toward final balance)`,'',
     'This estimate is intended for budgeting purposes. Final pricing may vary.',
     `Generated: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,
-  ].filter(l=>l!==null).join('\n');
+  ].filter(l=>l!==null&&l!=='').join('\n');
 }
 
 document.getElementById('btn-copy').addEventListener('click', ()=>{
@@ -1022,7 +1106,7 @@ document.getElementById('btn-copy').addEventListener('click', ()=>{
    PDF
    ══════════════════════════════════════════ */
 document.getElementById('btn-pdf').addEventListener('click', async ()=>{
-  const r    = calc();
+  const r = calc();
   if (!r) return;
   const name = document.getElementById('lead-name').value.trim();
   const em   = document.getElementById('lead-email').value.trim();
@@ -1030,13 +1114,16 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
   const from = document.getElementById('pickup-addr').value||'—';
   const to   = document.getElementById('dropoff-addr').value||'—';
   const spec = S.specialty.map(s=>SPECL[s]||s).join(', ')||'None';
-  const incl = ['Professional Movers','Transportation & Equipment','Moving Equipment','Travel Costs','Move Planning','Scheduling Coordination',...(S.packingOn?['Professional Packing']:[])];
+  const da   = S.disassembly.length ? S.disassembly.join(', ') : 'None needed';
+  const incl = ['Professional Movers','Moving Truck & Transportation','Moving Equipment & Supplies','Travel Costs','Move Planning & Coordination',
+    ...(S.disassembly.length?['Furniture Disassembly & Reassembly']:[]),
+    ...(S.packingOn?['Professional Packing']:[])];
 
   const t = document.getElementById('pdf-target');
   t.innerHTML = `
     <div style="border-bottom:3px solid #1c2b3a;padding-bottom:16px;margin-bottom:20px">
       <div style="font-size:21px;font-weight:800;color:#1c2b3a">Validate Your Vision</div>
-      <div style="font-size:12px;color:#566779;margin-top:2px">Move Plan &amp; Estimate — Fredericksburg, VA &nbsp;·&nbsp; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+      <div style="font-size:12px;color:#566779;margin-top:2px">Move Plan &amp; Estimate — Fredericksburg, VA &nbsp;&middot;&nbsp; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
@@ -1044,33 +1131,37 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
         <div style="font-size:14px;font-weight:700;color:#1c2b3a">${name}</div>
         <div style="font-size:12px;color:#3d5166">${em}</div>
         <div style="font-size:12px;color:#3d5166">${ph}</div>
+        <div style="font-size:12px;color:#566779;margin-top:6px">Move: ${DTL[S.moveDate]||'—'}</div>
       </div>
       <div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Move Route</div>
         <div style="font-size:12px;color:#3d5166">From: ${from}</div>
         <div style="font-size:12px;color:#3d5166;margin-top:2px">To: ${to}</div>
-        <div style="font-size:12px;color:#3d5166;margin-top:2px">${(S.miles/2).toFixed(1)} mi one way · ${S.miles.toFixed(1)} mi round trip</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">${(S.miles/2).toFixed(1)} mi one way &middot; ${S.miles.toFixed(1)} mi round trip</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Home Details</div>
-        <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'—'} · ${SL[S.homeSize]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'—'} &middot; ${SL[S.homeSize]||'—'}</div>
         <div style="font-size:12px;color:#3d5166;margin-top:2px">${FL[S.furnish]||'—'}</div>
         ${S.spaces.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Extra: ${S.spaces.join(', ')}</div>`:''}
-        <div style="font-size:12px;color:#3d5166;margin-top:2px">Stairs: ${APT_TYPES.includes(S.propType)&&S.aptFloor?S.aptFloor+(S.stairs!==null?' · '+(S.stairs===0?'No stairs':S.stairs===4?'4+':S.stairs)+' flight(s)':''):S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+':S.stairs+' flight(s)'} · Walk: ${CL[S.carry]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Walk: ${CL[S.carry]||'—'}</div>
         ${S.specialty.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Specialty: ${spec}</div>`:''}
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Disassembly: ${da}</div>
+        ${S.storage&&S.storage!=='no'?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Storage: ${STL[S.storage]}</div>`:''}
       </div>
       <div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Crew &amp; Services</div>
         <div style="font-size:12px;color:#3d5166">${S.crewSize} Movers @ $${S.crewRate}/hr</div>
-        ${S.packingOn&&S.packers?`<div style="font-size:12px;color:#3d5166;margin-top:2px">${S.packers} Packers @ $${S.packerRate}/hr</div>`:''}
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Est. ${r.lo.toFixed(1)}&ndash;${r.hi.toFixed(1)} hours</div>
+        ${S.packingOn&&S.packers?`<div style="font-size:12px;color:#3d5166;margin-top:2px">${PTL[S.packType]} packing &middot; ${S.packers} Packers @ $${S.packerRate}/hr</div>`:''}
       </div>
     </div>
     <div style="background:#1c2b3a;border-radius:10px;padding:22px;margin-bottom:18px;text-align:center">
       <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#7a9bb5;font-weight:700;margin-bottom:6px">Estimated Investment</div>
       <div style="font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px">${fmtR(r.totalLo,r.totalHi)}</div>
-      <div style="font-size:11px;color:#7a9bb5;margin-top:5px">Price range based on your move details</div>
+      <div style="font-size:11px;color:#7a9bb5;margin-top:5px">Estimated labor time: ${r.lo.toFixed(1)}&ndash;${r.hi.toFixed(1)} hours</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
       <div style="background:#f2f5f8;border-radius:8px;padding:14px">
@@ -1090,7 +1181,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
   t.style.display = 'block';
   try {
     const {jsPDF} = window.jspdf;
-    const canvas  = await html2canvas(t, {scale:2,useCORS:true,logging:false});
+    const canvas  = await html2canvas(t,{scale:2,useCORS:true,logging:false});
     const img     = canvas.toDataURL('image/png');
     const pdf     = new jsPDF({orientation:'portrait',unit:'px',format:'letter'});
     const pw = pdf.internal.pageSize.getWidth();
@@ -1104,20 +1195,35 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
     console.error(err);
     alert('PDF generation failed — use "Copy Estimate" instead.');
   } finally {
-    t.style.display='none';
+    t.style.display = 'none';
   }
 });
 
-/* Init */
-updateProg();
-updateSnap();
-
-/* Maps autocomplete — called by Maps JS SDK once loaded */
+/* ══════════════════════════════════════════
+   MAPS AUTOCOMPLETE + AUTO-CALC
+   ══════════════════════════════════════════ */
 function initMaps() {
-  const opts = { types: ['address'], componentRestrictions: { country: 'us' } };
-  new google.maps.places.Autocomplete(document.getElementById('pickup-addr'),  opts);
-  new google.maps.places.Autocomplete(document.getElementById('dropoff-addr'), opts);
+  const opts = {types:['address'], componentRestrictions:{country:'us'}};
+  const acPickup  = new google.maps.places.Autocomplete(document.getElementById('pickup-addr'),  opts);
+  const acDropoff = new google.maps.places.Autocomplete(document.getElementById('dropoff-addr'), opts);
+
+  let pickupDone = false, dropoffDone = false;
+
+  acPickup.addListener('place_changed', () => {
+    pickupDone = true;
+    if (dropoffDone) runDistanceCalc();
+  });
+  acDropoff.addListener('place_changed', () => {
+    dropoffDone = true;
+    if (pickupDone) runDistanceCalc();
+  });
 }
+
+/* ══════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════ */
+updateProg();
+updatePanel('welcome');
 </script>
 </body>
 </html>
