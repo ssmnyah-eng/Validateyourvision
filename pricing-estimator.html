@@ -6,6 +6,7 @@
 <title>Move Planner — Validate Your Vision</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -340,9 +341,9 @@ body{
     <div class="tip"><strong>Move Planning Tip</strong>Additional spaces are one of the most overlooked parts of moving estimates and can significantly affect loading time.</div>
   </div>
 
-  <!-- Screen 5: Stairs -->
+  <!-- Screen 5: Stairs (question/options updated dynamically based on property type) -->
   <div class="screen" id="screen-5">
-    <p class="q-label">How many flights of stairs are involved?</p>
+    <p class="q-label" id="s5-q">How many flights of stairs are involved?</p>
     <div class="opts" id="s5">
       <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
@@ -354,14 +355,15 @@ body{
 
   <!-- Screen 6: Long Carry -->
   <div class="screen" id="screen-6">
-    <p class="q-label">How far is the walk from the truck to the entrance?</p>
+    <p class="q-label">How far will the movers need to walk between the truck and your front door?</p>
+    <p class="q-sub">Think about where the moving truck will be able to park</p>
     <div class="opts" id="s6">
-      <button class="opt" data-val="close" data-mod="0"><span>Under 50 Feet</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="medium" data-mod="0.5"><span>50 – 100 Feet</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="long" data-mod="1"><span>100 – 200 Feet</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="verylong" data-mod="2"><span>200+ Feet</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="close" data-mod="0"><span>Right at the door &mdash; truck parks directly at my entrance</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk &mdash; across a parking lot or short driveway</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="long" data-mod="1"><span>Moderate walk &mdash; down a hallway, around a building, or through a complex</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="verylong" data-mod="2"><span>Long walk &mdash; across a large complex, parking structure, or gated area</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Long carries can significantly increase move time and labor requirements.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Every extra step adds up. The longer the carry, the more time it takes to load and unload &mdash; especially with heavy furniture.</div>
   </div>
 
   <!-- Screen 7: Specialty Items (multi) -->
@@ -559,6 +561,7 @@ function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
   cur = id;
+  if (id === '5') buildStairsScreen();
   updateProg();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -634,10 +637,11 @@ function calc() {
 /* ══════════════════════════════════════════
    SNAPSHOT
    ══════════════════════════════════════════ */
+const APT_TYPES = ['apartment','condo'];
 const PL = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Single Family Home'};
 const SL = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
 const FL = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
-const CL = {close:'Under 50 ft',medium:'50–100 ft',long:'100–200 ft',verylong:'200+ ft'};
+const CL = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
 const SPECL = {piano:'Piano',safe:'Safe',pool:'Pool Table',commercial:'Commercial Equipment'};
 
 function sv(id, val, empty) {
@@ -652,7 +656,12 @@ function updateSnap() {
   sv('size',   S.homeSize  ? SL[S.homeSize]  : '—', !S.homeSize);
   sv('furn',   S.furnish   ? FL[S.furnish]   : '—', !S.furnish);
   sv('spaces', S.spaces.length ? S.spaces.map(s=>s[0].toUpperCase()+s.slice(1)).join(', ') : 'None', false);
-  sv('stairs', S.stairs === null ? '—' : S.stairs === 0 ? 'None' : (S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s'), S.stairs===null);
+  const isApt = APT_TYPES.includes(S.propType);
+  const stairsLabel = S.stairs === null ? '—'
+    : isApt
+      ? (S.stairs===0?'1st Floor':S.stairs===2?'2nd Floor':S.stairs===4?'3rd Floor':'4th Floor+')
+      : (S.stairs===0?'None':(S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s'));
+  sv('stairs', stairsLabel, S.stairs===null);
   sv('carry',  S.carry     ? CL[S.carry]     : '—', !S.carry);
   sv('spec',   S.specialty.length ? S.specialty.map(s=>SPECL[s]||s).join(', ') : 'None', false);
   sv('dist',   S.miles > 0 ? (S.miles/2).toFixed(1)+' mi one way' : '—', S.miles===0);
@@ -735,7 +744,40 @@ single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.da
   document.getElementById('s4-cont').addEventListener('click', ()=>next());
 })();
 
-/* S5: Stairs */
+/* S5: Stairs — apartment/condo shows floor picker; house/townhome shows flights */
+function buildStairsScreen() {
+  const isApt = APT_TYPES.includes(S.propType);
+  const qEl   = document.getElementById('s5-q');
+  const s5    = document.getElementById('s5');
+
+  if (isApt) {
+    qEl.textContent = 'What floor are you on?';
+    s5.innerHTML = `
+      <button class="opt" data-val="0"><span>1st Floor</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2"><span>2nd Floor</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="4"><span>3rd Floor</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="6"><span>4th Floor or Higher</span><span class="chk">&#10003;</span></button>`;
+  } else {
+    qEl.textContent = 'How many flights of stairs are involved at either location?';
+    s5.innerHTML = `
+      <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>`;
+  }
+  // Re-attach single-select listener
+  s5.addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn || btn.classList.contains('multi')) return;
+    s5.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.stairs = parseInt(btn.dataset.val);
+    updateSnap();
+    const atClick = cur;
+    setTimeout(() => { if (cur === atClick) next(); }, 320);
+  });
+}
+
 single('s5', btn => { S.stairs = parseInt(btn.dataset.val); });
 
 /* S6: Carry */
@@ -765,8 +807,8 @@ single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dat
   document.getElementById('s7-cont').addEventListener('click', ()=>next());
 })();
 
-/* S8: Distance */
-document.getElementById('btn-calc').addEventListener('click', async ()=>{
+/* S8: Distance — uses Maps JS SDK (avoids CORS block on direct REST call) */
+document.getElementById('btn-calc').addEventListener('click', ()=>{
   const orig  = document.getElementById('pickup-addr').value.trim();
   const dest  = document.getElementById('dropoff-addr').value.trim();
   const resEl = document.getElementById('dist-res');
@@ -781,24 +823,38 @@ document.getElementById('btn-calc').addEventListener('click', async ()=>{
     resEl.classList.remove('hidden'); resEl.classList.add('warn');
     return;
   }
-  btn.textContent='Calculating...'; btn.disabled=true;
 
-  try {
-    const url  = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(orig)}&destinations=${encodeURIComponent(dest)}&units=imperial&key=${C.MAPS_KEY}`;
-    const data = await (await fetch(url)).json();
-    if (data.status!=='OK' || data.rows[0].elements[0].status!=='OK') throw new Error('Could not calculate distance — please check both addresses.');
-    const ow   = data.rows[0].elements[0].distance.value / 1609.344;
+  if (typeof google === 'undefined' || !google.maps || !google.maps.DistanceMatrixService) {
+    resEl.textContent = 'Maps service is still loading — please try again in a moment.';
+    resEl.classList.remove('hidden'); resEl.classList.add('warn');
+    return;
+  }
+
+  btn.textContent = 'Calculating...'; btn.disabled = true;
+
+  const svc = new google.maps.DistanceMatrixService();
+  svc.getDistanceMatrix({
+    origins:      [orig],
+    destinations: [dest],
+    travelMode:   google.maps.TravelMode.DRIVING,
+    unitSystem:   google.maps.UnitSystem.IMPERIAL,
+  }, (res, status) => {
+    btn.textContent = 'Recalculate Distance'; btn.disabled = false;
+
+    if (status !== 'OK' || !res.rows[0] || res.rows[0].elements[0].status !== 'OK') {
+      resEl.textContent = 'Could not calculate distance — please check both addresses and try again.';
+      resEl.classList.remove('hidden'); resEl.classList.add('warn');
+      return;
+    }
+
+    const el   = res.rows[0].elements[0];
+    const ow   = el.distance.value / 1609.344;   // meters → miles
     S.miles    = ow * 2;
-    resEl.innerHTML = `<strong>${data.rows[0].elements[0].distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip`;
-    resEl.classList.remove('hidden','warn');
+    resEl.innerHTML = `<strong>${el.distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip`;
+    resEl.classList.remove('hidden', 'warn');
     contB.classList.remove('hidden');
     updateSnap();
-  } catch(err) {
-    resEl.textContent = err.message || 'Something went wrong.';
-    resEl.classList.remove('hidden'); resEl.classList.add('warn');
-  } finally {
-    btn.textContent='Recalculate Distance'; btn.disabled=false;
-  }
+  });
 });
 document.getElementById('s8-cont').addEventListener('click', ()=>next());
 
