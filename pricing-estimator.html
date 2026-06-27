@@ -1162,6 +1162,32 @@ single('s13', btn => { S.moveDate = btn.dataset.val; });
 /* S14: Confidence */
 single('s14', btn => { S.confidence = btn.dataset.val; });
 
+/* ══════════════════════════════════════════
+   PRIORITY SYSTEM
+   ══════════════════════════════════════════ */
+const PRIORITY_MAP = {
+  'Immediately (within 24–48 hours)': {level:1, label:'Priority 1 – Emergency', days:1},
+  'Within 3–7 days':                  {level:2, label:'Priority 2 – High',      days:2},
+  'Within 1–2 weeks':                 {level:3, label:'Priority 3 – Standard',  days:3},
+  'Within 3–4 weeks':                 {level:4, label:'Priority 4 – Planned',   days:5},
+  'More than one month away':              {level:5, label:'Priority 5 – Future',    days:7},
+  'Not sure yet':                          {level:5, label:'Priority 5 – Future',    days:7},
+  'As Soon as Possible':                   {level:1, label:'Priority 1 – Emergency', days:1},
+  'Within 1 Month':                        {level:4, label:'Priority 4 – Planned',   days:5},
+  '1-3 Months':                            {level:5, label:'Priority 5 – Future',    days:7},
+  'Flexible / Not Sure':                   {level:5, label:'Priority 5 – Future',    days:7},
+};
+
+function getPriority(timeline) {
+  return PRIORITY_MAP[timeline] || {level:5, label:'Priority 5 – Future', days:7};
+}
+
+function getDueDate(days) {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split('T')[0];
+}
+
 /* Lead capture */
 const PROP_LABEL  = {apartment:'Apartment',condo:'Condo',house:'House',townhome:'Townhome'};
 const SIZE_LABEL  = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
@@ -1225,9 +1251,11 @@ async function submitLead(name, email, phone) {
         deposit_amount:   r ? r.deposit : '',
         complexity:       r ? (CX_LABEL[r.cx] || r.cx) : '',
         recommended_crew: C.REC_CREW[S.homeSize] || '',
-        /* Timeline */
-        move_timeline:    DATE_LABEL[S.moveDate]  || S.moveDate  || '',
-        confidence:       CONF_LABEL[S.confidence]|| S.confidence|| '',
+        /* Timeline & Priority */
+        move_timeline:         DATE_LABEL[S.moveDate]  || S.moveDate  || '',
+        confidence:            CONF_LABEL[S.confidence]|| S.confidence|| '',
+        priority_level:        getPriority(DATE_LABEL[S.moveDate] || S.moveDate).label,
+        consultation_due_by:   getDueDate(getPriority(DATE_LABEL[S.moveDate] || S.moveDate).days),
         /* Notes */
         inventory_notes:  invNotes,
       }),
@@ -1271,15 +1299,17 @@ document.getElementById('btn-consult-submit').addEventListener('click', ()=>{
       method:  'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        type:               'consultation_request',
-        customer_name:      name,
+        type:                  'consultation_request',
+        customer_name:         name,
         email,
         phone,
         consultation_timeline: timeline.value,
-        preferred_days:     days.join(', '),
-        preferred_times:    times.join(', '),
-        additional_notes:   notes,
-        submitted_at:       new Date().toISOString(),
+        priority_level:        getPriority(timeline.value).label,
+        consultation_due_by:   getDueDate(getPriority(timeline.value).days),
+        preferred_days:        days.join(', '),
+        preferred_times:       times.join(', '),
+        additional_notes:      notes,
+        submitted_at:          new Date().toISOString(),
       }),
     }).catch(()=>{});
   }
