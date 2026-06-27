@@ -543,7 +543,8 @@ const S = {
   homeSize:   null,
   furnish:    null, furnMod:  0,
   spaces:     [],
-  stairs:     null,
+  aptFloor:   null,   // apartment floor label (display only)
+  stairs:     null,   // actual flights count (drives pricing)
   carry:      null, carryMod: 0,
   specialty:  [],
   miles:      0,
@@ -656,12 +657,18 @@ function updateSnap() {
   sv('size',   S.homeSize  ? SL[S.homeSize]  : '—', !S.homeSize);
   sv('furn',   S.furnish   ? FL[S.furnish]   : '—', !S.furnish);
   sv('spaces', S.spaces.length ? S.spaces.map(s=>s[0].toUpperCase()+s.slice(1)).join(', ') : 'None', false);
-  const isApt = APT_TYPES.includes(S.propType);
-  const stairsLabel = S.stairs === null ? '—'
-    : isApt
-      ? (S.stairs===0?'1st Floor':S.stairs===2?'2nd Floor':S.stairs===4?'3rd Floor':'4th Floor+')
-      : (S.stairs===0?'None':(S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s'));
-  sv('stairs', stairsLabel, S.stairs===null);
+  const isApt2 = APT_TYPES.includes(S.propType);
+  let stairsLabel = '—';
+  if (isApt2) {
+    if (S.aptFloor && S.stairs !== null) {
+      stairsLabel = `${S.aptFloor} · ${S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight'+(S.stairs===1?'':'s')}`;
+    } else if (S.aptFloor) {
+      stairsLabel = S.aptFloor;
+    }
+  } else if (S.stairs !== null) {
+    stairsLabel = S.stairs===0?'None':(S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s');
+  }
+  sv('stairs', stairsLabel, stairsLabel==='—');
   sv('carry',  S.carry     ? CL[S.carry]     : '—', !S.carry);
   sv('spec',   S.specialty.length ? S.specialty.map(s=>SPECL[s]||s).join(', ') : 'None', false);
   sv('dist',   S.miles > 0 ? (S.miles/2).toFixed(1)+' mi one way' : '—', S.miles===0);
@@ -750,13 +757,53 @@ function buildStairsScreen() {
   const qEl   = document.getElementById('s5-q');
   const s5    = document.getElementById('s5');
 
+  // Reset apt state when rebuilding
+  S.aptFloor = null;
+  S.stairs   = null;
+
   if (isApt) {
     qEl.textContent = 'What floor are you on?';
     s5.innerHTML = `
-      <button class="opt" data-val="0"><span>1st Floor</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="2"><span>2nd Floor</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="4"><span>3rd Floor</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="6"><span>4th Floor or Higher</span><span class="chk">&#10003;</span></button>`;
+      <div class="opts" id="s5-floor">
+        <button class="opt" data-floor="1st Floor"><span>1st Floor</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-floor="2nd Floor"><span>2nd Floor</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-floor="3rd Floor"><span>3rd Floor</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-floor="4th Floor or Higher"><span>4th Floor or Higher</span><span class="chk">&#10003;</span></button>
+      </div>
+      <div id="s5-flights-wrap" style="display:none;margin-top:22px">
+        <p class="q-label" style="font-size:1.1rem;margin-bottom:12px">How many flights of stairs do you walk to reach your floor?</p>
+        <div class="opts" id="s5-flights">
+          <button class="opt" data-val="0"><span>None &mdash; elevator or ground-level entry</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="3"><span>3 Flights</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="4"><span>4+ Flights</span><span class="chk">&#10003;</span></button>
+        </div>
+      </div>`;
+
+    // Floor picker — reveal flights section on selection
+    document.getElementById('s5-floor').addEventListener('click', e => {
+      const btn = e.target.closest('.opt');
+      if (!btn) return;
+      document.querySelectorAll('#s5-floor .opt').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      S.aptFloor = btn.dataset.floor;
+      document.getElementById('s5-flights-wrap').style.display = 'block';
+      updateSnap();
+    });
+
+    // Flights picker — auto-advance after selection
+    document.getElementById('s5-flights').addEventListener('click', e => {
+      const btn = e.target.closest('.opt');
+      if (!btn) return;
+      document.querySelectorAll('#s5-flights .opt').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      S.stairs = parseInt(btn.dataset.val);
+      updateSnap();
+      const atClick = cur;
+      setTimeout(() => { if (cur === atClick) next(); }, 320);
+    });
+
   } else {
     qEl.textContent = 'How many flights of stairs are involved at either location?';
     s5.innerHTML = `
@@ -764,21 +811,19 @@ function buildStairsScreen() {
       <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>`;
-  }
-  // Re-attach single-select listener
-  s5.addEventListener('click', e => {
-    const btn = e.target.closest('.opt');
-    if (!btn || btn.classList.contains('multi')) return;
-    s5.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
-    btn.classList.add('sel');
-    S.stairs = parseInt(btn.dataset.val);
-    updateSnap();
-    const atClick = cur;
-    setTimeout(() => { if (cur === atClick) next(); }, 320);
-  });
-}
 
-single('s5', btn => { S.stairs = parseInt(btn.dataset.val); });
+    s5.addEventListener('click', e => {
+      const btn = e.target.closest('.opt');
+      if (!btn) return;
+      s5.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      S.stairs = parseInt(btn.dataset.val);
+      updateSnap();
+      const atClick = cur;
+      setTimeout(() => { if (cur === atClick) next(); }, 320);
+    });
+  }
+}
 
 /* S6: Carry */
 single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dataset.mod); });
@@ -943,7 +988,7 @@ function buildText() {
     `Size:        ${SL[S.homeSize]||'—'}`,
     `Furnishing:  ${FL[S.furnish]||'—'}`,
     S.spaces.length ? `Extra areas: ${S.spaces.join(', ')}` : '',
-    `Stairs:      ${S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)'}`,
+    `Stairs:      ${APT_TYPES.includes(S.propType)&&S.aptFloor ? S.aptFloor+(S.stairs!==null?' · '+(S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight(s)'):'') : S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)'}`,
     `Walk/carry:  ${CL[S.carry]||'—'}`,
     `Specialty:   ${spec}`,
     `Crew:        ${S.crewSize} movers @ $${S.crewRate}/hr`,
@@ -1008,7 +1053,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
         <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'—'} · ${SL[S.homeSize]||'—'}</div>
         <div style="font-size:12px;color:#3d5166;margin-top:2px">${FL[S.furnish]||'—'}</div>
         ${S.spaces.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Extra: ${S.spaces.join(', ')}</div>`:''}
-        <div style="font-size:12px;color:#3d5166;margin-top:2px">Stairs: ${S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+':S.stairs} · Walk: ${CL[S.carry]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Stairs: ${APT_TYPES.includes(S.propType)&&S.aptFloor?S.aptFloor+(S.stairs!==null?' · '+(S.stairs===0?'No stairs':S.stairs===4?'4+':S.stairs)+' flight(s)':''):S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+':S.stairs+' flight(s)'} · Walk: ${CL[S.carry]||'—'}</div>
         ${S.specialty.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Specialty: ${spec}</div>`:''}
       </div>
       <div>
