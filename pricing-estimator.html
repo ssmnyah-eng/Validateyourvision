@@ -461,10 +461,11 @@
       </div>
     </div>
     <div class="field-row mt-10">
-      <label>Does your home have a basement?</label>
-      <div class="radio-row">
-        <div class="radio-btn" id="basement-no" data-val="no">No</div>
-        <div class="radio-btn" id="basement-yes" data-val="yes">Yes — adds 1 flight</div>
+      <label>Additional spaces (select all that apply — each adds ~1 hr)</label>
+      <div class="pill-group mt-10" id="extra-spaces-group">
+        <div class="pill" data-space="garage">Garage</div>
+        <div class="pill" data-space="basement">Basement</div>
+        <div class="pill" data-space="attic">Attic</div>
       </div>
     </div>
   </div>
@@ -717,7 +718,7 @@ const CONFIG = {
    ════════════════════════════════════════════════════════════════ */
 const state = {
   homeSize:     null,
-  basement:     'no',
+  extraSpaces:  [],   // 'garage', 'basement', 'attic'
   stairs:       0,
   crewSize:     null,
   crewRate:     0,
@@ -748,11 +749,11 @@ function calc() {
   if (!s.homeSize || !s.crewSize) return null;
 
   const baseHrs = CONFIG.BASE_HOURS[s.homeSize];
-  const totalStairs = s.stairs + (s.basement === 'yes' ? 1 : 0);
-  const stairAdd = totalStairs * CONFIG.STAIRS_HRS;
+  const stairAdd = s.stairs * CONFIG.STAIRS_HRS;
+  const spaceAdd = s.extraSpaces.length; // +1 hr per extra space
 
-  let hrsLo = Math.max(CONFIG.MIN_HOURS, baseHrs[0] + stairAdd);
-  let hrsHi = Math.max(CONFIG.MIN_HOURS, baseHrs[1] + stairAdd);
+  let hrsLo = Math.max(CONFIG.MIN_HOURS, baseHrs[0] + stairAdd + spaceAdd);
+  let hrsHi = Math.max(CONFIG.MIN_HOURS, baseHrs[1] + stairAdd + spaceAdd);
 
   const laborLo = hrsLo * s.crewRate;
   const laborHi = hrsHi * s.crewRate;
@@ -875,21 +876,20 @@ document.getElementById('num-stairs').addEventListener('input', e => {
 });
 document.getElementById('num-floors').addEventListener('input', render);
 
-/* Basement radio */
-document.getElementById('basement-no').addEventListener('click', () => {
-  state.basement = 'no';
-  document.getElementById('basement-no').classList.add('selected');
-  document.getElementById('basement-yes').classList.remove('selected');
+/* Extra spaces (garage / basement / attic) — multi-select pills */
+document.getElementById('extra-spaces-group').addEventListener('click', e => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  const space = pill.dataset.space;
+  if (state.extraSpaces.includes(space)) {
+    state.extraSpaces = state.extraSpaces.filter(s => s !== space);
+    pill.classList.remove('selected');
+  } else {
+    state.extraSpaces.push(space);
+    pill.classList.add('selected');
+  }
   render();
 });
-document.getElementById('basement-yes').addEventListener('click', () => {
-  state.basement = 'yes';
-  document.getElementById('basement-yes').classList.add('selected');
-  document.getElementById('basement-no').classList.remove('selected');
-  render();
-});
-/* Default basement selection */
-document.getElementById('basement-no').classList.add('selected');
 
 /* ── Step 4: Crew cards ── */
 function selectCrew(n) {
@@ -991,6 +991,7 @@ function buildSummaryText() {
     `Pickup: ${document.getElementById('pickup-addr').value || '—'}`,
     `Drop-off: ${document.getElementById('dropoff-addr').value || '—'}`,
     `Round-trip miles: ${state.miles}`,
+    state.extraSpaces.length ? `Additional spaces: ${state.extraSpaces.join(', ')}` : '',
     `Crew: ${state.crewSize} movers @ $${state.crewRate}/hr`,
     specialtyItems ? `Specialty items: ${specialtyItems}` : '',
     state.packingOn && state.packers
@@ -1079,6 +1080,7 @@ document.getElementById('btn-download').addEventListener('click', async () => {
         <div style="font-size:13px;color:#3d5166;">From: ${document.getElementById('pickup-addr').value || '—'}</div>
         <div style="font-size:13px;color:#3d5166;margin-top:3px;">To: ${document.getElementById('dropoff-addr').value || '—'}</div>
         <div style="font-size:13px;color:#3d5166;margin-top:3px;">Round-trip: ${state.miles} mi</div>
+        ${state.extraSpaces.length ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Additional spaces: ${state.extraSpaces.join(', ')}</div>` : ''}
         <div style="font-size:13px;color:#3d5166;margin-top:3px;">Crew: ${state.crewSize} movers @ $${state.crewRate}/hr</div>
         ${state.packingOn && state.packers ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Packing: ${state.packers} packers @ $${state.packerRate}/hr</div>` : ''}
         ${specialtyItems ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Specialty items: ${specialtyItems}</div>` : ''}
