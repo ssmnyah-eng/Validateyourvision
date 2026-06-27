@@ -598,10 +598,7 @@ body{
    INTEGRATION CONFIG
    ══════════════════════════════════════════ */
 const INTEGRATIONS = {
-  AIRTABLE_TOKEN:   'YOUR_AIRTABLE_PAT_HERE',
-  AIRTABLE_BASE:    'appeKqbaDeU4lb2mM',
-  AIRTABLE_TABLE:   'tblECalg5M8YXq27N',
-  ZOHO_WEBHOOK:     'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
+  ZAPIER_WEBHOOK: 'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
 };
 
 const C = {
@@ -1040,66 +1037,48 @@ async function submitLead(name, email, phone) {
     S.disassembly.length ? `Disassembly needed: ${S.disassembly.join(', ')}` : '',
   ].filter(Boolean).join('\n');
 
-  /* ── Airtable ─────────────────────────────── */
-  if (INTEGRATIONS.AIRTABLE_TOKEN && INTEGRATIONS.AIRTABLE_TOKEN !== 'YOUR_AIRTABLE_PAT_HERE') {
-    const fields = {
-      'Customer Name':         name,
-      'Email':                 email,
-      'Phone':                 phone,
-      'Status':                'New Lead',
-      'Submitted At':          now,
-      'Pickup Address':        pickup,
-      'Destination Address':   dropoff,
-      'Distance One Way (mi)': r ? parseFloat((S.miles/2).toFixed(2)) : null,
-      'Distance Round Trip (mi)': r ? parseFloat(S.miles.toFixed(2)) : null,
-      'Drive Time':            S.driveTime || '',
-      'Property Type':         PROP_LABEL[S.propType]  || S.propType  || '',
-      'Bedrooms':              SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
-      'Furnishing Level':      FURN_LABEL[S.furnish]   || S.furnish   || '',
-      'Floor / Stairs':        floorInfo,
-      'Walk Distance':         CARRY_LABEL[S.carry]    || S.carry     || '',
-      'Packing Type':          S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
-      'Packer Count':          S.packers   || null,
-      'Storage Stop':          S.storage === 'yes' ? 'Yes' : 'No',
-      'Move Timeline':         DATE_LABEL[S.moveDate]  || S.moveDate  || '',
-      'Customer Confidence':   CONF_LABEL[S.confidence]|| S.confidence|| '',
-      'Complexity':            r ? (CX_LABEL[r.cx] || r.cx) : '',
-      'Recommended Crew':      C.REC_CREW[S.homeSize]  || null,
-      'Estimate Low':          r ? r.totalLo : null,
-      'Estimate High':         r ? r.totalHi : null,
-      'Deposit Amount':        r ? r.deposit : null,
-      'Inventory Notes':       invNotes,
-    };
-    if (S.spaces.length)     fields['Extra Spaces']      = S.spaces;
-    if (S.specialty.length)  fields['Specialty Items']   = S.specialty;
-    if (S.disassembly.length)fields['Disassembly Items'] = S.disassembly;
-
-    fetch(`https://api.airtable.com/v0/${INTEGRATIONS.AIRTABLE_BASE}/${INTEGRATIONS.AIRTABLE_TABLE}`, {
-      method:  'POST',
-      headers: {
-        'Authorization': `Bearer ${INTEGRATIONS.AIRTABLE_TOKEN}`,
-        'Content-Type':  'application/json',
-      },
-      body: JSON.stringify({ fields }),
-    }).catch(() => {});
-  }
-
-  /* ── Zoho CRM via Zapier webhook ─────────── */
-  if (INTEGRATIONS.ZOHO_WEBHOOK && INTEGRATIONS.ZOHO_WEBHOOK !== 'YOUR_ZAPIER_WEBHOOK_URL_HERE') {
-    fetch(INTEGRATIONS.ZOHO_WEBHOOK, {
+  /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
+  if (INTEGRATIONS.ZAPIER_WEBHOOK) {
+    fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method:  'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        name,
+        /* Customer */
+        customer_name:    name,
         email,
         phone,
-        move_timeline: DATE_LABEL[S.moveDate] || S.moveDate || '',
-        pickup_address:  pickup,
-        dropoff_address: dropoff,
-        estimate_low:  r ? r.totalLo : '',
-        estimate_high: r ? r.totalHi : '',
-        home_size:     SIZE_LABEL[S.homeSize] || S.homeSize || '',
-        source:        'Pricing Estimator',
+        submitted_at:     now,
+        source:           'Pricing Estimator',
+        /* Route */
+        pickup_address:   pickup,
+        dropoff_address:  dropoff,
+        distance_one_way: r ? parseFloat((S.miles/2).toFixed(2)) : '',
+        distance_round_trip: r ? parseFloat(S.miles.toFixed(2)) : '',
+        drive_time:       S.driveTime || '',
+        /* Home */
+        property_type:    PROP_LABEL[S.propType]  || S.propType  || '',
+        bedrooms:         SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
+        furnishing_level: FURN_LABEL[S.furnish]   || S.furnish   || '',
+        floor_stairs:     floorInfo,
+        walk_distance:    CARRY_LABEL[S.carry]    || S.carry     || '',
+        extra_spaces:     S.spaces.join(', '),
+        /* Services */
+        specialty_items:  S.specialty.join(', '),
+        disassembly:      S.disassembly.join(', '),
+        packing_type:     S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
+        packer_count:     S.packers || '',
+        storage_stop:     S.storage === 'yes' ? 'Yes' : 'No',
+        /* Pricing */
+        estimate_low:     r ? r.totalLo : '',
+        estimate_high:    r ? r.totalHi : '',
+        deposit_amount:   r ? r.deposit : '',
+        complexity:       r ? (CX_LABEL[r.cx] || r.cx) : '',
+        recommended_crew: C.REC_CREW[S.homeSize] || '',
+        /* Timeline */
+        move_timeline:    DATE_LABEL[S.moveDate]  || S.moveDate  || '',
+        confidence:       CONF_LABEL[S.confidence]|| S.confidence|| '',
+        /* Notes */
+        inventory_notes:  invNotes,
       }),
     }).catch(() => {});
   }
