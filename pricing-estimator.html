@@ -6,7 +6,7 @@
 <title>Move Planner — Validate Your Vision</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initMaps" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -1106,6 +1106,13 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
 /* Init */
 updateProg();
 updateSnap();
+
+/* Maps autocomplete — called by Maps JS SDK once loaded */
+function initMaps() {
+  const opts = { types: ['address'], componentRestrictions: { country: 'us' } };
+  new google.maps.places.Autocomplete(document.getElementById('pickup-addr'),  opts);
+  new google.maps.places.Autocomplete(document.getElementById('dropoff-addr'), opts);
+}
 </script>
 </body>
 </html>
