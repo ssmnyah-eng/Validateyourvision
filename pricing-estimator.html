@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving Cost Estimator — Validate Your Vision</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1c2b3a;
+    --slate:  #3d5166;
+    --steel:  #5c7a8e;
+    --mist:   #e8edf2;
+    --white:  #ffffff;
+    --accent: #2e6da4;
+    --accent-light: #d6e6f5;
+    --green:  #1e6b4a;
+    --green-light: #d4eddf;
+    --text:   #1c2b3a;
+    --muted:  #566779;
+    --border: #ccd6de;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(28,43,58,0.10);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f2f5f8;
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .page-wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 32px 24px 28px;
+    background: var(--navy);
+    border-radius: var(--radius);
+    color: var(--white);
+  }
+  header h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.3px; }
+  header p  { margin-top: 8px; color: #a8bfcf; font-size: 0.93rem; }
+
+  /* ── Running total bar ── */
+  .sticky-total {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .sticky-total .label { font-size: 0.82rem; color: #a8bfcf; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sticky-total .amount { font-size: 1.22rem; font-weight: 700; }
+
+  /* ── Step cards ── */
+  .step-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .step-num {
+    background: var(--accent);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+  .step-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+  .step-sub   { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
+
+  /* ── Form elements ── */
+  label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 5px; color: var(--slate); }
+  input[type="number"], input[type="text"] {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 7px;
+    font-size: 0.95rem; color: var(--text);
+    background: var(--white);
+    transition: border-color 0.15s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+
+  .field-row { margin-bottom: 14px; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ── Pill options (home size) ── */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    padding: 9px 18px;
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--slate);
+    background: var(--white);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.selected { background: var(--accent); border-color: var(--accent); color: var(--white); }
+
+  /* ── Crew cards ── */
+  .crew-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  @media (max-width: 520px) { .crew-grid { grid-template-columns: 1fr; } }
+  .crew-card {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .crew-card:hover { border-color: var(--accent); }
+  .crew-card.selected { border-color: var(--accent); background: var(--accent-light); }
+  .crew-card .crew-count { font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+  .crew-card .crew-rate  { font-size: 1rem; font-weight: 700; color: var(--accent); margin-top: 2px; }
+  .crew-card .crew-note  { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .crew-card.selected .crew-count,
+  .crew-card.selected .crew-rate  { color: var(--navy); }
+
+  /* ── Radio rows ── */
+  .radio-row { display: flex; gap: 12px; margin-top: 6px; }
+  .radio-btn {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 7px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--slate);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .radio-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .radio-btn.selected { background: var(--accent); border-color: var(--accent); color: var(--white); }
+
+  /* ── Checkboxes ── */
+  .check-list { display: grid; gap: 8px; }
+  .check-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--accent); background: var(--accent-light); }
+  .check-item.checked { border-color: var(--accent); background: var(--accent-light); }
+  .check-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+  .check-item span { font-size: 0.9rem; font-weight: 500; }
+
+  /* ── Info callout ── */
+  .info-box {
+    background: #eef5fb;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 0.84rem;
+    color: var(--slate);
+    margin-top: 12px;
+    line-height: 1.55;
+  }
+  .info-box.warning {
+    background: #fff8ec;
+    border-left-color: #c8872a;
+    color: #6b4a12;
+  }
+
+  /* ── Toggle switch ── */
+  .toggle-wrap {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px;
+    background: var(--mist);
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+  .toggle-label { font-size: 0.9rem; font-weight: 600; color: var(--navy); flex: 1; }
+  .toggle {
+    position: relative; width: 48px; height: 26px; cursor: pointer;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0;
+    background: var(--border); border-radius: 26px;
+    transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: ""; position: absolute;
+    width: 20px; height: 20px; left: 3px; bottom: 3px;
+    background: var(--white); border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .toggle input:checked ~ .toggle-slider { background: var(--accent); }
+  .toggle input:checked ~ .toggle-slider::before { transform: translateX(22px); }
+
+  .collapsible { display: none; margin-top: 16px; }
+  .collapsible.open { display: block; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+  /* ── Results card ── */
+  .results-card {
+    background: var(--white);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .results-card h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 18px; font-weight: 700; }
+
+  .line-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 8px 0; border-bottom: 1px solid var(--mist);
+    font-size: 0.92rem;
+  }
+  .line-item:last-of-type { border-bottom: none; }
+  .line-item .li-label { color: var(--muted); }
+  .line-item .li-value { font-weight: 700; color: var(--navy); }
+
+  .total-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0 10px;
+    border-top: 2px solid var(--navy);
+    margin-top: 8px;
+  }
+  .total-row .tl { font-size: 1rem; font-weight: 700; color: var(--navy); }
+  .total-row .tv { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+
+  .deposit-box {
+    background: var(--green-light);
+    border: 1px solid #9dd0b4;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-size: 0.88rem;
+    color: var(--green);
+  }
+  .deposit-box strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+
+  .disclaimer {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 16px;
+    line-height: 1.55;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    text-decoration: none;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    width: 100%;
+  }
+  .btn-primary:hover { background: #235a8a; }
+  .btn-secondary {
+    background: var(--mist);
+    color: var(--navy);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: #d6dfe8; }
+  .btn-navy {
+    background: var(--navy);
+    color: var(--white);
+    width: 100%;
+  }
+  .btn-navy:hover { background: #14212e; }
+
+  .btn-row { display: flex; gap: 10px; margin-top: 16px; }
+  .btn-row .btn { flex: 1; }
+
+  /* ── CTA section ── */
+  .cta-card {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .cta-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+  .cta-card p  { font-size: 0.88rem; color: #a8bfcf; margin-bottom: 20px; line-height: 1.55; }
+  .cta-card .btn-cta {
+    background: var(--white);
+    color: var(--navy);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s;
+  }
+  .cta-card .btn-cta:hover { background: var(--mist); }
+
+  /* ── Hidden PDF target ── */
+  #pdf-target { display: none; }
+
+  /* ── Misc ── */
+  .hidden  { display: none !important; }
+  .mt-10   { margin-top: 10px; }
+  .mt-16   { margin-top: 16px; }
+  small    { font-size: 0.8rem; color: var(--muted); }
+
+  @media (max-width: 480px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .pill { font-size: 0.85rem; padding: 8px 14px; }
+    header h1 { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <header>
+    <h1>Moving Cost Estimator</h1>
+    <p>Validate Your Vision &mdash; Fredericksburg, VA<br>
+    Get a transparent price range in under 2 minutes.</p>
+  </header>
+
+  <!-- Sticky running total -->
+  <div class="sticky-total" id="running-total-bar">
+    <div>
+      <div class="label">Estimated Total</div>
+      <div class="amount" id="rt-amount">Complete the form below</div>
+    </div>
+    <div style="font-size:0.8rem;color:#a8bfcf;text-align:right;max-width:160px;line-height:1.4">
+      Updates as you fill in each step
+    </div>
+  </div>
+
+  <!-- ── STEP 1: Home Size ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Home Size</div>
+        <div class="step-sub">Select your current home type</div>
+      </div>
+    </div>
+    <div class="pill-group" id="home-size-group">
+      <div class="pill" data-size="studio">Studio</div>
+      <div class="pill" data-size="1br">1 Bedroom</div>
+      <div class="pill" data-size="2br">2 Bedroom</div>
+      <div class="pill" data-size="3br">3 Bedroom</div>
+      <div class="pill" data-size="4br">4+ Bedroom</div>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Room Breakdown ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Room Breakdown</div>
+        <div class="step-sub">Used to personalize your estimate summary</div>
+      </div>
+    </div>
+    <div class="field-grid">
+      <div class="field-row">
+        <label for="r-bedrooms">Bedrooms</label>
+        <input type="number" id="r-bedrooms" min="0" max="20" value="0">
+      </div>
+      <div class="field-row">
+        <label for="r-bathrooms">Bathrooms</label>
+        <input type="number" id="r-bathrooms" min="0" max="20" value="0">
+      </div>
+      <div class="field-row">
+        <label for="r-living">Living Rooms</label>
+        <input type="number" id="r-living" min="0" max="10" value="0">
+      </div>
+      <div class="field-row">
+        <label for="r-family">Family Rooms</label>
+        <input type="number" id="r-family" min="0" max="10" value="0">
+      </div>
+      <div class="field-row">
+        <label for="r-kitchens">Kitchens</label>
+        <input type="number" id="r-kitchens" min="0" max="5" value="0">
+      </div>
+      <div class="field-row">
+        <label for="r-other">Other Rooms</label>
+        <input type="number" id="r-other" min="0" max="20" value="0">
+      </div>
+    </div>
+    <div class="field-row mt-10">
+      <label for="r-other-desc">Describe other rooms (optional)</label>
+      <input type="text" id="r-other-desc" placeholder="e.g. office, sunroom, garage">
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Floors & Stairs ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Floors &amp; Stairs</div>
+        <div class="step-sub">Stair flights add ~45 min each to labor</div>
+      </div>
+    </div>
+    <div class="field-grid">
+      <div class="field-row">
+        <label for="num-floors">Number of floors</label>
+        <input type="number" id="num-floors" min="1" max="10" value="1">
+      </div>
+      <div class="field-row">
+        <label for="num-stairs">Flights of stairs</label>
+        <input type="number" id="num-stairs" min="0" max="10" value="0">
+      </div>
+    </div>
+    <div class="field-row mt-10">
+      <label>Does your home have a basement?</label>
+      <div class="radio-row">
+        <div class="radio-btn" id="basement-no" data-val="no">No</div>
+        <div class="radio-btn" id="basement-yes" data-val="yes">Yes — adds 1 flight</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: Crew Size ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Crew Size</div>
+        <div class="step-sub">Select your preferred crew — price updates live</div>
+      </div>
+    </div>
+    <div class="crew-grid" id="crew-group">
+      <div class="crew-card" data-crew="2" data-rate="123">
+        <div class="crew-count">2 Movers</div>
+        <div class="crew-rate">$123 / hr</div>
+        <div class="crew-note">Standard option — great for studios and 1-bedroom moves</div>
+      </div>
+      <div class="crew-card" data-crew="3" data-rate="185">
+        <div class="crew-count">3 Movers</div>
+        <div class="crew-rate">$185 / hr</div>
+        <div class="crew-note">Recommended for 2-bedroom homes and larger — often finishes faster, so total cost stays similar while reducing your day's time commitment</div>
+      </div>
+      <div class="crew-card" data-crew="4" data-rate="235">
+        <div class="crew-count">4 Movers</div>
+        <div class="crew-rate">$235 / hr</div>
+        <div class="crew-note">Best for large homes (4+ bedrooms) or tight timelines</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 5: Specialty Items ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Specialty &amp; Heavy Items</div>
+        <div class="step-sub">Optional — check anything that applies</div>
+      </div>
+    </div>
+    <div class="check-list" id="specialty-list">
+      <label class="check-item" id="ci-piano">
+        <input type="checkbox" value="piano"> <span>Piano</span>
+      </label>
+      <label class="check-item" id="ci-safe">
+        <input type="checkbox" value="safe"> <span>Safe</span>
+      </label>
+      <label class="check-item" id="ci-gym">
+        <input type="checkbox" value="gym"> <span>Gym Equipment</span>
+      </label>
+      <label class="check-item" id="ci-pool">
+        <input type="checkbox" value="pool"> <span>Pool Table</span>
+      </label>
+      <label class="check-item" id="ci-other">
+        <input type="checkbox" value="other"> <span>Other large item</span>
+      </label>
+    </div>
+    <div class="field-row mt-10 hidden" id="specialty-other-wrap">
+      <label for="specialty-other-desc">Describe the item</label>
+      <input type="text" id="specialty-other-desc" placeholder="e.g. large china cabinet, antique wardrobe">
+    </div>
+    <div class="info-box warning hidden" id="specialty-note">
+      Specialty items may require additional time or third-party handling. We'll confirm exact details at your System Setup Visit.
+    </div>
+  </div>
+
+  <!-- ── STEP 6: Packing ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <div>
+        <div class="step-title">Packing / Unpacking Add-On</div>
+        <div class="step-sub">Optional — add professional packing to your move</div>
+      </div>
+    </div>
+    <div class="toggle-wrap">
+      <span class="toggle-label">Add packing service?</span>
+      <label class="toggle">
+        <input type="checkbox" id="packing-toggle">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="collapsible" id="packing-options">
+      <div class="mt-16">
+        <label>How many packers?</label>
+        <div class="radio-row" id="packer-count-group">
+          <div class="radio-btn" data-packers="2">2 Packers<br><small>$100/hr</small></div>
+          <div class="radio-btn" data-packers="3">3 Packers<br><small>$150/hr</small></div>
+          <div class="radio-btn" data-packers="4">4 Packers<br><small>$200/hr</small></div>
+        </div>
+      </div>
+      <div class="info-box mt-10">
+        Packing materials typically range from $180 (1BR) to $750+ (3BR+), confirmed exactly at your System Setup Visit.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 7: Distance / Truck Fee ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">7</div>
+      <div>
+        <div class="step-title">Truck &amp; Travel Fee</div>
+        <div class="step-sub">Enter your estimated round-trip mileage</div>
+      </div>
+    </div>
+    <div class="field-row">
+      <label for="pickup-addr">Pickup address (for your records)</label>
+      <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA">
+    </div>
+    <div class="field-row">
+      <label for="dropoff-addr">Drop-off address (for your records)</label>
+      <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA">
+    </div>
+    <div class="field-row">
+      <label for="roundtrip-miles">Estimated round-trip miles</label>
+      <input type="number" id="roundtrip-miles" min="0" max="500" value="0"
+             placeholder="e.g. 20">
+      <small style="margin-top:4px;display:block;">
+        Round trip = pickup to drop-off and back. Not sure? Google Maps driving distance &times; 2 is a good estimate.
+      </small>
+    </div>
+    <div class="info-box mt-10" id="truck-fee-display">
+      Truck &amp; Travel Fee: <strong>—</strong>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="results-card" id="results-section">
+    <h2>Your Estimate</h2>
+
+    <div class="line-item">
+      <span class="li-label">Labor (<span id="res-hours">—</span> hrs &times; <span id="res-rate">—</span>/hr)</span>
+      <span class="li-value" id="res-labor">—</span>
+    </div>
+    <div class="line-item">
+      <span class="li-label">Truck &amp; Travel Fee</span>
+      <span class="li-value" id="res-truck">—</span>
+    </div>
+    <div class="line-item" id="res-packing-row" style="display:none">
+      <span class="li-label">Packing Service (<span id="res-pack-hrs">—</span> hrs &times; <span id="res-pack-rate">—</span>/hr)</span>
+      <span class="li-value" id="res-packing">—</span>
+    </div>
+
+    <div class="total-row">
+      <span class="tl">Total Estimated Range</span>
+      <span class="tv" id="res-total">—</span>
+    </div>
+
+    <div class="deposit-box">
+      <strong id="deposit-label">Booking Deposit</strong>
+      <span id="deposit-text">Select a home size to see deposit details.</span>
+    </div>
+
+    <div class="info-box mt-10" id="visit-fee-box" style="display:none">
+      <strong>System Setup Visit fee:</strong> <span id="res-visit-fee">—</span>
+      &mdash; applied as operational prep work before your move begins.
+      <br><br>
+      <em>Most movers run over budget because nobody knew what they were walking into until move day. Our System Setup Visit fixes that before your move starts &mdash; we map out your home in advance, so your crew already knows the plan. No guessing, no standing around, no surprise hours added to your bill.</em>
+    </div>
+
+    <p class="disclaimer">
+      This is an estimate based on the information provided. Your final price is confirmed at your System Setup Visit.
+    </p>
+
+    <!-- Action buttons -->
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="btn-download">Download PDF</button>
+      <button class="btn btn-secondary" id="btn-copy">Copy Estimate</button>
+    </div>
+    <div class="mt-10 hidden" id="copy-confirm" style="font-size:0.83rem;color:var(--green);font-weight:600;">
+      Estimate copied to clipboard.
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-card">
+    <h3>Ready to lock in your move?</h3>
+    <p>Book your System Setup Visit and let us map out your home before move day &mdash; so there are no surprises when your crew arrives.</p>
+    <!-- UPDATE: Replace '#' with your actual booking/contact page URL -->
+    <a href="#" class="btn-cta">Book Your System Setup Visit</a>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- Hidden PDF render target -->
+<div id="pdf-target" style="
+  position:fixed;left:-9999px;top:0;width:700px;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:#fff;padding:40px;color:#1c2b3a;
+"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   EDITABLE CONFIG — update these values as needed
+   ════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  TRUCK_BASE:      176.55,  // UPDATE: fixed base truck/travel fee (check current rental rates periodically)
+  TRUCK_PER_MILE:  1.59,    // UPDATE: per-mile rate for round-trip truck fee
+  MIN_HOURS:       3,       // hard floor: minimum billable hours regardless of home size
+  STAIRS_HRS:      0.75,    // hours added per flight of stairs
+
+  CREW_RATES: { 2: 123, 3: 185, 4: 235 },
+  PACKER_RATES: { 2: 100, 3: 150, 4: 200 },
+
+  /* Base labor hours [low, high] by home size */
+  BASE_HOURS: {
+    studio: [2, 3],
+    '1br':  [3, 4],
+    '2br':  [4, 6],
+    '3br':  [6, 8],
+    '4br':  [8, 12],
+  },
+
+  /* Packing hours [low, high] by home size */
+  PACK_HOURS: {
+    studio: [3, 4],
+    '1br':  [3, 4],
+    '2br':  [4, 6],
+    '3br':  [6, 8],
+    '4br':  [8, 10],
+  },
+
+  /* System Setup Visit fees by home size */
+  VISIT_FEES: {
+    studio: 45,
+    '1br':  45,
+    '2br':  55,
+    '3br':  65,
+    '4br':  75,
+  },
+
+  /* Booking deposit by home size */
+  DEPOSITS: {
+    studio: 370,
+    '1br':  370,
+    '2br':  370,
+    '3br':  370,
+    '4br':  400,
+  },
+};
+
+/* ════════════════════════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════════════════════════ */
+const state = {
+  homeSize:     null,
+  basement:     'no',
+  stairs:       0,
+  crewSize:     null,
+  crewRate:     0,
+  packingOn:    false,
+  packers:      null,
+  packerRate:   0,
+  miles:        0,
+};
+
+/* ════════════════════════════════════════════════════════════════
+   UTILITY
+   ════════════════════════════════════════════════════════════════ */
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtRange(lo, hi) {
+  return fmt(lo) + ' – ' + fmt(hi);
+}
+function roundUpTo5(n) {
+  return Math.ceil(n / 5) * 5;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CALCULATE
+   ════════════════════════════════════════════════════════════════ */
+function calc() {
+  const s = state;
+  if (!s.homeSize || !s.crewSize) return null;
+
+  const baseHrs = CONFIG.BASE_HOURS[s.homeSize];
+  const totalStairs = s.stairs + (s.basement === 'yes' ? 1 : 0);
+  const stairAdd = totalStairs * CONFIG.STAIRS_HRS;
+
+  let hrsLo = Math.max(CONFIG.MIN_HOURS, baseHrs[0] + stairAdd);
+  let hrsHi = Math.max(CONFIG.MIN_HOURS, baseHrs[1] + stairAdd);
+
+  const laborLo = hrsLo * s.crewRate;
+  const laborHi = hrsHi * s.crewRate;
+
+  const truckFee = roundUpTo5(CONFIG.TRUCK_BASE + s.miles * CONFIG.TRUCK_PER_MILE);
+
+  let packLo = 0, packHi = 0, packHrsRange = null;
+  if (s.packingOn && s.packers) {
+    const ph = CONFIG.PACK_HOURS[s.homeSize];
+    packLo = ph[0] * s.packerRate;
+    packHi = ph[1] * s.packerRate;
+    packHrsRange = ph;
+  }
+
+  const totalLo = laborLo + truckFee + packLo;
+  const totalHi = laborHi + truckFee + packHi;
+
+  return {
+    hrsLo, hrsHi, totalStairs, stairAdd,
+    laborLo, laborHi,
+    truckFee,
+    packLo, packHi, packHrsRange,
+    totalLo, totalHi,
+    visitFee:  CONFIG.VISIT_FEES[s.homeSize],
+    deposit:   CONFIG.DEPOSITS[s.homeSize],
+  };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RENDER
+   ════════════════════════════════════════════════════════════════ */
+function render() {
+  const r = calc();
+
+  /* Truck fee preview in step 7 */
+  const truckDisplay = document.getElementById('truck-fee-display');
+  if (state.miles > 0) {
+    const tf = roundUpTo5(CONFIG.TRUCK_BASE + state.miles * CONFIG.TRUCK_PER_MILE);
+    truckDisplay.innerHTML = `Truck &amp; Travel Fee: <strong>${fmt(tf)}</strong>`;
+  } else {
+    truckDisplay.innerHTML = `Truck &amp; Travel Fee: <strong>Enter mileage above</strong>`;
+  }
+
+  /* Running total bar */
+  const rtEl = document.getElementById('rt-amount');
+  if (r) {
+    rtEl.textContent = fmtRange(r.totalLo, r.totalHi);
+  } else {
+    rtEl.textContent = 'Complete the form below';
+  }
+
+  /* Results section */
+  if (!r) return;
+
+  /* Labor */
+  document.getElementById('res-hours').textContent =
+    r.hrsLo === r.hrsHi ? r.hrsLo : `${r.hrsLo}–${r.hrsHi}`;
+  document.getElementById('res-rate').textContent = fmt(state.crewRate);
+  document.getElementById('res-labor').textContent = fmtRange(r.laborLo, r.laborHi);
+
+  /* Truck */
+  document.getElementById('res-truck').textContent = fmt(r.truckFee);
+
+  /* Packing */
+  const packRow = document.getElementById('res-packing-row');
+  if (r.packLo > 0) {
+    packRow.style.display = '';
+    const ph = r.packHrsRange;
+    document.getElementById('res-pack-hrs').textContent = ph[0] === ph[1] ? ph[0] : `${ph[0]}–${ph[1]}`;
+    document.getElementById('res-pack-rate').textContent = fmt(state.packerRate);
+    document.getElementById('res-packing').textContent = fmtRange(r.packLo, r.packHi);
+  } else {
+    packRow.style.display = 'none';
+  }
+
+  /* Total */
+  document.getElementById('res-total').textContent = fmtRange(r.totalLo, r.totalHi);
+
+  /* Deposit */
+  document.getElementById('deposit-label').textContent = `Booking Deposit: ${fmt(r.deposit)}`;
+  document.getElementById('deposit-text').textContent =
+    `A ${fmt(r.deposit)} deposit is required to book your System Setup Visit, applied toward your final labor cost.`;
+
+  /* Visit fee */
+  const vfBox = document.getElementById('visit-fee-box');
+  vfBox.style.display = '';
+  document.getElementById('res-visit-fee').textContent = fmt(r.visitFee);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   EVENT WIRING — Step 1: Home size pills
+   ════════════════════════════════════════════════════════════════ */
+document.getElementById('home-size-group').addEventListener('click', e => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  document.querySelectorAll('#home-size-group .pill').forEach(p => p.classList.remove('selected'));
+  pill.classList.add('selected');
+  state.homeSize = pill.dataset.size;
+
+  /* Auto-select crew default */
+  const autoCrewSize = ['studio','1br'].includes(state.homeSize) ? 2 : 3;
+  if (!state.crewSize) selectCrew(autoCrewSize);
+
+  render();
+});
+
+/* ── Step 2: Room counts (no math — just triggers render for summary) ── */
+['r-bedrooms','r-bathrooms','r-living','r-family','r-kitchens','r-other'].forEach(id => {
+  document.getElementById(id).addEventListener('input', render);
+});
+
+/* ── Step 3: Floors/stairs ── */
+document.getElementById('num-stairs').addEventListener('input', e => {
+  state.stairs = parseInt(e.target.value) || 0;
+  render();
+});
+document.getElementById('num-floors').addEventListener('input', render);
+
+/* Basement radio */
+document.getElementById('basement-no').addEventListener('click', () => {
+  state.basement = 'no';
+  document.getElementById('basement-no').classList.add('selected');
+  document.getElementById('basement-yes').classList.remove('selected');
+  render();
+});
+document.getElementById('basement-yes').addEventListener('click', () => {
+  state.basement = 'yes';
+  document.getElementById('basement-yes').classList.add('selected');
+  document.getElementById('basement-no').classList.remove('selected');
+  render();
+});
+/* Default basement selection */
+document.getElementById('basement-no').classList.add('selected');
+
+/* ── Step 4: Crew cards ── */
+function selectCrew(n) {
+  state.crewSize = n;
+  state.crewRate = CONFIG.CREW_RATES[n];
+  document.querySelectorAll('.crew-card').forEach(c => {
+    c.classList.toggle('selected', parseInt(c.dataset.crew) === n);
+  });
+}
+document.getElementById('crew-group').addEventListener('click', e => {
+  const card = e.target.closest('.crew-card');
+  if (!card) return;
+  selectCrew(parseInt(card.dataset.crew));
+  render();
+});
+
+/* ── Step 5: Specialty items ── */
+document.getElementById('specialty-list').addEventListener('change', e => {
+  const anyChecked = [...document.querySelectorAll('#specialty-list input[type="checkbox"]')]
+    .some(cb => cb.checked);
+  const otherChecked = document.querySelector('#ci-other input').checked;
+
+  document.querySelectorAll('#specialty-list .check-item').forEach(ci => {
+    ci.classList.toggle('checked', ci.querySelector('input').checked);
+  });
+
+  document.getElementById('specialty-note').classList.toggle('hidden', !anyChecked);
+  document.getElementById('specialty-other-wrap').classList.toggle('hidden', !otherChecked);
+  render();
+});
+
+/* ── Step 6: Packing toggle ── */
+document.getElementById('packing-toggle').addEventListener('change', e => {
+  state.packingOn = e.target.checked;
+  document.getElementById('packing-options').classList.toggle('open', state.packingOn);
+  if (!state.packingOn) {
+    state.packers = null;
+    state.packerRate = 0;
+    document.querySelectorAll('#packer-count-group .radio-btn')
+      .forEach(b => b.classList.remove('selected'));
+  }
+  render();
+});
+
+document.getElementById('packer-count-group').addEventListener('click', e => {
+  const btn = e.target.closest('.radio-btn');
+  if (!btn) return;
+  const n = parseInt(btn.dataset.packers);
+  state.packers = n;
+  state.packerRate = CONFIG.PACKER_RATES[n];
+  document.querySelectorAll('#packer-count-group .radio-btn')
+    .forEach(b => b.classList.toggle('selected', b === btn));
+  render();
+});
+
+/* ── Step 7: Mileage ── */
+document.getElementById('roundtrip-miles').addEventListener('input', e => {
+  state.miles = parseFloat(e.target.value) || 0;
+  render();
+});
+
+/* ════════════════════════════════════════════════════════════════
+   BUILD SUMMARY TEXT (for clipboard + PDF)
+   ════════════════════════════════════════════════════════════════ */
+function buildSummaryText() {
+  const r = calc();
+  if (!r) return 'Please complete the estimator form to generate a summary.';
+
+  const sizeLabel = {
+    studio:'Studio', '1br':'1 Bedroom', '2br':'2 Bedroom',
+    '3br':'3 Bedroom', '4br':'4+ Bedroom'
+  }[state.homeSize];
+
+  const rooms = [
+    ['Bedrooms', document.getElementById('r-bedrooms').value],
+    ['Bathrooms', document.getElementById('r-bathrooms').value],
+    ['Living rooms', document.getElementById('r-living').value],
+    ['Family rooms', document.getElementById('r-family').value],
+    ['Kitchens', document.getElementById('r-kitchens').value],
+    ['Other rooms', document.getElementById('r-other').value],
+  ].filter(([,v]) => parseInt(v) > 0)
+   .map(([k,v]) => `  ${k}: ${v}`).join('\n');
+
+  const specialtyItems = [...document.querySelectorAll('#specialty-list input:checked')]
+    .map(cb => {
+      if (cb.value === 'other') {
+        const d = document.getElementById('specialty-other-desc').value.trim();
+        return d ? `Other: ${d}` : 'Other large item';
+      }
+      return { piano:'Piano', safe:'Safe', gym:'Gym Equipment', pool:'Pool Table' }[cb.value];
+    }).join(', ');
+
+  const lines = [
+    'VALIDATE YOUR VISION — MOVING COST ESTIMATE',
+    '='.repeat(44),
+    '',
+    `Home size: ${sizeLabel}`,
+    rooms ? `Rooms:\n${rooms}` : '',
+    `Pickup: ${document.getElementById('pickup-addr').value || '—'}`,
+    `Drop-off: ${document.getElementById('dropoff-addr').value || '—'}`,
+    `Round-trip miles: ${state.miles}`,
+    `Crew: ${state.crewSize} movers @ $${state.crewRate}/hr`,
+    specialtyItems ? `Specialty items: ${specialtyItems}` : '',
+    state.packingOn && state.packers
+      ? `Packing: ${state.packers} packers @ $${state.packerRate}/hr` : '',
+    '',
+    'ESTIMATE BREAKDOWN',
+    '-'.repeat(44),
+    `Labor:            ${fmtRange(r.laborLo, r.laborHi)}`,
+    `Truck & Travel:   ${fmt(r.truckFee)}`,
+    state.packingOn && r.packLo > 0 ? `Packing:          ${fmtRange(r.packLo, r.packHi)}` : '',
+    '',
+    `TOTAL RANGE:      ${fmtRange(r.totalLo, r.totalHi)}`,
+    '',
+    '-'.repeat(44),
+    `Booking deposit required: ${fmt(r.deposit)}`,
+    `System Setup Visit fee: ${fmt(r.visitFee)}`,
+    '',
+    'This is an estimate based on the information provided.',
+    'Your final price is confirmed at your System Setup Visit.',
+    '',
+    `Generated: ${new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}`,
+  ].filter(l => l !== null && l !== '').join('\n');
+
+  return lines;
+}
+
+/* ── Copy to clipboard ── */
+document.getElementById('btn-copy').addEventListener('click', () => {
+  const r = calc();
+  if (!r) { alert('Please complete the estimator first.'); return; }
+  navigator.clipboard.writeText(buildSummaryText()).then(() => {
+    const el = document.getElementById('copy-confirm');
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 3000);
+  }).catch(() => {
+    alert('Copy failed — please select and copy the estimate text manually.');
+  });
+});
+
+/* ════════════════════════════════════════════════════════════════
+   PDF DOWNLOAD
+   ════════════════════════════════════════════════════════════════ */
+document.getElementById('btn-download').addEventListener('click', async () => {
+  const r = calc();
+  if (!r) { alert('Please complete the estimator first.'); return; }
+
+  const sizeLabel = {
+    studio:'Studio', '1br':'1 Bedroom', '2br':'2 Bedroom',
+    '3br':'3 Bedroom', '4br':'4+ Bedroom'
+  }[state.homeSize];
+
+  const specialtyItems = [...document.querySelectorAll('#specialty-list input:checked')]
+    .map(cb => {
+      if (cb.value === 'other') {
+        const d = document.getElementById('specialty-other-desc').value.trim();
+        return d ? `Other: ${d}` : 'Other large item';
+      }
+      return { piano:'Piano', safe:'Safe', gym:'Gym Equipment', pool:'Pool Table' }[cb.value];
+    }).join(', ');
+
+  const rooms = [
+    ['Bedrooms', document.getElementById('r-bedrooms').value],
+    ['Bathrooms', document.getElementById('r-bathrooms').value],
+    ['Living rooms', document.getElementById('r-living').value],
+    ['Family rooms', document.getElementById('r-family').value],
+    ['Kitchens', document.getElementById('r-kitchens').value],
+    ['Other rooms', document.getElementById('r-other').value],
+  ].filter(([,v]) => parseInt(v) > 0);
+
+  const target = document.getElementById('pdf-target');
+  target.innerHTML = `
+    <div style="border-bottom:3px solid #1c2b3a;padding-bottom:18px;margin-bottom:22px;">
+      <div style="font-size:22px;font-weight:800;color:#1c2b3a;">Validate Your Vision</div>
+      <div style="font-size:13px;color:#566779;margin-top:3px;">Moving Cost Estimate — Fredericksburg, VA</div>
+      <div style="font-size:12px;color:#566779;margin-top:2px;">Generated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Home Details</div>
+        <div style="font-size:14px;font-weight:700;color:#1c2b3a;margin-bottom:4px;">${sizeLabel}</div>
+        ${rooms.map(([k,v]) => `<div style="font-size:13px;color:#3d5166;">${k}: ${v}</div>`).join('')}
+      </div>
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Move Details</div>
+        <div style="font-size:13px;color:#3d5166;">From: ${document.getElementById('pickup-addr').value || '—'}</div>
+        <div style="font-size:13px;color:#3d5166;margin-top:3px;">To: ${document.getElementById('dropoff-addr').value || '—'}</div>
+        <div style="font-size:13px;color:#3d5166;margin-top:3px;">Round-trip: ${state.miles} mi</div>
+        <div style="font-size:13px;color:#3d5166;margin-top:3px;">Crew: ${state.crewSize} movers @ $${state.crewRate}/hr</div>
+        ${state.packingOn && state.packers ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Packing: ${state.packers} packers @ $${state.packerRate}/hr</div>` : ''}
+        ${specialtyItems ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Specialty items: ${specialtyItems}</div>` : ''}
+      </div>
+    </div>
+
+    <div style="background:#f2f5f8;border-radius:8px;padding:20px;margin-bottom:22px;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:14px;">Estimate Breakdown</div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
+        <span style="font-size:13px;color:#566779;">Labor (${r.hrsLo === r.hrsHi ? r.hrsLo : r.hrsLo + '–' + r.hrsHi} hrs &times; $${state.crewRate}/hr)</span>
+        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.laborLo, r.laborHi)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;${r.packLo > 0 ? 'border-bottom:1px solid #ccd6de;' : ''}">
+        <span style="font-size:13px;color:#566779;">Truck & Travel Fee</span>
+        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmt(r.truckFee)}</span>
+      </div>
+      ${r.packLo > 0 ? `
+      <div style="display:flex;justify-content:space-between;padding:8px 0;">
+        <span style="font-size:13px;color:#566779;">Packing Service</span>
+        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.packLo, r.packHi)}</span>
+      </div>` : ''}
+      <div style="display:flex;justify-content:space-between;padding:14px 0 0;border-top:2px solid #1c2b3a;margin-top:8px;">
+        <span style="font-size:15px;font-weight:700;color:#1c2b3a;">Total Estimated Range</span>
+        <span style="font-size:20px;font-weight:800;color:#2e6da4;">${fmtRange(r.totalLo, r.totalHi)}</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
+      <div style="background:#d4eddf;border:1px solid #9dd0b4;border-radius:8px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:#1e6b4a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Booking Deposit</div>
+        <div style="font-size:18px;font-weight:800;color:#1e6b4a;">${fmt(r.deposit)}</div>
+        <div style="font-size:12px;color:#1e6b4a;margin-top:4px;">Applied toward final labor cost</div>
+      </div>
+      <div style="background:#eef5fb;border:1px solid #9bbbd9;border-radius:8px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:#2e6da4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">System Setup Visit</div>
+        <div style="font-size:18px;font-weight:800;color:#2e6da4;">${fmt(r.visitFee)}</div>
+        <div style="font-size:12px;color:#2e6da4;margin-top:4px;">Pre-move planning visit</div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;color:#566779;font-style:italic;border-top:1px solid #ccd6de;padding-top:14px;line-height:1.6;">
+      This is an estimate based on the information provided. Your final price is confirmed at your System Setup Visit.
+    </div>
+  `;
+
+  target.style.display = 'block';
+  try {
+    const { jsPDF } = window.jspdf;
+    const canvas = await html2canvas(target, { scale: 2, useCORS: true, logging: false });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'letter' });
+    const pw = pdf.internal.pageSize.getWidth();
+    const ph = pdf.internal.pageSize.getHeight();
+    const ratio = canvas.width / canvas.height;
+    let iw = pw - 40, ih = iw / ratio;
+    if (ih > ph - 40) { ih = ph - 40; iw = ih * ratio; }
+    pdf.addImage(imgData, 'PNG', 20, 20, iw, ih);
+    pdf.save('VYV-Moving-Estimate.pdf');
+  } catch (err) {
+    console.error(err);
+    alert('PDF generation failed. Try the "Copy Estimate" button instead.');
+  } finally {
+    target.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
