@@ -594,6 +594,16 @@ body{
 /* ══════════════════════════════════════════
    CONFIG
    ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   INTEGRATION CONFIG
+   ══════════════════════════════════════════ */
+const INTEGRATIONS = {
+  AIRTABLE_TOKEN:   'YOUR_AIRTABLE_PAT_HERE',
+  AIRTABLE_BASE:    'appeKqbaDeU4lb2mM',
+  AIRTABLE_TABLE:   'tblECalg5M8YXq27N',
+  ZOHO_WEBHOOK:     'YOUR_ZAPIER_WEBHOOK_URL_HERE',
+};
+
 const C = {
   TRUCK_BASE:      176.55,
   TRUCK_MILE:      1.59,
@@ -626,6 +636,7 @@ const S = {
   specialty:   [],
   disassembly: [],
   miles:       0,
+  driveTime:   null,
   packType:    null,
   packingOn:   null,
   packers:     null, packerRate: 0,
@@ -973,8 +984,9 @@ function runDistanceCalc() {
     }
     const el = res.rows[0].elements[0];
     const ow = el.distance.value / 1609.344;
-    S.miles  = ow * 2;
-    resEl.innerHTML = `<strong>${el.distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip`;
+    S.miles     = ow * 2;
+    S.driveTime = el.duration.text;
+    resEl.innerHTML = `<strong>${el.distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip &middot; ~${el.duration.text} drive`;
     resEl.classList.add('ok');
     contB.classList.remove('hidden');
   });
@@ -1003,6 +1015,96 @@ single('s13', btn => { S.moveDate = btn.dataset.val; });
 single('s14', btn => { S.confidence = btn.dataset.val; });
 
 /* Lead capture */
+const PROP_LABEL  = {apartment:'Apartment',condo:'Condo',house:'House',townhome:'Townhome'};
+const SIZE_LABEL  = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
+const FURN_LABEL  = {light:'Lightly Furnished',average:'Average',full:'Fully Furnished',veryfull:'Very Heavily Furnished'};
+const CARRY_LABEL = {close:'Right at Door',medium:'Short Walk',long:'Moderate Walk',verylong:'Long Walk'};
+const PACK_LABEL  = {fragile:'Fragile Items Only',kitchen:'Kitchen Only',rooms:'Select Rooms',full:'Full Home Pack'};
+const DATE_LABEL  = {asap:'As Soon as Possible','1month':'Within 1 Month','3month':'1-3 Months',flexible:'Flexible / Not Sure'};
+const CONF_LABEL  = {very:'Very Confident',mostly:'Mostly Sure',unsure:'Not Sure Yet'};
+const CX_LABEL    = {std:'Standard',mod:'Moderate',cpx:'Complex'};
+
+async function submitLead(name, email, phone) {
+  const r   = calc();
+  const pickup  = document.getElementById('pickup-addr').value.trim();
+  const dropoff = document.getElementById('dropoff-addr').value.trim();
+  const now  = new Date().toISOString();
+
+  const floorInfo = S.aptFloor
+    ? `Floor ${S.aptFloor}${S.stairs ? `, ${S.stairs} flight${S.stairs>1?'s':''}` : ''}`
+    : S.stairs ? `${S.stairs} flight${S.stairs>1?'s':''}` : '';
+
+  const invNotes = [
+    S.spaces.length    ? `Extra areas: ${S.spaces.join(', ')}`         : '',
+    S.specialty.length ? `Specialty items: ${S.specialty.join(', ')}`  : '',
+    S.disassembly.length ? `Disassembly needed: ${S.disassembly.join(', ')}` : '',
+  ].filter(Boolean).join('\n');
+
+  /* ── Airtable ─────────────────────────────── */
+  if (INTEGRATIONS.AIRTABLE_TOKEN && INTEGRATIONS.AIRTABLE_TOKEN !== 'YOUR_AIRTABLE_PAT_HERE') {
+    const fields = {
+      'Customer Name':         name,
+      'Email':                 email,
+      'Phone':                 phone,
+      'Status':                'New Lead',
+      'Submitted At':          now,
+      'Pickup Address':        pickup,
+      'Destination Address':   dropoff,
+      'Distance One Way (mi)': r ? parseFloat((S.miles/2).toFixed(2)) : null,
+      'Distance Round Trip (mi)': r ? parseFloat(S.miles.toFixed(2)) : null,
+      'Drive Time':            S.driveTime || '',
+      'Property Type':         PROP_LABEL[S.propType]  || S.propType  || '',
+      'Bedrooms':              SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
+      'Furnishing Level':      FURN_LABEL[S.furnish]   || S.furnish   || '',
+      'Floor / Stairs':        floorInfo,
+      'Walk Distance':         CARRY_LABEL[S.carry]    || S.carry     || '',
+      'Packing Type':          S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
+      'Packer Count':          S.packers   || null,
+      'Storage Stop':          S.storage === 'yes' ? 'Yes' : 'No',
+      'Move Timeline':         DATE_LABEL[S.moveDate]  || S.moveDate  || '',
+      'Customer Confidence':   CONF_LABEL[S.confidence]|| S.confidence|| '',
+      'Complexity':            r ? (CX_LABEL[r.cx] || r.cx) : '',
+      'Recommended Crew':      C.REC_CREW[S.homeSize]  || null,
+      'Estimate Low':          r ? r.totalLo : null,
+      'Estimate High':         r ? r.totalHi : null,
+      'Deposit Amount':        r ? r.deposit : null,
+      'Inventory Notes':       invNotes,
+    };
+    if (S.spaces.length)     fields['Extra Spaces']      = S.spaces;
+    if (S.specialty.length)  fields['Specialty Items']   = S.specialty;
+    if (S.disassembly.length)fields['Disassembly Items'] = S.disassembly;
+
+    fetch(`https://api.airtable.com/v0/${INTEGRATIONS.AIRTABLE_BASE}/${INTEGRATIONS.AIRTABLE_TABLE}`, {
+      method:  'POST',
+      headers: {
+        'Authorization': `Bearer ${INTEGRATIONS.AIRTABLE_TOKEN}`,
+        'Content-Type':  'application/json',
+      },
+      body: JSON.stringify({ fields }),
+    }).catch(() => {});
+  }
+
+  /* ── Zoho CRM via Zapier webhook ─────────── */
+  if (INTEGRATIONS.ZOHO_WEBHOOK && INTEGRATIONS.ZOHO_WEBHOOK !== 'YOUR_ZAPIER_WEBHOOK_URL_HERE') {
+    fetch(INTEGRATIONS.ZOHO_WEBHOOK, {
+      method:  'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        move_timeline: DATE_LABEL[S.moveDate] || S.moveDate || '',
+        pickup_address:  pickup,
+        dropoff_address: dropoff,
+        estimate_low:  r ? r.totalLo : '',
+        estimate_high: r ? r.totalHi : '',
+        home_size:     SIZE_LABEL[S.homeSize] || S.homeSize || '',
+        source:        'Pricing Estimator',
+      }),
+    }).catch(() => {});
+  }
+}
+
 document.getElementById('btn-reveal').addEventListener('click', ()=>{
   const n = document.getElementById('lead-name').value.trim();
   const e = document.getElementById('lead-email').value.trim();
@@ -1010,6 +1112,7 @@ document.getElementById('btn-reveal').addEventListener('click', ()=>{
   const errEl = document.getElementById('lead-err');
   if (!n||!e||!p) { errEl.classList.remove('hidden'); return; }
   errEl.classList.add('hidden');
+  submitLead(n, e, p);
   renderResults();
   show('results');
 });
