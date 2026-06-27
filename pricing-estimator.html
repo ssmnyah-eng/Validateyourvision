@@ -3,1214 +3,1008 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moving Cost Estimator — Validate Your Vision</title>
+<title>Move Planner — Validate Your Vision</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 
-  :root {
-    --navy:         #1c2b3a;
-    --slate:        #3d5166;
-    --mist:         #e8edf2;
-    --white:        #ffffff;
-    --accent:       #2e6da4;
-    --accent-light: #d6e6f5;
-    --green:        #1e6b4a;
-    --green-light:  #d4eddf;
-    --text:         #1c2b3a;
-    --muted:        #566779;
-    --border:       #ccd6de;
-    --radius:       10px;
-    --shadow:       0 2px 12px rgba(28,43,58,0.10);
-  }
+:root{
+  --navy:#1c2b3a;
+  --navy2:#2d4155;
+  --accent:#2e6da4;
+  --accent-lt:#d6e6f5;
+  --green:#1e6b4a;
+  --green-lt:#d4eddf;
+  --white:#ffffff;
+  --mist:#f2f5f8;
+  --border:#d0dae3;
+  --text:#1c2b3a;
+  --muted:#5a6e7e;
+  --r:12px;
+}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f2f5f8;
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--mist);
+  color:var(--text);
+  line-height:1.5;
+  min-height:100vh;
+}
 
-  .page-wrap { max-width: 740px; margin: 0 auto; padding: 24px 16px 60px; }
+/* ── APP SHELL ── */
+#app{min-height:100vh;display:flex;flex-direction:column}
 
-  header {
-    text-align: center;
-    margin-bottom: 24px;
-    padding: 32px 24px 28px;
-    background: var(--navy);
-    border-radius: var(--radius);
-    color: var(--white);
+@media(min-width:900px){
+  #app{
+    display:grid;
+    grid-template-rows:auto 1fr;
+    grid-template-columns:1fr 340px;
+    grid-template-areas:"hdr hdr" "main snap";
+    min-height:100vh;
   }
-  header h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.3px; }
-  header p  { margin-top: 8px; color: #a8bfcf; font-size: 0.93rem; }
+  #prog-hdr{grid-area:hdr}
+  #main{grid-area:main}
+  #snap{grid-area:snap}
+}
 
-  /* Sticky total */
-  .sticky-total {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--navy); color: var(--white);
-    padding: 10px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-radius: var(--radius);
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-  }
-  .sticky-total .label  { font-size: 0.82rem; color: #a8bfcf; text-transform: uppercase; letter-spacing: 0.05em; }
-  .sticky-total .amount { font-size: 1.22rem; font-weight: 700; }
+/* ── PROGRESS HEADER ── */
+#prog-hdr{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  position:sticky;top:0;z-index:100;
+}
+.back-btn{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  border:none;background:none;cursor:pointer;
+  border-radius:50%;color:var(--navy);font-size:1.1rem;
+  transition:background .15s;flex-shrink:0;
+}
+.back-btn:hover{background:var(--mist)}
+.back-btn.hide{visibility:hidden}
+.prog-track{flex:1;height:5px;background:var(--mist);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s ease;width:0%}
+.step-cnt{font-size:.78rem;color:var(--muted);font-weight:600;flex-shrink:0;min-width:48px;text-align:right}
 
-  /* Step cards */
-  .step-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-  }
-  .step-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
-  .step-num {
-    background: var(--accent); color: var(--white);
-    font-size: 0.72rem; font-weight: 700;
-    border-radius: 50%; width: 24px; height: 24px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .step-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
-  .step-sub   { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
+/* ── MAIN ── */
+#main{
+  display:flex;flex-direction:column;
+  padding:28px 24px 140px;
+}
+@media(min-width:900px){
+  #main{padding:52px 60px 52px;max-width:660px}
+}
+@media(max-width:480px){#main{padding:20px 16px 160px}}
 
-  /* Form */
-  label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 5px; color: var(--slate); }
-  input[type="number"], input[type="text"], input[type="email"], input[type="tel"] {
-    width: 100%; padding: 10px 12px;
-    border: 1px solid var(--border); border-radius: 7px;
-    font-size: 0.95rem; color: var(--text); background: var(--white);
-    transition: border-color 0.15s;
-    -moz-appearance: textfield;
-  }
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
-  .field-row  { margin-bottom: 14px; }
-  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;gap:22px}
+.screen.active{display:flex;animation:fadeUp .28s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-  /* Pills */
-  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill {
-    padding: 9px 18px; border: 2px solid var(--border); border-radius: 40px;
-    cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--slate);
-    background: var(--white); transition: all 0.15s; user-select: none;
-  }
-  .pill:hover  { border-color: var(--accent); color: var(--accent); }
-  .pill.selected { background: var(--accent); border-color: var(--accent); color: var(--white); }
+/* Welcome */
+.welcome-wrap{min-height:calc(100vh - 61px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.badge{display:inline-block;background:var(--accent-lt);color:var(--accent);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+.welcome-h{font-size:clamp(1.9rem,5vw,2.9rem);font-weight:800;color:var(--navy);line-height:1.15;letter-spacing:-.5px;margin-top:6px}
+.welcome-p{font-size:1rem;color:var(--muted);max-width:440px;line-height:1.65}
 
-  /* Crew cards */
-  .crew-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-  @media (max-width: 520px) { .crew-grid { grid-template-columns: 1fr; } }
-  .crew-card {
-    border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 16px 12px; cursor: pointer; text-align: center;
-    transition: all 0.15s; user-select: none;
-  }
-  .crew-card:hover { border-color: var(--accent); }
-  .crew-card.selected { border-color: var(--accent); background: var(--accent-light); }
-  .crew-card .crew-count { font-size: 1.3rem; font-weight: 800; color: var(--navy); }
-  .crew-card .crew-rate  { font-size: 1rem;  font-weight: 700; color: var(--accent); margin-top: 2px; }
-  .crew-card .crew-note  { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
-  .crew-card.selected .crew-count,
-  .crew-card.selected .crew-rate { color: var(--navy); }
+/* Question */
+.q-label{font-size:clamp(1.2rem,3vw,1.6rem);font-weight:700;color:var(--navy);line-height:1.3;letter-spacing:-.2px}
+.q-sub{font-size:.85rem;color:var(--muted);margin-top:-14px}
 
-  /* Option cards (property type, furnishing, long carry) */
-  .option-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
-  @media (max-width: 480px) { .option-grid { grid-template-columns: 1fr; } }
-  .option-card {
-    border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 14px 16px; cursor: pointer;
-    transition: all 0.15s; user-select: none;
-  }
-  .option-card:hover { border-color: var(--accent); }
-  .option-card.selected { border-color: var(--accent); background: var(--accent-light); }
-  .option-card .oc-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
-  .option-card .oc-desc  { font-size: 0.78rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }
-  .option-card.selected .oc-title { color: var(--navy); }
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  width:100%;padding:16px 20px;
+  border:2px solid var(--border);border-radius:var(--r);
+  background:var(--white);text-align:left;cursor:pointer;
+  font-size:1rem;font-weight:600;color:var(--navy);
+  transition:all .15s;
+  display:flex;align-items:center;justify-content:space-between;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.opt:hover{border-color:var(--accent);background:var(--accent-lt)}
+.opt.sel{border-color:var(--navy);background:var(--navy);color:var(--white)}
+.opt.multi.sel{border-color:var(--accent);background:var(--accent-lt);color:var(--navy)}
+.chk{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:800;transition:all .15s;
+}
+.opt.sel .chk,.opt.multi.sel .chk{background:var(--accent);border-color:var(--accent);color:var(--white)}
 
-  /* Radio row */
-  .radio-row { display: flex; gap: 12px; margin-top: 6px; }
-  .radio-btn {
-    flex: 1; padding: 10px; border: 2px solid var(--border); border-radius: 7px;
-    text-align: center; cursor: pointer; font-size: 0.9rem; font-weight: 600;
-    color: var(--slate); transition: all 0.15s; user-select: none;
-  }
-  .radio-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .radio-btn.selected { background: var(--accent); border-color: var(--accent); color: var(--white); }
+/* Tip */
+.tip{
+  background:var(--white);
+  border:1px solid var(--border);border-left:4px solid var(--accent);
+  border-radius:8px;padding:14px 16px;
+  font-size:.84rem;color:var(--muted);line-height:1.6;
+}
+.tip strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:3px}
 
-  /* Checkboxes */
-  .check-list { display: grid; gap: 8px; }
-  .check-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 14px; border: 1px solid var(--border); border-radius: 7px;
-    cursor: pointer; transition: all 0.15s; user-select: none;
-  }
-  .check-item:hover { border-color: var(--accent); background: var(--accent-light); }
-  .check-item.checked { border-color: var(--accent); background: var(--accent-light); }
-  .check-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
-  .check-item span { font-size: 0.9rem; font-weight: 500; }
+/* Buttons */
+.btn-main{
+  padding:15px 24px;background:var(--navy);color:var(--white);
+  border:none;border-radius:var(--r);font-size:1rem;font-weight:700;
+  cursor:pointer;width:100%;transition:background .15s;
+}
+.btn-main:hover{background:var(--navy2)}
+.btn-main:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.btn-sec{
+  padding:12px 20px;background:var(--white);border:1.5px solid var(--border);
+  border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;
+  color:var(--navy);transition:all .15s;
+}
+.btn-sec:hover{background:var(--mist)}
+.btn-row{display:flex;gap:10px}
+.btn-row button{flex:1}
 
-  /* Info boxes */
-  .info-box {
-    background: #eef5fb; border-left: 4px solid var(--accent);
-    border-radius: 6px; padding: 12px 14px;
-    font-size: 0.84rem; color: var(--slate); margin-top: 12px; line-height: 1.55;
-  }
-  .info-box.warning { background: #fff8ec; border-left-color: #c8872a; color: #6b4a12; }
+/* Fields */
+.frow{margin-bottom:14px}
+.frow label{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.frow input{
+  width:100%;padding:13px 16px;
+  border:2px solid var(--border);border-radius:var(--r);
+  font-size:1rem;color:var(--text);background:var(--white);
+  transition:border-color .15s;
+}
+.frow input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
 
-  /* Tooltip */
-  .tooltip-wrap { display: inline-flex; align-items: center; gap: 6px; position: relative; }
-  .tooltip-icon {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--accent); color: var(--white);
-    font-size: 0.7rem; font-weight: 800; cursor: pointer;
-    flex-shrink: 0;
-  }
-  .tooltip-box {
-    display: none; position: absolute; bottom: 26px; left: 0;
-    width: 280px; background: var(--navy); color: var(--white);
-    border-radius: 8px; padding: 12px 14px; font-size: 0.8rem; line-height: 1.5;
-    z-index: 200; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-  }
-  .tooltip-wrap:hover .tooltip-box,
-  .tooltip-wrap:focus-within .tooltip-box { display: block; }
+/* Info boxes */
+.ibox{background:var(--accent-lt);border:1px solid #9bbbd9;border-radius:8px;padding:12px 16px;font-size:.88rem;color:var(--accent);font-weight:600}
+.ibox.warn{background:#fff8ec;border-color:#e8c070;color:#7a5010;font-weight:400}
 
-  /* Toggle */
-  .toggle-wrap {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px; background: var(--mist); border-radius: 8px; margin-top: 6px;
-  }
-  .toggle-label { font-size: 0.9rem; font-weight: 600; color: var(--navy); flex: 1; }
-  .toggle { position: relative; width: 48px; height: 26px; cursor: pointer; }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider {
-    position: absolute; inset: 0;
-    background: var(--border); border-radius: 26px; transition: background 0.2s;
-  }
-  .toggle-slider::before {
-    content: ""; position: absolute;
-    width: 20px; height: 20px; left: 3px; bottom: 3px;
-    background: var(--white); border-radius: 50%; transition: transform 0.2s;
-  }
-  .toggle input:checked ~ .toggle-slider { background: var(--accent); }
-  .toggle input:checked ~ .toggle-slider::before { transform: translateX(22px); }
+/* Lead screen */
+.lead-h{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;color:var(--navy);line-height:1.2}
+.lead-p{font-size:.95rem;color:var(--muted);line-height:1.6}
 
-  .collapsible { display: none; margin-top: 16px; }
-  .collapsible.open { display: block; }
+/* Results */
+.res-h{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;color:var(--navy);line-height:1.2}
+.complexity{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700}
+.cx-std{background:#d4eddf;color:#1e6b4a}
+.cx-mod{background:#fff3d6;color:#7a5010}
+.cx-cpx{background:#fde8e8;color:#8b1a1a}
 
-  hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+.crew-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.crew-box-lbl{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px}
+.crew-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.crew-opt{
+  padding:12px 8px;border:2px solid var(--border);border-radius:8px;
+  text-align:center;cursor:pointer;transition:all .15s;user-select:none;
+}
+.crew-opt:hover{border-color:var(--accent)}
+.crew-opt.sel{border-color:var(--navy);background:var(--navy);color:var(--white)}
+.crew-opt .cn{font-size:.88rem;font-weight:800}
+.crew-opt .cr{font-size:.73rem;color:var(--muted);margin-top:2px}
+.crew-opt.sel .cr{color:#a8bfcf}
 
-  /* Lead capture gate */
-  .lead-gate {
-    background: var(--white); border: 2px solid var(--accent);
-    border-radius: var(--radius); padding: 28px 24px;
-    margin-bottom: 16px; box-shadow: var(--shadow);
-  }
-  .lead-gate h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .lead-gate p  { font-size: 0.88rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+.invest-card{background:var(--navy);color:var(--white);border-radius:var(--r);padding:24px;text-align:center}
+.invest-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#7a9bb5;font-weight:700;margin-bottom:8px}
+.invest-amt{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1px;line-height:1.1}
+.invest-note{font-size:.76rem;color:#7a9bb5;margin-top:6px}
 
-  /* Results */
-  .results-card {
-    background: var(--white); border: 2px solid var(--accent);
-    border-radius: var(--radius); padding: 28px 24px;
-    margin-bottom: 16px; box-shadow: var(--shadow);
-  }
-  .results-card h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 18px; font-weight: 700; }
-  .line-item {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 8px 0; border-bottom: 1px solid var(--mist); font-size: 0.92rem;
-  }
-  .line-item:last-of-type { border-bottom: none; }
-  .line-item .li-label { color: var(--muted); }
-  .line-item .li-value { font-weight: 700; color: var(--navy); }
-  .total-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 14px 0 10px; border-top: 2px solid var(--navy); margin-top: 8px;
-  }
-  .total-row .tl { font-size: 1rem; font-weight: 700; color: var(--navy); }
-  .total-row .tv { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+.incl-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.incl-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px}
+.incl-item{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:.9rem;border-bottom:1px solid var(--mist)}
+.incl-item:last-child{border-bottom:none}
+.incl-chk{width:20px;height:20px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.6rem;font-weight:800;flex-shrink:0}
 
-  .deposit-box {
-    background: var(--green-light); border: 1px solid #9dd0b4;
-    border-radius: 8px; padding: 14px 16px; margin-top: 16px;
-    font-size: 0.88rem; color: var(--green);
-  }
-  .deposit-box strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
-  .disclaimer { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 16px; line-height: 1.55; }
+.dep-box{background:var(--green-lt);border:1px solid #9dd0b4;border-radius:10px;padding:16px 18px}
+.dep-lbl{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:4px}
+.dep-amt{font-size:1.4rem;font-weight:800;color:var(--green)}
+.dep-note{font-size:.82rem;color:#2a8a5e;margin-top:6px;line-height:1.5}
 
-  /* Buttons */
-  .btn {
-    display: inline-block; padding: 13px 24px; border-radius: 8px;
-    font-size: 0.95rem; font-weight: 700; cursor: pointer; border: none;
-    transition: all 0.15s; text-decoration: none; text-align: center;
-  }
-  .btn-primary { background: var(--accent); color: var(--white); width: 100%; }
-  .btn-primary:hover { background: #235a8a; }
-  .btn-secondary { background: var(--mist); color: var(--navy); border: 1px solid var(--border); }
-  .btn-secondary:hover { background: #d6dfe8; }
-  .btn-row { display: flex; gap: 10px; margin-top: 16px; }
-  .btn-row .btn { flex: 1; }
+.disclaimer{font-size:.79rem;color:var(--muted);font-style:italic;line-height:1.65}
 
-  /* CTA */
-  .cta-card {
-    background: var(--navy); color: var(--white);
-    border-radius: var(--radius); padding: 28px 24px;
-    text-align: center; margin-top: 20px;
-  }
-  .cta-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
-  .cta-card p  { font-size: 0.88rem; color: #a8bfcf; margin-bottom: 20px; line-height: 1.55; }
-  .cta-card .btn-cta {
-    background: var(--white); color: var(--navy);
-    padding: 14px 28px; border-radius: 8px;
-    font-weight: 800; font-size: 1rem; text-decoration: none;
-    display: inline-block; transition: background 0.15s;
-  }
-  .cta-card .btn-cta:hover { background: var(--mist); }
+.cta-blk{background:var(--navy);border-radius:var(--r);padding:24px;text-align:center}
+.cta-blk h3{font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:6px}
+.cta-blk p{font-size:.85rem;color:#a8bfcf;margin-bottom:18px;line-height:1.5}
+.cta-link{display:inline-block;background:var(--white);color:var(--navy);padding:13px 28px;border-radius:8px;font-weight:800;font-size:.95rem;text-decoration:none;transition:background .15s}
+.cta-link:hover{background:var(--mist)}
 
-  #pdf-target { display: none; }
-  .hidden { display: none !important; }
-  .mt-10 { margin-top: 10px; }
-  .mt-16 { margin-top: 16px; }
-  small  { font-size: 0.8rem; color: var(--muted); }
+.copy-ok{font-size:.83rem;color:var(--green);font-weight:600;text-align:center;display:none}
+.copy-ok.show{display:block}
 
-  @media (max-width: 480px) {
-    .field-grid { grid-template-columns: 1fr; }
-    .pill { font-size: 0.85rem; padding: 8px 14px; }
-    header h1 { font-size: 1.25rem; }
+/* ── SNAPSHOT PANEL ── */
+#snap{
+  background:var(--white);
+  border-left:1px solid var(--border);
+  padding:28px 22px;
+  overflow-y:auto;
+  position:sticky;top:61px;
+  height:calc(100vh - 61px);
+}
+@media(max-width:899px){
+  #snap{
+    position:fixed;bottom:0;left:0;right:0;z-index:200;
+    border-left:none;border-top:1px solid var(--border);
+    border-radius:16px 16px 0 0;
+    height:auto;max-height:85vh;overflow-y:auto;
+    box-shadow:0 -4px 24px rgba(28,43,58,.15);
+    transform:translateY(calc(100% - 52px));
+    transition:transform .35s ease;
+    padding:0 22px 28px;
   }
+  #snap.open{transform:translateY(0)}
+}
+
+.snap-handle{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;cursor:pointer;user-select:none;
+}
+.snap-bar{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 10px}
+.snap-toggle-lbl{font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em}
+.snap-arrow{font-size:.7rem;color:var(--muted);transition:transform .3s}
+#snap.open .snap-arrow{transform:rotate(180deg)}
+@media(min-width:900px){.snap-handle{display:none}.snap-bar{display:none}}
+
+.snap-title{font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:16px;padding-top:2px}
+@media(max-width:899px){.snap-title{display:none}}
+
+.snap-rows{display:flex;flex-direction:column;gap:8px}
+.snap-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 11px;background:var(--mist);border-radius:8px;font-size:.83rem}
+.snap-lbl{color:var(--muted);font-weight:600;white-space:nowrap}
+.snap-val{color:var(--navy);font-weight:700;text-align:right}
+.snap-val.empty{color:var(--border);font-weight:400;font-style:italic}
+
+.snap-est{margin-top:14px;background:var(--navy);color:var(--white);border-radius:10px;padding:14px;text-align:center}
+.snap-est-lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:#7a9bb5;font-weight:700;margin-bottom:4px}
+.snap-est-amt{font-size:1.25rem;font-weight:800}
+.snap-crew{margin-top:8px;background:var(--accent-lt);border-radius:8px;padding:9px 12px;font-size:.8rem;color:var(--accent);font-weight:600;text-align:center}
+
+/* Utils */
+.hidden{display:none!important}
+.mt8{margin-top:8px}
+.mt16{margin-top:16px}
 </style>
 </head>
 <body>
-<div class="page-wrap">
+<div id="app">
 
-  <header>
-    <h1>Moving Cost Estimator</h1>
-    <p>Validate Your Vision &mdash; Fredericksburg, VA<br>
-    Get a transparent price range in under 3 minutes.</p>
-  </header>
-
-  <div class="sticky-total" id="running-total-bar">
-    <div>
-      <div class="label">Estimated Total</div>
-      <div class="amount" id="rt-amount">Complete the form below</div>
-    </div>
-    <div style="font-size:0.8rem;color:#a8bfcf;text-align:right;max-width:160px;line-height:1.4">
-      Updates as you fill in each step
-    </div>
-  </div>
-
-  <!-- ── STEP 1: Addresses & Distance ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">1</div>
-      <div>
-        <div class="step-title">Where Are You Moving?</div>
-        <div class="step-sub">We'll calculate your actual driving distance automatically</div>
-      </div>
-    </div>
-    <div class="field-row">
-      <label for="pickup-addr">Current address (pickup)</label>
-      <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA">
-    </div>
-    <div class="field-row">
-      <label for="dropoff-addr">New address (drop-off)</label>
-      <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA">
-    </div>
-    <button class="btn btn-primary mt-10" id="btn-calc-distance">Calculate Distance</button>
-    <div class="info-box mt-10 hidden" id="distance-result"></div>
-    <div class="info-box mt-10 hidden" id="truck-fee-display"></div>
-  </div>
-
-  <!-- ── STEP 2: Home Size ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">2</div>
-      <div>
-        <div class="step-title">Home Size</div>
-        <div class="step-sub">Select your current home type</div>
-      </div>
-    </div>
-    <div class="pill-group" id="home-size-group">
-      <div class="pill" data-size="studio">Studio</div>
-      <div class="pill" data-size="1br">1 Bedroom</div>
-      <div class="pill" data-size="2br">2 Bedroom</div>
-      <div class="pill" data-size="3br">3 Bedroom</div>
-      <div class="pill" data-size="4br">4+ Bedroom</div>
-    </div>
-  </div>
-
-  <!-- ── STEP 3: Property Type ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">3</div>
-      <div>
-        <div class="step-title">Property Type</div>
-        <div class="step-sub">Affects access, parking, and crew setup time</div>
-      </div>
-    </div>
-    <div class="option-grid" id="property-type-group">
-      <div class="option-card" data-prop="apartment">
-        <div class="oc-title">Apartment</div>
-        <div class="oc-desc">Elevator or walk-up building</div>
-      </div>
-      <div class="option-card" data-prop="condo">
-        <div class="oc-title">Condo</div>
-        <div class="oc-desc">Managed building, shared areas</div>
-      </div>
-      <div class="option-card" data-prop="townhome">
-        <div class="oc-title">Townhome</div>
-        <div class="oc-desc">Multi-level, attached unit</div>
-      </div>
-      <div class="option-card" data-prop="house">
-        <div class="oc-title">Single Family Home</div>
-        <div class="oc-desc">Standalone house with direct access</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 4: Furnishing Level ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">4</div>
-      <div>
-        <div class="step-title">How Furnished Is Your Home?</div>
-        <div class="step-sub">Two 3-bedroom homes can be completely different jobs — this matters</div>
-      </div>
-    </div>
-    <div class="option-grid" id="furnish-group">
-      <div class="option-card" data-furnish="light" data-mod="-1">
-        <div class="oc-title">Lightly Furnished</div>
-        <div class="oc-desc">Minimal furniture, mostly boxes and essentials</div>
-      </div>
-      <div class="option-card" data-furnish="average" data-mod="0">
-        <div class="oc-title">Average Furnished</div>
-        <div class="oc-desc">Typical furniture for the home size</div>
-      </div>
-      <div class="option-card" data-furnish="full" data-mod="1">
-        <div class="oc-title">Fully Furnished</div>
-        <div class="oc-desc">Every room fully furnished, lots of items</div>
-      </div>
-      <div class="option-card" data-furnish="veryfull" data-mod="2">
-        <div class="oc-title">Very Full / Heavy Contents</div>
-        <div class="oc-desc">Packed storage, garage, collections, dense contents</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 5: Room Breakdown ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">5</div>
-      <div>
-        <div class="step-title">Room Breakdown</div>
-        <div class="step-sub">Used to personalize your estimate summary</div>
-      </div>
-    </div>
-    <div class="field-grid">
-      <div class="field-row">
-        <label for="r-bedrooms">Bedrooms</label>
-        <input type="number" id="r-bedrooms" min="0" max="20" value="0">
-      </div>
-      <div class="field-row">
-        <label for="r-bathrooms">Bathrooms</label>
-        <input type="number" id="r-bathrooms" min="0" max="20" value="0">
-      </div>
-      <div class="field-row">
-        <label for="r-living">Living Rooms</label>
-        <input type="number" id="r-living" min="0" max="10" value="0">
-      </div>
-      <div class="field-row">
-        <label for="r-family">Family Rooms</label>
-        <input type="number" id="r-family" min="0" max="10" value="0">
-      </div>
-      <div class="field-row">
-        <label for="r-kitchens">Kitchens</label>
-        <input type="number" id="r-kitchens" min="0" max="5" value="0">
-      </div>
-      <div class="field-row">
-        <label for="r-other">Other Rooms</label>
-        <input type="number" id="r-other" min="0" max="20" value="0">
-      </div>
-    </div>
-    <div class="field-row mt-10">
-      <label for="r-other-desc">Describe other rooms (optional)</label>
-      <input type="text" id="r-other-desc" placeholder="e.g. office, sunroom, garage">
-    </div>
-  </div>
-
-  <!-- ── STEP 6: Floors, Stairs & Extra Spaces ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">6</div>
-      <div>
-        <div class="step-title">Floors, Stairs &amp; Extra Spaces</div>
-        <div class="step-sub">Stairs add ~45 min each; extra spaces add ~1 hr each</div>
-      </div>
-    </div>
-    <div class="field-grid">
-      <div class="field-row">
-        <label for="num-floors">Number of floors</label>
-        <input type="number" id="num-floors" min="1" max="10" value="1">
-      </div>
-      <div class="field-row">
-        <label for="num-stairs">Flights of stairs</label>
-        <input type="number" id="num-stairs" min="0" max="10" value="0">
-      </div>
-    </div>
-    <div class="field-row mt-10">
-      <label>Additional spaces (select all that apply)</label>
-      <div class="pill-group mt-10" id="extra-spaces-group">
-        <div class="pill" data-space="garage">Garage</div>
-        <div class="pill" data-space="basement">Basement</div>
-        <div class="pill" data-space="attic">Attic</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 7: Long Carry ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">7</div>
-      <div>
-        <div class="step-title">Walk Distance to Truck</div>
-        <div class="step-sub">How far is the walk from your front door to where the truck parks?</div>
-      </div>
-    </div>
-    <div class="option-grid" id="long-carry-group">
-      <div class="option-card" data-carry="close" data-mod="0">
-        <div class="oc-title">Under 50 ft</div>
-        <div class="oc-desc">Truck parks right at the door or driveway</div>
-      </div>
-      <div class="option-card" data-carry="medium" data-mod="0.5">
-        <div class="oc-title">50 – 100 ft</div>
-        <div class="oc-desc">Short walk, street parking nearby</div>
-      </div>
-      <div class="option-card" data-carry="long" data-mod="1">
-        <div class="oc-title">100 – 200 ft</div>
-        <div class="oc-desc">Apartment lobby, loading dock, long driveway</div>
-      </div>
-      <div class="option-card" data-carry="verylong" data-mod="2">
-        <div class="oc-title">200 ft +</div>
-        <div class="oc-desc">Downtown, no close parking, long corridor</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 8: Crew Size ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">8</div>
-      <div>
-        <div class="step-title">Crew Size</div>
-        <div class="step-sub">Select your preferred crew — price updates live</div>
-      </div>
-    </div>
-    <div class="crew-grid" id="crew-group">
-      <div class="crew-card" data-crew="2" data-rate="123">
-        <div class="crew-count">2 Movers</div>
-        <div class="crew-rate">$123 / hr</div>
-        <div class="crew-note">Standard option — great for studios and 1-bedroom moves</div>
-      </div>
-      <div class="crew-card" data-crew="3" data-rate="185">
-        <div class="crew-count">3 Movers</div>
-        <div class="crew-rate">$185 / hr</div>
-        <div class="crew-note">Recommended for 2-bedroom homes and larger — often finishes faster, so total cost stays similar while reducing your day's time commitment</div>
-      </div>
-      <div class="crew-card" data-crew="4" data-rate="235">
-        <div class="crew-count">4 Movers</div>
-        <div class="crew-rate">$235 / hr</div>
-        <div class="crew-note">Best for large homes (4+ bedrooms) or tight timelines</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 9: Heavy Items ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">9</div>
-      <div>
-        <div class="step-title">Heavy &amp; Specialty Items</div>
-        <div class="step-sub">Select anything that applies — each adds labor time</div>
-      </div>
-    </div>
-    <div class="check-list" id="specialty-list">
-      <label class="check-item">
-        <input type="checkbox" value="piano"> <span>Piano</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" value="safe"> <span>Safe</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" value="pool"> <span>Pool Table</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" value="gunsafe"> <span>Gun Safe</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" value="gym"> <span>Gym Equipment</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" value="commercial"> <span>Commercial Equipment</span>
-      </label>
-      <label class="check-item" id="ci-other">
-        <input type="checkbox" value="other"> <span>Other large item</span>
-      </label>
-    </div>
-    <div class="field-row mt-10 hidden" id="specialty-other-wrap">
-      <label for="specialty-other-desc">Describe the item</label>
-      <input type="text" id="specialty-other-desc" placeholder="e.g. large china cabinet, antique wardrobe">
-    </div>
-    <div class="info-box warning hidden" id="specialty-note">
-      Specialty items may require additional time or third-party handling. We'll confirm exact details at your Move Coordination Visit.
-    </div>
-  </div>
-
-  <!-- ── STEP 10: Packing ── -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">10</div>
-      <div>
-        <div class="step-title">Packing / Unpacking Add-On</div>
-        <div class="step-sub">Optional — add professional packing to your move</div>
-      </div>
-    </div>
-    <div class="toggle-wrap">
-      <span class="toggle-label">Add packing service?</span>
-      <label class="toggle">
-        <input type="checkbox" id="packing-toggle">
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-    <div class="collapsible" id="packing-options">
-      <div class="mt-16">
-        <label>How many packers?</label>
-        <div class="radio-row" id="packer-count-group">
-          <div class="radio-btn" data-packers="2">2 Packers<br><small>$100/hr</small></div>
-          <div class="radio-btn" data-packers="3">3 Packers<br><small>$150/hr</small></div>
-          <div class="radio-btn" data-packers="4">4 Packers<br><small>$200/hr</small></div>
-        </div>
-      </div>
-      <div class="info-box mt-10">
-        Packing materials typically range from $180 (1BR) to $750+ (3BR+), confirmed exactly at your Move Coordination Visit.
-      </div>
-    </div>
-  </div>
-
-  <!-- ── LEAD CAPTURE ── -->
-  <div class="lead-gate" id="lead-gate">
-    <h2>See Your Full Estimate</h2>
-    <p>Enter your contact info and we'll show your complete price range. No spam — just your numbers.</p>
-    <div class="field-row">
-      <label for="lead-name">Full Name</label>
-      <input type="text" id="lead-name" placeholder="Jane Smith">
-    </div>
-    <div class="field-row">
-      <label for="lead-email">Email Address</label>
-      <input type="email" id="lead-email" placeholder="jane@email.com">
-    </div>
-    <div class="field-row">
-      <label for="lead-phone">Phone Number</label>
-      <input type="tel" id="lead-phone" placeholder="(540) 000-0000">
-    </div>
-    <button class="btn btn-primary mt-10" id="btn-reveal">Show My Estimate</button>
-    <div class="info-box warning hidden mt-10" id="lead-error">Please fill in your name, email, and phone number.</div>
-  </div>
-
-  <!-- ── RESULTS ── -->
-  <div class="results-card hidden" id="results-section">
-    <h2>Your Estimate</h2>
-
-    <div class="line-item">
-      <span class="li-label">Labor (<span id="res-hours">—</span> hrs &times; <span id="res-rate">—</span>/hr)</span>
-      <span class="li-value" id="res-labor">—</span>
-    </div>
-    <div class="line-item">
-      <span class="li-label">
-        <span class="tooltip-wrap">
-          Truck &amp; Travel Fee
-          <span class="tooltip-icon">?</span>
-          <span class="tooltip-box">Includes moving truck, fuel, moving equipment, protective materials, travel expenses, and transportation logistics.</span>
-        </span>
-      </span>
-      <span class="li-value" id="res-truck">—</span>
-    </div>
-    <div class="line-item" id="res-packing-row" style="display:none">
-      <span class="li-label">Packing Service (<span id="res-pack-hrs">—</span> hrs &times; <span id="res-pack-rate">—</span>/hr)</span>
-      <span class="li-value" id="res-packing">—</span>
-    </div>
-
-    <div class="total-row">
-      <span class="tl">Total Estimated Range</span>
-      <span class="tv" id="res-total">—</span>
-    </div>
-
-    <div class="deposit-box">
-      <strong id="deposit-label">Booking Deposit</strong>
-      <span id="deposit-text">—</span>
-    </div>
-
-    <p class="disclaimer">
-      This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.
-    </p>
-
-    <div class="btn-row">
-      <button class="btn btn-secondary" id="btn-download">Download PDF</button>
-      <button class="btn btn-secondary" id="btn-copy">Copy Estimate</button>
-    </div>
-    <div class="mt-10 hidden" id="copy-confirm" style="font-size:0.83rem;color:var(--green);font-weight:600;">
-      Estimate copied to clipboard.
-    </div>
-  </div>
-
-  <!-- ── CTA ── -->
-  <div class="cta-card hidden" id="cta-section">
-    <h3>Ready to lock in your move?</h3>
-    <p>Book your Move Coordination Visit and let us map out your home before move day — so there are no surprises when your crew arrives.</p>
-    <!-- UPDATE: Replace '#' with your actual booking/contact page URL -->
-    <a href="#" class="btn-cta">Book Your Move Coordination Visit</a>
-  </div>
-
+<!-- PROGRESS HEADER -->
+<div id="prog-hdr">
+  <button class="back-btn hide" id="back-btn">&#8592;</button>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="step-cnt" id="step-cnt"></div>
 </div>
 
-<div id="pdf-target" style="position:fixed;left:-9999px;top:0;width:700px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;padding:40px;color:#1c2b3a;"></div>
+<!-- MAIN -->
+<div id="main">
+
+  <!-- Welcome -->
+  <div class="screen active" id="screen-welcome">
+    <div class="welcome-wrap">
+      <div>
+        <div class="badge">Validate Your Vision &mdash; Fredericksburg, VA</div>
+        <h1 class="welcome-h">Let's Build<br>Your Move Plan</h1>
+        <p class="welcome-p" style="margin-top:14px">Moving can be stressful enough. Answer a few questions and we'll create a personalized moving estimate based on your specific move.</p>
+        <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Start My Move Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 1: Property Type -->
+  <div class="screen" id="screen-1">
+    <p class="q-label">What type of home are you moving from?</p>
+    <div class="opts" id="s1">
+      <button class="opt" data-val="apartment"><span>Apartment</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="condo"><span>Condo</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="townhome"><span>Townhome</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="house"><span>Single Family Home</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Every move is different. Understanding your home's layout helps us recommend the right crew and equipment.</div>
+  </div>
+
+  <!-- Screen 2: Bedrooms -->
+  <div class="screen" id="screen-2">
+    <p class="q-label">How many bedrooms are being moved?</p>
+    <div class="opts" id="s2">
+      <button class="opt" data-val="studio"><span>Studio</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="1br"><span>1 Bedroom</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2br"><span>2 Bedrooms</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3br"><span>3 Bedrooms</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="4br"><span>4+ Bedrooms</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Bedroom count helps estimate labor time, but access, distance, and inventory can all affect the final recommendation.</div>
+  </div>
+
+  <!-- Screen 3: Furnishing -->
+  <div class="screen" id="screen-3">
+    <p class="q-label">How furnished is your home?</p>
+    <div class="opts" id="s3">
+      <button class="opt" data-val="light" data-mod="-1"><span>Lightly Furnished</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="average" data-mod="0"><span>Average Furnished</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="full" data-mod="1"><span>Fully Furnished</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="veryfull" data-mod="2"><span>Very Full / Heavy Contents</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Two homes with the same number of bedrooms can require very different moving times depending on the amount of furniture and belongings.</div>
+  </div>
+
+  <!-- Screen 4: Extra Spaces (multi) -->
+  <div class="screen" id="screen-4">
+    <p class="q-label">Are there any additional areas that need to be moved?</p>
+    <p class="q-sub">Select all that apply</p>
+    <div class="opts" id="s4">
+      <button class="opt multi" data-val="garage"><span>Garage</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="basement"><span>Basement</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="attic"><span>Attic</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="none" id="s4-none"><span>None of these</span><span class="chk">&#10003;</span></button>
+    </div>
+    <button class="btn-main" id="s4-cont">Continue</button>
+    <div class="tip"><strong>Move Planning Tip</strong>Additional spaces are one of the most overlooked parts of moving estimates and can significantly affect loading time.</div>
+  </div>
+
+  <!-- Screen 5: Stairs -->
+  <div class="screen" id="screen-5">
+    <p class="q-label">How many flights of stairs are involved?</p>
+    <div class="opts" id="s5">
+      <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Stairs can increase loading and unloading time, especially when moving large furniture.</div>
+  </div>
+
+  <!-- Screen 6: Long Carry -->
+  <div class="screen" id="screen-6">
+    <p class="q-label">How far is the walk from the truck to the entrance?</p>
+    <div class="opts" id="s6">
+      <button class="opt" data-val="close" data-mod="0"><span>Under 50 Feet</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="medium" data-mod="0.5"><span>50 – 100 Feet</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="long" data-mod="1"><span>100 – 200 Feet</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="verylong" data-mod="2"><span>200+ Feet</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Long carries can significantly increase move time and labor requirements.</div>
+  </div>
+
+  <!-- Screen 7: Specialty Items (multi) -->
+  <div class="screen" id="screen-7">
+    <p class="q-label">Will any specialty items need to be moved?</p>
+    <p class="q-sub">Select all that apply</p>
+    <div class="opts" id="s7">
+      <button class="opt multi" data-val="piano"><span>Piano</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="safe"><span>Safe</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="pool"><span>Pool Table</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="commercial"><span>Commercial Equipment</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
+    </div>
+    <button class="btn-main" id="s7-cont">Continue</button>
+    <div class="tip"><strong>Move Planning Tip</strong>Specialty items require additional planning, equipment, and labor to move safely.</div>
+  </div>
+
+  <!-- Screen 8: Distance -->
+  <div class="screen" id="screen-8">
+    <p class="q-label">Where are you moving?</p>
+    <div class="frow">
+      <label>Current Address</label>
+      <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA">
+    </div>
+    <div class="frow">
+      <label>Destination Address</label>
+      <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA">
+    </div>
+    <button class="btn-main" id="btn-calc">Calculate Distance</button>
+    <div class="ibox hidden mt8" id="dist-res"></div>
+    <button class="btn-main hidden mt8" id="s8-cont">Continue</button>
+    <div class="tip"><strong>Move Planning Tip</strong>We use real driving distance to create more accurate transportation estimates.</div>
+  </div>
+
+  <!-- Screen 9: Packing -->
+  <div class="screen" id="screen-9">
+    <p class="q-label">Would you like professional packing services?</p>
+    <div class="opts" id="s9">
+      <button class="opt" data-val="no"><span>No Packing Needed</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="yes"><span>Packing Assistance Needed</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Professional packing can save time and reduce the risk of damage during transit.</div>
+  </div>
+
+  <!-- Screen 10: Packer Count (conditional) -->
+  <div class="screen" id="screen-10">
+    <p class="q-label">How many packers would you like?</p>
+    <div class="opts" id="s10">
+      <button class="opt" data-val="2" data-rate="100"><span>2 Packers &mdash; $100/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3" data-rate="150"><span>3 Packers &mdash; $150/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="4" data-rate="200"><span>4 Packers &mdash; $200/hr</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Packing Materials</strong>Materials typically range from $180 (1BR) to $750+ (3BR+) and are confirmed at your Move Coordination Visit.</div>
+  </div>
+
+  <!-- Lead Capture -->
+  <div class="screen" id="screen-lead">
+    <h2 class="lead-h">Your Move Plan Is Ready</h2>
+    <p class="lead-p">Enter your contact information to view your personalized moving estimate.</p>
+    <div class="frow"><label>Full Name</label><input type="text" id="lead-name" placeholder="Jane Smith"></div>
+    <div class="frow"><label>Email Address</label><input type="email" id="lead-email" placeholder="jane@email.com"></div>
+    <div class="frow"><label>Phone Number</label><input type="tel" id="lead-phone" placeholder="(540) 000-0000"></div>
+    <button class="btn-main" id="btn-reveal">View My Move Plan</button>
+    <div class="ibox warn hidden mt8" id="lead-err">Please fill in all three fields to continue.</div>
+  </div>
+
+  <!-- Results -->
+  <div class="screen" id="screen-results">
+    <h2 class="res-h">Your Personalized Move Plan</h2>
+    <div id="cx-badge"></div>
+
+    <div class="crew-box">
+      <div class="crew-box-lbl">Recommended Crew &mdash; adjust to compare pricing</div>
+      <div class="crew-grid" id="crew-grid">
+        <div class="crew-opt" data-crew="2" data-rate="123"><div class="cn">2 Movers</div><div class="cr">$123/hr</div></div>
+        <div class="crew-opt" data-crew="3" data-rate="185"><div class="cn">3 Movers</div><div class="cr">$185/hr</div></div>
+        <div class="crew-opt" data-crew="4" data-rate="235"><div class="cn">4 Movers</div><div class="cr">$235/hr</div></div>
+      </div>
+    </div>
+
+    <div class="invest-card">
+      <div class="invest-lbl">Estimated Investment</div>
+      <div class="invest-amt" id="res-total">—</div>
+      <div class="invest-note">Price range based on your move details</div>
+    </div>
+
+    <div class="incl-box">
+      <div class="incl-title">Included in Your Estimate</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Professional Movers</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Transportation &amp; Equipment</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Equipment</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Travel Costs</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Move Planning</div>
+      <div class="incl-item"><span class="incl-chk">&#10003;</span>Scheduling Coordination</div>
+      <div class="incl-item hidden" id="incl-pack"><span class="incl-chk">&#10003;</span>Professional Packing</div>
+    </div>
+
+    <div class="dep-box">
+      <div class="dep-lbl">Booking Deposit</div>
+      <div class="dep-amt" id="res-dep">—</div>
+      <div class="dep-note">Your deposit secures your move date and is applied toward your final balance. It is not an additional charge.</div>
+    </div>
+
+    <p class="disclaimer">This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.</p>
+
+    <div class="btn-row">
+      <button class="btn-sec" id="btn-pdf">Download PDF</button>
+      <button class="btn-sec" id="btn-copy">Copy Estimate</button>
+    </div>
+    <div class="copy-ok" id="copy-ok">Estimate copied to clipboard.</div>
+
+    <div class="cta-blk">
+      <h3>Ready to lock in your move?</h3>
+      <p>Book your Move Coordination Visit and let us map out your home before move day &mdash; so your crew already knows the plan before they arrive.</p>
+      <!-- UPDATE: replace '#' with your booking page URL -->
+      <a href="#" class="cta-link">Book Your Move Coordination Visit</a>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- SNAPSHOT -->
+<aside id="snap">
+  <div class="snap-handle" id="snap-toggle">
+    <div><div class="snap-bar"></div><span class="snap-toggle-lbl">Your Move Plan So Far</span></div>
+    <span class="snap-arrow">&#9650;</span>
+  </div>
+  <div class="snap-title">Your Move Plan</div>
+  <div class="snap-rows">
+    <div class="snap-row"><span class="snap-lbl">Property</span><span class="snap-val empty" id="sn-prop">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Bedrooms</span><span class="snap-val empty" id="sn-size">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Furnishing</span><span class="snap-val empty" id="sn-furn">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Extra Areas</span><span class="snap-val empty" id="sn-spaces">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Stairs</span><span class="snap-val empty" id="sn-stairs">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Walk Distance</span><span class="snap-val empty" id="sn-carry">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Specialty</span><span class="snap-val empty" id="sn-spec">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Distance</span><span class="snap-val empty" id="sn-dist">—</span></div>
+    <div class="snap-row"><span class="snap-lbl">Packing</span><span class="snap-val empty" id="sn-pack">—</span></div>
+  </div>
+  <div class="snap-crew hidden" id="sn-crew"></div>
+  <div class="snap-est hidden" id="sn-est">
+    <div class="snap-est-lbl">Estimated Investment</div>
+    <div class="snap-est-amt" id="sn-amt">—</div>
+  </div>
+</aside>
+
+</div><!-- /app -->
+
+<div id="pdf-target" style="position:fixed;left:-9999px;top:0;width:700px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;padding:40px;color:#1c2b3a"></div>
 
 <script>
-/* ════════════════════════════════════════════════════════════
-   CONFIG — edit these values as needed
-   ════════════════════════════════════════════════════════════ */
-const CONFIG = {
-  TRUCK_BASE:     176.55,   // UPDATE: fixed base truck/travel fee
-  TRUCK_PER_MILE: 1.59,     // UPDATE: per-mile rate (round trip)
-  MIN_HOURS:      3,        // minimum billable hours
-  STAIRS_HRS:     0.75,     // hours per flight of stairs
-
-  CREW_RATES:   { 2: 123, 3: 185, 4: 235 },
-  PACKER_RATES: { 2: 100, 3: 150, 4: 200 },
-
-  BASE_HOURS: {
-    studio: [2, 3], '1br': [3, 4], '2br': [4, 6], '3br': [6, 8], '4br': [8, 12],
-  },
-  PACK_HOURS: {
-    studio: [3, 4], '1br': [3, 4], '2br': [4, 6], '3br': [6, 8], '4br': [8, 10],
-  },
-  VISIT_FEES: {
-    studio: 45, '1br': 45, '2br': 55, '3br': 65, '4br': 75,
-  },
-  DEPOSITS: {
-    studio: 370, '1br': 370, '2br': 370, '3br': 370, '4br': 400,
-  },
-
-  /* Property type hour modifiers */
-  PROP_MOD: { apartment: 0.5, condo: 0.5, townhome: 0.5, house: 0 },
-
-  /* Furnishing level modifiers */
-  FURNISH_MOD: { light: -1, average: 0, full: 1, veryfull: 2 },
-
-  /* Long carry modifiers */
-  CARRY_MOD: { close: 0, medium: 0.5, long: 1, verylong: 2 },
-
-  /* Heavy item hour modifier per item */
-  HEAVY_ITEM_HRS: 0.5,
-
-  MAPS_KEY: 'AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0',
+/* ══════════════════════════════════════════
+   CONFIG — edit values here as needed
+   ══════════════════════════════════════════ */
+const C = {
+  TRUCK_BASE:    176.55,   // UPDATE: adjust when rental rates change
+  TRUCK_MILE:    1.59,
+  MIN_HRS:       3,
+  STAIR_HRS:     0.75,
+  CREW_RATES:    {2:123, 3:185, 4:235},
+  PACKER_RATES:  {2:100, 3:150, 4:200},
+  BASE_HRS:      {studio:[2,3],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,12]},
+  PACK_HRS:      {studio:[3,4],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,10]},
+  VISIT:         {studio:45,'1br':45,'2br':55,'3br':65,'4br':75},
+  DEPOSIT:       {studio:370,'1br':370,'2br':370,'3br':370,'4br':400},
+  CARRY_MOD:     {close:0,medium:.5,long:1,verylong:2},
+  FURNISH_MOD:   {light:-1,average:0,full:1,veryfull:2},
+  REC_CREW:      {studio:2,'1br':2,'2br':3,'3br':3,'4br':4},
+  MAPS_KEY:      'AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0',
 };
 
-/* ════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    STATE
-   ════════════════════════════════════════════════════════════ */
-const state = {
-  homeSize:     null,
-  propType:     null,
-  furnishing:   null,
-  furnishMod:   0,
-  extraSpaces:  [],
-  stairs:       0,
-  longCarry:    null,
-  carryMod:     0,
-  crewSize:     null,
-  crewRate:     0,
-  heavyItems:   [],
-  packingOn:    false,
-  packers:      null,
-  packerRate:   0,
-  miles:        0,
-  revealed:     false,
+   ══════════════════════════════════════════ */
+const S = {
+  propType:   null,
+  homeSize:   null,
+  furnish:    null, furnMod:  0,
+  spaces:     [],
+  stairs:     null,
+  carry:      null, carryMod: 0,
+  specialty:  [],
+  miles:      0,
+  packingOn:  null,
+  packers:    null, packerRate: 0,
+  crewSize:   null, crewRate:   0,
 };
 
-/* ════════════════════════════════════════════════════════════
-   UTILITY
-   ════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════ */
+let cur = 'welcome';
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  cur = id;
+  updateProg();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const TOTAL = 10;
+const STEP_MAP = {welcome:0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,lead:10,results:10};
+
+function updateProg() {
+  const n = STEP_MAP[cur] || 0;
+  document.getElementById('prog-fill').style.width = (n / TOTAL * 100) + '%';
+  document.getElementById('step-cnt').textContent  = (cur === 'welcome' || cur === 'results') ? '' : `${n} of ${TOTAL}`;
+  document.getElementById('back-btn').classList.toggle('hide', cur === 'welcome' || cur === 'results');
+}
+
+document.getElementById('back-btn').addEventListener('click', () => {
+  const order = ['welcome','1','2','3','4','5','6','7','8','9'];
+  if (S.packingOn) order.push('10');
+  order.push('lead');
+  const i = order.indexOf(cur);
+  if (i > 0) show(order[i - 1]);
+});
+
+function next() {
+  if (cur === 'welcome') return show('1');
+  if (cur === '1')  return show('2');
+  if (cur === '2')  return show('3');
+  if (cur === '3')  return show('4');
+  if (cur === '4')  return show('5');
+  if (cur === '5')  return show('6');
+  if (cur === '6')  return show('7');
+  if (cur === '7')  return show('8');
+  if (cur === '8')  return show('9');
+  if (cur === '9')  return S.packingOn ? show('10') : show('lead');
+  if (cur === '10') return show('lead');
+}
+
+/* ══════════════════════════════════════════
+   CALC
+   ══════════════════════════════════════════ */
 const fmt      = n  => '$' + Math.round(n).toLocaleString();
-const fmtRange = (lo, hi) => fmt(lo) + ' – ' + fmt(hi);
+const fmtR     = (a,b) => fmt(a) + ' – ' + fmt(b);
 const roundUp5 = n  => Math.ceil(n / 5) * 5;
 
-/* ════════════════════════════════════════════════════════════
-   CALCULATE
-   ════════════════════════════════════════════════════════════ */
 function calc() {
-  const s = state;
-  if (!s.homeSize || !s.crewSize) return null;
-
-  const base      = CONFIG.BASE_HOURS[s.homeSize];
-  const stairAdd  = s.stairs * CONFIG.STAIRS_HRS;
-  const spaceAdd  = s.extraSpaces.length;
-  const propMod   = s.propType ? (CONFIG.PROP_MOD[s.propType] || 0) : 0;
-  const furnMod   = s.furnishMod;
-  const carryMod  = s.carryMod;
-  const heavyMod  = s.heavyItems.length * CONFIG.HEAVY_ITEM_HRS;
-
-  let hrsLo = Math.max(CONFIG.MIN_HOURS, base[0] + stairAdd + spaceAdd + propMod + furnMod + carryMod + heavyMod);
-  let hrsHi = Math.max(CONFIG.MIN_HOURS, base[1] + stairAdd + spaceAdd + propMod + furnMod + carryMod + heavyMod);
-
-  const laborLo = hrsLo * s.crewRate;
-  const laborHi = hrsHi * s.crewRate;
-
-  const truckFee = roundUp5(CONFIG.TRUCK_BASE + s.miles * CONFIG.TRUCK_PER_MILE);
-
-  let packLo = 0, packHi = 0, packHrsRange = null;
-  if (s.packingOn && s.packers) {
-    const ph  = CONFIG.PACK_HOURS[s.homeSize];
-    packLo    = ph[0] * s.packerRate;
-    packHi    = ph[1] * s.packerRate;
-    packHrsRange = ph;
+  if (!S.homeSize || !S.crewSize) return null;
+  const base  = C.BASE_HRS[S.homeSize];
+  const sadd  = (S.stairs || 0) * C.STAIR_HRS;
+  const spadd = S.spaces.length;
+  const fm    = S.furnMod;
+  const cm    = S.carryMod;
+  const lo    = Math.max(C.MIN_HRS, base[0] + sadd + spadd + fm + cm);
+  const hi    = Math.max(C.MIN_HRS, base[1] + sadd + spadd + fm + cm);
+  const llab  = lo * S.crewRate;
+  const hlab  = hi * S.crewRate;
+  const truck = roundUp5(C.TRUCK_BASE + S.miles * C.TRUCK_MILE);
+  let lp = 0, hp = 0;
+  if (S.packingOn && S.packers) {
+    const ph = C.PACK_HRS[S.homeSize];
+    lp = ph[0] * S.packerRate;
+    hp = ph[1] * S.packerRate;
   }
-
-  const visitFee = CONFIG.VISIT_FEES[s.homeSize];
-  const totalLo  = laborLo + truckFee + packLo + visitFee;
-  const totalHi  = laborHi + truckFee + packHi + visitFee;
-
+  const visit = C.VISIT[S.homeSize];
+  const extra = sadd + spadd + fm + cm;
   return {
-    hrsLo, hrsHi,
-    laborLo, laborHi,
-    truckFee,
-    packLo, packHi, packHrsRange,
-    visitFee,
-    totalLo, totalHi,
-    deposit: CONFIG.DEPOSITS[s.homeSize],
+    lo, hi, llab, hlab, truck, lp, hp, visit,
+    totalLo: llab + truck + lp + visit,
+    totalHi: hlab + truck + hp + visit,
+    deposit: C.DEPOSIT[S.homeSize],
+    cx: extra <= 1 ? 'std' : extra <= 3 ? 'mod' : 'cpx',
   };
 }
 
-/* ════════════════════════════════════════════════════════════
-   RENDER
-   ════════════════════════════════════════════════════════════ */
-function render() {
-  const r = calc();
+/* ══════════════════════════════════════════
+   SNAPSHOT
+   ══════════════════════════════════════════ */
+const PL = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Single Family Home'};
+const SL = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
+const FL = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
+const CL = {close:'Under 50 ft',medium:'50–100 ft',long:'100–200 ft',verylong:'200+ ft'};
+const SPECL = {piano:'Piano',safe:'Safe',pool:'Pool Table',commercial:'Commercial Equipment'};
 
-  /* Running total */
-  const rtEl = document.getElementById('rt-amount');
-  rtEl.textContent = r ? fmtRange(r.totalLo, r.totalHi) : 'Complete the form below';
-
-  if (!r || !state.revealed) return;
-
-  document.getElementById('res-hours').textContent =
-    r.hrsLo === r.hrsHi ? r.hrsLo : `${r.hrsLo.toFixed(1)}–${r.hrsHi.toFixed(1)}`;
-  document.getElementById('res-rate').textContent   = fmt(state.crewRate);
-  document.getElementById('res-labor').textContent  = fmtRange(r.laborLo, r.laborHi);
-  document.getElementById('res-truck').textContent  = fmt(r.truckFee);
-
-  const packRow = document.getElementById('res-packing-row');
-  if (r.packLo > 0) {
-    packRow.style.display = '';
-    const ph = r.packHrsRange;
-    document.getElementById('res-pack-hrs').textContent  = `${ph[0]}–${ph[1]}`;
-    document.getElementById('res-pack-rate').textContent = fmt(state.packerRate);
-    document.getElementById('res-packing').textContent   = fmtRange(r.packLo, r.packHi);
-  } else {
-    packRow.style.display = 'none';
-  }
-
-  document.getElementById('res-total').textContent       = fmtRange(r.totalLo, r.totalHi);
-  document.getElementById('deposit-label').textContent   = `Booking Deposit: ${fmt(r.deposit)}`;
-  document.getElementById('deposit-text').textContent    =
-    `A ${fmt(r.deposit)} deposit is required to book your Move Coordination Visit, applied toward your final labor cost.`;
+function sv(id, val, empty) {
+  const el = document.getElementById('sn-' + id);
+  if (!el) return;
+  el.textContent = val;
+  el.classList.toggle('empty', !!empty);
 }
 
-/* ════════════════════════════════════════════════════════════
-   STEP 1 — Distance API
-   ════════════════════════════════════════════════════════════ */
-document.getElementById('btn-calc-distance').addEventListener('click', async () => {
-  const origin   = document.getElementById('pickup-addr').value.trim();
-  const dest     = document.getElementById('dropoff-addr').value.trim();
-  const resultEl = document.getElementById('distance-result');
-  const feeEl    = document.getElementById('truck-fee-display');
-  const btn      = document.getElementById('btn-calc-distance');
+function updateSnap() {
+  sv('prop',   S.propType  ? PL[S.propType]  : '—', !S.propType);
+  sv('size',   S.homeSize  ? SL[S.homeSize]  : '—', !S.homeSize);
+  sv('furn',   S.furnish   ? FL[S.furnish]   : '—', !S.furnish);
+  sv('spaces', S.spaces.length ? S.spaces.map(s=>s[0].toUpperCase()+s.slice(1)).join(', ') : 'None', false);
+  sv('stairs', S.stairs === null ? '—' : S.stairs === 0 ? 'None' : (S.stairs===3?'3+':S.stairs)+' Flight'+(S.stairs===1?'':'s'), S.stairs===null);
+  sv('carry',  S.carry     ? CL[S.carry]     : '—', !S.carry);
+  sv('spec',   S.specialty.length ? S.specialty.map(s=>SPECL[s]||s).join(', ') : 'None', false);
+  sv('dist',   S.miles > 0 ? (S.miles/2).toFixed(1)+' mi one way' : '—', S.miles===0);
+  sv('pack',   S.packingOn===null ? '—' : !S.packingOn ? 'Not needed' : S.packers ? `${S.packers} Packers @ $${S.packerRate}/hr` : 'Needed', S.packingOn===null);
 
-  if (!origin || !dest) {
-    resultEl.classList.remove('hidden');
-    resultEl.textContent = 'Please enter both a pickup and drop-off address.';
-    return;
+  const crewEl = document.getElementById('sn-crew');
+  if (S.homeSize && S.crewSize) {
+    const rec = C.REC_CREW[S.homeSize];
+    crewEl.textContent = `${S.crewSize} Movers (${S.crewSize===rec?'Recommended':'Adjusted'})`;
+    crewEl.classList.remove('hidden');
+  } else {
+    crewEl.classList.add('hidden');
   }
 
-  btn.textContent = 'Calculating...';
-  btn.disabled    = true;
-  resultEl.classList.add('hidden');
-  feeEl.classList.add('hidden');
+  const r = calc();
+  const estEl = document.getElementById('sn-est');
+  if (r) {
+    estEl.classList.remove('hidden');
+    document.getElementById('sn-amt').textContent = fmtR(r.totalLo, r.totalHi);
+  } else {
+    estEl.classList.add('hidden');
+  }
+}
 
-  try {
-    const url  = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(dest)}&units=imperial&key=${CONFIG.MAPS_KEY}`;
-    const res  = await fetch(url);
-    const data = await res.json();
+/* ══════════════════════════════════════════
+   SCREEN HANDLERS
+   ══════════════════════════════════════════ */
 
-    if (data.status !== 'OK' || data.rows[0].elements[0].status !== 'OK') {
-      throw new Error('Could not calculate distance — check that both addresses are correct.');
+/* Auto-advance single-select */
+function single(containerId, cb) {
+  document.getElementById(containerId).addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn || btn.classList.contains('multi')) return;
+    document.querySelectorAll('#'+containerId+' .opt').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+    if (cb) cb(btn);
+    updateSnap();
+    const atClick = cur;
+    setTimeout(() => { if (cur === atClick) next(); }, 320);
+  });
+}
+
+document.getElementById('btn-start').addEventListener('click', () => next());
+
+/* S1: Property */
+single('s1', btn => { S.propType = btn.dataset.val; });
+
+/* S2: Bedrooms */
+single('s2', btn => {
+  S.homeSize = btn.dataset.val;
+  const rec  = C.REC_CREW[S.homeSize];
+  S.crewSize = rec; S.crewRate = C.CREW_RATES[rec];
+  document.querySelectorAll('.crew-opt').forEach(c => c.classList.toggle('sel', parseInt(c.dataset.crew)===rec));
+});
+
+/* S3: Furnishing */
+single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.dataset.mod); });
+
+/* S4: Extra Spaces (multi) */
+(()=>{
+  const none = document.getElementById('s4-none');
+  document.getElementById('s4').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    if (btn.id === 's4-none') {
+      document.querySelectorAll('#s4 .opt.multi').forEach(b=>b.classList.remove('sel'));
+      S.spaces = [];
+      none.classList.add('sel');
+      updateSnap();
+      setTimeout(()=>{ if(cur==='4') next(); },320);
+      return;
     }
-
-    const onewayMeters = data.rows[0].elements[0].distance.value;
-    const onewayMiles  = onewayMeters / 1609.344;
-    state.miles        = onewayMiles * 2;
-
-    const truckFee = roundUp5(CONFIG.TRUCK_BASE + state.miles * CONFIG.TRUCK_PER_MILE);
-
-    resultEl.classList.remove('hidden');
-    resultEl.innerHTML = `<strong>${data.rows[0].elements[0].distance.text} one way</strong> &mdash; ${state.miles.toFixed(1)} miles round trip`;
-
-    feeEl.classList.remove('hidden');
-    feeEl.innerHTML = `Truck &amp; Travel Fee: <strong>${fmt(truckFee)}</strong>`;
-
-    render();
-  } catch (err) {
-    resultEl.classList.remove('hidden');
-    resultEl.textContent = err.message || 'Something went wrong. Please try again.';
-  } finally {
-    btn.textContent = 'Recalculate Distance';
-    btn.disabled    = false;
-  }
-});
-
-/* ── Step 2: Home size ── */
-document.getElementById('home-size-group').addEventListener('click', e => {
-  const pill = e.target.closest('.pill');
-  if (!pill) return;
-  document.querySelectorAll('#home-size-group .pill').forEach(p => p.classList.remove('selected'));
-  pill.classList.add('selected');
-  state.homeSize = pill.dataset.size;
-  if (!state.crewSize) selectCrew(['studio','1br'].includes(state.homeSize) ? 2 : 3);
-  render();
-});
-
-/* ── Step 3: Property type ── */
-document.getElementById('property-type-group').addEventListener('click', e => {
-  const card = e.target.closest('.option-card');
-  if (!card) return;
-  document.querySelectorAll('#property-type-group .option-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  state.propType = card.dataset.prop;
-  render();
-});
-
-/* ── Step 4: Furnishing level ── */
-document.getElementById('furnish-group').addEventListener('click', e => {
-  const card = e.target.closest('.option-card');
-  if (!card) return;
-  document.querySelectorAll('#furnish-group .option-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  state.furnishing = card.dataset.furnish;
-  state.furnishMod = parseFloat(card.dataset.mod);
-  render();
-});
-
-/* ── Step 5: Room counts ── */
-['r-bedrooms','r-bathrooms','r-living','r-family','r-kitchens','r-other'].forEach(id => {
-  document.getElementById(id).addEventListener('input', render);
-});
-
-/* ── Step 6: Stairs & extra spaces ── */
-document.getElementById('num-stairs').addEventListener('input', e => {
-  state.stairs = parseInt(e.target.value) || 0;
-  render();
-});
-document.getElementById('num-floors').addEventListener('input', render);
-
-document.getElementById('extra-spaces-group').addEventListener('click', e => {
-  const pill = e.target.closest('.pill');
-  if (!pill) return;
-  const space = pill.dataset.space;
-  if (state.extraSpaces.includes(space)) {
-    state.extraSpaces = state.extraSpaces.filter(s => s !== space);
-    pill.classList.remove('selected');
-  } else {
-    state.extraSpaces.push(space);
-    pill.classList.add('selected');
-  }
-  render();
-});
-
-/* ── Step 7: Long carry ── */
-document.getElementById('long-carry-group').addEventListener('click', e => {
-  const card = e.target.closest('.option-card');
-  if (!card) return;
-  document.querySelectorAll('#long-carry-group .option-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  state.longCarry = card.dataset.carry;
-  state.carryMod  = parseFloat(card.dataset.mod);
-  render();
-});
-
-/* ── Step 8: Crew ── */
-function selectCrew(n) {
-  state.crewSize = n;
-  state.crewRate = CONFIG.CREW_RATES[n];
-  document.querySelectorAll('.crew-card').forEach(c => {
-    c.classList.toggle('selected', parseInt(c.dataset.crew) === n);
+    none.classList.remove('sel');
+    btn.classList.toggle('sel');
+    const v = btn.dataset.val;
+    if (btn.classList.contains('sel')) { if(!S.spaces.includes(v)) S.spaces.push(v); }
+    else { S.spaces = S.spaces.filter(x=>x!==v); }
+    updateSnap();
   });
-}
-document.getElementById('crew-group').addEventListener('click', e => {
-  const card = e.target.closest('.crew-card');
-  if (!card) return;
-  selectCrew(parseInt(card.dataset.crew));
-  render();
-});
+  document.getElementById('s4-cont').addEventListener('click', ()=>next());
+})();
 
-/* ── Step 9: Heavy items ── */
-document.getElementById('specialty-list').addEventListener('change', e => {
-  state.heavyItems = [...document.querySelectorAll('#specialty-list input:checked')]
-    .map(cb => cb.value);
+/* S5: Stairs */
+single('s5', btn => { S.stairs = parseInt(btn.dataset.val); });
 
-  document.querySelectorAll('#specialty-list .check-item').forEach(ci => {
-    ci.classList.toggle('checked', ci.querySelector('input').checked);
+/* S6: Carry */
+single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dataset.mod); });
+
+/* S7: Specialty (multi) */
+(()=>{
+  const none = document.getElementById('s7-none');
+  document.getElementById('s7').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    if (btn.id === 's7-none') {
+      document.querySelectorAll('#s7 .opt.multi').forEach(b=>b.classList.remove('sel'));
+      S.specialty = [];
+      none.classList.add('sel');
+      updateSnap();
+      setTimeout(()=>{ if(cur==='7') next(); },320);
+      return;
+    }
+    none.classList.remove('sel');
+    btn.classList.toggle('sel');
+    const v = btn.dataset.val;
+    if (btn.classList.contains('sel')) { if(!S.specialty.includes(v)) S.specialty.push(v); }
+    else { S.specialty = S.specialty.filter(x=>x!==v); }
+    updateSnap();
   });
+  document.getElementById('s7-cont').addEventListener('click', ()=>next());
+})();
 
-  const otherChecked = document.querySelector('#ci-other input').checked;
-  document.getElementById('specialty-other-wrap').classList.toggle('hidden', !otherChecked);
-  document.getElementById('specialty-note').classList.toggle('hidden', state.heavyItems.length === 0);
-  render();
-});
+/* S8: Distance */
+document.getElementById('btn-calc').addEventListener('click', async ()=>{
+  const orig  = document.getElementById('pickup-addr').value.trim();
+  const dest  = document.getElementById('dropoff-addr').value.trim();
+  const resEl = document.getElementById('dist-res');
+  const contB = document.getElementById('s8-cont');
+  const btn   = document.getElementById('btn-calc');
 
-/* ── Step 10: Packing ── */
-document.getElementById('packing-toggle').addEventListener('change', e => {
-  state.packingOn = e.target.checked;
-  document.getElementById('packing-options').classList.toggle('open', state.packingOn);
-  if (!state.packingOn) {
-    state.packers = null; state.packerRate = 0;
-    document.querySelectorAll('#packer-count-group .radio-btn').forEach(b => b.classList.remove('selected'));
-  }
-  render();
-});
-document.getElementById('packer-count-group').addEventListener('click', e => {
-  const btn = e.target.closest('.radio-btn');
-  if (!btn) return;
-  const n = parseInt(btn.dataset.packers);
-  state.packers = n; state.packerRate = CONFIG.PACKER_RATES[n];
-  document.querySelectorAll('#packer-count-group .radio-btn').forEach(b => b.classList.toggle('selected', b === btn));
-  render();
-});
+  resEl.classList.add('hidden'); contB.classList.add('hidden');
+  resEl.classList.remove('warn');
 
-/* ════════════════════════════════════════════════════════════
-   LEAD CAPTURE GATE
-   ════════════════════════════════════════════════════════════ */
-document.getElementById('btn-reveal').addEventListener('click', () => {
-  const name  = document.getElementById('lead-name').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-
-  if (!name || !email || !phone) {
-    document.getElementById('lead-error').classList.remove('hidden');
+  if (!orig || !dest) {
+    resEl.textContent = 'Please enter both addresses.';
+    resEl.classList.remove('hidden'); resEl.classList.add('warn');
     return;
   }
-  document.getElementById('lead-error').classList.add('hidden');
+  btn.textContent='Calculating...'; btn.disabled=true;
 
-  state.revealed = true;
+  try {
+    const url  = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(orig)}&destinations=${encodeURIComponent(dest)}&units=imperial&key=${C.MAPS_KEY}`;
+    const data = await (await fetch(url)).json();
+    if (data.status!=='OK' || data.rows[0].elements[0].status!=='OK') throw new Error('Could not calculate distance — please check both addresses.');
+    const ow   = data.rows[0].elements[0].distance.value / 1609.344;
+    S.miles    = ow * 2;
+    resEl.innerHTML = `<strong>${data.rows[0].elements[0].distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip`;
+    resEl.classList.remove('hidden','warn');
+    contB.classList.remove('hidden');
+    updateSnap();
+  } catch(err) {
+    resEl.textContent = err.message || 'Something went wrong.';
+    resEl.classList.remove('hidden'); resEl.classList.add('warn');
+  } finally {
+    btn.textContent='Recalculate Distance'; btn.disabled=false;
+  }
+});
+document.getElementById('s8-cont').addEventListener('click', ()=>next());
 
-  /* Hide gate, show results */
-  document.getElementById('lead-gate').classList.add('hidden');
-  document.getElementById('results-section').classList.remove('hidden');
-  document.getElementById('cta-section').classList.remove('hidden');
-  document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
-
-  render();
+/* S9: Packing */
+single('s9', btn => {
+  S.packingOn = btn.dataset.val === 'yes';
+  if (!S.packingOn) { S.packers=null; S.packerRate=0; }
 });
 
-/* ════════════════════════════════════════════════════════════
-   SUMMARY TEXT
-   ════════════════════════════════════════════════════════════ */
-function buildSummary() {
+/* S10: Packer count */
+single('s10', btn => { S.packers=parseInt(btn.dataset.val); S.packerRate=parseInt(btn.dataset.rate); });
+
+/* Lead capture */
+document.getElementById('btn-reveal').addEventListener('click', ()=>{
+  const n = document.getElementById('lead-name').value.trim();
+  const e = document.getElementById('lead-email').value.trim();
+  const p = document.getElementById('lead-phone').value.trim();
+  const errEl = document.getElementById('lead-err');
+  if (!n||!e||!p) { errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+  renderResults();
+  show('results');
+});
+
+/* ══════════════════════════════════════════
+   RESULTS
+   ══════════════════════════════════════════ */
+function renderResults() {
   const r = calc();
-  if (!r) return 'Please complete the estimator form to generate a summary.';
+  if (!r) return;
 
-  const sizeLabel = { studio:'Studio','1br':'1 Bedroom','2br':'2 Bedroom','3br':'3 Bedroom','4br':'4+ Bedroom' }[state.homeSize];
-  const propLabel = { apartment:'Apartment', condo:'Condo', townhome:'Townhome', house:'Single Family Home' }[state.propType] || '—';
-  const furnLabel = { light:'Lightly Furnished', average:'Average Furnished', full:'Fully Furnished', veryfull:'Very Full / Heavy' }[state.furnishing] || '—';
-  const carryLabel = { close:'Under 50 ft', medium:'50–100 ft', long:'100–200 ft', verylong:'200 ft+' }[state.longCarry] || '—';
+  const cxMap = {std:['Standard Move','cx-std'],mod:['Moderate Move','cx-mod'],cpx:['Complex Move','cx-cpx']};
+  const [lbl,cls] = cxMap[r.cx];
+  document.getElementById('cx-badge').innerHTML = `<span class="complexity ${cls}">${lbl}</span>`;
 
-  const heavyList = state.heavyItems.map(v => {
-    if (v === 'other') { const d = document.getElementById('specialty-other-desc').value.trim(); return d || 'Other'; }
-    return { piano:'Piano', safe:'Safe', pool:'Pool Table', gunsafe:'Gun Safe', gym:'Gym Equipment', commercial:'Commercial Equipment' }[v];
-  }).join(', ');
+  document.getElementById('res-total').textContent = fmtR(r.totalLo, r.totalHi);
+  document.getElementById('res-dep').textContent   = fmt(r.deposit);
+  document.getElementById('incl-pack').classList.toggle('hidden', !S.packingOn);
 
-  const name  = document.getElementById('lead-name').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-
-  return [
-    'VALIDATE YOUR VISION — MOVING COST ESTIMATE',
-    '='.repeat(44),
-    '',
-    `Name:  ${name}`,
-    `Email: ${email}`,
-    '',
-    `From: ${document.getElementById('pickup-addr').value || '—'}`,
-    `To:   ${document.getElementById('dropoff-addr').value || '—'}`,
-    `Round-trip: ${state.miles.toFixed(1)} mi`,
-    '',
-    `Home size:     ${sizeLabel}`,
-    `Property type: ${propLabel}`,
-    `Furnishing:    ${furnLabel}`,
-    `Walk to truck: ${carryLabel}`,
-    state.extraSpaces.length ? `Extra spaces:  ${state.extraSpaces.join(', ')}` : '',
-    heavyList ? `Heavy items:   ${heavyList}` : '',
-    `Crew:          ${state.crewSize} movers @ $${state.crewRate}/hr`,
-    state.packingOn && state.packers ? `Packing:       ${state.packers} packers @ $${state.packerRate}/hr` : '',
-    '',
-    'ESTIMATE BREAKDOWN',
-    '-'.repeat(44),
-    `Labor:                  ${fmtRange(r.laborLo, r.laborHi)}`,
-    `Truck & Travel:         ${fmt(r.truckFee)}`,
-    state.packingOn && r.packLo > 0 ? `Packing:                ${fmtRange(r.packLo, r.packHi)}` : '',
-    '',
-    `TOTAL RANGE:            ${fmtRange(r.totalLo, r.totalHi)}`,
-    '',
-    '-'.repeat(44),
-    `Booking deposit: ${fmt(r.deposit)}`,
-    '',
-    'This is an estimate based on the information provided.',
-    'Your final price is confirmed at your Move Coordination Visit.',
-    '',
-    `Generated: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,
-  ].filter(l => l !== null).join('\n');
+  document.querySelectorAll('.crew-opt').forEach(c => {
+    c.classList.toggle('sel', parseInt(c.dataset.crew) === S.crewSize);
+  });
+  updateSnap();
 }
 
-/* ── Copy ── */
-document.getElementById('btn-copy').addEventListener('click', () => {
-  if (!calc()) { alert('Please complete the estimator first.'); return; }
-  navigator.clipboard.writeText(buildSummary()).then(() => {
-    const el = document.getElementById('copy-confirm');
-    el.classList.remove('hidden');
-    setTimeout(() => el.classList.add('hidden'), 3000);
+/* Crew adjust on results */
+document.getElementById('crew-grid').addEventListener('click', e => {
+  const btn = e.target.closest('.crew-opt');
+  if (!btn) return;
+  S.crewSize = parseInt(btn.dataset.crew);
+  S.crewRate = C.CREW_RATES[S.crewSize];
+  document.querySelectorAll('.crew-opt').forEach(c => c.classList.toggle('sel', c===btn));
+  const r = calc();
+  if (r) {
+    document.getElementById('res-total').textContent = fmtR(r.totalLo, r.totalHi);
+    document.getElementById('sn-amt').textContent    = fmtR(r.totalLo, r.totalHi);
+  }
+  updateSnap();
+});
+
+/* ══════════════════════════════════════════
+   MOBILE SNAPSHOT DRAWER
+   ══════════════════════════════════════════ */
+document.getElementById('snap-toggle').addEventListener('click', ()=>{
+  document.getElementById('snap').classList.toggle('open');
+});
+
+/* ══════════════════════════════════════════
+   COPY
+   ══════════════════════════════════════════ */
+function buildText() {
+  const r    = calc();
+  if (!r) return '';
+  const name = document.getElementById('lead-name').value.trim();
+  const em   = document.getElementById('lead-email').value.trim();
+  const ph   = document.getElementById('lead-phone').value.trim();
+  const spec = S.specialty.map(s=>SPECL[s]||s).join(', ') || 'None';
+  return [
+    'VALIDATE YOUR VISION — MOVE PLAN & ESTIMATE',
+    '='.repeat(44), '',
+    `Name:    ${name}`, `Email:   ${em}`, `Phone:   ${ph}`, '',
+    `From:    ${document.getElementById('pickup-addr').value||'—'}`,
+    `To:      ${document.getElementById('dropoff-addr').value||'—'}`,
+    `Distance: ${(S.miles/2).toFixed(1)} mi one way (${S.miles.toFixed(1)} mi round trip)`, '',
+    `Property:    ${PL[S.propType]||'—'}`,
+    `Size:        ${SL[S.homeSize]||'—'}`,
+    `Furnishing:  ${FL[S.furnish]||'—'}`,
+    S.spaces.length ? `Extra areas: ${S.spaces.join(', ')}` : '',
+    `Stairs:      ${S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)'}`,
+    `Walk/carry:  ${CL[S.carry]||'—'}`,
+    `Specialty:   ${spec}`,
+    `Crew:        ${S.crewSize} movers @ $${S.crewRate}/hr`,
+    S.packingOn ? `Packing:     ${S.packers} packers @ $${S.packerRate}/hr` : '', '',
+    'ESTIMATED INVESTMENT', '-'.repeat(44),
+    fmtR(r.totalLo, r.totalHi), '',
+    'INCLUDED:', '  Professional Movers', '  Transportation & Equipment',
+    '  Moving Equipment', '  Travel Costs', '  Move Planning', '  Scheduling Coordination',
+    S.packingOn ? '  Professional Packing' : '', '',
+    '-'.repeat(44),
+    `Booking Deposit: ${fmt(r.deposit)} (applied toward final balance)`, '',
+    'This estimate is intended for budgeting purposes. Final pricing may vary.',
+    `Generated: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,
+  ].filter(l=>l!==null).join('\n');
+}
+
+document.getElementById('btn-copy').addEventListener('click', ()=>{
+  navigator.clipboard.writeText(buildText()).then(()=>{
+    const el = document.getElementById('copy-ok');
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'),3000);
   });
 });
 
-/* ════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    PDF
-   ════════════════════════════════════════════════════════════ */
-document.getElementById('btn-download').addEventListener('click', async () => {
-  const r = calc();
-  if (!r) { alert('Please complete the estimator first.'); return; }
+   ══════════════════════════════════════════ */
+document.getElementById('btn-pdf').addEventListener('click', async ()=>{
+  const r    = calc();
+  if (!r) return;
+  const name = document.getElementById('lead-name').value.trim();
+  const em   = document.getElementById('lead-email').value.trim();
+  const ph   = document.getElementById('lead-phone').value.trim();
+  const from = document.getElementById('pickup-addr').value||'—';
+  const to   = document.getElementById('dropoff-addr').value||'—';
+  const spec = S.specialty.map(s=>SPECL[s]||s).join(', ')||'None';
+  const incl = ['Professional Movers','Transportation & Equipment','Moving Equipment','Travel Costs','Move Planning','Scheduling Coordination',...(S.packingOn?['Professional Packing']:[])];
 
-  const sizeLabel  = { studio:'Studio','1br':'1 Bedroom','2br':'2 Bedroom','3br':'3 Bedroom','4br':'4+ Bedroom' }[state.homeSize];
-  const propLabel  = { apartment:'Apartment', condo:'Condo', townhome:'Townhome', house:'Single Family Home' }[state.propType] || '—';
-  const furnLabel  = { light:'Lightly Furnished', average:'Average Furnished', full:'Fully Furnished', veryfull:'Very Full / Heavy' }[state.furnishing] || '—';
-  const carryLabel = { close:'Under 50 ft', medium:'50–100 ft', long:'100–200 ft', verylong:'200 ft+' }[state.longCarry] || '—';
-  const name  = document.getElementById('lead-name').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-
-  const heavyList = state.heavyItems.map(v => {
-    if (v === 'other') { const d = document.getElementById('specialty-other-desc').value.trim(); return d || 'Other'; }
-    return { piano:'Piano', safe:'Safe', pool:'Pool Table', gunsafe:'Gun Safe', gym:'Gym Equipment', commercial:'Commercial Equipment' }[v];
-  }).join(', ');
-
-  const target = document.getElementById('pdf-target');
-  target.innerHTML = `
-    <div style="border-bottom:3px solid #1c2b3a;padding-bottom:18px;margin-bottom:22px;">
-      <div style="font-size:22px;font-weight:800;color:#1c2b3a;">Validate Your Vision</div>
-      <div style="font-size:13px;color:#566779;margin-top:3px;">Moving Cost Estimate — Fredericksburg, VA</div>
-      <div style="font-size:12px;color:#566779;margin-top:2px;">Generated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+  const t = document.getElementById('pdf-target');
+  t.innerHTML = `
+    <div style="border-bottom:3px solid #1c2b3a;padding-bottom:16px;margin-bottom:20px">
+      <div style="font-size:21px;font-weight:800;color:#1c2b3a">Validate Your Vision</div>
+      <div style="font-size:12px;color:#566779;margin-top:2px">Move Plan &amp; Estimate — Fredericksburg, VA &nbsp;·&nbsp; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Customer</div>
-        <div style="font-size:14px;font-weight:700;color:#1c2b3a;">${name}</div>
-        <div style="font-size:13px;color:#3d5166;">${email}</div>
-        <div style="font-size:13px;color:#3d5166;">${phone}</div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Customer</div>
+        <div style="font-size:14px;font-weight:700;color:#1c2b3a">${name}</div>
+        <div style="font-size:12px;color:#3d5166">${em}</div>
+        <div style="font-size:12px;color:#3d5166">${ph}</div>
       </div>
       <div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Move Details</div>
-        <div style="font-size:13px;color:#3d5166;">From: ${document.getElementById('pickup-addr').value || '—'}</div>
-        <div style="font-size:13px;color:#3d5166;margin-top:3px;">To: ${document.getElementById('dropoff-addr').value || '—'}</div>
-        <div style="font-size:13px;color:#3d5166;margin-top:3px;">Round-trip: ${state.miles.toFixed(1)} mi</div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Move Route</div>
+        <div style="font-size:12px;color:#3d5166">From: ${from}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">To: ${to}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">${(S.miles/2).toFixed(1)} mi one way · ${S.miles.toFixed(1)} mi round trip</div>
       </div>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Home</div>
-        <div style="font-size:13px;color:#3d5166;">${sizeLabel} &mdash; ${propLabel}</div>
-        <div style="font-size:13px;color:#3d5166;margin-top:3px;">${furnLabel}</div>
-        ${state.extraSpaces.length ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Extra spaces: ${state.extraSpaces.join(', ')}</div>` : ''}
-        ${heavyList ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Heavy items: ${heavyList}</div>` : ''}
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Home Details</div>
+        <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'—'} · ${SL[S.homeSize]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">${FL[S.furnish]||'—'}</div>
+        ${S.spaces.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Extra: ${S.spaces.join(', ')}</div>`:''}
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Stairs: ${S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+':S.stairs} · Walk: ${CL[S.carry]||'—'}</div>
+        ${S.specialty.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Specialty: ${spec}</div>`:''}
       </div>
       <div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:6px;">Crew & Access</div>
-        <div style="font-size:13px;color:#3d5166;">${state.crewSize} movers @ $${state.crewRate}/hr</div>
-        <div style="font-size:13px;color:#3d5166;margin-top:3px;">Walk to truck: ${carryLabel}</div>
-        ${state.packingOn && state.packers ? `<div style="font-size:13px;color:#3d5166;margin-top:3px;">Packing: ${state.packers} packers @ $${state.packerRate}/hr</div>` : ''}
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Crew &amp; Services</div>
+        <div style="font-size:12px;color:#3d5166">${S.crewSize} Movers @ $${S.crewRate}/hr</div>
+        ${S.packingOn&&S.packers?`<div style="font-size:12px;color:#3d5166;margin-top:2px">${S.packers} Packers @ $${S.packerRate}/hr</div>`:''}
       </div>
     </div>
-
-    <div style="background:#f2f5f8;border-radius:8px;padding:20px;margin-bottom:22px;">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:14px;">Estimate Breakdown</div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
-        <span style="font-size:13px;color:#566779;">Labor (${r.hrsLo.toFixed(1)}–${r.hrsHi.toFixed(1)} hrs × $${state.crewRate}/hr)</span>
-        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.laborLo, r.laborHi)}</span>
+    <div style="background:#1c2b3a;border-radius:10px;padding:22px;margin-bottom:18px;text-align:center">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#7a9bb5;font-weight:700;margin-bottom:6px">Estimated Investment</div>
+      <div style="font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px">${fmtR(r.totalLo,r.totalHi)}</div>
+      <div style="font-size:11px;color:#7a9bb5;margin-top:5px">Price range based on your move details</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+      <div style="background:#f2f5f8;border-radius:8px;padding:14px">
+        <div style="font-size:10px;font-weight:700;color:#566779;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Included in Your Estimate</div>
+        ${incl.map(i=>`<div style="font-size:11px;color:#3d5166;padding:2px 0">&#10003; ${i}</div>`).join('')}
       </div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
-        <span style="font-size:13px;color:#566779;">Truck & Travel Fee</span>
-        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmt(r.truckFee)}</span>
-      </div>
-      ${r.packLo > 0 ? `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
-        <span style="font-size:13px;color:#566779;">Packing Service</span>
-        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.packLo, r.packHi)}</span>
-      </div>` : ''}
-      <div style="display:flex;justify-content:space-between;padding:14px 0 0;border-top:2px solid #1c2b3a;margin-top:8px;">
-        <span style="font-size:15px;font-weight:700;color:#1c2b3a;">Total Estimated Range</span>
-        <span style="font-size:20px;font-weight:800;color:#2e6da4;">${fmtRange(r.totalLo, r.totalHi)}</span>
+      <div style="background:#d4eddf;border:1px solid #9dd0b4;border-radius:8px;padding:14px">
+        <div style="font-size:10px;font-weight:700;color:#1e6b4a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Booking Deposit</div>
+        <div style="font-size:22px;font-weight:800;color:#1e6b4a">${fmt(r.deposit)}</div>
+        <div style="font-size:11px;color:#1e6b4a;margin-top:5px;line-height:1.5">Secures your move date. Applied toward your final balance.</div>
       </div>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
-      <div style="background:#d4eddf;border:1px solid #9dd0b4;border-radius:8px;padding:14px;">
-        <div style="font-size:11px;font-weight:700;color:#1e6b4a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Booking Deposit</div>
-        <div style="font-size:18px;font-weight:800;color:#1e6b4a;">${fmt(r.deposit)}</div>
-        <div style="font-size:12px;color:#1e6b4a;margin-top:4px;">Applied toward final labor cost</div>
-      </div>
-      <div style="background:#eef5fb;border:1px solid #9bbbd9;border-radius:8px;padding:14px;">
-        <div style="font-size:11px;font-weight:700;color:#2e6da4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Move Coordination</div>
-        <div style="font-size:13px;color:#2e6da4;margin-top:4px;line-height:1.5;">Included in your total estimate. Covers scheduling, routing, logistics, and pre-move planning.</div>
-      </div>
-    </div>
-
-    <div style="font-size:12px;color:#566779;font-style:italic;border-top:1px solid #ccd6de;padding-top:14px;line-height:1.6;">
+    <div style="font-size:11px;color:#566779;font-style:italic;border-top:1px solid #d0dae3;padding-top:12px;line-height:1.6">
       This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.
-    </div>
-  `;
+    </div>`;
 
-  target.style.display = 'block';
+  t.style.display = 'block';
   try {
-    const { jsPDF } = window.jspdf;
-    const canvas  = await html2canvas(target, { scale: 2, useCORS: true, logging: false });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf     = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'letter' });
+    const {jsPDF} = window.jspdf;
+    const canvas  = await html2canvas(t, {scale:2,useCORS:true,logging:false});
+    const img     = canvas.toDataURL('image/png');
+    const pdf     = new jsPDF({orientation:'portrait',unit:'px',format:'letter'});
     const pw = pdf.internal.pageSize.getWidth();
     const ph = pdf.internal.pageSize.getHeight();
-    const ratio = canvas.width / canvas.height;
-    let iw = pw - 40, ih = iw / ratio;
-    if (ih > ph - 40) { ih = ph - 40; iw = ih * ratio; }
-    pdf.addImage(imgData, 'PNG', 20, 20, iw, ih);
-    pdf.save('VYV-Moving-Estimate.pdf');
-  } catch (err) {
+    const r2 = canvas.width / canvas.height;
+    let iw = pw-40, ih = iw/r2;
+    if (ih > ph-40) { ih=ph-40; iw=ih*r2; }
+    pdf.addImage(img,'PNG',20,20,iw,ih);
+    pdf.save('VYV-Move-Plan.pdf');
+  } catch(err) {
     console.error(err);
-    alert('PDF generation failed. Use "Copy Estimate" instead.');
+    alert('PDF generation failed — use "Copy Estimate" instead.');
   } finally {
-    target.style.display = 'none';
+    t.style.display='none';
   }
 });
+
+/* Init */
+updateProg();
+updateSnap();
 </script>
 </body>
 </html>
