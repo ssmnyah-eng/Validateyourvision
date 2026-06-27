@@ -605,6 +605,10 @@
       <span class="li-label">Truck &amp; Travel Fee</span>
       <span class="li-value" id="res-truck">—</span>
     </div>
+    <div class="line-item">
+      <span class="li-label">System Setup Visit Fee</span>
+      <span class="li-value" id="res-visit-line">—</span>
+    </div>
     <div class="line-item" id="res-packing-row" style="display:none">
       <span class="li-label">Packing Service (<span id="res-pack-hrs">—</span> hrs &times; <span id="res-pack-rate">—</span>/hr)</span>
       <span class="li-value" id="res-packing">—</span>
@@ -763,8 +767,9 @@ function calc() {
     packHrsRange = ph;
   }
 
-  const totalLo = laborLo + truckFee + packLo;
-  const totalHi = laborHi + truckFee + packHi;
+  const visitFee = CONFIG.VISIT_FEES[s.homeSize];
+  const totalLo = laborLo + truckFee + packLo + visitFee;
+  const totalHi = laborHi + truckFee + packHi + visitFee;
 
   return {
     hrsLo, hrsHi, totalStairs, stairAdd,
@@ -772,7 +777,7 @@ function calc() {
     truckFee,
     packLo, packHi, packHrsRange,
     totalLo, totalHi,
-    visitFee:  CONFIG.VISIT_FEES[s.homeSize],
+    visitFee,
     deposit:   CONFIG.DEPOSITS[s.homeSize],
   };
 }
@@ -811,6 +816,9 @@ function render() {
 
   /* Truck */
   document.getElementById('res-truck').textContent = fmt(r.truckFee);
+
+  /* Visit fee line item */
+  document.getElementById('res-visit-line').textContent = fmt(r.visitFee);
 
   /* Packing */
   const packRow = document.getElementById('res-packing-row');
@@ -993,12 +1001,12 @@ function buildSummaryText() {
     `Labor:            ${fmtRange(r.laborLo, r.laborHi)}`,
     `Truck & Travel:   ${fmt(r.truckFee)}`,
     state.packingOn && r.packLo > 0 ? `Packing:          ${fmtRange(r.packLo, r.packHi)}` : '',
+    `System Setup Visit: ${fmt(r.visitFee)}`,
     '',
     `TOTAL RANGE:      ${fmtRange(r.totalLo, r.totalHi)}`,
     '',
     '-'.repeat(44),
     `Booking deposit required: ${fmt(r.deposit)}`,
-    `System Setup Visit fee: ${fmt(r.visitFee)}`,
     '',
     'This is an estimate based on the information provided.',
     'Your final price is confirmed at your System Setup Visit.',
@@ -1088,10 +1096,14 @@ document.getElementById('btn-download').addEventListener('click', async () => {
         <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmt(r.truckFee)}</span>
       </div>
       ${r.packLo > 0 ? `
-      <div style="display:flex;justify-content:space-between;padding:8px 0;">
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
         <span style="font-size:13px;color:#566779;">Packing Service</span>
         <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmtRange(r.packLo, r.packHi)}</span>
       </div>` : ''}
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ccd6de;">
+        <span style="font-size:13px;color:#566779;">System Setup Visit Fee</span>
+        <span style="font-size:13px;font-weight:700;color:#1c2b3a;">${fmt(r.visitFee)}</span>
+      </div>
       <div style="display:flex;justify-content:space-between;padding:14px 0 0;border-top:2px solid #1c2b3a;margin-top:8px;">
         <span style="font-size:15px;font-weight:700;color:#1c2b3a;">Total Estimated Range</span>
         <span style="font-size:20px;font-weight:800;color:#2e6da4;">${fmtRange(r.totalLo, r.totalHi)}</span>
