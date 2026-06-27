@@ -372,8 +372,13 @@ body{
     <p class="q-sub">Select all that apply</p>
     <div class="opts" id="s7">
       <button class="opt multi" data-val="piano"><span>Piano</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="safe"><span>Safe</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="safe"><span>Safe / Gun Safe</span><span class="chk">&#10003;</span></button>
       <button class="opt multi" data-val="pool"><span>Pool Table</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="fishtank"><span>Fish Tank / Aquarium</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="glass"><span>Large Glass Items or Mirrors</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="hottub"><span>Hot Tub / Spa</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="clock"><span>Grandfather Clock</span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="artwork"><span>Large Artwork / Antiques</span><span class="chk">&#10003;</span></button>
       <button class="opt multi" data-val="commercial"><span>Commercial Equipment</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
     </div>
@@ -643,7 +648,7 @@ const PL = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Singl
 const SL = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
 const FL = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
 const CL = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
-const SPECL = {piano:'Piano',safe:'Safe',pool:'Pool Table',commercial:'Commercial Equipment'};
+const SPECL = {piano:'Piano',safe:'Safe / Gun Safe',pool:'Pool Table',fishtank:'Fish Tank / Aquarium',glass:'Large Glass / Mirrors',hottub:'Hot Tub / Spa',clock:'Grandfather Clock',artwork:'Large Artwork / Antiques',commercial:'Commercial Equipment'};
 
 function sv(id, val, empty) {
   const el = document.getElementById('sn-' + id);
