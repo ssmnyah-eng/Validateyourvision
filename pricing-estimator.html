@@ -570,25 +570,21 @@
       <div class="step-num">7</div>
       <div>
         <div class="step-title">Truck &amp; Travel Fee</div>
-        <div class="step-sub">Enter your estimated round-trip mileage</div>
+        <div class="step-sub">Enter both addresses — we'll calculate the distance automatically</div>
       </div>
     </div>
     <div class="field-row">
-      <label for="pickup-addr">Pickup address (for your records)</label>
+      <label for="pickup-addr">Pickup address</label>
       <input type="text" id="pickup-addr" placeholder="e.g. 123 Main St, Fredericksburg, VA">
     </div>
     <div class="field-row">
-      <label for="dropoff-addr">Drop-off address (for your records)</label>
+      <label for="dropoff-addr">Drop-off address</label>
       <input type="text" id="dropoff-addr" placeholder="e.g. 456 Oak Ave, Stafford, VA">
     </div>
-    <div class="field-row">
-      <label for="roundtrip-miles">Estimated round-trip miles</label>
-      <input type="number" id="roundtrip-miles" min="0" max="500" value="0"
-             placeholder="e.g. 20">
-      <small style="margin-top:4px;display:block;">
-        Round trip = pickup to drop-off and back. Not sure? Google Maps driving distance &times; 2 is a good estimate.
-      </small>
-    </div>
+    <button class="btn btn-secondary mt-10" id="btn-calc-distance" style="width:100%">
+      Calculate Distance
+    </button>
+    <div class="info-box mt-10 hidden" id="distance-result"></div>
     <div class="info-box mt-10" id="truck-fee-display">
       Truck &amp; Travel Fee: <strong>—</strong>
     </div>
@@ -945,10 +941,52 @@ document.getElementById('packer-count-group').addEventListener('click', e => {
   render();
 });
 
-/* ── Step 7: Mileage ── */
-document.getElementById('roundtrip-miles').addEventListener('input', e => {
-  state.miles = parseFloat(e.target.value) || 0;
-  render();
+/* ── Step 7: Distance Matrix API ── */
+const MAPS_KEY = 'AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0';
+
+document.getElementById('btn-calc-distance').addEventListener('click', async () => {
+  const origin  = document.getElementById('pickup-addr').value.trim();
+  const dest    = document.getElementById('dropoff-addr').value.trim();
+  const resultEl = document.getElementById('distance-result');
+  const btn      = document.getElementById('btn-calc-distance');
+
+  if (!origin || !dest) {
+    resultEl.classList.remove('hidden');
+    resultEl.textContent = 'Please enter both a pickup and drop-off address.';
+    return;
+  }
+
+  btn.textContent = 'Calculating...';
+  btn.disabled = true;
+  resultEl.classList.add('hidden');
+
+  try {
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(dest)}&units=imperial&key=${MAPS_KEY}`;
+    const res  = await fetch(url);
+    const data = await res.json();
+
+    if (data.status !== 'OK' || data.rows[0].elements[0].status !== 'OK') {
+      throw new Error('Could not calculate distance. Check that both addresses are correct.');
+    }
+
+    const onewayMeters = data.rows[0].elements[0].distance.value;
+    const onewayMiles  = onewayMeters / 1609.344;
+    const roundTrip    = onewayMiles * 2;
+
+    state.miles = roundTrip;
+
+    const onewayText = data.rows[0].elements[0].distance.text;
+    resultEl.classList.remove('hidden');
+    resultEl.innerHTML = `Distance: <strong>${onewayText} one way</strong> &mdash; <strong>${(roundTrip).toFixed(1)} miles round trip</strong>`;
+
+    render();
+  } catch (err) {
+    resultEl.classList.remove('hidden');
+    resultEl.textContent = err.message || 'Something went wrong. Please try again.';
+  } finally {
+    btn.textContent = 'Calculate Distance';
+    btn.disabled = false;
+  }
 });
 
 /* ════════════════════════════════════════════════════════════════
@@ -990,7 +1028,7 @@ function buildSummaryText() {
     rooms ? `Rooms:\n${rooms}` : '',
     `Pickup: ${document.getElementById('pickup-addr').value || '—'}`,
     `Drop-off: ${document.getElementById('dropoff-addr').value || '—'}`,
-    `Round-trip miles: ${state.miles}`,
+    `Round-trip miles: ${state.miles.toFixed(1)}`,
     state.extraSpaces.length ? `Additional spaces: ${state.extraSpaces.join(', ')}` : '',
     `Crew: ${state.crewSize} movers @ $${state.crewRate}/hr`,
     specialtyItems ? `Specialty items: ${specialtyItems}` : '',
