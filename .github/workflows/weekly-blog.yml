@@ -2,8 +2,8 @@ name: Weekly Blog Draft
 
 on:
   schedule:
-    # Every Saturday at 10 AM ET (14:00 UTC)
-    - cron: '0 14 * * 6'
+    # Every Saturday at 9 AM ET (13:00 UTC)
+    - cron: '0 13 * * 6'
   workflow_dispatch: # Allow manual trigger for testing
 
 jobs:
