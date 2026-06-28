@@ -1,0 +1,54 @@
+name: Revise Blog Draft
+
+on:
+  repository_dispatch:
+    types: [revise-blog]
+  workflow_dispatch:
+    inputs:
+      feedback:
+        description: 'Edit feedback from email reply'
+        required: true
+        type: string
+
+jobs:
+  revise-and-email:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Apply edits with Claude
+        id: revise
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FEEDBACK: ${{ github.event.client_payload.feedback || inputs.feedback }}
+        run: |
+          python .github/scripts/revise_post.py | tee /tmp/revise_output.txt
+          echo "DRAFT_PATH=$(grep '^DRAFT_PATH=' /tmp/revise_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+          echo "REVISION=$(grep '^REVISION=' /tmp/revise_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+
+      - name: Commit revised draft
+        run: |
+          git config user.name "VYV Blog Bot"
+          git config user.email "blog@validateyourvision.com"
+          git add blog/drafts/ blog/_published-topics.json
+          git commit -m "Revision ${{ steps.revise.outputs.REVISION }}: ${{ steps.revise.outputs.DRAFT_PATH }}"
+          git push origin gh-pages
+
+      - name: Send revised draft email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DRAFT_PATH: ${{ steps.revise.outputs.DRAFT_PATH }}
+          REVISION: ${{ steps.revise.outputs.REVISION }}
+          MODE: revision
+        run: python .github/scripts/send_email.py
