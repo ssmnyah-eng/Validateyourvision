@@ -2213,7 +2213,7 @@
           <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⭐</div> Customer-Focused Service</div>
         </div>
         <div class="reveal" style="margin-top:56px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);max-height:480px;">
-          <video autoplay muted loop playsinline preload="auto"
+          <video muted loop playsinline preload="none" data-lazy-video
             aria-label="Happy family settled and relaxing in their new home after a smooth move"
             style="width:100%;height:480px;object-fit:cover;display:block;">
             <source src="assets/why-video.mp4" type="video/mp4" />
@@ -2243,7 +2243,7 @@
         </div>
         <div class="story-img reveal-right">
           <video
-            autoplay muted loop playsinline preload="auto"
+            muted loop playsinline preload="none" data-lazy-video
             aria-label="Professional moving crew in action"
             style="width:100%;height:460px;object-fit:cover;display:block;"
           >
@@ -2873,20 +2873,29 @@
       }, { passive: true });
     })();
 
-    // Force autoplay on mobile — browsers may block autoplay until interaction
-    document.querySelectorAll('video').forEach(function(v) {
-      v.muted = true;
-      var p = v.play();
-      if (p !== undefined) {
-        p.catch(function() {
-          // If autoplay blocked, try again on first user interaction
-          document.addEventListener('touchstart', function tryPlay() {
-            v.play();
-            document.removeEventListener('touchstart', tryPlay);
-          }, { once: true });
+    // Hero video: force play immediately
+    var heroVideo = document.querySelector('.hero-img-wrap video');
+    if (heroVideo) {
+      heroVideo.muted = true;
+      heroVideo.play().catch(function() {
+        document.addEventListener('touchstart', function() { heroVideo.play(); }, { once: true });
+      });
+    }
+    // Secondary videos: load and play only when scrolled into view
+    var lazyVideos = document.querySelectorAll('video[data-lazy-video]');
+    if ('IntersectionObserver' in window && lazyVideos.length) {
+      var videoObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            var v = e.target;
+            v.load();
+            v.play().catch(function(){});
+            videoObs.unobserve(v);
+          }
         });
-      }
-    });
+      }, { rootMargin: '200px' });
+      lazyVideos.forEach(function(v) { videoObs.observe(v); });
+    }
   </script>
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
