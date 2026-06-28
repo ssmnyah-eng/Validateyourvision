@@ -1533,6 +1533,9 @@
       .footer-bottom { flex-direction: column; text-align: center; }
       .why-badges { gap: 10px; }
       .section-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+      .quotes-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+      .quotes-img { order: -1; min-height: 260px !important; }
+      .quotes-img img { min-height: 260px !important; }
       .btn { font-size: 0.88rem; padding: 13px 22px; }
       #families > .container > div { gap: 24px !important; }
       #families img { height: 240px !important; }
@@ -1772,12 +1775,12 @@
   <!-- ===== WHY OUR QUOTES ARE DIFFERENT ===== -->
   <section style="background:var(--lbg);padding:96px 0;" aria-labelledby="quotes-heading">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
-        <div class="reveal-left" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="quotes-grid">
+        <div class="reveal-left quotes-img" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
           <img
             src="assets/clipboard-checklist.png"
             alt="VYV Home Inventory Checklist — room-by-room moving plan on a branded clipboard"
-            style="width:100%;display:block;"
+            style="width:100%;height:100%;object-fit:cover;display:block;min-height:320px;"
             loading="lazy"
           />
         </div>
@@ -2146,20 +2149,6 @@
     </div>
   </div>
 
-  <!-- CTA STRIP: After families section -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">Your Next Chapter Starts Here</p>
-          <h3>Spend Less Time Worrying. More Time Preparing.</h3>
-          <p class="cta-strip-sub">Moving is hard. Getting help shouldn't be. We've got a plan ready — all you have to do is reach out.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">Start Your Moving Plan</a>
-      </div>
-    </div>
-  </div>
-
   <!-- ===== REVIEWS ===== -->
   <section id="reviews" aria-labelledby="reviews-heading">
     <div class="container">
@@ -2279,50 +2268,6 @@
     </div>
   </section>
 
-  <!-- ===== AREAS WE SERVE ===== -->
-  <section id="areas" style="background: var(--lbg); padding: 96px 0;" aria-labelledby="areas-heading">
-    <div class="container">
-      <div style="text-align:center; margin-bottom:52px;">
-        <p class="section-eyebrow reveal">Service Area</p>
-        <h2 id="areas-heading" class="section-title reveal">Areas We Serve</h2>
-        <p class="section-sub reveal" style="margin:0 auto;">We serve families and individuals across Northern Virginia, the Fredericksburg region, and the greater Richmond area — roughly a 90-mile radius.</p>
-      </div>
-      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Fredericksburg, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Stafford, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Spotsylvania, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> Woodbridge, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Dale City, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Manassas, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Gainesville, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Centreville, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> Chantilly, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Fairfax, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Springfield, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Alexandria, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Arlington, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> McLean, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Reston, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Herndon, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Ashburn, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Leesburg, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> Warrenton, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Culpeper, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> King George, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Richmond, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Glen Allen, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> Short Pump, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Mechanicsville, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Midlothian, VA</div>
-        <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📍</div> Chesterfield, VA</div>
-        <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">📍</div> Colonial Heights, VA</div>
-        <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">📍</div> Winchester, VA</div>
-        <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📍</div> Front Royal, VA</div>
-        <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">📍</div> Charlottesville, VA</div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== FAQ ===== -->
   <section id="faq" style="background:var(--lbg);padding:96px 0;" aria-labelledby="faq-heading">
     <div class="container">
@@ -2382,7 +2327,7 @@
   </section>
 
   <!-- ===== SERVICE AREAS ===== -->
-  <section style="background:var(--lbg2);padding:72px 0;" aria-labelledby="areas-seo-heading">
+  <section id="areas" style="background:var(--lbg2);padding:72px 0;" aria-labelledby="areas-seo-heading">
     <div class="container">
       <div style="text-align:center;margin-bottom:48px;">
         <p class="section-eyebrow reveal">Where We Work</p>
