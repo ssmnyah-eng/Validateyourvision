@@ -490,6 +490,19 @@ body{
     <div class="tip"><strong>Move Planning Tip</strong>Two homes with the same bedroom count can take very different amounts of time based on how full they are. Be as accurate as possible here.</div>
   </div>
 
+  <!-- Screen 3b: Box Count -->
+  <div class="screen" id="screen-3b">
+    <p class="q-label">Roughly how many boxes are you moving?</p>
+    <p class="q-sub">Packed and ready to go — your best guess is fine</p>
+    <div class="opts" id="s3b">
+      <button class="opt" data-val="few" data-mod="0"><span>Very few (under 15)<small>Minimal loose items, mostly furniture</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="some" data-mod="0.5"><span>Some (15–40 boxes)<small>A moderate amount, typical for a 1–2 bedroom move</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="many" data-mod="1"><span>Quite a few (40–80 boxes)<small>Several rooms worth of packed items</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="alot" data-mod="2"><span>A lot (80+ boxes)<small>Heavy move, fully packed home or accumulated belongings</small></span><span class="chk">&#10003;</span></button>
+    </div>
+    <div class="tip"><strong>Move Planning Tip</strong>Box count is one of the most underestimated parts of a move. Each trip in and out of the truck adds up, especially with a full home.</div>
+  </div>
+
   <!-- Screen 4: Extra Spaces (multi) -->
   <div class="screen" id="screen-4">
     <p class="q-label">Are there any additional areas that need to be moved?</p>
@@ -513,35 +526,61 @@ body{
 
   <!-- Screen 6: Long Carry -->
   <div class="screen" id="screen-6">
-    <p class="q-label">How far will the movers need to walk between the truck and your front door?</p>
+    <p class="q-label">How far will the movers need to walk at your pick-up location?</p>
     <p class="q-sub">Think about where the moving truck will be able to park</p>
-    <div class="opts" id="s6">
-      <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance (driveway or building door)</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
+    <div id="s6">
+      <div class="opts" id="s6-origin">
+        <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance (driveway or building door)</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
+      </div>
+      <div id="s6-dest-wrap" style="display:none;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)">
+        <p class="q-label" style="font-size:1.05rem;margin-bottom:8px">What about at your destination?</p>
+        <p class="q-sub" style="margin-bottom:12px">How far will movers need to walk at the drop-off location?</p>
+        <div class="opts" id="s6-dest">
+          <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
+        </div>
+      </div>
     </div>
     <div class="tip"><strong>Move Planning Tip</strong>Every extra step adds up. Long carries can add more time to a move than almost any other single factor.</div>
   </div>
 
-  <!-- Screen 7: Specialty Items (multi) -->
+  <!-- Screen 7: Specialty Items + Appliances (multi) -->
   <div class="screen" id="screen-7">
     <p class="q-label">Will any specialty items need to be moved?</p>
     <p class="q-sub">Select all that apply</p>
-    <div class="opts" id="s7">
-      <button class="opt multi" data-val="piano"><span>Piano</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="safe"><span>Safe / Gun Safe</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="pool"><span>Pool Table</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="fishtank"><span>Fish Tank / Aquarium</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="glass"><span>Large Glass Items or Mirrors</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="hottub"><span>Hot Tub / Spa</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="clock"><span>Grandfather Clock</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="artwork"><span>Large Artwork / Antiques</span><span class="chk">&#10003;</span></button>
-      <button class="opt multi" data-val="commercial"><span>Commercial Equipment</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
+    <div id="s7">
+      <div class="opts" id="s7-specialty">
+        <button class="opt multi" data-val="piano"><span>Piano</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="safe"><span>Safe / Gun Safe</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="pool"><span>Pool Table</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="fishtank"><span>Fish Tank / Aquarium</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="glass"><span>Large Glass Items or Mirrors</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="hottub"><span>Hot Tub / Spa</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="clock"><span>Grandfather Clock</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="artwork"><span>Large Artwork / Antiques</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="commercial"><span>Commercial Equipment</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
+      </div>
+      <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)">
+        <p class="q-label" style="font-size:1.05rem;margin-bottom:8px">Will any appliances be moving with you?</p>
+        <p class="q-sub" style="margin-bottom:12px">Select all that apply</p>
+        <div class="opts" id="s7-appliances">
+          <button class="opt multi" data-val="washerdryer"><span>Washer / Dryer</span><span class="chk">&#10003;</span></button>
+          <button class="opt multi" data-val="refrigerator"><span>Refrigerator</span><span class="chk">&#10003;</span></button>
+          <button class="opt multi" data-val="stove"><span>Stove / Range</span><span class="chk">&#10003;</span></button>
+          <button class="opt multi" data-val="dishwasher"><span>Dishwasher</span><span class="chk">&#10003;</span></button>
+          <button class="opt multi" data-val="deepfreezer"><span>Deep Freezer / Chest Freezer</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="none" id="s7-appl-none"><span>No Appliances</span><span class="chk">&#10003;</span></button>
+        </div>
+      </div>
     </div>
     <button class="btn-main" id="s7-cont">Continue</button>
-    <div class="tip"><strong>Move Planning Tip</strong>Specialty items require specific equipment and planning. Identifying them now means your crew arrives fully prepared.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Specialty items and appliances require specific equipment and planning. Identifying them now means your crew arrives fully prepared.</div>
   </div>
 
   <!-- Screen 8: Disassembly (multi) -->
@@ -873,11 +912,14 @@ const C = {
 const S = {
   propType:    null,
   homeSize:    null,
-  furnish:     null, furnMod:    0,
+  furnish:     null, furnMod:      0,
+  boxCount:    null, boxMod:       0,
   spaces:      [],
   aptFloor:    null,
-  stairs:      null,
-  carry:       null, carryMod:   0,
+  stairs:      null, destStairs:   null,
+  carry:       null, carryMod:     0,
+  destCarry:   null, destCarryMod: 0,
+  appliances:  [],
   specialty:   [],
   disassembly: [],
   miles:       0,
@@ -899,6 +941,7 @@ const PANELS = {
   '1':{tag:'Did You Know',head:'Property type affects more than you might think.',body:'Apartments, condos, and houses each come with different access requirements, including elevator policies, parking restrictions, long hallways, and building rules that affect how a move is planned.',fact:'Move-day delays are most commonly caused by access issues that were not identified during the original estimate.'},
   '2':{tag:'Move Planning Insight',head:'Bedroom count is just the starting point.',body:'Two homes with the same number of bedrooms can require very different amounts of time and crew depending on furnishing level, stair access, and how the home is laid out.',fact:'Choosing the right crew size is one of the most impactful decisions in the entire moving process.'},
   '3':{tag:'Why This Matters',head:'Furnishing level is the single biggest variable in any estimate.',body:'A lightly furnished studio can take less time to move than a fully packed one-bedroom. Being as accurate as possible here gives you the most reliable estimate.',fact:'Homes are consistently underestimated when furnishing level is not accounted for from the start.'},
+  '3b':{tag:'Plan Ahead',head:'Box count is more impactful than most people expect.',body:'Boxes mean extra trips in and out of the truck. A high box count on a small home can add more time than an entire extra bedroom. Your best estimate here helps us plan your crew and time accurately.'},
   '4':{tag:'Common Oversight',head:'Extra spaces are what estimates get wrong most often.',body:'Garages, attics, and basements are frequently overlooked during estimates and then discovered on move day. Including them now protects both your timeline and your budget.',fact:'Most move-day overruns are tied directly to spaces that were left out of the original plan.'},
   '5':{tag:'Move Planning Tip',head:'Stairs are one of the biggest time factors in any move.',body:'Every additional trip up a flight of stairs adds labor time, especially with large furniture or appliances. Accurate stair information helps us staff your move correctly from the start.'},
   '6':{tag:'Move Planning Tip',head:'Long carries add up faster than most people expect.',body:'When a truck has to park far from your entrance, every single trip takes longer. This one factor can add hours to a move that would otherwise be straightforward.'},
@@ -941,11 +984,11 @@ function show(id) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-const TOTAL = 14;
+const TOTAL = 15;
 const STEP_MAP = {
-  welcome:0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,
-  '8':8,'9':9,'10':10,'11':11,'12':12,'13':13,'14':14,
-  lead:14,results:14
+  welcome:0,'1':1,'2':2,'3':3,'3b':4,'4':5,'5':6,'6':7,'7':8,
+  '8':9,'9':10,'10':11,'11':12,'12':13,'13':14,'14':15,
+  lead:15,results:15
 };
 
 function updateProg() {
@@ -956,7 +999,7 @@ function updateProg() {
 }
 
 document.getElementById('back-btn').addEventListener('click', () => {
-  const order = ['welcome','1','2','3','4','5','6','7','8','9','10'];
+  const order = ['welcome','1','2','3','3b','4','5','6','7','8','9','10'];
   if (S.packingOn) order.push('11');
   order.push('12','13','14','lead');
   const i = order.indexOf(cur);
@@ -967,7 +1010,8 @@ function next() {
   if (cur === 'welcome') return show('1');
   if (cur === '1')  return show('2');
   if (cur === '2')  return show('3');
-  if (cur === '3')  return show('4');
+  if (cur === '3')  return show('3b');
+  if (cur === '3b') return show('4');
   if (cur === '4')  return show('5');
   if (cur === '5')  return show('6');
   if (cur === '6')  return show('7');
@@ -988,16 +1032,30 @@ const fmt      = n => '$' + Math.round(n).toLocaleString();
 const fmtR     = (a,b) => fmt(a) + ' – ' + fmt(b);
 const roundUp5 = n => Math.ceil(n / 5) * 5;
 
-function calc() {
-  if (!S.homeSize || !S.crewSize) return null;
-  const base  = C.BASE_HRS[S.homeSize];
-  const sadd  = (S.stairs || 0) * C.STAIR_HRS;
+function calcComplexity() {
+  const sadd  = (S.stairs || 0) * C.STAIR_HRS + (S.destStairs || 0) * C.STAIR_HRS;
   const dadd  = S.disassembly.length * C.DISASSEMBLY_HRS;
   const spadd = S.spaces.length;
   const fm    = S.furnMod;
-  const cm    = S.carryMod;
-  const lo    = Math.max(C.MIN_HRS, base[0] + sadd + dadd + spadd + fm + cm);
-  const hi    = Math.max(C.MIN_HRS, base[1] + sadd + dadd + spadd + fm + cm);
+  const cm    = S.carryMod + S.destCarryMod;
+  const appl  = S.appliances.length * 0.5;
+  const bm    = S.boxMod;
+  return {sadd, dadd, spadd, fm, cm, appl, bm, total: sadd + dadd + spadd + fm + cm + appl + bm};
+}
+
+function calcRecommendedCrew() {
+  const base = C.REC_CREW[S.homeSize] || 2;
+  const cx   = calcComplexity();
+  return cx.total >= 3 ? Math.min(4, base + 1) : base;
+}
+
+function calc() {
+  if (!S.homeSize || !S.crewSize) return null;
+  const base  = C.BASE_HRS[S.homeSize];
+  const cx    = calcComplexity();
+  const extra = cx.total;
+  const lo    = Math.max(C.MIN_HRS, base[0] + extra);
+  const hi    = Math.max(C.MIN_HRS, base[1] + extra);
   const llab  = lo * S.crewRate;
   const hlab  = hi * S.crewRate;
   const truck = roundUp5(C.TRUCK_BASE + S.miles * C.TRUCK_MILE);
@@ -1009,7 +1067,6 @@ function calc() {
     hp = ph[1] * pm * S.packerRate;
   }
   const visit = C.VISIT[S.homeSize];
-  const extra = sadd + dadd + spadd + fm + cm;
   return {
     lo, hi, llab, hlab, truck, lp, hp, visit,
     totalLo: llab + truck + lp + visit,
@@ -1055,13 +1112,16 @@ single('s1', btn => { S.propType = btn.dataset.val; });
 /* S2: Bedrooms */
 single('s2', btn => {
   S.homeSize = btn.dataset.val;
-  const rec  = C.REC_CREW[S.homeSize];
+  const rec  = calcRecommendedCrew();
   S.crewSize = rec; S.crewRate = C.CREW_RATES[rec];
   document.querySelectorAll('.crew-opt').forEach(c => c.classList.toggle('sel', parseInt(c.dataset.crew)===rec));
 });
 
 /* S3: Furnishing */
 single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.dataset.mod); });
+
+/* S3b: Box Count */
+single('s3b', btn => { S.boxCount = btn.dataset.val; S.boxMod = parseFloat(btn.dataset.mod); });
 
 /* S4: Extra Spaces */
 (()=>{
@@ -1085,16 +1145,29 @@ single('s3', btn => { S.furnish = btn.dataset.val; S.furnMod = parseFloat(btn.da
   document.getElementById('s4-cont').addEventListener('click', ()=>next());
 })();
 
-/* S5: Stairs — context-aware */
+/* S5: Stairs — context-aware, asks origin then destination */
 function buildStairsScreen() {
   const isApt = APT_TYPES.includes(S.propType);
   const qEl   = document.getElementById('s5-q');
   const s5    = document.getElementById('s5');
   S.aptFloor  = null;
   S.stairs    = null;
+  S.destStairs = null;
+
+  const destFlightsHTML = `
+    <div id="s5-dest-wrap" style="display:none;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)">
+      <p class="q-label" style="font-size:1.05rem;margin-bottom:8px">What about at your destination?</p>
+      <p class="q-sub" style="margin-bottom:12px">How many flights of stairs at the drop-off location?</p>
+      <div class="opts" id="s5-dest">
+        <button class="opt" data-val="0"><span>None / Ground level or elevator</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
+      </div>
+    </div>`;
 
   if (isApt) {
-    qEl.textContent = 'What floor are you on?';
+    qEl.textContent = 'What floor are you moving from?';
     s5.innerHTML = `
       <div class="opts" id="s5-floor">
         <button class="opt" data-floor="1st Floor"><span>1st Floor</span><span class="chk">&#10003;</span></button>
@@ -1103,7 +1176,7 @@ function buildStairsScreen() {
         <button class="opt" data-floor="4th Floor or Higher"><span>4th Floor or Higher</span><span class="chk">&#10003;</span></button>
       </div>
       <div id="s5-flights-wrap" style="display:none;margin-top:22px">
-        <p class="q-label" style="font-size:1.05rem;margin-bottom:12px">How many flights of stairs do you walk to reach your floor?</p>
+        <p class="q-label" style="font-size:1.05rem;margin-bottom:12px">How many flights of stairs to reach your floor?</p>
         <div class="opts" id="s5-flights">
           <button class="opt" data-val="0"><span>Ground level or elevator access</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
@@ -1111,7 +1184,8 @@ function buildStairsScreen() {
           <button class="opt" data-val="3"><span>3 Flights</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="4"><span>4+ Flights</span><span class="chk">&#10003;</span></button>
         </div>
-      </div>`;
+      </div>
+      ${destFlightsHTML}`;
 
     document.getElementById('s5-floor').addEventListener('click', e => {
       const btn = e.target.closest('.opt');
@@ -1128,53 +1202,99 @@ function buildStairsScreen() {
       document.querySelectorAll('#s5-flights .opt').forEach(b => b.classList.remove('sel'));
       btn.classList.add('sel');
       S.stairs = parseInt(btn.dataset.val);
-      const atClick = cur;
-      setTimeout(() => { if (cur === atClick) next(); }, 320);
+      document.getElementById('s5-dest-wrap').style.display = 'block';
     });
 
   } else {
-    qEl.textContent = 'How many flights of stairs are involved at either location?';
+    qEl.textContent = 'How many flights of stairs at your current home?';
     s5.innerHTML = `
       <div class="opts" id="s5-house">
         <button class="opt" data-val="0"><span>None</span><span class="chk">&#10003;</span></button>
         <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
         <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
         <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
-      </div>`;
+      </div>
+      ${destFlightsHTML}`;
+
     document.getElementById('s5-house').addEventListener('click', e => {
       const btn = e.target.closest('.opt');
       if (!btn) return;
       document.querySelectorAll('#s5-house .opt').forEach(b => b.classList.remove('sel'));
       btn.classList.add('sel');
       S.stairs = parseInt(btn.dataset.val);
-      const atClick = cur;
-      setTimeout(() => { if (cur === atClick) next(); }, 320);
+      document.getElementById('s5-dest-wrap').style.display = 'block';
     });
   }
+
+  /* Destination stairs — shared handler regardless of apt/house */
+  s5.addEventListener('click', e => {
+    const btn = e.target.closest('#s5-dest .opt');
+    if (!btn) return;
+    document.querySelectorAll('#s5-dest .opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.destStairs = parseInt(btn.dataset.val);
+    const atClick = cur;
+    setTimeout(() => { if (cur === atClick) next(); }, 320);
+  });
 }
 
-/* S6: Carry */
-single('s6', btn => { S.carry = btn.dataset.val; S.carryMod = parseFloat(btn.dataset.mod); });
-
-/* S7: Specialty */
+/* S6: Carry — origin then destination */
 (()=>{
-  const none = document.getElementById('s7-none');
-  document.getElementById('s7').addEventListener('click', e => {
+  document.getElementById('s6').addEventListener('click', e => {
+    const btn = e.target.closest('#s6-origin .opt');
+    if (!btn) return;
+    document.querySelectorAll('#s6-origin .opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.carry    = btn.dataset.val;
+    S.carryMod = parseFloat(btn.dataset.mod);
+    document.getElementById('s6-dest-wrap').style.display = 'block';
+  });
+  document.getElementById('s6').addEventListener('click', e => {
+    const btn = e.target.closest('#s6-dest .opt');
+    if (!btn) return;
+    document.querySelectorAll('#s6-dest .opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.destCarry    = btn.dataset.val;
+    S.destCarryMod = parseFloat(btn.dataset.mod);
+    const atClick = cur;
+    setTimeout(() => { if (cur === atClick) next(); }, 320);
+  });
+})();
+
+/* S7: Specialty + Appliances */
+(()=>{
+  document.getElementById('s7-specialty').addEventListener('click', e => {
     const btn = e.target.closest('.opt');
     if (!btn) return;
     if (btn.id === 's7-none') {
-      document.querySelectorAll('#s7 .opt.multi').forEach(b => b.classList.remove('sel'));
+      document.querySelectorAll('#s7-specialty .opt.multi').forEach(b => b.classList.remove('sel'));
       S.specialty = [];
-      none.classList.add('sel');
-      setTimeout(()=>{ if(cur==='7') next(); },320);
+      btn.classList.add('sel');
       return;
     }
-    none.classList.remove('sel');
+    document.getElementById('s7-none').classList.remove('sel');
     btn.classList.toggle('sel');
     const v = btn.dataset.val;
     if (btn.classList.contains('sel')) { if(!S.specialty.includes(v)) S.specialty.push(v); }
     else { S.specialty = S.specialty.filter(x=>x!==v); }
   });
+
+  document.getElementById('s7-appliances').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    if (btn.id === 's7-appl-none') {
+      document.querySelectorAll('#s7-appliances .opt.multi').forEach(b => b.classList.remove('sel'));
+      S.appliances = [];
+      btn.classList.add('sel');
+      return;
+    }
+    document.getElementById('s7-appl-none').classList.remove('sel');
+    btn.classList.toggle('sel');
+    const v = btn.dataset.val;
+    if (btn.classList.contains('sel')) { if(!S.appliances.includes(v)) S.appliances.push(v); }
+    else { S.appliances = S.appliances.filter(x=>x!==v); }
+  });
+
   document.getElementById('s7-cont').addEventListener('click', ()=>next());
 })();
 
@@ -1306,9 +1426,11 @@ async function submitLead(name, email, phone) {
     : S.stairs ? `${S.stairs} flight${S.stairs>1?'s':''}` : '';
 
   const invNotes = [
-    S.spaces.length    ? `Extra areas: ${S.spaces.join(', ')}`         : '',
-    S.specialty.length ? `Specialty items: ${S.specialty.join(', ')}`  : '',
+    S.spaces.length      ? `Extra areas: ${S.spaces.join(', ')}`              : '',
+    S.specialty.length   ? `Specialty items: ${S.specialty.join(', ')}`       : '',
+    S.appliances.length  ? `Appliances: ${S.appliances.join(', ')}`           : '',
     S.disassembly.length ? `Disassembly needed: ${S.disassembly.join(', ')}` : '',
+    S.boxCount           ? `Box count range: ${S.boxCount}`                   : '',
   ].filter(Boolean).join('\n');
 
   /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
@@ -1333,11 +1455,15 @@ async function submitLead(name, email, phone) {
         property_type:    PROP_LABEL[S.propType]  || S.propType  || '',
         bedrooms:         SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
         furnishing_level: FURN_LABEL[S.furnish]   || S.furnish   || '',
-        floor_stairs:     floorInfo,
-        walk_distance:    CARRY_LABEL[S.carry]    || S.carry     || '',
-        extra_spaces:     S.spaces.join(', '),
+        floor_stairs:         floorInfo,
+        dest_stairs:          S.destStairs !== null ? S.destStairs : '',
+        walk_distance:        CARRY_LABEL[S.carry]      || S.carry      || '',
+        dest_walk_distance:   CARRY_LABEL[S.destCarry]  || S.destCarry  || '',
+        extra_spaces:         S.spaces.join(', '),
         /* Services */
         specialty_items:  S.specialty.join(', '),
+        appliances:       S.appliances.join(', '),
+        box_count:        S.boxCount || '',
         disassembly:      S.disassembly.join(', '),
         packing_type:     S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
         packer_count:     S.packers || '',
@@ -1425,6 +1551,12 @@ const CONF_MSG = {
 };
 
 function renderResults() {
+  /* Re-evaluate recommended crew now that all complexity factors are known */
+  const rec = calcRecommendedCrew();
+  if (S.crewSize !== rec) {
+    S.crewSize = rec;
+    S.crewRate = C.CREW_RATES[rec];
+  }
   const r = calc();
   if (!r) return;
 
