@@ -1274,6 +1274,65 @@
     }
     .footer-bottom p { font-size: 0.78rem; color: rgba(236,235,238,0.25); }
 
+    /* ===== CTA STRIPS ===== */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--mp) 0%, var(--ap) 100%);
+      padding: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(139,91,199,0.25) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      position: relative;
+    }
+    .cta-strip-text p.cta-strip-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(236,235,238,0.5);
+      margin-bottom: 8px;
+    }
+    .cta-strip-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+      font-weight: 800;
+      color: var(--tw);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .cta-strip-text p.cta-strip-sub {
+      font-size: 0.92rem;
+      color: rgba(236,235,238,0.6);
+      line-height: 1.6;
+    }
+    .cta-strip .btn-primary {
+      white-space: nowrap;
+      flex-shrink: 0;
+      background: var(--tw);
+      color: var(--mp);
+      font-weight: 700;
+    }
+    .cta-strip .btn-primary:hover {
+      background: var(--lbg2);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .cta-strip-inner { flex-direction: column; text-align: center; }
+      .cta-strip-inner .btn-primary { width: 100%; justify-content: center; }
+    }
+
     /* ===== FAQ ===== */
     .faq-item {
       background: var(--lbg2);
@@ -1746,6 +1805,20 @@
     </div>
   </section>
 
+  <!-- CTA STRIP: After pain/stress section -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">Moving Doesn't Have To Feel Overwhelming</p>
+          <h3>You've Got Enough To Think About.</h3>
+          <p class="cta-strip-sub">Let us build a clear moving plan so you know exactly what to expect — start to finish.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== PROCESS ===== -->
   <section id="process" aria-labelledby="process-heading">
     <div class="container">
@@ -1839,6 +1912,20 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA STRIP: After process section -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">Every Great Move Starts With A Plan</p>
+          <h3>Know Exactly What Comes Next.</h3>
+          <p class="cta-strip-sub">The first step is easier than you think. We'll walk you through everything — before moving day ever arrives.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== COMPARISON TABLE ===== -->
   <section style="background:var(--lbg2);padding:88px 0;" aria-labelledby="compare-heading">
@@ -1998,6 +2085,34 @@
     </div>
   </section>
 
+  <!-- CTA STRIP: After pricing section -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">No Surprises. No Pressure.</p>
+          <h3>Just a Clear Plan — And a Price You Agreed To.</h3>
+          <p class="cta-strip-sub">We tell you what it costs before you commit. What we quote is what you pay.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA STRIP: After families section -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">Your Next Chapter Starts Here</p>
+          <h3>Spend Less Time Worrying. More Time Preparing.</h3>
+          <p class="cta-strip-sub">Moving is hard. Getting help shouldn't be. We've got a plan ready — all you have to do is reach out.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== REVIEWS ===== -->
   <section id="reviews" aria-labelledby="reviews-heading">
     <div class="container">
@@ -2027,6 +2142,20 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA STRIP: After reviews -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">Because Peace Of Mind Matters</p>
+          <h3>Ready to See Why Families Trust VYV?</h3>
+          <p class="cta-strip-sub">Your move deserves more than just a truck. It deserves a team that shows up with a plan.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== WHY CHOOSE US ===== -->
   <section id="why" aria-labelledby="why-heading">
@@ -2215,6 +2344,20 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA STRIP: Before contact -->
+  <div class="cta-strip" aria-label="Get your moving plan">
+    <div class="container">
+      <div class="cta-strip-inner">
+        <div class="cta-strip-text">
+          <p class="cta-strip-eyebrow">We Help You Move Forward, Not Just Move</p>
+          <h3>Life's Changing. Let Us Help You Get There.</h3>
+          <p class="cta-strip-sub">Tell us about your move and we'll put together a plan — so you can stop wondering and start moving forward.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get Your Moving Plan</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== CONTACT ===== -->
   <section id="contact" style="background: var(--lbg2); padding: 108px 0;" aria-labelledby="contact-heading">
