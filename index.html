@@ -1656,8 +1656,8 @@
             <div class="hero-float-card hf1">
               <div class="hf1-icon" aria-hidden="true">✅</div>
               <div>
-                <strong>Move Complete,On Time</strong>
-                <span>Fredericksburg, VA · Today</span>
+                <strong id="hf-move-label">Move Complete, On Time</strong>
+                <span id="hf-move-location">Fredericksburg, VA · Today</span>
               </div>
             </div>
             <div class="hero-float-card hf2">
@@ -2871,6 +2871,33 @@
           window.scrollTo({ top: Math.max(0, els[next].offsetTop - 72), behavior: 'smooth' });
         }
       }, { passive: true });
+    })();
+
+    // Hero float card — realistic rotating move completions
+    (function() {
+      var moves = [
+        { city: 'Fredericksburg, VA', label: 'Move Complete, On Time' },
+        { city: 'Stafford, VA',       label: 'Packing + Move Complete' },
+        { city: 'Woodbridge, VA',     label: 'Move Complete, On Time' },
+        { city: 'Spotsylvania, VA',   label: 'Full-Service Move Done' },
+        { city: 'Manassas, VA',       label: 'Move Complete, On Time' },
+        { city: 'Richmond, VA',       label: 'Packing + Move Complete' },
+        { city: 'Alexandria, VA',     label: 'Move Complete, On Time' },
+        { city: 'Dale City, VA',      label: 'Move Complete, On Time' },
+        { city: 'Ashburn, VA',        label: 'Full-Service Move Done' },
+        { city: 'Gainesville, VA',    label: 'Move Complete, On Time' },
+      ];
+      var times = ['Today', 'Today', '2 days ago', '3 days ago', 'Last week', '10 days ago', '2 weeks ago'];
+      // Seed with day-of-year so it changes daily but is stable within a day
+      var now = new Date();
+      var seed = now.getFullYear() * 1000 + Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+      function pick(arr, offset) { return arr[Math.abs(seed + offset) % arr.length]; }
+      var m = pick(moves, 0);
+      var t = pick(times, 1);
+      var lbl = document.getElementById('hf-move-label');
+      var loc = document.getElementById('hf-move-location');
+      if (lbl) lbl.textContent = m.label;
+      if (loc) loc.textContent = m.city + ' · ' + t;
     })();
 
     // Hero video: force play immediately
