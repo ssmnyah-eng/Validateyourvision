@@ -2732,9 +2732,10 @@
     }
     const cntObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting && !e.target.dataset.counted) {
-          e.target.dataset.counted = '1';
+        if (e.isIntersecting) {
           animCount(e.target);
+        } else {
+          e.target.textContent = '0';
         }
       });
     }, { threshold: 0.5 });
