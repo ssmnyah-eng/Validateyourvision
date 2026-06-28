@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Move Planner — Validate Your Vision</title>
+<title>Move Planner | Validate Your Vision</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap" rel="stylesheet">
@@ -250,7 +250,15 @@ body{
 .consult-done-icon{width:60px;height:60px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;margin:0 auto 20px;font-weight:800}
 .consult-done-head{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:12px;font-family:'Playfair Display',serif}
 .consult-done-body{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:10px}
-@media(max-width:480px){.consult-avail-grid{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .consult-avail-grid{grid-template-columns:1fr}
+  .consult-radio{padding:13px 12px}
+  .btn-row{flex-direction:column}
+  .btn-sec{width:100%}
+  .cta-link{padding:16px 20px;font-size:.9rem}
+  .invest-amt{font-size:2rem}
+  .res-h{font-size:1.3rem}
+}
 
 .process-blk{border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-top:20px}
 .process-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:18px;font-family:'Raleway',sans-serif}
@@ -340,7 +348,7 @@ body{
   <div class="screen active" id="screen-welcome">
     <div class="welcome-wrap">
       <div>
-        <div class="badge">Validate Your Vision &mdash; Fredericksburg, VA</div>
+        <div class="badge">Validate Your Vision | Fredericksburg, VA</div>
         <h1 class="welcome-h">Let's Build<br>Your Move Plan</h1>
         <p class="welcome-p" style="margin-top:14px">Moving can be stressful enough. Answer a few questions and we'll create a personalized moving estimate based on your specific situation.</p>
         <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Start My Move Plan</button>
@@ -357,7 +365,7 @@ body{
       <button class="opt" data-val="townhome"><span>Townhome</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="house"><span>Single Family Home</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Property type tells us what to expect before your crew arrives — elevator access, parking policies, and building rules all affect how a move is planned.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Property type tells us what to expect before your crew arrives, including elevator access, parking policies, and building rules all affect how a move is planned.</div>
   </div>
 
   <!-- Screen 2: Bedrooms -->
@@ -370,7 +378,7 @@ body{
       <button class="opt" data-val="3br"><span>3 Bedrooms</span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="4br"><span>4+ Bedrooms</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Bedroom count is the starting point — furnishing level, stair access, and layout all shape the final recommendation.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Bedroom count is the starting point. Furnishing level, stair access, and layout all shape the final recommendation.</div>
   </div>
 
   <!-- Screen 3: Furnishing -->
@@ -382,11 +390,11 @@ body{
         <span class="chk">&#10003;</span>
       </button>
       <button class="opt" data-val="average" data-mod="0">
-        <span>Average Furnished<small>Typical home — beds, dressers, couch, dining table, normal closets and boxes</small></span>
+        <span>Average Furnished<small>Typical home: beds, dressers, couch, dining table, normal closets and boxes</small></span>
         <span class="chk">&#10003;</span>
       </button>
       <button class="opt" data-val="full" data-mod="1">
-        <span>Fully Furnished<small>Every room fully furnished — multiple TVs, bookshelves, office furniture, several large pieces</small></span>
+        <span>Fully Furnished<small>Every room fully furnished: multiple TVs, bookshelves, office furniture, several large pieces</small></span>
         <span class="chk">&#10003;</span>
       </button>
       <button class="opt" data-val="veryfull" data-mod="2">
@@ -408,14 +416,14 @@ body{
       <button class="opt" data-val="none" id="s4-none"><span>None of these</span><span class="chk">&#10003;</span></button>
     </div>
     <button class="btn-main" id="s4-cont">Continue</button>
-    <div class="tip"><strong>Common Oversight</strong>Garages, basements, and attics are the most frequently overlooked parts of any move — and the most common cause of move-day surprises.</div>
+    <div class="tip"><strong>Common Oversight</strong>Garages, basements, and attics are the most frequently overlooked parts of any move, and the most common cause of move-day surprises.</div>
   </div>
 
   <!-- Screen 5: Stairs (rebuilt dynamically by JS) -->
   <div class="screen" id="screen-5">
     <p class="q-label" id="s5-q">How many flights of stairs are involved?</p>
     <div id="s5"></div>
-    <div class="tip"><strong>Move Planning Tip</strong>Stairs are one of the biggest time factors in any move — especially when moving large furniture or appliances.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Stairs are one of the biggest time factors in any move, especially when moving large furniture or appliances.</div>
   </div>
 
   <!-- Screen 6: Long Carry -->
@@ -423,7 +431,7 @@ body{
     <p class="q-label">How far will the movers need to walk between the truck and your front door?</p>
     <p class="q-sub">Think about where the moving truck will be able to park</p>
     <div class="opts" id="s6">
-      <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance — driveway or building door</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance (driveway or building door)</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
@@ -454,7 +462,7 @@ body{
   <!-- Screen 8: Disassembly (multi) -->
   <div class="screen" id="screen-8">
     <p class="q-label">Will you need help disassembling or reassembling any furniture?</p>
-    <p class="q-sub">Select all that apply &mdash; our team handles all tools</p>
+    <p class="q-sub">Select all that apply. Our team handles all tools.</p>
     <div class="opts" id="s8">
       <button class="opt multi" data-val="beds"><span>Beds</span><span class="chk">&#10003;</span></button>
       <button class="opt multi" data-val="bunkbeds"><span>Bunk Beds</span><span class="chk">&#10003;</span></button>
@@ -487,7 +495,7 @@ body{
     <div class="ibox hidden mt8" id="dist-res"></div>
     <button class="btn-main hidden mt8" id="s9-cont">Continue</button>
     <button class="btn-sec mt8" id="btn-calc" style="font-size:.85rem">Address not showing up? Calculate manually</button>
-    <div class="tip"><strong>The VYV Difference</strong>We calculate your actual driving distance — not a rough estimate by zip code — so your transportation cost reflects exactly where you are going.</div>
+    <div class="tip"><strong>The VYV Difference</strong>We calculate your actual driving distance, not a rough estimate by zip code, so your transportation cost reflects exactly where you are going.</div>
   </div>
 
   <!-- Screen 10: Packing Type -->
@@ -496,9 +504,9 @@ body{
     <div class="opts" id="s10">
       <button class="opt" data-val="none"><span>No Packing Needed<small>I will handle all packing before move day</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="fragile"><span>A Few Fragile Items<small>Glassware, dishes, artwork, or other delicate pieces</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="kitchen"><span>Kitchen Only<small>Full kitchen pack — dishes, glassware, pantry items</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="kitchen"><span>Kitchen Only<small>Full kitchen pack: dishes, glassware, pantry items</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="rooms"><span>Several Rooms<small>Multiple rooms need professional packing assistance</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="full"><span>Full Home Packing<small>Our team handles everything — fully hands-off experience</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="full"><span>Full Home Packing<small>Our team handles everything. Fully hands-off experience.</small></span><span class="chk">&#10003;</span></button>
     </div>
     <div class="tip"><strong>Packing Services</strong>Professional packing reduces damage risk and move-day stress. Our team uses professional-grade materials and techniques.</div>
   </div>
@@ -507,11 +515,11 @@ body{
   <div class="screen" id="screen-11">
     <p class="q-label">How many professional packers would you like?</p>
     <div class="opts" id="s11">
-      <button class="opt" data-val="2" data-rate="100"><span>2 Packers &mdash; $100/hr</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="3" data-rate="150"><span>3 Packers &mdash; $150/hr</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="4" data-rate="200"><span>4 Packers &mdash; $200/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2" data-rate="100"><span>2 Packers | $100/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3" data-rate="150"><span>3 Packers | $150/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="4" data-rate="200"><span>4 Packers | $200/hr</span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Packing Services</strong>Packing materials — boxes, wrap, tape, and padding — typically range from $180 for smaller homes to $750+ for larger ones, confirmed during your Move Planning Consultation.</div>
+    <div class="tip"><strong>Packing Services</strong>Packing materials (boxes, wrap, tape, and padding) typically range from $180 for smaller homes to $750+ for larger ones, confirmed during your Move Planning Consultation.</div>
   </div>
 
   <!-- Screen 12: Storage -->
@@ -523,7 +531,7 @@ body{
       <button class="opt" data-val="dropoff"><span>Dropping off to a storage unit<small>Some or all items go to storage before your final destination</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="both"><span>Both pickup and delivery<small>Collecting from one storage and delivering to another</small></span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Storage Stops</strong>Storage stops add time and coordination to any move. Telling us now means we plan for it from the start — nothing gets rushed or missed.</div>
+    <div class="tip"><strong>Storage Stops</strong>Storage stops add time and coordination to any move. Telling us now means we plan for it from the start. Nothing gets rushed or missed..</div>
   </div>
 
   <!-- Screen 13: Move Date -->
@@ -533,7 +541,7 @@ body{
       <button class="opt" data-val="week"><span>Within 7 Days<small>I need to move very soon</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="month"><span>Within 30 Days<small>My move is coming up in the next few weeks</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="quarter"><span>1 to 3 Months<small>I have some time to plan but want to start early</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="planning"><span>Just Planning Ahead<small>No set date yet — exploring my options</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="planning"><span>Just Planning Ahead<small>No set date yet. Exploring my options.</small></span><span class="chk">&#10003;</span></button>
     </div>
     <div class="tip"><strong>Timing Matters</strong>The earlier you plan, the more flexibility you have on crew availability and scheduling. Most customers who plan further out report a smoother overall experience.</div>
   </div>
@@ -543,9 +551,9 @@ body{
     <p class="q-label">How confident are you that you have included everything being moved?</p>
     <p class="q-sub">This helps us calibrate how to present your estimate</p>
     <div class="opts" id="s14">
-      <button class="opt" data-val="very"><span>Very Confident<small>I have thought through everything — rooms, garage, storage, all of it</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="very"><span>Very Confident<small>I have thought through everything: rooms, garage, storage, all of it</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="mostly"><span>Mostly Confident<small>I covered the main things but may have missed a few details</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="unsure"><span>Not Sure<small>I may have missed things — there is a lot to think about</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="unsure"><span>Not Sure<small>I may have missed things. There is a lot to think about.</small></span><span class="chk">&#10003;</span></button>
     </div>
     <div class="tip"><strong>Almost There</strong>Your estimate is only as accurate as the information provided. If anything is missing, our team reviews everything with you before confirming your final plan.</div>
   </div>
@@ -567,7 +575,7 @@ body{
     <div id="cx-badge"></div>
 
     <div class="crew-box">
-      <div class="crew-box-lbl">Recommended Crew &mdash; adjust to compare pricing</div>
+      <div class="crew-box-lbl">Recommended Crew | Adjust to compare pricing</div>
       <div class="crew-grid" id="crew-grid">
         <div class="crew-opt" data-crew="2" data-rate="123"><div class="cn">2 Movers</div><div class="cr">$123/hr</div></div>
         <div class="crew-opt" data-crew="3" data-rate="185"><div class="cn">3 Movers</div><div class="cr">$185/hr</div></div>
@@ -636,7 +644,7 @@ body{
           <div class="process-num">4</div>
           <div class="process-content">
             <div class="process-step-head">Move Day</div>
-            <div class="process-step-body">Our crew arrives with a clear strategy, the right equipment, and a complete understanding of your home, your belongings, and your preferences — reducing surprises and improving efficiency from start to finish.</div>
+            <div class="process-step-body">Our crew arrives with a clear strategy, the right equipment, and a complete understanding of your home, your belongings, and your preferences, reducing surprises and improving efficiency from start to finish.</div>
           </div>
         </div>
       </div>
@@ -652,7 +660,7 @@ body{
       <button class="cta-link" id="btn-consult">Schedule Your Move Planning Consultation</button>
 
       <p class="cta-no-schedule">Prefer not to schedule right now? No problem. A member of our team will review your estimate and contact you within one business day to discuss next steps.</p>
-      <a href="https://validateyourvision.com" class="btn-home-return">Learn More About VYV Moving Co.</a>
+      <a href="https://validateyourvision.com" class="btn-home-return">Learn More About Validate Your Vision</a>
     </div>
   </div>
 
@@ -676,7 +684,7 @@ body{
 
     <div class="consult-section">
       <div class="consult-section-head">Preferred Consultation Availability</div>
-      <p class="consult-section-sub">Our office will contact you to confirm — this helps us find the right time.</p>
+      <p class="consult-section-sub">Our office will contact you to confirm. This helps us find the right time.</p>
       <div class="consult-avail-grid">
         <div>
           <div class="consult-avail-label">Preferred Days</div>
@@ -703,8 +711,8 @@ body{
 
     <div class="consult-section">
       <div class="consult-section-head">Additional Information</div>
-      <p class="consult-section-sub">Anything we should know before contacting you — gated community, closing date, limited availability, urgent timeline, military orders, etc.</p>
-      <textarea class="consult-notes" id="consult-notes" placeholder="Optional — share anything that would help us prepare for your consultation."></textarea>
+      <p class="consult-section-sub">Anything we should know before contacting you. Examples: gated community, closing date, limited availability, urgent timeline, or military orders.</p>
+      <textarea class="consult-notes" id="consult-notes" placeholder="Optional. Share anything that would help us prepare for your consultation."></textarea>
     </div>
 
     <div class="consult-next-blk">
@@ -726,7 +734,7 @@ body{
       <h2 class="consult-done-head">Consultation Request Received</h2>
       <p class="consult-done-body">Thank you. A member of our team will review your move details and contact you to confirm your Move Planning Consultation.</p>
       <p class="consult-done-body">Most customers are contacted within one business day. For urgent moves, we will make every effort to reach you as soon as possible.</p>
-      <a href="https://validateyourvision.com" class="btn-home-return">Learn More About VYV Moving Co.</a>
+      <a href="https://validateyourvision.com" class="btn-home-return">Learn More About Validate Your Vision</a>
     </div>
   </div>
 
@@ -737,7 +745,7 @@ body{
   <div class="edu-inner" id="edu-inner">
     <div class="edu-tag">The VYV Difference</div>
     <div class="edu-head">A moving estimate built around your actual move.</div>
-    <div class="edu-body">Most companies estimate your move using only bedroom count. We consider your entire home, route, crew needs, and access details — so your estimate reflects your actual situation.</div>
+    <div class="edu-body">Most companies estimate your move using only bedroom count. We consider your entire home, route, crew needs, and access details so your estimate reflects your actual situation.</div>
   </div>
 </aside>
 
@@ -802,21 +810,21 @@ const S = {
    EDUCATIONAL PANEL CONTENT
    ══════════════════════════════════════════ */
 const PANELS = {
-  welcome:{tag:'The VYV Difference',head:'A moving estimate built around your actual move.',body:'Most companies estimate using only bedroom count. We consider your entire home, route, crew needs, and access details — so your estimate reflects your actual situation.'},
-  '1':{tag:'Did You Know',head:'Property type affects more than you might think.',body:'Apartments, condos, and houses each come with different access requirements — elevator policies, parking restrictions, long hallways, and building rules all affect how a move is planned.',fact:'Move-day delays are most commonly caused by access issues that were not identified during the original estimate.'},
+  welcome:{tag:'The VYV Difference',head:'A moving estimate built around your actual move.',body:'Most companies estimate using only bedroom count. We consider your entire home, route, crew needs, and access details so your estimate reflects your actual situation.'},
+  '1':{tag:'Did You Know',head:'Property type affects more than you might think.',body:'Apartments, condos, and houses each come with different access requirements, including elevator policies, parking restrictions, long hallways, and building rules that affect how a move is planned.',fact:'Move-day delays are most commonly caused by access issues that were not identified during the original estimate.'},
   '2':{tag:'Move Planning Insight',head:'Bedroom count is just the starting point.',body:'Two homes with the same number of bedrooms can require very different amounts of time and crew depending on furnishing level, stair access, and how the home is laid out.',fact:'Choosing the right crew size is one of the most impactful decisions in the entire moving process.'},
   '3':{tag:'Why This Matters',head:'Furnishing level is the single biggest variable in any estimate.',body:'A lightly furnished studio can take less time to move than a fully packed one-bedroom. Being as accurate as possible here gives you the most reliable estimate.',fact:'Homes are consistently underestimated when furnishing level is not accounted for from the start.'},
-  '4':{tag:'Common Oversight',head:'Extra spaces are what estimates get wrong most often.',body:'Garages, attics, and basements are frequently overlooked during estimates — and then discovered on move day. Including them now protects both your timeline and your budget.',fact:'Most move-day overruns are tied directly to spaces that were left out of the original plan.'},
-  '5':{tag:'Move Planning Tip',head:'Stairs are one of the biggest time factors in any move.',body:'Every additional trip up a flight of stairs adds labor time — especially with large furniture or appliances. Accurate stair information helps us staff your move correctly from the start.'},
+  '4':{tag:'Common Oversight',head:'Extra spaces are what estimates get wrong most often.',body:'Garages, attics, and basements are frequently overlooked during estimates and then discovered on move day. Including them now protects both your timeline and your budget.',fact:'Most move-day overruns are tied directly to spaces that were left out of the original plan.'},
+  '5':{tag:'Move Planning Tip',head:'Stairs are one of the biggest time factors in any move.',body:'Every additional trip up a flight of stairs adds labor time, especially with large furniture or appliances. Accurate stair information helps us staff your move correctly from the start.'},
   '6':{tag:'Move Planning Tip',head:'Long carries add up faster than most people expect.',body:'When a truck has to park far from your entrance, every single trip takes longer. This one factor can add hours to a move that would otherwise be straightforward.'},
   '7':{tag:'Specialty Items',head:'Some items require more than just extra hands.',body:'Pianos, safes, fish tanks, and antiques require specific handling, equipment, and sometimes a larger crew. Identifying them now means we come fully prepared on move day.'},
-  '8':{tag:'Hands-Off Moving',head:'We handle the heavy work — including the setup.',body:'Beds, desks, wall mounts, and sectional sofas often need to be disassembled to fit through doorways. Our team can handle this as part of your move so you do not have to.',fact:'Furniture disassembly and reassembly is one of the most frequently requested add-ons for customers who want a fully hands-off experience.'},
-  '9':{tag:'The VYV Difference',head:'We calculate your real driving distance — not a rough estimate.',body:'Some moving companies estimate mileage by zip code or general region. We use your actual addresses to calculate your real driving route, so your transportation cost reflects exactly where you are going.'},
+  '8':{tag:'Hands-Off Moving',head:'We handle the heavy work, including the setup.',body:'Beds, desks, wall mounts, and sectional sofas often need to be disassembled to fit through doorways. Our team can handle this as part of your move so you do not have to.',fact:'Furniture disassembly and reassembly is one of the most frequently requested add-ons for customers who want a fully hands-off experience.'},
+  '9':{tag:'The VYV Difference',head:'We calculate your real driving distance, not a rough estimate.',body:'Some moving companies estimate mileage by zip code or general region. We use your actual addresses to calculate your real driving route, so your transportation cost reflects exactly where you are going.'},
   '10':{tag:'Packing Services',head:'Professional packing protects what matters most.',body:'From a handful of fragile items to your entire home, our packing team uses professional-grade materials and proven techniques. Everything is packed to arrive safely.',fact:'Most packing-related damage happens because items were not individually wrapped or boxes were not fully packed to prevent shifting in transit.'},
   '11':{tag:'Packing Services',head:'More packers means a faster, smoother packing day.',body:'A larger packing crew finishes the job more quickly and reduces the window of exposure for your belongings. We will recommend a starting point based on your home size and packing scope.'},
-  '12':{tag:'Storage Stops',head:'We plan for every stop — not just the main one.',body:'Whether you are picking up from a storage unit, dropping off before your destination, or both, we factor that into your move plan so no stop is rushed or overlooked.'},
+  '12':{tag:'Storage Stops',head:'We plan for every stop, not just the main one.',body:'Whether you are picking up from a storage unit, dropping off before your destination, or both, we factor that into your move plan so nothing is rushed or overlooked.'},
   '13':{tag:'Timing Matters',head:'The earlier you plan, the smoother your move.',body:'Your move timeline helps us check crew and truck availability so we can give you the most accurate scheduling options.',fact:'Planning ahead is consistently cited as the single biggest factor in a low-stress moving experience.'},
-  '14':{tag:'Almost There',head:'Your estimate is only as accurate as the details you provide.',body:'If you are unsure about something, that is okay. Our team reviews every move plan with you before anything is confirmed — this estimate is your starting point, not your final number.'},
+  '14':{tag:'Almost There',head:'Your estimate is only as accurate as the details you provide.',body:'If you are unsure about something, that is okay. Our team reviews every move plan with you before anything is confirmed. This estimate is your starting point, not your final number.'},
   lead:{tag:'Your Move Plan Is Ready',head:'One last step before you see your estimate.',body:'We use your contact information to follow up about your move and to send your estimate summary. Your information is never shared with third parties.'},
 };
 
@@ -1012,7 +1020,7 @@ function buildStairsScreen() {
       <div id="s5-flights-wrap" style="display:none;margin-top:22px">
         <p class="q-label" style="font-size:1.05rem;margin-bottom:12px">How many flights of stairs do you walk to reach your floor?</p>
         <div class="opts" id="s5-flights">
-          <button class="opt" data-val="0"><span>None &mdash; elevator or ground-level entry</span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="0"><span>Ground level or elevator access</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="3"><span>3 Flights</span><span class="chk">&#10003;</span></button>
@@ -1130,7 +1138,7 @@ function runDistanceCalc() {
     unitSystem:   google.maps.UnitSystem.IMPERIAL,
   }, (res, status) => {
     if (status !== 'OK' || !res.rows[0] || res.rows[0].elements[0].status !== 'OK') {
-      resEl.textContent = 'Could not calculate distance — please check both addresses and try again.';
+      resEl.textContent = 'Could not calculate distance. Please check both addresses and try again.';
       resEl.classList.add('warn');
       return;
     }
@@ -1138,7 +1146,7 @@ function runDistanceCalc() {
     const ow = el.distance.value / 1609.344;
     S.miles     = ow * 2;
     S.driveTime = el.duration.text;
-    resEl.innerHTML = `<strong>${el.distance.text} one way</strong> &mdash; ${S.miles.toFixed(1)} miles round trip &middot; ~${el.duration.text} drive`;
+    resEl.innerHTML = `<strong>${el.distance.text} one way</strong> | ${S.miles.toFixed(1)} miles round trip &middot; ~${el.duration.text} drive`;
     resEl.classList.add('ok');
     contB.classList.remove('hidden');
   });
@@ -1390,7 +1398,7 @@ function buildText() {
     : S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)';
 
   return [
-    'VALIDATE YOUR VISION — MOVE PLAN & ESTIMATE',
+    'VALIDATE YOUR VISION | MOVE PLAN & ESTIMATE',
     '='.repeat(44),'',
     `Name:    ${name}`,`Email:   ${em}`,`Phone:   ${ph}`,'',
     `From:    ${document.getElementById('pickup-addr').value||'—'}`,
@@ -1451,7 +1459,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
   t.innerHTML = `
     <div style="border-bottom:3px solid #1c2b3a;padding-bottom:16px;margin-bottom:20px">
       <div style="font-size:21px;font-weight:800;color:#1c2b3a">Validate Your Vision</div>
-      <div style="font-size:12px;color:#566779;margin-top:2px">Move Plan &amp; Estimate — Fredericksburg, VA &nbsp;&middot;&nbsp; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+      <div style="font-size:12px;color:#566779;margin-top:2px">Move Plan &amp; Estimate | Fredericksburg, VA &nbsp;&middot;&nbsp; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
@@ -1521,7 +1529,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
     pdf.save('VYV-Move-Plan.pdf');
   } catch(err) {
     console.error(err);
-    alert('PDF generation failed — use "Copy Estimate" instead.');
+    alert('PDF generation failed. Use "Copy Estimate" instead.');
   } finally {
     t.style.display = 'none';
   }
