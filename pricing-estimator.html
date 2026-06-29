@@ -1516,10 +1516,11 @@ function calc() {
     hp = ph[1] * pm * S.packerRate;
   }
   const visit = C.VISIT[S.homeSize];
+  const overhead = 75;
   return {
     lo, hi, llab, hlab, truck, lp, hp, visit,
-    totalLo: llab + truck + lp + visit,
-    totalHi: hlab + truck + hp + visit,
+    totalLo: llab + truck + lp + visit + overhead,
+    totalHi: hlab + truck + hp + visit + overhead,
     deposit: C.DEPOSIT[S.homeSize],
     cx: extra <= 1 ? 'std' : extra <= 3 ? 'mod' : 'cpx',
   };
