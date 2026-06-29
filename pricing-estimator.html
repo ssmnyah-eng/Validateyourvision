@@ -177,6 +177,12 @@ body{
 @media(min-width:600px){#main{padding:32px 28px 100px}}
 @media(min-width:768px){#main{padding:40px 40px 80px;max-width:720px;margin:0 auto}}
 @media(min-width:900px){#main{padding:52px 60px 52px;max-width:660px;margin:0}}
+@media(min-width:900px){#main.results-open{max-width:1080px;padding:52px 48px 52px}}
+@media(min-width:900px){
+  .res-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .res-col-left{display:flex;flex-direction:column;gap:16px}
+  .res-col-right{display:flex;flex-direction:column;gap:16px}
+}
 
 /* ── SCREENS ── */
 .screen{display:none;flex-direction:column;gap:20px}
@@ -899,96 +905,102 @@ input,select,textarea{font-size:16px !important}
     <h2 class="res-h">Your VYV Moving Plan</h2>
     <div id="cx-badge"></div>
 
-    <!-- Checklist Preview (shown first so they see the value before the price) -->
-    <div class="checklist-blk">
-      <div class="checklist-head">
-        <div>
-          <div class="checklist-head-title">Your Personalized Pre-Move Checklist</div>
-          <div class="checklist-head-sub" id="cl-summary-sub">Customized from your answers</div>
+    <div class="res-cols">
+      <div class="res-col-left">
+        <!-- Checklist Preview -->
+        <div class="checklist-blk">
+          <div class="checklist-head">
+            <div>
+              <div class="checklist-head-title">Your Personalized Pre-Move Checklist</div>
+              <div class="checklist-head-sub" id="cl-summary-sub">Customized from your answers</div>
+            </div>
+          </div>
+          <div class="cl-phase-preview" id="cl-phase-preview">
+            <!-- Phase summaries rendered by JS -->
+          </div>
+          <div class="cl-pdf-note">
+            Full checklist with every task and checkbox is included in your PDF Moving Plan.
+          </div>
+        </div>
+
+        <!-- Move Summary Card -->
+        <div class="move-summary" id="move-summary-card">
+          <div class="move-summary-head">Your Move at a Glance</div>
+          <div class="move-route">
+            <span class="move-route-city" id="summary-from">Origin</span>
+            <span class="move-route-arrow">&#8594;</span>
+            <span class="move-route-city" id="summary-to">Destination</span>
+          </div>
+          <div class="move-summary-grid">
+            <div class="move-summary-item">
+              <div class="move-summary-label">Move Date</div>
+              <div class="move-summary-value" id="summary-date">-</div>
+            </div>
+            <div class="move-summary-item">
+              <div class="move-summary-label">Distance</div>
+              <div class="move-summary-value" id="summary-miles">-</div>
+            </div>
+            <div class="move-summary-item">
+              <div class="move-summary-label">Home Size</div>
+              <div class="move-summary-value" id="summary-size">-</div>
+            </div>
+            <div class="move-summary-item">
+              <div class="move-summary-label">Est. Time</div>
+              <div class="move-summary-value" id="summary-time">-</div>
+            </div>
+            <div class="move-summary-item">
+              <div class="move-summary-label">Your Crew</div>
+              <div class="move-summary-value" id="summary-crew">-</div>
+            </div>
+            <div class="move-summary-item">
+              <div class="move-summary-label">Services</div>
+              <div class="move-summary-value" id="summary-services">Loading &amp; Unloading</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="cl-phase-preview" id="cl-phase-preview">
-        <!-- Phase summaries rendered by JS -->
-      </div>
-      <div class="cl-pdf-note">
-        Full checklist with every task and checkbox is included in your PDF Moving Plan.
-      </div>
-    </div>
 
-    <!-- Move Summary Card -->
-    <div class="move-summary" id="move-summary-card">
-      <div class="move-summary-head">Your Move at a Glance</div>
-      <div class="move-route">
-        <span class="move-route-city" id="summary-from">Origin</span>
-        <span class="move-route-arrow">&#8594;</span>
-        <span class="move-route-city" id="summary-to">Destination</span>
-      </div>
-      <div class="move-summary-grid">
-        <div class="move-summary-item">
-          <div class="move-summary-label">Move Date</div>
-          <div class="move-summary-value" id="summary-date">-</div>
+      <div class="res-col-right">
+        <div class="crew-box">
+          <div class="crew-box-lbl">Recommended Crew | Adjust to compare pricing</div>
+          <div class="crew-grid" id="crew-grid">
+            <div class="crew-opt" data-crew="2" data-rate="123"><div class="cn">2 Movers</div><div class="cr">$123/hr</div></div>
+            <div class="crew-opt" data-crew="3" data-rate="185"><div class="cn">3 Movers</div><div class="cr">$185/hr</div></div>
+            <div class="crew-opt" data-crew="4" data-rate="235"><div class="cn">4 Movers</div><div class="cr">$235/hr</div></div>
+          </div>
         </div>
-        <div class="move-summary-item">
-          <div class="move-summary-label">Distance</div>
-          <div class="move-summary-value" id="summary-miles">-</div>
-        </div>
-        <div class="move-summary-item">
-          <div class="move-summary-label">Home Size</div>
-          <div class="move-summary-value" id="summary-size">-</div>
-        </div>
-        <div class="move-summary-item">
-          <div class="move-summary-label">Est. Time</div>
-          <div class="move-summary-value" id="summary-time">-</div>
-        </div>
-        <div class="move-summary-item">
-          <div class="move-summary-label">Your Crew</div>
-          <div class="move-summary-value" id="summary-crew">-</div>
-        </div>
-        <div class="move-summary-item">
-          <div class="move-summary-label">Services</div>
-          <div class="move-summary-value" id="summary-services">Loading &amp; Unloading</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="crew-box">
-      <div class="crew-box-lbl">Recommended Crew | Adjust to compare pricing</div>
-      <div class="crew-grid" id="crew-grid">
-        <div class="crew-opt" data-crew="2" data-rate="123"><div class="cn">2 Movers</div><div class="cr">$123/hr</div></div>
-        <div class="crew-opt" data-crew="3" data-rate="185"><div class="cn">3 Movers</div><div class="cr">$185/hr</div></div>
-        <div class="crew-opt" data-crew="4" data-rate="235"><div class="cn">4 Movers</div><div class="cr">$235/hr</div></div>
+        <div class="invest-card">
+          <div class="invest-lbl">Estimated Investment</div>
+          <div class="invest-amt" id="res-total">-</div>
+          <div class="invest-note">Price range based on your move details</div>
+          <div class="invest-hrs" id="res-hrs"></div>
+          <div class="conf-msg hidden" id="conf-msg"></div>
+        </div>
+
+        <div class="incl-box">
+          <div class="incl-title">Included in Your Estimate</div>
+          <div class="incl-item"><span class="incl-chk">&#10003;</span>Professional Movers</div>
+          <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Truck &amp; Transportation</div>
+          <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Equipment &amp; Supplies</div>
+          <div class="incl-item"><span class="incl-chk">&#10003;</span>Travel Costs</div>
+          <div class="incl-item"><span class="incl-chk">&#10003;</span>Move Planning &amp; Coordination</div>
+          <div class="incl-item hidden" id="incl-da"><span class="incl-chk">&#10003;</span>Furniture Disassembly &amp; Reassembly</div>
+          <div class="incl-item hidden" id="incl-pack"><span class="incl-chk">&#10003;</span>Professional Packing</div>
+        </div>
+
+        <!-- Specialty Bill (shown only when specialty items selected) -->
+        <div class="spec-bill hidden" id="specialty-bill"></div>
+
+        <div class="dep-box">
+          <div class="dep-lbl">Booking Deposit</div>
+          <div class="dep-amt" id="res-dep">-</div>
+          <div class="dep-note">Your deposit secures your move date and is applied toward your final balance. It is not an additional charge.</div>
+        </div>
+
+        <p class="disclaimer">This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.</p>
       </div>
     </div>
-
-    <div class="invest-card">
-      <div class="invest-lbl">Estimated Investment</div>
-      <div class="invest-amt" id="res-total">-</div>
-      <div class="invest-note">Price range based on your move details</div>
-      <div class="invest-hrs" id="res-hrs"></div>
-      <div class="conf-msg hidden" id="conf-msg"></div>
-    </div>
-
-    <div class="incl-box">
-      <div class="incl-title">Included in Your Estimate</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Professional Movers</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Truck &amp; Transportation</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Moving Equipment &amp; Supplies</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Travel Costs</div>
-      <div class="incl-item"><span class="incl-chk">&#10003;</span>Move Planning &amp; Coordination</div>
-      <div class="incl-item hidden" id="incl-da"><span class="incl-chk">&#10003;</span>Furniture Disassembly &amp; Reassembly</div>
-      <div class="incl-item hidden" id="incl-pack"><span class="incl-chk">&#10003;</span>Professional Packing</div>
-    </div>
-
-    <!-- Specialty Bill (shown only when specialty items selected) -->
-    <div class="spec-bill hidden" id="specialty-bill"></div>
-
-    <div class="dep-box">
-      <div class="dep-lbl">Booking Deposit</div>
-      <div class="dep-amt" id="res-dep">-</div>
-      <div class="dep-note">Your deposit secures your move date and is applied toward your final balance. It is not an additional charge.</div>
-    </div>
-
-    <p class="disclaimer">This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.</p>
 
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
@@ -1427,6 +1439,7 @@ function show(id) {
   document.getElementById('screen-' + id).classList.add('active');
   cur = id;
   if (id === '5') buildStairsScreen();
+  document.getElementById('main').classList.toggle('results-open', id === 'results');
   updateProg();
   updatePanel(id);
   window.scrollTo({top:0,behavior:'smooth'});
