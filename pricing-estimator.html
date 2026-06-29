@@ -371,6 +371,77 @@ body{
 .process-step-head{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:4px;font-family:'Raleway',sans-serif}
 .process-step-body{font-size:.82rem;color:var(--muted);line-height:1.6}
 
+/* ── MOVE SUMMARY CARD ── */
+.move-summary{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:4px}
+.move-summary-head{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;font-family:'Raleway',sans-serif}
+.move-route{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.move-route-city{font-size:1rem;font-weight:800;color:var(--navy);font-family:'Playfair Display',serif}
+.move-route-arrow{color:var(--accent);font-size:1.1rem;flex-shrink:0}
+.move-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.move-summary-item{background:var(--mist);border-radius:8px;padding:10px 12px}
+.move-summary-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px;font-family:'Raleway',sans-serif}
+.move-summary-value{font-size:.9rem;font-weight:700;color:var(--navy)}
+@media(max-width:480px){.move-summary-grid{grid-template-columns:1fr}}
+
+/* ── PRE-MOVE CHECKLIST ── */
+.checklist-blk{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px}
+.checklist-head{padding:18px 20px;background:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;-webkit-tap-highlight-color:transparent}
+.checklist-head-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-family:'Raleway',sans-serif}
+.checklist-head-sub{font-size:.85rem;font-weight:700;color:var(--navy);margin-top:2px;font-family:'Playfair Display',serif}
+.checklist-toggle{color:var(--accent);font-size:1rem;font-weight:700;flex-shrink:0;transition:transform .2s}
+.checklist-toggle.open{transform:rotate(180deg)}
+.checklist-body{display:none;border-top:1px solid var(--border)}
+.checklist-body.open{display:block}
+.cl-phase{border-bottom:1px solid var(--mist)}
+.cl-phase:last-child{border-bottom:none}
+.cl-phase-head{padding:14px 20px 10px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-family:'Raleway',sans-serif;background:var(--accent-lt)}
+.cl-item{display:flex;align-items:flex-start;gap:12px;padding:11px 20px;border-bottom:1px solid var(--mist);cursor:pointer;transition:background .1s}
+.cl-item:last-child{border-bottom:none}
+.cl-item:hover{background:var(--mist)}
+.cl-item.done .cl-text{text-decoration:line-through;color:var(--muted);opacity:.6}
+.cl-box{flex-shrink:0;width:20px;height:20px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s}
+.cl-item.done .cl-box{background:var(--green);border-color:var(--green)}
+.cl-check-icon{color:#fff;font-size:.6rem;font-weight:900;display:none}
+.cl-item.done .cl-check-icon{display:block}
+.cl-text{font-size:.86rem;color:var(--navy);line-height:1.5}
+.cl-progress{padding:14px 20px;background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.cl-prog-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.cl-prog-fill{height:100%;background:var(--green);border-radius:3px;transition:width .3s ease}
+.cl-prog-label{font-size:.75rem;font-weight:700;color:var(--muted);white-space:nowrap;font-family:'Raleway',sans-serif}
+
+/* ── HOW TO CHOOSE THE RIGHT MOVER ── */
+.chooser-blk{border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.chooser-head{padding:20px 22px;background:var(--white)}
+.chooser-tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;font-family:'Raleway',sans-serif}
+.chooser-title{font-size:1.05rem;font-weight:800;color:var(--navy);font-family:'Playfair Display',serif;line-height:1.3}
+.chooser-sub{font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.6}
+.chooser-q{border-top:1px solid var(--mist)}
+.chooser-q-head{padding:14px 20px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.chooser-q-head:hover{background:var(--mist)}
+.chooser-q-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--accent-lt);color:var(--accent);font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px;font-family:'Raleway',sans-serif}
+.chooser-q-text{flex:1;font-size:.88rem;font-weight:700;color:var(--navy);line-height:1.4}
+.chooser-q-icon{font-size:.8rem;color:var(--muted);flex-shrink:0;margin-top:3px;transition:transform .2s}
+.chooser-q-icon.open{transform:rotate(180deg)}
+.chooser-q-body{display:none;padding:0 20px 16px 56px}
+.chooser-q-body.open{display:block}
+.chooser-generic{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:10px}
+.chooser-vyv{background:var(--green-lt);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:10px 14px;font-size:.82rem;color:var(--green);line-height:1.6}
+.chooser-vyv strong{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;font-family:'Raleway',sans-serif}
+
+/* ── UPDATED CTA BLOCK ── */
+.plan-cta{background:var(--navy);border-radius:var(--r);padding:28px 24px;text-align:center}
+.plan-cta-head{font-size:1.25rem;font-weight:800;color:#ECEBEE;margin-bottom:8px;font-family:'Playfair Display',serif}
+.plan-cta-sub{font-size:.85rem;color:rgba(236,235,238,.65);margin-bottom:24px;line-height:1.65}
+.plan-cta-divider{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,235,238,.3);margin:16px 0;font-family:'Raleway',sans-serif}
+.btn-call{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--accent);color:#ECEBEE;padding:16px 24px;border-radius:var(--r);font-weight:800;font-size:1rem;text-decoration:none;transition:background .15s;font-family:'Raleway',sans-serif;margin-bottom:10px;border:none;width:100%;cursor:pointer}
+.btn-call:hover{background:#7a4ab3}
+.btn-call-icon{font-size:1.1rem}
+.btn-consult-2{display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);color:#ECEBEE;padding:14px 24px;border-radius:var(--r);font-weight:700;font-size:.9rem;text-decoration:none;transition:background .15s;font-family:'Raleway',sans-serif;margin-bottom:10px;border:1.5px solid rgba(255,255,255,.12);width:100%;cursor:pointer}
+.btn-consult-2:hover{background:rgba(255,255,255,.1)}
+.btn-website{display:inline-block;font-size:.8rem;color:rgba(236,235,238,.35);text-decoration:underline;font-family:'Raleway',sans-serif;transition:color .15s;border:none;background:none;cursor:pointer;margin-top:6px}
+.btn-website:hover{color:rgba(236,235,238,.7)}
+.plan-cta-note{font-size:.76rem;color:rgba(236,235,238,.35);margin-top:14px;line-height:1.6}
+
 /* ── EDU PANEL ── */
 #edu-panel{
   background:#190E2A;
@@ -745,8 +816,44 @@ body{
 
   <!-- Results -->
   <div class="screen" id="screen-results">
-    <h2 class="res-h">Your Personalized Move Plan</h2>
+    <h2 class="res-h">Your VYV Moving Plan</h2>
     <div id="cx-badge"></div>
+
+    <!-- Move Summary Card -->
+    <div class="move-summary" id="move-summary-card">
+      <div class="move-summary-head">Your Move at a Glance</div>
+      <div class="move-route">
+        <span class="move-route-city" id="summary-from">Origin</span>
+        <span class="move-route-arrow">&#8594;</span>
+        <span class="move-route-city" id="summary-to">Destination</span>
+      </div>
+      <div class="move-summary-grid">
+        <div class="move-summary-item">
+          <div class="move-summary-label">Move Date</div>
+          <div class="move-summary-value" id="summary-date">—</div>
+        </div>
+        <div class="move-summary-item">
+          <div class="move-summary-label">Distance</div>
+          <div class="move-summary-value" id="summary-miles">—</div>
+        </div>
+        <div class="move-summary-item">
+          <div class="move-summary-label">Home Size</div>
+          <div class="move-summary-value" id="summary-size">—</div>
+        </div>
+        <div class="move-summary-item">
+          <div class="move-summary-label">Est. Time</div>
+          <div class="move-summary-value" id="summary-time">—</div>
+        </div>
+        <div class="move-summary-item">
+          <div class="move-summary-label">Your Crew</div>
+          <div class="move-summary-value" id="summary-crew">—</div>
+        </div>
+        <div class="move-summary-item">
+          <div class="move-summary-label">Services</div>
+          <div class="move-summary-value" id="summary-services">Loading &amp; Unloading</div>
+        </div>
+      </div>
+    </div>
 
     <div class="crew-box">
       <div class="crew-box-lbl">Recommended Crew | Adjust to compare pricing</div>
@@ -793,51 +900,189 @@ body{
     </div>
     <div class="copy-ok" id="copy-ok">Estimate copied to clipboard.</div>
 
-    <div class="process-blk">
-      <div class="process-title">How Our Estimating Process Works</div>
-      <div class="process-steps">
-        <div class="process-step">
-          <div class="process-num">1</div>
-          <div class="process-content">
-            <div class="process-step-head">Complete Your Online Estimate</div>
-            <div class="process-step-body">Answer a few questions about your move, including your home, furniture, and any services you may need. This allows us to prepare a preliminary estimate and better understand your move.</div>
-          </div>
+    <!-- Pre-Move Checklist -->
+    <div class="checklist-blk">
+      <div class="checklist-head" id="checklist-toggle-btn">
+        <div>
+          <div class="checklist-head-title">Your Pre-Move Checklist</div>
+          <div class="checklist-head-sub">Everything to do before moving day</div>
         </div>
-        <div class="process-step">
-          <div class="process-num">2</div>
-          <div class="process-content">
-            <div class="process-step-head">Personalized Consultation</div>
-            <div class="process-step-body">For larger, more complex, or full-service moves, we schedule a walkthrough consultation with you to confirm inventory, identify specialty items, evaluate access, and build a customized moving plan.</div>
-          </div>
+        <span class="checklist-toggle" id="checklist-toggle-icon">&#9660;</span>
+      </div>
+      <div class="checklist-body" id="checklist-body">
+        <div class="cl-phase">
+          <div class="cl-phase-head">4–6 Weeks Before Moving Day</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Book your moving company and confirm crew size, date, and services</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Declutter — sell, donate, or discard what you won't take</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Photograph valuables and electronics setups for insurance documentation</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Research and plan for specialty items (piano, safe, appliances)</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Talk to kids about the move — start making it exciting</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Notify landlord of your move-out date (if renting)</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Start gathering boxes, tape, and packing supplies</div></div>
         </div>
-        <div class="process-step">
-          <div class="process-num">3</div>
-          <div class="process-content">
-            <div class="process-step-head">Review &amp; Book</div>
-            <div class="process-step-body">We review everything with you, answer any questions, and finalize your moving plan. After you approve the estimate and reserve your move, our team begins preparing every detail before moving day.</div>
-          </div>
+        <div class="cl-phase">
+          <div class="cl-phase-head">2 Weeks Before Moving Day</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">File change of address with USPS (usps.com)</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Notify bank, employer, credit cards, insurance, pharmacy, subscriptions</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Schedule utility disconnect at old address — overlap by at least one day</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Schedule utility connect at new address (electric, gas, water, internet)</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Confirm move details with your moving company</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Start packing non-essentials — seasonal items, books, decorations</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Use a color-coded box system — one color per destination room</div></div>
         </div>
-        <div class="process-step">
-          <div class="process-num">4</div>
-          <div class="process-content">
-            <div class="process-step-head">Move Day</div>
-            <div class="process-step-body">Our crew arrives with a clear strategy, the right equipment, and a complete understanding of your home, your belongings, and your preferences, reducing surprises and improving efficiency from start to finish.</div>
-          </div>
+        <div class="cl-phase">
+          <div class="cl-phase-head">1 Week Before Moving Day</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Confirm start time with movers — get crew lead's direct cell number</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Aim to be 75% packed by this point</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Arrange childcare or pet care for moving day</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Confirm parking for the moving truck at both addresses</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Return borrowed items; retrieve anything you've lent out</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Get copies of pet vaccination records and place carriers out early</div></div>
+        </div>
+        <div class="cl-phase">
+          <div class="cl-phase-head">2 Days Before Moving Day</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Finish all packing — only leave out what you need for the next 48 hours</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Defrost refrigerator and leave doors open overnight to dry</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Drain washing machine, dishwasher, and any water lines from appliances</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Pack your "Open First" box — keep it in your car, not on the truck</div></div>
+        </div>
+        <div class="cl-phase">
+          <div class="cl-phase-head">Your "Open First" Box (In Your Car)</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Chargers for phones, tablets, and laptops</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Change of clothes and undergarments for everyone</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">All medications and medical devices</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Toiletries — toothbrush, toothpaste, deodorant, soap, shampoo</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Toilet paper, paper towels, and hand soap</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Sheets, pillows, and one blanket per person</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Snacks, water, and a coffee maker</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Payment method for final invoice</div></div>
+        </div>
+        <div class="cl-phase">
+          <div class="cl-phase-head">Moving Day Morning</div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Be awake and ready 15 minutes before crew arrival</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Clear the driveway and path to the front door for the truck</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Have water or beverages ready for the crew</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Do a complete walkthrough with the crew lead before anyone touches anything</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Point out fragile items, specialty items, and anything staying behind</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">Do a final walkthrough before the truck leaves — check every closet, cabinet, and drawer</div></div>
+          <div class="cl-item"><div class="cl-box"><span class="cl-check-icon">&#10003;</span></div><div class="cl-text">At the new home: inspect furniture and boxes before crew leaves, then sign off</div></div>
+        </div>
+        <div class="cl-progress">
+          <div class="cl-prog-bar"><div class="cl-prog-fill" id="cl-fill" style="width:0%"></div></div>
+          <div class="cl-prog-label" id="cl-label">0 of 40 done</div>
         </div>
       </div>
     </div>
 
-    <div class="cta-blk">
-      <div class="cta-confirm-head">Your Estimate Has Been Received</div>
-      <p class="cta-confirm-sub">Thank you. We have received your moving information and your estimate has been saved.</p>
+    <!-- How to Choose the Right Mover -->
+    <div class="chooser-blk">
+      <div class="chooser-head">
+        <div class="chooser-tag">Before You Book Anyone</div>
+        <div class="chooser-title">8 Questions Every Family Should Ask Their Mover</div>
+        <div class="chooser-sub">Consumer protection agencies and the FMCSA recommend asking every moving company these questions. Here's how VYV answers each one.</div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">1</div>
+          <div class="chooser-q-text">Are you licensed and insured? What is your DOT number?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">All interstate and most local movers must be registered and carry liability coverage. Never book a mover who can't immediately provide this — it's a legal requirement and the #1 red flag consumers ignore.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Validate Your Vision is fully licensed and insured. Our documentation is available upon request before you book.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">2</div>
+          <div class="chooser-q-text">Do you perform background checks on all crew members?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">You're letting strangers into your home, around your kids, and your most valuable possessions. Legitimate companies conduct criminal background checks on every employee — not just management.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Every VYV crew member is background checked before joining our team. Your home and your family's safety is non-negotiable to us.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">3</div>
+          <div class="chooser-q-text">Will you give me a written estimate after seeing my home?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">Phone estimates without seeing your inventory are the most common source of moving day price shock. A binding written estimate, done after an in-home or virtual walkthrough, is the industry's gold standard and your only real protection.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We provide written estimates — and for larger or complex moves, we schedule a Move Planning Consultation to verify your inventory before confirming your price.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">4</div>
+          <div class="chooser-q-text">What could increase the cost beyond the estimate?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">Stairs, long carries, elevator fees, packing materials, fuel surcharges — these are where opaque movers pad bills. Ask for a complete written fee schedule before you commit.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Our estimator accounts for stairs, carry distance, specialty items, and appliances before giving you a number. No hidden add-ons on moving day.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">5</div>
+          <div class="chooser-q-text">Are your movers employees or day laborers?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">Companies that use rotating day laborers have little accountability for who shows up to your home. Direct employees are trained, background-checked, and motivated to represent the company professionally.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Our crew are direct team members — not day laborers. The people on your move are trained VYV movers every time.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">6</div>
+          <div class="chooser-q-text">How do you handle damage claims?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">Ask specifically: who pays, what's the timeline, and how do you file? Vague answers here almost always mean slow or denied claims. Get the process in writing before moving day.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We handle damage claims directly — no corporate runaround. We walk through the process with you during your consultation so there are no surprises.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">7</div>
+          <div class="chooser-q-text">What happens if your crew doesn't show up or is significantly late?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">No-shows happen — especially with understaffed companies using day laborers. Ask what the backup plan is. A company that hesitates here doesn't have one.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We communicate proactively. If anything changes, you hear from us first — not on moving day. We take your booked date seriously.</div>
+        </div>
+      </div>
+      <div class="chooser-q">
+        <div class="chooser-q-head" onclick="toggleQ(this)">
+          <div class="chooser-q-num">8</div>
+          <div class="chooser-q-text">Can you handle specialty items like pianos, safes, or antiques?</div>
+          <span class="chooser-q-icon">&#9660;</span>
+        </div>
+        <div class="chooser-q-body">
+          <p class="chooser-generic">Most general movers aren't equipped or trained for specialty items. A baby grand moved wrong can be damaged beyond repair. Make sure your mover has the equipment, training, and experience — and ask for it specifically.</p>
+          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We handle pianos, safes, pool tables, hot tubs, antiques, large appliances, and more — with the right crew size, equipment, and pricing built into your plan upfront.</div>
+        </div>
+      </div>
+    </div>
 
-      <div class="cta-next-head">What happens next?</div>
-      <p class="cta-next-body">Our team will review your information to make sure we have everything needed to provide the most accurate pricing and moving plan. If your move would benefit from an in-home or virtual Move Planning Consultation, we will coordinate that with you.</p>
-
-      <button class="cta-link" id="btn-consult">Schedule Your Move Planning Consultation</button>
-
-      <p class="cta-no-schedule">Prefer not to schedule right now? No problem. A member of our team will review your estimate and contact you within one business day to discuss next steps.</p>
-      <a href="https://validateyourvision.com" class="btn-home-return">Learn More About Validate Your Vision</a>
+    <!-- CTA -->
+    <div class="plan-cta">
+      <div class="plan-cta-head">Ready to Make It Official?</div>
+      <p class="plan-cta-sub">Your moving plan is ready. The next step is a quick call with our team to confirm the details, answer your questions, and lock in your date.</p>
+      <a href="sms:+15403001414" class="btn-call">
+        <span class="btn-call-icon">&#128172;</span>
+        Text Us to Book — 540-300-1414
+      </a>
+      <button class="btn-consult-2" id="btn-consult">Schedule a Free Move Planning Consultation</button>
+      <div class="plan-cta-divider">or</div>
+      <a href="https://validateyourvision.com" class="btn-website">Return to the VYV Website</a>
+      <p class="plan-cta-note">We respond to all inquiries within one business day. Prefer a call? Text us first and we'll set up a time.</p>
     </div>
   </div>
 
@@ -1884,6 +2129,33 @@ function renderResults() {
   });
 
   renderSpecialty();
+  renderMoveSummary(r);
+}
+
+function renderMoveSummary(r) {
+  const pickup  = document.getElementById('pickup-addr').value || '—';
+  const dropoff = document.getElementById('dropoff-addr').value || '—';
+
+  const fromCity = pickup.split(',')[0]  || pickup;
+  const toCity   = dropoff.split(',')[0] || dropoff;
+  document.getElementById('summary-from').textContent = fromCity;
+  document.getElementById('summary-to').textContent   = toCity;
+
+  const dateMap = {
+    flexible:'Flexible / TBD', next7:'Within 7 days', next30:'Within 30 days',
+    next60:'Within 60 days', next90:'Within 90 days', planning:'Planning ahead'
+  };
+  document.getElementById('summary-date').textContent  = dateMap[S.moveDate] || (S.moveDate || '—');
+  document.getElementById('summary-miles').textContent = S.miles ? (S.miles/2).toFixed(1)+' mi one way' : '—';
+  document.getElementById('summary-size').textContent  = SL[S.homeSize] || '—';
+  document.getElementById('summary-time').textContent  = r ? `${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hrs` : '—';
+  document.getElementById('summary-crew').textContent  = S.crewSize ? `${S.crewSize} movers` : '—';
+
+  const svcs = ['Loading & Unloading'];
+  if (S.packingOn) svcs.push('Packing');
+  if (S.disassembly.length) svcs.push('Disassembly');
+  if (S.specialty.length)   svcs.push('Specialty Items');
+  document.getElementById('summary-services').textContent = svcs.join(' · ');
 }
 
 /* Crew adjust on results */
@@ -1897,8 +2169,49 @@ document.getElementById('crew-grid').addEventListener('click', e => {
   if (r) {
     document.getElementById('res-total').textContent = fmtR(r.totalLo, r.totalHi);
     document.getElementById('res-hrs').textContent   = `Estimated labor time: ${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hours`;
+    renderMoveSummary(r);
   }
 });
+
+/* ══════════════════════════════════════════
+   CHECKLIST
+   ══════════════════════════════════════════ */
+document.getElementById('checklist-toggle-btn').addEventListener('click', () => {
+  const body = document.getElementById('checklist-body');
+  const icon = document.getElementById('checklist-toggle-icon');
+  body.classList.toggle('open');
+  icon.classList.toggle('open');
+});
+
+document.getElementById('checklist-body').addEventListener('click', e => {
+  const item = e.target.closest('.cl-item');
+  if (!item) return;
+  item.classList.toggle('done');
+  updateChecklistProgress();
+});
+
+function updateChecklistProgress() {
+  const all  = document.querySelectorAll('.cl-item');
+  const done = document.querySelectorAll('.cl-item.done');
+  const pct  = all.length ? Math.round((done.length / all.length) * 100) : 0;
+  document.getElementById('cl-fill').style.width  = pct + '%';
+  document.getElementById('cl-label').textContent = `${done.length} of ${all.length} done`;
+}
+
+/* ══════════════════════════════════════════
+   CHOOSER (HOW TO PICK A MOVER)
+   ══════════════════════════════════════════ */
+function toggleQ(headEl) {
+  const body = headEl.nextElementSibling;
+  const icon = headEl.querySelector('.chooser-q-icon');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.chooser-q-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.chooser-q-icon').forEach(i => i.classList.remove('open'));
+  if (!isOpen) {
+    body.classList.add('open');
+    icon.classList.add('open');
+  }
+}
 
 /* ══════════════════════════════════════════
    COPY
