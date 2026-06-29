@@ -345,6 +345,24 @@ body{
   .res-h{font-size:1.3rem}
 }
 
+/* ── SPECIALTY BILL ── */
+.spec-bill{background:var(--white);border:2px solid var(--navy2);border-radius:var(--r);padding:22px;margin-top:20px}
+.spec-bill-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--navy2);margin-bottom:4px;font-family:'Raleway',sans-serif}
+.spec-bill-sub{font-size:.8rem;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.spec-bill-crew{display:inline-block;background:var(--navy);color:#ECEBEE;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:16px;font-family:'Raleway',sans-serif}
+.spec-bill-line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid var(--mist);font-size:.88rem;color:var(--navy)}
+.spec-bill-line:last-child{border-bottom:none}
+.spec-surcharge{color:var(--muted);font-size:.83rem}
+.spec-custom{color:var(--accent);font-weight:700;font-size:.8rem;white-space:nowrap}
+.spec-bill-divider{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:14px 0 6px;font-family:'Raleway',sans-serif}
+.spec-bill-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:2px solid var(--navy2);font-weight:800;font-size:1rem;color:var(--navy)}
+.spec-bill-note{font-size:.79rem;color:var(--muted);font-style:italic;line-height:1.6;margin-top:12px;padding:10px 12px;background:var(--mist);border-radius:8px}
+.spec-truck-note{font-size:.79rem;color:#7a5010;background:#fff3d6;border-radius:8px;padding:10px 12px;margin-top:10px;line-height:1.5}
+
+/* ── SPEC SUB-QUESTIONS ── */
+.spec-subq-block{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+.spec-subq-lbl{font-size:.82rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:10px;font-family:'Raleway',sans-serif;text-transform:uppercase;letter-spacing:.07em}
+
 .process-blk{border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-top:20px}
 .process-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:18px;font-family:'Raleway',sans-serif}
 .process-steps{display:flex;flex-direction:column;gap:18px}
@@ -551,21 +569,26 @@ body{
 
   <!-- Screen 7: Specialty Items + Appliances (multi) -->
   <div class="screen" id="screen-7">
-    <p class="q-label">Will any specialty items need to be moved?</p>
+    <p class="q-label">Will any specialty or heavy items need to be moved?</p>
     <p class="q-sub">Select all that apply</p>
     <div id="s7">
       <div class="opts" id="s7-specialty">
         <button class="opt multi" data-val="piano"><span>Piano</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="safe"><span>Safe / Gun Safe</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="pool"><span>Pool Table</span><span class="chk">&#10003;</span></button>
-        <button class="opt multi" data-val="fishtank"><span>Fish Tank / Aquarium</span><span class="chk">&#10003;</span></button>
-        <button class="opt multi" data-val="glass"><span>Large Glass Items or Mirrors</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="hottub"><span>Hot Tub / Spa</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="sauna"><span>Sauna</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="fishtank"><span>Fish Tank / Aquarium</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="clock"><span>Grandfather Clock</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="glass"><span>Large Glass Items or Mirrors</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="artwork"><span>Large Artwork / Antiques</span><span class="chk">&#10003;</span></button>
         <button class="opt multi" data-val="commercial"><span>Commercial Equipment</span><span class="chk">&#10003;</span></button>
+        <button class="opt multi" data-val="other"><span>Other Heavy Item</span><span class="chk">&#10003;</span></button>
         <button class="opt" data-val="none" id="s7-none"><span>None</span><span class="chk">&#10003;</span></button>
       </div>
+      <!-- Sub-questions appear here as items are selected -->
+      <div id="s7-subq"></div>
+      <!-- Appliances -->
       <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)">
         <p class="q-label" style="font-size:1.05rem;margin-bottom:8px">Will any appliances be moving with you?</p>
         <p class="q-sub" style="margin-bottom:12px">Select all that apply</p>
@@ -581,6 +604,33 @@ body{
     </div>
     <button class="btn-main" id="s7-cont">Continue</button>
     <div class="tip"><strong>Move Planning Tip</strong>Specialty items and appliances require specific equipment and planning. Identifying them now means your crew arrives fully prepared.</div>
+  </div>
+
+  <!-- Screen 7b: Specialty Access Conditions (conditional) -->
+  <div class="screen" id="screen-7b">
+    <p class="q-label">Any special access conditions for your specialty items?</p>
+    <p class="q-sub">Select all that apply — these affect the specialty item price</p>
+    <div class="opts" id="s7b">
+      <button class="opt multi" data-val="stairs"><span>Stairs involved<small>Any flights of stairs at pickup or drop-off</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="longcarry"><span>Long carry from truck<small>Truck cannot park within 75 ft of the item</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="terrain"><span>Difficult terrain<small>Slope, grass, gravel, or uneven ground</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="tight"><span>Tight doorway or turn<small>Less than 36 inches wide or very tight corners</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="elevator"><span>Elevator access only<small>No stair option available</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="shuttle"><span>Shuttle service needed<small>Moving truck cannot reach the address</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="hoist"><span>Hoist through window or balcony<small>Item cannot fit through any door</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt multi" data-val="crane"><span>Crane may be required<small>Very large item, extreme access challenge</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="none" id="s7b-none"><span>None of these</span><span class="chk">&#10003;</span></button>
+    </div>
+    <div id="s7b-stairs-wrap" style="display:none;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)">
+      <p class="q-label" style="font-size:1.05rem;margin-bottom:10px">How many flights of stairs?</p>
+      <div class="opts" id="s7b-stairs">
+        <button class="opt" data-val="1"><span>1 Flight</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="2"><span>2 Flights</span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="3"><span>3+ Flights</span><span class="chk">&#10003;</span></button>
+      </div>
+    </div>
+    <button class="btn-main" id="s7b-cont" style="margin-top:22px">Continue</button>
+    <div class="tip"><strong>Specialty Item Pricing</strong>Access conditions directly affect the crew size, equipment, and time required for specialty items. Being accurate here protects your estimate.</div>
   </div>
 
   <!-- Screen 8: Disassembly (multi) -->
@@ -725,6 +775,9 @@ body{
       <div class="incl-item hidden" id="incl-da"><span class="incl-chk">&#10003;</span>Furniture Disassembly &amp; Reassembly</div>
       <div class="incl-item hidden" id="incl-pack"><span class="incl-chk">&#10003;</span>Professional Packing</div>
     </div>
+
+    <!-- Specialty Bill (shown only when specialty items selected) -->
+    <div class="spec-bill hidden" id="specialty-bill"></div>
 
     <div class="dep-box">
       <div class="dep-lbl">Booking Deposit</div>
@@ -907,30 +960,91 @@ const C = {
 };
 
 /* ══════════════════════════════════════════
+   SPECIALTY CONFIG
+   ══════════════════════════════════════════ */
+const SPEC_CONFIG = {
+  piano:      {label:'Piano',                  subQ:'What type of piano?',            extraTruck:['babygrand','grand'], options:[
+    {val:'spinet',    label:'Spinet / Console (~300 lbs)',    price:399},
+    {val:'studio',    label:'Studio Upright (~500–800 lbs)',  price:499},
+    {val:'babygrand', label:'Baby Grand (~500–600 lbs)',       price:599},
+    {val:'grand',     label:'Grand (~600–1,200 lbs)',          price:749},
+    {val:'concert',   label:'Concert Grand (1,400+ lbs)',      price:null, custom:true},
+  ]},
+  safe:       {label:'Safe / Gun Safe',        subQ:'Roughly how heavy is the safe?', stairRate:200, extraTruck:['safe_800_1200'], options:[
+    {val:'safe_lt500',    label:'Under 500 lbs',         price:499},
+    {val:'safe_500_800',  label:'500–800 lbs',           price:649},
+    {val:'safe_800_1200', label:'800–1,200 lbs',         price:849},
+    {val:'safe_vault',    label:'1,200+ lbs (Vault)',    price:null, custom:true},
+  ]},
+  pool:       {label:'Pool Table',             subQ:'What size is the pool table?',   extraTruck:['pool_tournament'], options:[
+    {val:'pool_std',        label:'Standard 7–8 ft — includes disassembly, reassembly & leveling', price:499},
+    {val:'pool_full',       label:'Full Size 9 ft — includes disassembly, reassembly & leveling',  price:649},
+    {val:'pool_tournament', label:'Tournament 12 ft — includes disassembly, reassembly & leveling',price:849},
+  ]},
+  hottub:     {label:'Hot Tub / Spa',          subQ:'What size is the hot tub?',      extraTruck:['hottub_lg'], options:[
+    {val:'hottub_sm',  label:'Small (2–3 person)',    price:399},
+    {val:'hottub_std', label:'Standard (4–6 person)', price:549},
+    {val:'hottub_lg',  label:'Large (7+ person)',      price:799},
+  ]},
+  sauna:      {label:'Sauna',                  subQ:'What type of sauna?',            options:[
+    {val:'sauna_infrared', label:'Infrared / Modular kit',  price:499},
+    {val:'sauna_barrel',   label:'Barrel sauna (~800 lbs)',  price:699},
+    {val:'sauna_custom',   label:'Custom-built sauna',       price:null, custom:true},
+  ]},
+  fishtank:   {label:'Fish Tank / Aquarium',   subQ:'What size is the aquarium?',     options:[
+    {val:'tank_sm',     label:'Small (under 75 gallons)',  price:199},
+    {val:'tank_lg',     label:'Large (75–150 gallons)',    price:349},
+    {val:'tank_custom', label:'Custom / 200+ gallons',     price:null, custom:true},
+  ]},
+  clock:      {label:'Grandfather Clock',      subQ:'What type?',                     options:[
+    {val:'clock_std',     label:'Standard grandfather clock', price:299},
+    {val:'clock_antique', label:'Oversized or antique clock',  price:399},
+  ]},
+  glass:      {label:'Large Glass / Mirrors',  price:199},
+  artwork:    {label:'Large Artwork / Antiques', price:null, custom:true},
+  commercial: {label:'Commercial Equipment',   price:null, custom:true},
+  other:      {label:'Other Heavy Item',       price:null, custom:true},
+};
+
+const SPEC_SURCHARGE = {
+  stairs:    {label:'Stairs', perFlight:true, rate:75},
+  longcarry: {label:'Long carry from truck (>75 ft)', amount:100},
+  terrain:   {label:'Difficult terrain (slope / grass / gravel)', amount:100},
+  tight:     {label:'Tight access or doorway (<36")', amount:125},
+  elevator:  {label:'Elevator', amount:75},
+  shuttle:   {label:'Shuttle service', amount:300},
+  hoist:     {label:'Hoist through window or balcony', amount:400},
+  crane:     {label:'Crane required', custom:true},
+};
+
+/* ══════════════════════════════════════════
    STATE
    ══════════════════════════════════════════ */
 const S = {
-  propType:    null,
-  homeSize:    null,
-  furnish:     null, furnMod:      0,
-  boxCount:    null, boxMod:       0,
-  spaces:      [],
-  aptFloor:    null,
-  stairs:      null, destStairs:   null,
-  carry:       null, carryMod:     0,
-  destCarry:   null, destCarryMod: 0,
-  appliances:  [],
-  specialty:   [],
-  disassembly: [],
-  miles:       0,
-  driveTime:   null,
-  packType:    null,
-  packingOn:   null,
-  packers:     null, packerRate: 0,
-  storage:     null,
-  moveDate:    null,
-  confidence:  null,
-  crewSize:    null, crewRate:   0,
+  propType:         null,
+  homeSize:         null,
+  furnish:          null, furnMod:      0,
+  boxCount:         null, boxMod:       0,
+  spaces:           [],
+  aptFloor:         null,
+  stairs:           null, destStairs:   null,
+  carry:            null, carryMod:     0,
+  destCarry:        null, destCarryMod: 0,
+  appliances:       [],
+  specialty:        [],
+  specialtyDetails: {},
+  specialtyAccess:  [],
+  specialtyFlights: 1,
+  disassembly:      [],
+  miles:            0,
+  driveTime:        null,
+  packType:         null,
+  packingOn:        null,
+  packers:          null, packerRate: 0,
+  storage:          null,
+  moveDate:         null,
+  confidence:       null,
+  crewSize:         null, crewRate:   0,
 };
 
 /* ══════════════════════════════════════════
@@ -946,6 +1060,7 @@ const PANELS = {
   '5':{tag:'Move Planning Tip',head:'Stairs are one of the biggest time factors in any move.',body:'Every additional trip up a flight of stairs adds labor time, especially with large furniture or appliances. Accurate stair information helps us staff your move correctly from the start.'},
   '6':{tag:'Move Planning Tip',head:'Long carries add up faster than most people expect.',body:'When a truck has to park far from your entrance, every single trip takes longer. This one factor can add hours to a move that would otherwise be straightforward.'},
   '7':{tag:'Specialty Items',head:'Some items require more than just extra hands.',body:'Pianos, safes, fish tanks, and antiques require specific handling, equipment, and sometimes a larger crew. Identifying them now means we come fully prepared on move day.'},
+  '7b':{tag:'Access Conditions',head:'Access is what separates a smooth move from a complicated one.',body:'Stairs, long carries, tight doorways, and terrain all affect the time, crew size, and equipment needed for specialty items. Being accurate here ensures your specialty estimate is as reliable as possible.'},
   '8':{tag:'Hands-Off Moving',head:'We handle the heavy work, including the setup.',body:'Beds, desks, wall mounts, and sectional sofas often need to be disassembled to fit through doorways. Our team can handle this as part of your move so you do not have to.',fact:'Furniture disassembly and reassembly is one of the most frequently requested add-ons for customers who want a fully hands-off experience.'},
   '9':{tag:'The VYV Difference',head:'We calculate your real driving distance, not a rough estimate.',body:'Some moving companies estimate mileage by zip code or general region. We use your actual addresses to calculate your real driving route, so your transportation cost reflects exactly where you are going.'},
   '10':{tag:'Packing Services',head:'Professional packing protects what matters most.',body:'From a handful of fragile items to your entire home, our packing team uses professional-grade materials and proven techniques. Everything is packed to arrive safely.',fact:'Most packing-related damage happens because items were not individually wrapped or boxes were not fully packed to prevent shifting in transit.'},
@@ -984,11 +1099,11 @@ function show(id) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-const TOTAL = 15;
+const TOTAL = 16;
 const STEP_MAP = {
-  welcome:0,'1':1,'2':2,'3':3,'3b':4,'4':5,'5':6,'6':7,'7':8,
-  '8':9,'9':10,'10':11,'11':12,'12':13,'13':14,'14':15,
-  lead:15,results:15
+  welcome:0,'1':1,'2':2,'3':3,'3b':4,'4':5,'5':6,'6':7,'7':8,'7b':9,
+  '8':10,'9':11,'10':12,'11':13,'12':14,'13':15,'14':16,
+  lead:16,results:16
 };
 
 function updateProg() {
@@ -999,7 +1114,9 @@ function updateProg() {
 }
 
 document.getElementById('back-btn').addEventListener('click', () => {
-  const order = ['welcome','1','2','3','3b','4','5','6','7','8','9','10'];
+  const order = ['welcome','1','2','3','3b','4','5','6','7'];
+  if (S.specialty.length) order.push('7b');
+  order.push('8','9','10');
   if (S.packingOn) order.push('11');
   order.push('12','13','14','lead');
   const i = order.indexOf(cur);
@@ -1015,7 +1132,8 @@ function next() {
   if (cur === '4')  return show('5');
   if (cur === '5')  return show('6');
   if (cur === '6')  return show('7');
-  if (cur === '7')  return show('8');
+  if (cur === '7')  return S.specialty.length ? show('7b') : show('8');
+  if (cur === '7b') return show('8');
   if (cur === '8')  return show('9');
   if (cur === '9')  return show('10');
   if (cur === '10') return S.packingOn ? show('11') : show('12');
@@ -1074,6 +1192,107 @@ function calc() {
     deposit: C.DEPOSIT[S.homeSize],
     cx: extra <= 1 ? 'std' : extra <= 3 ? 'mod' : 'cpx',
   };
+}
+
+/* ══════════════════════════════════════════
+   SPECIALTY CALC & RENDER
+   ══════════════════════════════════════════ */
+function calcSpecialty() {
+  if (!S.specialty.length) return null;
+  const lines = [], surLines = [];
+  let baseTotal = 0, surTotal = 0, hasCustom = false, needsExtraTruck = false;
+  const hasSafe = S.specialty.includes('safe');
+
+  for (const key of S.specialty) {
+    const cfg = SPEC_CONFIG[key];
+    if (!cfg) continue;
+    if (cfg.custom || cfg.price === null) {
+      lines.push({label:cfg.label, price:null, custom:true});
+      hasCustom = true; continue;
+    }
+    if (!cfg.options) {
+      lines.push({label:cfg.label, price:cfg.price});
+      baseTotal += cfg.price; continue;
+    }
+    const detail = S.specialtyDetails[key];
+    if (!detail) { lines.push({label:cfg.label, price:null, pending:true}); continue; }
+    const opt = cfg.options.find(o=>o.val===detail);
+    if (!opt) continue;
+    if (opt.custom || opt.price===null) {
+      lines.push({label:`${cfg.label} — ${opt.label}`, price:null, custom:true});
+      hasCustom = true;
+    } else {
+      lines.push({label:`${cfg.label} — ${opt.label}`, price:opt.price});
+      baseTotal += opt.price;
+    }
+    if (cfg.extraTruck && cfg.extraTruck.includes(detail)) needsExtraTruck = true;
+  }
+
+  for (const sc of S.specialtyAccess) {
+    const scCfg = SPEC_SURCHARGE[sc];
+    if (!scCfg) continue;
+    if (scCfg.custom) {
+      surLines.push({label:scCfg.label, price:null, custom:true});
+      hasCustom = true;
+    } else if (scCfg.perFlight) {
+      const flights = S.specialtyFlights || 1;
+      const rate    = hasSafe ? 200 : scCfg.rate;
+      const amt     = flights * rate;
+      surLines.push({label:`${scCfg.label} (${flights} flight${flights>1?'s':''} × $${rate})`, price:amt});
+      surTotal += amt;
+    } else {
+      surLines.push({label:scCfg.label, price:scCfg.amount});
+      surTotal += scCfg.amount;
+    }
+  }
+
+  let truckLine = null;
+  if (needsExtraTruck && S.miles > 0) {
+    const amt = roundUp5(C.TRUCK_BASE + S.miles * C.TRUCK_MILE);
+    truckLine = {label:`Additional truck trip (${(S.miles/2).toFixed(1)} mi one way)`, price:amt};
+    surTotal += amt;
+  }
+
+  return {lines, surLines, truckLine, baseTotal, surTotal,
+    grandTotal: baseTotal + surTotal, hasCustom, needsExtraTruck};
+}
+
+function renderSpecialty() {
+  const el = document.getElementById('specialty-bill');
+  if (!S.specialty.length) { el.classList.add('hidden'); return; }
+  const r = calcSpecialty();
+  if (!r) { el.classList.add('hidden'); return; }
+  el.classList.remove('hidden');
+
+  let html = `
+    <div class="spec-bill-head">Specialty Item Estimate</div>
+    <div class="spec-bill-sub">This is a separate bill from your moving estimate above.</div>
+    <span class="spec-bill-crew">4-Mover Minimum — All Specialty Jobs</span>
+    <div>`;
+
+  for (const ln of r.lines) {
+    if (ln.custom)  html += `<div class="spec-bill-line"><span>${ln.label}</span><span class="spec-custom">Custom Consultation Required</span></div>`;
+    else if (ln.pending) html += `<div class="spec-bill-line"><span>${ln.label}</span><span class="spec-custom">Select type above</span></div>`;
+    else html += `<div class="spec-bill-line"><span>${ln.label}</span><span>${fmt(ln.price)}</span></div>`;
+  }
+
+  if (r.surLines.length || r.truckLine) {
+    html += `<div class="spec-bill-divider">Access Surcharges</div>`;
+    for (const sc of r.surLines) {
+      if (sc.custom) html += `<div class="spec-bill-line spec-surcharge"><span>${sc.label}</span><span class="spec-custom">Custom Quote</span></div>`;
+      else html += `<div class="spec-bill-line spec-surcharge"><span>+ ${sc.label}</span><span>+ ${fmt(sc.price)}</span></div>`;
+    }
+    if (r.truckLine) html += `<div class="spec-bill-line spec-surcharge"><span>+ ${r.truckLine.label}</span><span>+ ${fmt(r.truckLine.price)}</span></div>`;
+  }
+
+  html += `<div class="spec-bill-total"><span>${r.hasCustom ? 'Specialty Subtotal' : 'Specialty Total'}</span>
+    <span>${r.grandTotal > 0 ? fmt(r.grandTotal) + (r.hasCustom ? ' + custom items' : '') : 'Custom Consultation Required'}</span>
+  </div></div>`;
+
+  if (r.hasCustom) html += `<div class="spec-bill-note">Items marked "Custom Consultation Required" are quoted during your Move Planning Consultation after we evaluate access, dimensions, and specific requirements.</div>`;
+  if (r.needsExtraTruck && !S.miles) html += `<div class="spec-truck-note">One or more specialty items may require an additional truck trip. This will be confirmed and priced during your Move Planning Consultation.</div>`;
+
+  el.innerHTML = html;
 }
 
 /* ══════════════════════════════════════════
@@ -1261,22 +1480,59 @@ function buildStairsScreen() {
   });
 })();
 
-/* S7: Specialty + Appliances */
+/* S7: Specialty + Sub-questions + Appliances */
+function rebuildSubQuestions() {
+  const container = document.getElementById('s7-subq');
+  if (!container) return;
+  const needsSub = S.specialty.filter(k => SPEC_CONFIG[k] && SPEC_CONFIG[k].options);
+  if (!needsSub.length) { container.innerHTML = ''; return; }
+
+  let html = '<div class="spec-subq-block"><p class="spec-subq-lbl">Tell us a bit more</p>';
+  for (const key of needsSub) {
+    const cfg = SPEC_CONFIG[key];
+    const sel = S.specialtyDetails[key];
+    html += `<div style="margin-bottom:16px">
+      <p class="q-sub" style="margin-bottom:8px;font-weight:600">${cfg.label} — ${cfg.subQ}</p>
+      <div class="opts" data-subq="${key}">`;
+    for (const opt of cfg.options) {
+      const priceTag = opt.custom ? '' : ` — $${opt.price.toLocaleString()}`;
+      html += `<button class="opt${sel===opt.val?' sel':''}" data-item="${key}" data-detail="${opt.val}">
+        <span>${opt.label}${priceTag}</span><span class="chk">&#10003;</span>
+      </button>`;
+    }
+    html += '</div></div>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
 (()=>{
   document.getElementById('s7-specialty').addEventListener('click', e => {
     const btn = e.target.closest('.opt');
     if (!btn) return;
     if (btn.id === 's7-none') {
       document.querySelectorAll('#s7-specialty .opt.multi').forEach(b => b.classList.remove('sel'));
-      S.specialty = [];
+      S.specialty = []; S.specialtyDetails = {};
       btn.classList.add('sel');
+      rebuildSubQuestions();
       return;
     }
     document.getElementById('s7-none').classList.remove('sel');
     btn.classList.toggle('sel');
     const v = btn.dataset.val;
     if (btn.classList.contains('sel')) { if(!S.specialty.includes(v)) S.specialty.push(v); }
-    else { S.specialty = S.specialty.filter(x=>x!==v); }
+    else { S.specialty = S.specialty.filter(x=>x!==v); delete S.specialtyDetails[v]; }
+    rebuildSubQuestions();
+  });
+
+  document.getElementById('s7-subq').addEventListener('click', e => {
+    const btn = e.target.closest('[data-subq] .opt');
+    if (!btn) return;
+    const item = btn.dataset.item;
+    const detail = btn.dataset.detail;
+    btn.closest('[data-subq]').querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.specialtyDetails[item] = detail;
   });
 
   document.getElementById('s7-appliances').addEventListener('click', e => {
@@ -1296,6 +1552,39 @@ function buildStairsScreen() {
   });
 
   document.getElementById('s7-cont').addEventListener('click', ()=>next());
+})();
+
+/* S7b: Specialty Access Conditions */
+(()=>{
+  const noneBtn = document.getElementById('s7b-none');
+  document.getElementById('s7b').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    if (btn.id === 's7b-none') {
+      document.querySelectorAll('#s7b .opt.multi').forEach(b => b.classList.remove('sel'));
+      S.specialtyAccess = [];
+      btn.classList.add('sel');
+      document.getElementById('s7b-stairs-wrap').style.display = 'none';
+      return;
+    }
+    noneBtn.classList.remove('sel');
+    btn.classList.toggle('sel');
+    const v = btn.dataset.val;
+    if (btn.classList.contains('sel')) { if(!S.specialtyAccess.includes(v)) S.specialtyAccess.push(v); }
+    else { S.specialtyAccess = S.specialtyAccess.filter(x=>x!==v); }
+    document.getElementById('s7b-stairs-wrap').style.display =
+      S.specialtyAccess.includes('stairs') ? 'block' : 'none';
+  });
+
+  document.getElementById('s7b-stairs').addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    document.querySelectorAll('#s7b-stairs .opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    S.specialtyFlights = parseInt(btn.dataset.val);
+  });
+
+  document.getElementById('s7b-cont').addEventListener('click', ()=>next());
 })();
 
 /* S8: Disassembly */
@@ -1425,12 +1714,16 @@ async function submitLead(name, email, phone) {
     ? `Floor ${S.aptFloor}${S.stairs ? `, ${S.stairs} flight${S.stairs>1?'s':''}` : ''}`
     : S.stairs ? `${S.stairs} flight${S.stairs>1?'s':''}` : '';
 
+  const specR = calcSpecialty();
   const invNotes = [
-    S.spaces.length      ? `Extra areas: ${S.spaces.join(', ')}`              : '',
-    S.specialty.length   ? `Specialty items: ${S.specialty.join(', ')}`       : '',
-    S.appliances.length  ? `Appliances: ${S.appliances.join(', ')}`           : '',
-    S.disassembly.length ? `Disassembly needed: ${S.disassembly.join(', ')}` : '',
-    S.boxCount           ? `Box count range: ${S.boxCount}`                   : '',
+    S.spaces.length         ? `Extra areas: ${S.spaces.join(', ')}`                                   : '',
+    S.specialty.length      ? `Specialty items: ${S.specialty.join(', ')}`                            : '',
+    Object.keys(S.specialtyDetails).length ? `Specialty details: ${Object.entries(S.specialtyDetails).map(([k,v])=>`${k}=${v}`).join(', ')}` : '',
+    S.specialtyAccess.length? `Specialty access: ${S.specialtyAccess.join(', ')}`                     : '',
+    specR && specR.needsExtraTruck ? 'May require additional truck trip for specialty items'           : '',
+    S.appliances.length     ? `Appliances: ${S.appliances.join(', ')}`                                : '',
+    S.disassembly.length    ? `Disassembly needed: ${S.disassembly.join(', ')}`                       : '',
+    S.boxCount              ? `Box count range: ${S.boxCount}`                                         : '',
   ].filter(Boolean).join('\n');
 
   /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
@@ -1461,10 +1754,17 @@ async function submitLead(name, email, phone) {
         dest_walk_distance:   CARRY_LABEL[S.destCarry]  || S.destCarry  || '',
         extra_spaces:         S.spaces.join(', '),
         /* Services */
-        specialty_items:  S.specialty.join(', '),
-        appliances:       S.appliances.join(', '),
-        box_count:        S.boxCount || '',
-        disassembly:      S.disassembly.join(', '),
+        specialty_items:        S.specialty.join(', '),
+        specialty_details:      Object.entries(S.specialtyDetails).map(([k,v])=>`${k}:${v}`).join(', '),
+        specialty_access:       S.specialtyAccess.join(', '),
+        specialty_stair_flights:S.specialtyAccess.includes('stairs') ? S.specialtyFlights : '',
+        specialty_base_total:   (()=>{const sr=calcSpecialty();return sr?sr.baseTotal:''})(),
+        specialty_surcharge_total:(()=>{const sr=calcSpecialty();return sr?sr.surTotal:''})(),
+        specialty_grand_total:  (()=>{const sr=calcSpecialty();return sr?sr.grandTotal:''})(),
+        specialty_has_custom:   (()=>{const sr=calcSpecialty();return sr?sr.hasCustom:false})(),
+        appliances:             S.appliances.join(', '),
+        box_count:              S.boxCount || '',
+        disassembly:            S.disassembly.join(', '),
         packing_type:     S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
         packer_count:     S.packers || '',
         storage_stop:     S.storage === 'yes' ? 'Yes' : 'No',
@@ -1582,6 +1882,8 @@ function renderResults() {
   document.querySelectorAll('.crew-opt').forEach(c => {
     c.classList.toggle('sel', parseInt(c.dataset.crew) === S.crewSize);
   });
+
+  renderSpecialty();
 }
 
 /* Crew adjust on results */
