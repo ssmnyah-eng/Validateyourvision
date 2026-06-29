@@ -411,6 +411,20 @@ body{
 .checklist-body{display:none;border-top:1px solid var(--border)}
 .checklist-body.open{display:block}
 .cl-phase{border-bottom:1px solid var(--mist)}
+.cl-phase-preview{padding:12px 0 4px}
+.cl-phase-row{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;border-bottom:1px solid var(--mist)}
+.cl-phase-row:last-child{border-bottom:none}
+.cl-phase-row-title{font-size:.88rem;font-weight:600;color:var(--navy)}
+.cl-phase-row-count{font-size:.8rem;color:var(--accent);font-weight:700;background:var(--accent-lt);padding:3px 10px;border-radius:20px}
+.cl-pdf-note{font-size:.79rem;color:var(--muted);text-align:center;padding:12px 20px 16px;font-style:italic}
+.pdf-modal{background:var(--white);border:2px solid var(--accent);border-radius:var(--r);padding:24px 20px;margin:16px 0}
+.pdf-modal-head{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.pdf-modal-sub{font-size:.84rem;color:var(--muted);margin-bottom:20px}
+.pdf-q-group{margin-bottom:16px}
+.pdf-q-label{font-size:.88rem;font-weight:600;color:var(--navy);margin-bottom:8px}
+.pdf-q-opts{display:flex;gap:10px}
+.pdf-opt{flex:1;padding:10px 8px;border:2px solid var(--border);border-radius:var(--r);background:var(--white);font-size:.88rem;font-weight:600;color:var(--navy);cursor:pointer;transition:border-color .15s,background .15s}
+.pdf-opt.sel{border-color:var(--accent);background:var(--accent-lt)}
 .cl-phase:last-child{border-bottom:none}
 .cl-phase-head{padding:14px 20px 10px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-family:'Raleway',sans-serif;background:var(--accent-lt)}
 .cl-item{display:flex;align-items:flex-start;gap:12px;padding:11px 20px;border-bottom:1px solid var(--mist);cursor:pointer;transition:background .1s}
@@ -973,121 +987,6 @@ body{
     </div>
     <div class="copy-ok" id="copy-ok">Estimate copied to clipboard.</div>
 
-    <!-- Pre-Move Checklist -->
-    <div class="checklist-blk">
-      <div class="checklist-head" id="checklist-toggle-btn">
-        <div>
-          <div class="checklist-head-title">Your Pre-Move Checklist</div>
-          <div class="checklist-head-sub">Everything to do before moving day</div>
-        </div>
-        <span class="checklist-toggle" id="checklist-toggle-icon">&#9660;</span>
-      </div>
-      <div class="checklist-body" id="checklist-body">
-        <div id="checklist-phases"></div>
-        <div class="cl-progress">
-          <div class="cl-prog-bar"><div class="cl-prog-fill" id="cl-fill" style="width:0%"></div></div>
-          <div class="cl-prog-label" id="cl-label">0 items</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- How to Choose the Right Mover -->
-    <div class="chooser-blk">
-      <div class="chooser-head">
-        <div class="chooser-tag">Before You Book Anyone</div>
-        <div class="chooser-title">8 Questions Every Family Should Ask Their Mover</div>
-        <div class="chooser-sub">Consumer protection agencies and the FMCSA recommend asking every moving company these questions. Here's how VYV answers each one.</div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">1</div>
-          <div class="chooser-q-text">Are you licensed and insured? What is your DOT number?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">All interstate and most local movers must be registered and carry liability coverage. Never book a mover who can't immediately provide this — it's a legal requirement and the #1 red flag consumers ignore.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Validate Your Vision is fully licensed and insured. Our documentation is available upon request before you book.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">2</div>
-          <div class="chooser-q-text">Do you perform background checks on all crew members?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">You're letting strangers into your home, around your kids, and your most valuable possessions. Legitimate companies conduct criminal background checks on every employee — not just management.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Every VYV crew member is background checked before joining our team. Your home and your family's safety is non-negotiable to us.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">3</div>
-          <div class="chooser-q-text">Will you give me a written estimate after seeing my home?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">Phone estimates without seeing your inventory are the most common source of moving day price shock. A binding written estimate, done after an in-home or virtual walkthrough, is the industry's gold standard and your only real protection.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We provide written estimates — and for larger or complex moves, we schedule a Move Planning Consultation to verify your inventory before confirming your price.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">4</div>
-          <div class="chooser-q-text">What could increase the cost beyond the estimate?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">Stairs, long carries, elevator fees, packing materials, fuel surcharges — these are where opaque movers pad bills. Ask for a complete written fee schedule before you commit.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Our estimator accounts for stairs, carry distance, specialty items, and appliances before giving you a number. No hidden add-ons on moving day.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">5</div>
-          <div class="chooser-q-text">Are your movers employees or day laborers?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">Companies that use rotating day laborers have little accountability for who shows up to your home. Direct employees are trained, background-checked, and motivated to represent the company professionally.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>Our crew are direct team members — not day laborers. The people on your move are trained VYV movers every time.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">6</div>
-          <div class="chooser-q-text">How do you handle damage claims?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">Ask specifically: who pays, what's the timeline, and how do you file? Vague answers here almost always mean slow or denied claims. Get the process in writing before moving day.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We handle damage claims directly — no corporate runaround. We walk through the process with you during your consultation so there are no surprises.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">7</div>
-          <div class="chooser-q-text">What happens if your crew doesn't show up or is significantly late?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">No-shows happen — especially with understaffed companies using day laborers. Ask what the backup plan is. A company that hesitates here doesn't have one.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We communicate proactively. If anything changes, you hear from us first — not on moving day. We take your booked date seriously.</div>
-        </div>
-      </div>
-      <div class="chooser-q">
-        <div class="chooser-q-head" onclick="toggleQ(this)">
-          <div class="chooser-q-num">8</div>
-          <div class="chooser-q-text">Can you handle specialty items like pianos, safes, or antiques?</div>
-          <span class="chooser-q-icon">&#9660;</span>
-        </div>
-        <div class="chooser-q-body">
-          <p class="chooser-generic">Most general movers aren't equipped or trained for specialty items. A baby grand moved wrong can be damaged beyond repair. Make sure your mover has the equipment, training, and experience — and ask for it specifically.</p>
-          <div class="chooser-vyv"><strong>How VYV Answers This</strong>We handle pianos, safes, pool tables, hot tubs, antiques, large appliances, and more — with the right crew size, equipment, and pricing built into your plan upfront.</div>
-        </div>
-      </div>
-    </div>
-
     <!-- Why VYV -->
     <div class="vyv-why">
       <div class="vyv-why-tag">Why Validate Your Vision</div>
@@ -1200,6 +1099,51 @@ body{
           <div class="obj-highlight">"Came when they said, took care of everything, were friendly and professional." — Jessica P., Stafford, VA</div>
         </div>
       </div>
+    </div>
+
+    <!-- Pre-Move Checklist -->
+    <div class="checklist-blk">
+      <div class="checklist-head">
+        <div>
+          <div class="checklist-head-title">Your Personalized Pre-Move Checklist</div>
+          <div class="checklist-head-sub" id="cl-summary-sub">Customized from your answers</div>
+        </div>
+      </div>
+      <div class="cl-phase-preview" id="cl-phase-preview">
+        <!-- Phase summaries rendered by JS -->
+      </div>
+      <div class="cl-pdf-note">
+        Full checklist with every task and checkbox is included in your PDF Moving Plan.
+      </div>
+    </div>
+
+    <!-- PDF personalization mini-modal -->
+    <div class="pdf-modal hidden" id="pdf-modal">
+      <div class="pdf-modal-head">Quick Questions for Your PDF Checklist</div>
+      <div class="pdf-modal-sub">2 more details help us personalize your full checklist</div>
+      <div class="pdf-q-group">
+        <div class="pdf-q-label">Do you have kids or pets at home?</div>
+        <div class="pdf-q-opts">
+          <button class="pdf-opt" data-key="hasKids" data-val="yes" onclick="pdfOpt(this)">Yes</button>
+          <button class="pdf-opt" data-key="hasKids" data-val="no" onclick="pdfOpt(this)">No</button>
+        </div>
+      </div>
+      <div class="pdf-q-group">
+        <div class="pdf-q-label">Garage, attic, basement, or outdoor items to move?</div>
+        <div class="pdf-q-opts">
+          <button class="pdf-opt" data-key="hasGarage" data-val="yes" onclick="pdfOpt(this)">Yes</button>
+          <button class="pdf-opt" data-key="hasGarage" data-val="no" onclick="pdfOpt(this)">No</button>
+        </div>
+      </div>
+      <div class="pdf-q-group">
+        <div class="pdf-q-label">Need to update utilities, DMV, subscriptions, or address?</div>
+        <div class="pdf-q-opts">
+          <button class="pdf-opt" data-key="hasUtilities" data-val="yes" onclick="pdfOpt(this)">Yes</button>
+          <button class="pdf-opt" data-key="hasUtilities" data-val="no" onclick="pdfOpt(this)">No</button>
+        </div>
+      </div>
+      <button class="btn-main" style="margin-top:16px" onclick="confirmPdfQuestions()">Generate My PDF</button>
+      <button class="btn-sec" style="margin-top:8px" onclick="skipPdfQuestions()">Skip — Generate Now</button>
     </div>
 
     <!-- CTA -->
@@ -2291,7 +2235,11 @@ function renderMoveSummary(r) {
     week:'Within 7 Days', month:'Within 30 Days', quarter:'1–3 Months', planning:'Just Planning Ahead'
   };
   document.getElementById('summary-date').textContent  = dateMap[S.moveDate] || (S.moveDate || '—');
-  document.getElementById('summary-miles').textContent = S.miles ? (S.miles/2).toFixed(1)+' mi one way' : '—';
+  const owMiles = S.miles ? (S.miles / 2) : 0;
+  const milesLabel = owMiles > 50
+    ? `${owMiles.toFixed(0)} mi one way (long distance)`
+    : owMiles > 0 ? `${owMiles.toFixed(1)} mi one way` : '—';
+  document.getElementById('summary-miles').textContent = milesLabel;
   document.getElementById('summary-size').textContent  = SL[S.homeSize] || '—';
   document.getElementById('summary-time').textContent  = r ? `${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hrs` : '—';
   document.getElementById('summary-crew').textContent  = S.crewSize ? `${S.crewSize} movers` : '—';
@@ -2356,7 +2304,33 @@ function confirmMove(source) {
 /* ══════════════════════════════════════════
    PDF DOWNLOAD
    ══════════════════════════════════════════ */
+function pdfOpt(btn) {
+  const key = btn.dataset.key;
+  const val = btn.dataset.val;
+  S[key] = val === 'yes';
+  btn.closest('.pdf-q-opts').querySelectorAll('.pdf-opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function confirmPdfQuestions() {
+  S._pdfAnswered = true;
+  document.getElementById('pdf-modal').classList.add('hidden');
+  downloadPlan();
+}
+
+function skipPdfQuestions() {
+  S._pdfAnswered = true;
+  document.getElementById('pdf-modal').classList.add('hidden');
+  downloadPlan();
+}
+
 async function downloadPlan() {
+  // Show personalization mini-modal if not yet answered
+  if (!S._pdfAnswered) {
+    document.getElementById('pdf-modal').classList.remove('hidden');
+    document.getElementById('pdf-modal').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
   // Lazy-load jsPDF only when user actually requests a PDF download
   if (!window.jspdf) {
     await new Promise((resolve, reject) => {
@@ -2671,6 +2645,8 @@ function buildChecklistPhases() {
         'Talk to kids about the move — introduce it as an adventure, not just a disruption',
         'Notify landlord of your move-out date and review lease terms (if renting)',
         hasStorage ? 'Confirm your storage unit address and access hours with your facility' : null,
+        ...(S.hasKids ? ['Book a sitter or plan childcare for moving day'] : []),
+        ...(S.hasGarage ? ['Walk through garage, attic, and outdoor areas — decide what moves vs. donates'] : []),
       ].filter(Boolean),
     });
 
@@ -2686,6 +2662,8 @@ function buildChecklistPhases() {
         hasPacking ? 'VYV packers are handling your boxes — focus on labeling rooms and clearing paths' : 'Start packing non-essentials: seasonal items, books, decorations, extra linens',
         hasPacking ? null : 'Use color-coded tape — one color per destination room — so movers place boxes correctly',
         hasDA      ? `Confirm which furniture pieces need disassembly — your plan includes: ${daNames}` : null,
+        ...(S.hasUtilities ? ['Schedule utility transfers: electric, gas, internet, water'] : []),
+        ...(S.hasUtilities ? ['Update address: bank, DMV, USPS forward, subscriptions'] : []),
       ].filter(Boolean),
     });
   }
@@ -2745,6 +2723,8 @@ function buildChecklistPhases() {
       'Clear the driveway and all pathways from every room to the front door',
       'Have water, sports drinks, or snacks available for the crew',
       'Keep kids in one room away from the work area — or better yet, out of the house',
+      ...(S.hasKids ? ['Confirm childcare/sitter is set for today'] : []),
+      ...(S.hasKids ? ['Set up a safe area for kids and pets during the move'] : []),
       'Do a complete walkthrough with the crew lead before anything is moved',
       hasSpecial ? `Point out your specialty items to the crew lead: ${specNames}` : null,
       hasDA      ? `Confirm which pieces need disassembly before the crew starts: ${daNames}` : null,
@@ -2761,39 +2741,15 @@ function buildChecklistPhases() {
 
 function renderChecklist() {
   const phases = buildChecklistPhases();
-  const container = document.getElementById('checklist-phases');
-  container.innerHTML = phases.map(phase => `
-    <div class="cl-phase">
-      <div class="cl-phase-head">${phase.title}</div>
-      ${phase.items.map(item => `
-        <div class="cl-item">
-          <div class="cl-box"><span class="cl-check-icon">&#10003;</span></div>
-          <div class="cl-text">${item}</div>
-        </div>`).join('')}
+  const totalItems = phases.reduce((n, p) => n + p.items.length, 0);
+  document.getElementById('cl-summary-sub').textContent =
+    `${phases.length} phases · ${totalItems} personalized tasks`;
+  const preview = document.getElementById('cl-phase-preview');
+  preview.innerHTML = phases.map(phase => `
+    <div class="cl-phase-row">
+      <div class="cl-phase-row-title">${phase.title}</div>
+      <div class="cl-phase-row-count">${phase.items.length} tasks</div>
     </div>`).join('');
-  updateChecklistProgress();
-}
-
-document.getElementById('checklist-toggle-btn').addEventListener('click', () => {
-  const body = document.getElementById('checklist-body');
-  const icon = document.getElementById('checklist-toggle-icon');
-  body.classList.toggle('open');
-  icon.classList.toggle('open');
-});
-
-document.getElementById('checklist-body').addEventListener('click', e => {
-  const item = e.target.closest('.cl-item');
-  if (!item) return;
-  item.classList.toggle('done');
-  updateChecklistProgress();
-});
-
-function updateChecklistProgress() {
-  const all  = document.querySelectorAll('.cl-item');
-  const done = document.querySelectorAll('.cl-item.done');
-  const pct  = all.length ? Math.round((done.length / all.length) * 100) : 0;
-  document.getElementById('cl-fill').style.width  = pct + '%';
-  document.getElementById('cl-label').textContent = `${done.length} of ${all.length} done`;
 }
 
 /* ══════════════════════════════════════════
