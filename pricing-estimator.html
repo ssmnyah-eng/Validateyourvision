@@ -94,10 +94,10 @@
 <!-- Speed: preconnect so DNS + TLS handshake happens in parallel with HTML parse -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Speed: load fonts without blocking render — swap in once loaded -->
+<!-- Speed: load fonts without blocking render, swap in once loaded -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap"></noscript>
-<!-- Speed: jsPDF + html2canvas only needed when user downloads PDF — lazy loaded then -->
+<!-- Speed: jsPDF + html2canvas only needed when user downloads PDF, lazy loaded then -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initMaps" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -349,7 +349,7 @@ body{
 /* consult-radio gets more tap space on small phones */
 @media(max-width:480px){.consult-radio{padding:13px 12px}}
 
-/* ── iPad (768px portrait) — single column but roomier ── */
+/* ── iPad (768px portrait), single column but roomier ── */
 @media(min-width:768px) and (max-width:899px){
   .move-summary-grid{grid-template-columns:repeat(3,1fr)}
   .crew-grid{gap:12px}
@@ -603,7 +603,7 @@ body{
       <div>
         <div class="badge">Validate Your Vision | Fredericksburg, VA</div>
         <h1 class="welcome-h">Let's Build<br>Your Move Plan</h1>
-        <p class="welcome-p" style="margin-top:14px">Answer a few questions and we'll build your personalized moving plan — including your estimate, a custom checklist, and everything you need to prepare for moving day.</p>
+        <p class="welcome-p" style="margin-top:14px">Answer a few questions and we'll build your personalized moving plan, including your estimate, a custom checklist, and everything you need to prepare for moving day.</p>
         <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Build My Moving Plan</button>
       </div>
     </div>
@@ -661,7 +661,7 @@ body{
   <!-- Screen 3b: Box Count -->
   <div class="screen" id="screen-3b">
     <p class="q-label">Roughly how many boxes are you moving?</p>
-    <p class="q-sub">Packed and ready to go — your best guess is fine</p>
+    <p class="q-sub">Packed and ready to go, your best guess is fine</p>
     <div class="opts" id="s3b">
       <button class="opt" data-val="few" data-mod="0"><span>Very few (under 15)<small>Minimal loose items, mostly furniture</small></span><span class="chk">&#10003;</span></button>
       <button class="opt" data-val="some" data-mod="0.5"><span>Some (15–40 boxes)<small>A moderate amount, typical for a 1–2 bedroom move</small></span><span class="chk">&#10003;</span></button>
@@ -759,7 +759,7 @@ body{
   <!-- Screen 7b: Specialty Access Conditions (conditional) -->
   <div class="screen" id="screen-7b">
     <p class="q-label">Any special access conditions for your specialty items?</p>
-    <p class="q-sub">Select all that apply — these affect the specialty item price</p>
+    <p class="q-sub">Select all that apply, these affect the specialty item price</p>
     <div class="opts" id="s7b">
       <button class="opt multi" data-val="stairs"><span>Stairs involved<small>Any flights of stairs at pickup or drop-off</small></span><span class="chk">&#10003;</span></button>
       <button class="opt multi" data-val="longcarry"><span>Long carry from truck<small>Truck cannot park within 75 ft of the item</small></span><span class="chk">&#10003;</span></button>
@@ -909,23 +909,23 @@ body{
       <div class="move-summary-grid">
         <div class="move-summary-item">
           <div class="move-summary-label">Move Date</div>
-          <div class="move-summary-value" id="summary-date">—</div>
+          <div class="move-summary-value" id="summary-date">-</div>
         </div>
         <div class="move-summary-item">
           <div class="move-summary-label">Distance</div>
-          <div class="move-summary-value" id="summary-miles">—</div>
+          <div class="move-summary-value" id="summary-miles">-</div>
         </div>
         <div class="move-summary-item">
           <div class="move-summary-label">Home Size</div>
-          <div class="move-summary-value" id="summary-size">—</div>
+          <div class="move-summary-value" id="summary-size">-</div>
         </div>
         <div class="move-summary-item">
           <div class="move-summary-label">Est. Time</div>
-          <div class="move-summary-value" id="summary-time">—</div>
+          <div class="move-summary-value" id="summary-time">-</div>
         </div>
         <div class="move-summary-item">
           <div class="move-summary-label">Your Crew</div>
-          <div class="move-summary-value" id="summary-crew">—</div>
+          <div class="move-summary-value" id="summary-crew">-</div>
         </div>
         <div class="move-summary-item">
           <div class="move-summary-label">Services</div>
@@ -945,7 +945,7 @@ body{
 
     <div class="invest-card">
       <div class="invest-lbl">Estimated Investment</div>
-      <div class="invest-amt" id="res-total">—</div>
+      <div class="invest-amt" id="res-total">-</div>
       <div class="invest-note">Price range based on your move details</div>
       <div class="invest-hrs" id="res-hrs"></div>
       <div class="conf-msg hidden" id="conf-msg"></div>
@@ -967,7 +967,7 @@ body{
 
     <div class="dep-box">
       <div class="dep-lbl">Booking Deposit</div>
-      <div class="dep-amt" id="res-dep">—</div>
+      <div class="dep-amt" id="res-dep">-</div>
       <div class="dep-note">Your deposit secures your move date and is applied toward your final balance. It is not an additional charge.</div>
     </div>
 
@@ -977,8 +977,8 @@ body{
     <div class="mid-confirm" id="mid-confirm">
       <div class="mid-confirm-head">Does this look right for your move?</div>
       <div class="mid-confirm-sub">If so, let us know and we'll reach out to confirm your details, answer questions, and get your date locked in.</div>
-      <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes — Confirm My Move</button>
-      <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Not yet — save my plan as a PDF first</button>
+      <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes, Confirm My Move</button>
+      <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Not yet, save my plan as a PDF first</button>
     </div>
 
     <div class="btn-row" style="display:none">
@@ -993,7 +993,7 @@ body{
       <div class="vyv-why-head">Moving is already hard enough.<br>We make sure the people you hire aren't the hard part.</div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#128221;</span>
-        <div class="vyv-why-text"><strong>We walk your home before we quote you anything.</strong>No guessing. No generic bedroom-count pricing. We see exactly what we're moving before we give you a number — so moving day doesn't come with surprises.</div>
+        <div class="vyv-why-text"><strong>We walk your home before we quote you anything.</strong>No guessing. No generic bedroom-count pricing. We see exactly what we're moving before we give you a number, so moving day doesn't come with surprises.</div>
       </div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#128101;</span>
@@ -1001,7 +1001,7 @@ body{
       </div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#128337;</span>
-        <div class="vyv-why-text"><strong>We show up when we say we will.</strong>"They came when they said" shouldn't be a standout quality — but it is. It's one of the first things our customers mention. We take your time seriously.</div>
+        <div class="vyv-why-text"><strong>We show up when we say we will.</strong>"They came when they said" shouldn't be a standout quality, but it is. It's one of the first things our customers mention. We take your time seriously.</div>
       </div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#128230;</span>
@@ -1009,11 +1009,11 @@ body{
       </div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#127968;</span>
-        <div class="vyv-why-text"><strong>One plan. Start to finish.</strong>Packing, moving, unpacking, White Glove organizing — all available through one team with one plan. You don't have to coordinate five different vendors for one move.</div>
+        <div class="vyv-why-text"><strong>One plan. Start to finish.</strong>Packing, moving, unpacking, White Glove organizing, all available through one team with one plan. You don't have to coordinate five different vendors for one move.</div>
       </div>
       <div class="vyv-why-item">
         <span class="vyv-why-icon">&#11088;</span>
-        <div class="vyv-why-text"><strong>What our customers say:</strong>"Absolutely one of the most professional, accommodating, and hard workers I have come across." — Vicki J. &nbsp;|&nbsp; "Professional, prompt, took care of our stuff — I fully recommend them." — Meagan V. &nbsp;|&nbsp; "Prices very reasonable!" — Jessica P.</div>
+        <div class="vyv-why-text"><strong>What our customers say:</strong> "Absolutely one of the most professional, accommodating, and hard workers I have come across." (Vicki J.) &nbsp;|&nbsp; "Professional, prompt, took great care of our stuff. I fully recommend them." (Meagan V.) &nbsp;|&nbsp; "Prices very reasonable!" (Jessica P.)</div>
       </div>
     </div>
 
@@ -1030,8 +1030,8 @@ body{
         </div>
         <div class="obj-item-body">
           <p>We hear this sometimes. Here's what we've learned: lower quotes often come from companies that haven't actually seen your home, use day laborers with no background checks, or add fees on moving day that weren't in the original quote.</p>
-          <p>Our estimate is built from real information — your actual home, your actual items, your actual route. The low-to-high range you see here is designed to reflect what you'll actually pay, not just get you to sign a contract.</p>
-          <div class="obj-highlight">The most expensive move is one that goes wrong. Broken furniture, a crew that doesn't show up, a bill that doubled on moving day — that's a real cost people don't think about when chasing the lowest number.</div>
+          <p>Our estimate is built from real information, your actual home, your actual items, your actual route. The low-to-high range you see here is designed to reflect what you'll actually pay, not just get you to sign a contract.</p>
+          <div class="obj-highlight">The most expensive move is one that goes wrong. Broken furniture, a crew that doesn't show up, a bill that doubled on moving day, that's a real cost people don't think about when chasing the lowest number.</div>
         </div>
       </div>
       <div class="obj-item">
@@ -1040,7 +1040,7 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>Absolutely — for small moves with light furniture and a flexible schedule, it can make sense. But most families underestimate the cost: truck rental, fuel, moving blankets, dollies, boxes, the physical toll, the time, and the risk of injury or damage without the right equipment and technique.</p>
+          <p>Absolutely, for small moves with light furniture and a flexible schedule, it can make sense. But most families underestimate the cost: truck rental, fuel, moving blankets, dollies, boxes, the physical toll, the time, and the risk of injury or damage without the right equipment and technique.</p>
           <p>A professional crew also moves 2–3x faster than most families working on their own. When you add up time off work, two days of exhaustion, and the risk of something going wrong, the math often looks different than it did at the start.</p>
           <div class="obj-highlight">Ask yourself what your time and energy are worth on one of the most stressful days of the year. That's part of the equation too.</div>
         </div>
@@ -1051,9 +1051,9 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>Your estimate is based on how long the job takes, which depends on what's being moved and the conditions on moving day. Because we gather detailed information upfront — including stairs, carry distance, specialty items, and your home size — our estimates are accurate and rarely far off.</p>
+          <p>Your estimate is based on how long the job takes, which depends on what's being moved and the conditions on moving day. Because we gather detailed information upfront, including stairs, carry distance, specialty items, and your home size, our estimates are accurate and rarely far off.</p>
           <p>The range you see here is intentional. We give you a low and high so you can budget with confidence, not a single number that may not reflect reality.</p>
-          <div class="obj-highlight">We don't show up and surprise you. If anything in your move changes before moving day, we adjust your plan together — not after the truck is loaded.</div>
+          <div class="obj-highlight">We don't show up and surprise you. If anything in your move changes before moving day, we adjust your plan together, not after the truck is loaded.</div>
         </div>
       </div>
       <div class="obj-item">
@@ -1062,9 +1062,9 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>We know. The moving industry has a reputation problem, and a lot of it is earned. Late arrivals, broken items, charges that appeared out of nowhere, crews that didn't care — these are real experiences people have had.</p>
+          <p>We know. The moving industry has a reputation problem, and a lot of it is earned. Late arrivals, broken items, charges that appeared out of nowhere, crews that didn't care, these are real experiences people have had.</p>
           <p>VYV was built specifically in response to that. We do in-person walkthroughs before quoting. We communicate before, during, and after. We treat your belongings the way we'd want ours treated. And we don't cut corners with who we hire.</p>
-          <div class="obj-highlight">"Professional, prompt, took care of our stuff — I fully and whole-heartedly recommend them." — Meagan V., Northern Virginia</div>
+          <div class="obj-highlight">"Professional, prompt, took great care of our stuff. I fully and whole-heartedly recommend them." (Meagan V., Northern Virginia)</div>
         </div>
       </div>
       <div class="obj-item">
@@ -1073,8 +1073,8 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>We recommend being present for the initial walkthrough at the start of the move and at the final delivery to confirm everything arrived and is placed correctly. During the move itself, you don't have to hover — but having someone available to answer questions and make decisions keeps things moving smoothly.</p>
-          <p>Kids and pets do best when they're in one room away from the work area — or ideally, with a sitter for the day. It makes the move faster and less stressful for everyone.</p>
+          <p>We recommend being present for the initial walkthrough at the start of the move and at the final delivery to confirm everything arrived and is placed correctly. During the move itself, you don't have to hover, but having someone available to answer questions and make decisions keeps things moving smoothly.</p>
+          <p>Kids and pets do best when they're in one room away from the work area, or ideally, with a sitter for the day. It makes the move faster and less stressful for everyone.</p>
         </div>
       </div>
       <div class="obj-item">
@@ -1083,7 +1083,7 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>We handle your belongings with care from the moment we touch them. But if something does happen, we deal with it directly — no corporate runaround, no waiting months for a claims department to respond.</p>
+          <p>We handle your belongings with care from the moment we touch them. But if something does happen, we deal with it directly, no corporate runaround, no waiting months for a claims department to respond.</p>
           <p>During your consultation, we walk through how claims work so you know the process before moving day. We'd rather talk about it upfront than have you discover it after something goes wrong.</p>
           <div class="obj-highlight">We're a locally-owned company. Our reputation is personal. When something goes wrong, it matters to us the same way it matters to you.</div>
         </div>
@@ -1094,9 +1094,9 @@ body{
           <span class="obj-item-icon">&#9660;</span>
         </div>
         <div class="obj-item-body">
-          <p>This is a fair question given how many people have been burned by no-shows. Our crew members are direct employees — not day laborers pulled from a list the night before. When you book a date with VYV, that date belongs to you.</p>
-          <p>If anything changes on our end, you hear from us first — not on moving day morning. We communicate proactively because we know what's at stake when someone is counting on us to show up.</p>
-          <div class="obj-highlight">"Came when they said, took care of everything, were friendly and professional." — Jessica P., Stafford, VA</div>
+          <p>This is a fair question given how many people have been burned by no-shows. Our crew members are direct employees, not day laborers pulled from a list the night before. When you book a date with VYV, that date belongs to you.</p>
+          <p>If anything changes on our end, you hear from us first, not on moving day morning. We communicate proactively because we know what's at stake when someone is counting on us to show up.</p>
+          <div class="obj-highlight">"Came when they said, took care of everything, were friendly and professional.", Jessica P., Stafford, VA</div>
         </div>
       </div>
     </div>
@@ -1143,7 +1143,7 @@ body{
         </div>
       </div>
       <button class="btn-main" style="margin-top:16px" onclick="confirmPdfQuestions()">Generate My PDF</button>
-      <button class="btn-sec" style="margin-top:8px" onclick="skipPdfQuestions()">Skip — Generate Now</button>
+      <button class="btn-sec" style="margin-top:8px" onclick="skipPdfQuestions()">Skip, Generate Now</button>
     </div>
 
     <!-- CTA -->
@@ -1164,7 +1164,7 @@ body{
     <!-- Confirmation Success -->
     <div class="confirm-success hidden" id="confirm-success">
       <div class="confirm-icon">&#10003;</div>
-      <div class="confirm-head">You're on our list — we'll be in touch.</div>
+      <div class="confirm-head">You're on our list, we'll be in touch.</div>
       <p class="confirm-body">We've received your moving plan and will reach out to you at the email and phone number you provided. Expect to hear from us within one business day to confirm your date and next steps.</p>
       <button class="btn-pdf-dl" onclick="downloadPlan()" style="margin:16px auto 0;display:block">&#8595; Save Your Moving Plan as PDF</button>
       <a href="https://validateyourvision.com" class="btn-back-site">&#8592; Back to Validate Your Vision</a>
@@ -1308,9 +1308,9 @@ const SPEC_CONFIG = {
     {val:'safe_vault',label:'Vault or Commercial Safe',            price:null, custom:true},
   ]},
   pool:       {label:'Pool Table',             subQ:'What size is the pool table?',   extraTruck:[], options:[
-    {val:'pool_std',        label:'7–8 ft — includes disassembly, setup & leveling', price:399},
-    {val:'pool_full',       label:'9 ft Slate — includes disassembly, setup & leveling', price:475},
-    {val:'pool_tournament', label:'12 ft Tournament — includes disassembly, setup & leveling', price:649},
+    {val:'pool_std',        label:'7–8 ft, includes disassembly, setup & leveling', price:399},
+    {val:'pool_full',       label:'9 ft Slate, includes disassembly, setup & leveling', price:475},
+    {val:'pool_tournament', label:'12 ft Tournament, includes disassembly, setup & leveling', price:649},
   ]},
   hottub:     {label:'Hot Tub / Spa',          subQ:'What size is the hot tub?',      extraTruck:['hottub_lg'], options:[
     {val:'hottub_sm',  label:'Small (2–3 person)',    price:399},
@@ -1338,7 +1338,7 @@ const SPEC_CONFIG = {
 };
 
 const SPEC_SURCHARGE = {
-  stairs:    {label:'Flight Fee', perFlight:true, rate:50},
+  stairs:    {label:'Additional Labor & Equipment', perFlight:true, rate:50},
   longcarry: {label:'Extended carry (>75 ft from truck)', amount:100},
   terrain:   {label:'Difficult terrain', amount:100},
   tight:     {label:'Tight access or narrow doorway', amount:125},
@@ -1550,10 +1550,10 @@ function calcSpecialty() {
     const opt = cfg.options.find(o=>o.val===detail);
     if (!opt) continue;
     if (opt.custom || opt.price===null) {
-      lines.push({label:`${cfg.label} — ${opt.label}`, price:null, custom:true});
+      lines.push({label:`${cfg.label}, ${opt.label}`, price:null, custom:true});
       hasCustom = true;
     } else {
-      lines.push({label:`${cfg.label} — ${opt.label}`, price:opt.price});
+      lines.push({label:`${cfg.label}, ${opt.label}`, price:opt.price});
       baseTotal += opt.price;
     }
     if (cfg.extraTruck && cfg.extraTruck.includes(detail)) needsExtraTruck = true;
@@ -1599,7 +1599,7 @@ function renderSpecialty() {
   let html = `
     <div class="spec-bill-head">Specialty Item Estimate</div>
     <div class="spec-bill-sub">This is a separate bill from your moving estimate above.</div>
-    <span class="spec-bill-crew">4-Mover Minimum — All Specialty Jobs</span>
+    <span class="spec-bill-crew">4-Mover Minimum, All Specialty Jobs</span>
     <div>`;
 
   for (const ln of r.lines) {
@@ -1696,7 +1696,7 @@ single('s3b', btn => { S.boxCount = btn.dataset.val; S.boxMod = parseFloat(btn.d
   document.getElementById('s4-cont').addEventListener('click', ()=>next());
 })();
 
-/* S5: Stairs — context-aware, asks origin then destination */
+/* S5: Stairs, context-aware, asks origin then destination */
 function buildStairsScreen() {
   const isApt = APT_TYPES.includes(S.propType);
   const qEl   = document.getElementById('s5-q');
@@ -1777,7 +1777,7 @@ function buildStairsScreen() {
     });
   }
 
-  /* Destination stairs — shared handler regardless of apt/house */
+  /* Destination stairs, shared handler regardless of apt/house */
   s5.addEventListener('click', e => {
     const btn = e.target.closest('#s5-dest .opt');
     if (!btn) return;
@@ -1789,7 +1789,7 @@ function buildStairsScreen() {
   });
 }
 
-/* S6: Carry — origin then destination */
+/* S6: Carry, origin then destination */
 (()=>{
   document.getElementById('s6').addEventListener('click', e => {
     const btn = e.target.closest('#s6-origin .opt');
@@ -1824,10 +1824,10 @@ function rebuildSubQuestions() {
     const cfg = SPEC_CONFIG[key];
     const sel = S.specialtyDetails[key];
     html += `<div style="margin-bottom:16px">
-      <p class="q-sub" style="margin-bottom:8px;font-weight:600">${cfg.label} — ${cfg.subQ}</p>
+      <p class="q-sub" style="margin-bottom:8px;font-weight:600">${cfg.label}, ${cfg.subQ}</p>
       <div class="opts" data-subq="${key}">`;
     for (const opt of cfg.options) {
-      const priceTag = opt.custom ? '' : ` — $${opt.price.toLocaleString()}`;
+      const priceTag = opt.custom ? '' : `, $${opt.price.toLocaleString()}`;
       html += `<button class="opt${sel===opt.val?' sel':''}" data-item="${key}" data-detail="${opt.val}">
         <span>${opt.label}${priceTag}</span><span class="chk">&#10003;</span>
       </button>`;
@@ -2225,8 +2225,8 @@ function renderResults() {
 }
 
 function renderMoveSummary(r) {
-  const pickup  = document.getElementById('pickup-addr').value || '—';
-  const dropoff = document.getElementById('dropoff-addr').value || '—';
+  const pickup  = document.getElementById('pickup-addr').value || '-';
+  const dropoff = document.getElementById('dropoff-addr').value || '-';
 
   const fromCity = pickup.split(',')[0]  || pickup;
   const toCity   = dropoff.split(',')[0] || dropoff;
@@ -2236,15 +2236,15 @@ function renderMoveSummary(r) {
   const dateMap = {
     week:'Within 7 Days', month:'Within 30 Days', quarter:'1–3 Months', planning:'Just Planning Ahead'
   };
-  document.getElementById('summary-date').textContent  = dateMap[S.moveDate] || (S.moveDate || '—');
+  document.getElementById('summary-date').textContent  = dateMap[S.moveDate] || (S.moveDate || '-');
   const owMiles = S.miles ? (S.miles / 2) : 0;
   const milesLabel = owMiles > 50
     ? `${owMiles.toFixed(0)} mi one way (long distance)`
-    : owMiles > 0 ? `${owMiles.toFixed(1)} mi one way` : '—';
+    : owMiles > 0 ? `${owMiles.toFixed(1)} mi one way` : '-';
   document.getElementById('summary-miles').textContent = milesLabel;
-  document.getElementById('summary-size').textContent  = SL[S.homeSize] || '—';
-  document.getElementById('summary-time').textContent  = r ? `${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hrs` : '—';
-  document.getElementById('summary-crew').textContent  = S.crewSize ? `${S.crewSize} movers` : '—';
+  document.getElementById('summary-size').textContent  = SL[S.homeSize] || '-';
+  document.getElementById('summary-time').textContent  = r ? `${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hrs` : '-';
+  document.getElementById('summary-crew').textContent  = S.crewSize ? `${S.crewSize} movers` : '-';
 
   const svcs = ['Loading & Unloading'];
   if (S.packingOn) svcs.push('Packing');
@@ -2455,7 +2455,7 @@ async function downloadPlan() {
   doc.setFillColor(...navy);
   doc.roundedRect(margin, y, cw, 24, 2, 2, 'F');
   doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.setTextColor(...white);
-  doc.text(r ? fmtR(r.totalLo, r.totalHi) : '—', W/2, y + 15, {align:'center'});
+  doc.text(r ? fmtR(r.totalLo, r.totalHi) : '-', W/2, y + 15, {align:'center'});
   doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(180,160,210);
   doc.text('Price range based on move details provided', W/2, y + 21, {align:'center'});
   y += 30;
@@ -2480,7 +2480,7 @@ async function downloadPlan() {
   });
 
   gap(3);
-  infoBox('Your deposit secures your move date and is applied toward your final balance — it is not an additional charge.', greenlt, green);
+  infoBox('Your deposit secures your move date and is applied toward your final balance, it is not an additional charge.', greenlt, green);
   gap(2);
   doc.setFontSize(7.5); doc.setFont('helvetica','italic'); doc.setTextColor(...muted);
   const disc = doc.splitTextToSize('This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.', cw);
@@ -2532,11 +2532,11 @@ async function downloadPlan() {
   y += 38;
 
   const whyItems = [
-    {icon:'✓', head:'We walk your home before we quote you anything.', body:'No guessing. No generic pricing. We see exactly what we\'re moving before giving you a number — so moving day doesn\'t come with surprises.'},
-    {icon:'✓', head:'Background-checked crew members, every time.', body:'Every VYV mover is vetted before they step on a job. You\'re letting people into your home — that matters to us.'},
-    {icon:'✓', head:'We show up when we say we will.', body:'"Came when they said, took care of everything, were friendly and professional." — Jessica P., Stafford, VA'},
+    {icon:'✓', head:'We walk your home before we quote you anything.', body:'No guessing. No generic pricing. We see exactly what we\'re moving before giving you a number, so moving day doesn\'t come with surprises.'},
+    {icon:'✓', head:'Background-checked crew members, every time.', body:'Every VYV mover is vetted before they step on a job. You\'re letting people into your home, that matters to us.'},
+    {icon:'✓', head:'We show up when we say we will.', body:'"Came when they said, took care of everything, were friendly and professional.", Jessica P., Stafford, VA'},
     {icon:'✓', head:'Your belongings are handled like they matter.', body:'The furniture your grandmother left you. The piano you\'ve had since childhood. Our crew handles them that way.'},
-    {icon:'✓', head:'One team, one plan, start to finish.', body:'Packing, moving, unpacking, White Glove organizing — all available through one team. No coordinating five vendors for one move.'},
+    {icon:'✓', head:'One team, one plan, start to finish.', body:'Packing, moving, unpacking, White Glove organizing, all available through one team. No coordinating five vendors for one move.'},
   ];
 
   whyItems.forEach(w => {
@@ -2565,11 +2565,11 @@ async function downloadPlan() {
   sectionTitle('Common Questions & Honest Answers');
 
   const objections = [
-    {q:'"Your price seems higher than other quotes I got."', a:'Lower quotes often come from companies that haven\'t seen your home, use unvetted day laborers, or add fees on moving day. Our estimate is built from real information. The most expensive move is one that goes wrong — broken furniture, a no-show crew, or a bill that doubled on moving day.'},
-    {q:'"Will my price change on moving day?"', a:'Your estimate is based on actual move time. Because we gather detailed information upfront — stairs, carry distance, specialty items, home size — our ranges are accurate and rarely far off. If anything changes before moving day, we adjust together, not after the truck is loaded.'},
-    {q:'"I\'ve had bad experiences with movers before."', a:'We know. VYV was built in direct response to that. In-person walkthroughs before quoting. Proactive communication. Vetted employees, not day laborers. "Professional, prompt, took care of our stuff — I fully and whole-heartedly recommend them." — Meagan V.'},
-    {q:'"What if something gets damaged?"', a:'We handle your belongings with care from the first touch. If something does happen, we deal with it directly — no corporate runaround. We walk through the claims process during your consultation so there are no surprises. We\'re locally owned. Our reputation is personal.'},
-    {q:'"How do I know you\'ll show up?"', a:'Our crew are direct employees — not day laborers pulled the night before. When you book a date with VYV, that date belongs to you. If anything changes on our end, you hear from us first — not on moving day morning.'},
+    {q:'"Your price seems higher than other quotes I got."', a:'Lower quotes often come from companies that haven\'t seen your home, use unvetted day laborers, or add fees on moving day. Our estimate is built from real information. The most expensive move is one that goes wrong, broken furniture, a no-show crew, or a bill that doubled on moving day.'},
+    {q:'"Will my price change on moving day?"', a:'Your estimate is based on actual move time. Because we gather detailed information upfront, stairs, carry distance, specialty items, home size, our ranges are accurate and rarely far off. If anything changes before moving day, we adjust together, not after the truck is loaded.'},
+    {q:'"I\'ve had bad experiences with movers before."', a:'We know. VYV was built in direct response to that. In-person walkthroughs before quoting. Proactive communication. Vetted employees, not day laborers. "Professional, prompt, took care of our stuff, I fully and whole-heartedly recommend them.", Meagan V.'},
+    {q:'"What if something gets damaged?"', a:'We handle your belongings with care from the first touch. If something does happen, we deal with it directly, no corporate runaround. We walk through the claims process during your consultation so there are no surprises. We\'re locally owned. Our reputation is personal.'},
+    {q:'"How do I know you\'ll show up?"', a:'Our crew are direct employees, not day laborers pulled the night before. When you book a date with VYV, that date belongs to you. If anything changes on our end, you hear from us first, not on moving day morning.'},
   ];
 
   objections.forEach(obj => {
@@ -2639,16 +2639,16 @@ function buildChecklistPhases() {
       title: '4–6 Weeks Before Moving Day',
       items: [
         'Book your moving company and confirm crew size, date, and all services',
-        'Declutter every room — sell, donate, or discard what you won\'t take',
+        'Declutter every room, sell, donate, or discard what you won\'t take',
         'Photograph all valuables, antiques, and electronics setups for insurance records',
-        hasSpecial ? `Coordinate specialty item logistics with your mover — your plan includes: ${specNames}` : null,
-        hasAppl    ? `Confirm appliance service and disconnect requirements — your plan includes appliances` : null,
+        hasSpecial ? `Coordinate specialty item logistics with your mover, your plan includes: ${specNames}` : null,
+        hasAppl    ? `Confirm appliance service and disconnect requirements, your plan includes appliances` : null,
         'Start gathering moving boxes, packing tape, and supplies',
-        'Talk to kids about the move — introduce it as an adventure, not just a disruption',
+        'Talk to kids about the move, introduce it as an adventure, not just a disruption',
         'Notify landlord of your move-out date and review lease terms (if renting)',
         hasStorage ? 'Confirm your storage unit address and access hours with your facility' : null,
         ...(S.hasKids ? ['Book a sitter or plan childcare for moving day'] : []),
-        ...(S.hasGarage ? ['Walk through garage, attic, and outdoor areas — decide what moves vs. donates'] : []),
+        ...(S.hasGarage ? ['Walk through garage, attic, and outdoor areas, decide what moves vs. donates'] : []),
       ].filter(Boolean),
     });
 
@@ -2658,12 +2658,12 @@ function buildChecklistPhases() {
         'File change of address with USPS at usps.com',
         'Notify your bank, employer, credit cards, insurance provider, pharmacy, and subscriptions',
         'Update your Virginia DMV address',
-        'Schedule utility disconnect at your current address — overlap new service by at least one day',
+        'Schedule utility disconnect at your current address, overlap new service by at least one day',
         'Schedule utility connect at your new address: electricity, gas, water, internet',
-        'Confirm all move details with VYV — crew size, start time, services, both addresses',
-        hasPacking ? 'VYV packers are handling your boxes — focus on labeling rooms and clearing paths' : 'Start packing non-essentials: seasonal items, books, decorations, extra linens',
-        hasPacking ? null : 'Use color-coded tape — one color per destination room — so movers place boxes correctly',
-        hasDA      ? `Confirm which furniture pieces need disassembly — your plan includes: ${daNames}` : null,
+        'Confirm all move details with VYV, crew size, start time, services, both addresses',
+        hasPacking ? 'VYV packers are handling your boxes, focus on labeling rooms and clearing paths' : 'Start packing non-essentials: seasonal items, books, decorations, extra linens',
+        hasPacking ? null : 'Use color-coded tape, one color per destination room, so movers place boxes correctly',
+        hasDA      ? `Confirm which furniture pieces need disassembly, your plan includes: ${daNames}` : null,
         ...(S.hasUtilities ? ['Schedule utility transfers: electric, gas, internet, water'] : []),
         ...(S.hasUtilities ? ['Update address: bank, DMV, USPS forward, subscriptions'] : []),
       ].filter(Boolean),
@@ -2674,23 +2674,23 @@ function buildChecklistPhases() {
     title: isUrgent ? 'Before Moving Day' : '1 Week Before Moving Day',
     items: [
       'Confirm start time with VYV and get the crew lead\'s direct number for moving day',
-      hasPacking ? 'VYV is handling packing — set aside valuables and personal items to keep separate' : 'Aim to be 75% packed by now — daily-use items last',
+      hasPacking ? 'VYV is handling packing, set aside valuables and personal items to keep separate' : 'Aim to be 75% packed by now, daily-use items last',
       'Arrange childcare or a trusted person to watch kids during the move',
-      'Arrange care for pets on moving day — they\'ll be less stressed away from the activity',
+      'Arrange care for pets on moving day, they\'ll be less stressed away from the activity',
       'Confirm parking clearance for the moving truck at both addresses',
-      hasStairs  ? 'Clear staircases at both addresses — remove rugs, obstacles, and anything on steps' : null,
+      hasStairs  ? 'Clear staircases at both addresses, remove rugs, obstacles, and anything on steps' : null,
       'Return any borrowed items; retrieve anything you\'ve lent to others',
       hasStorage ? 'Confirm your storage unit is accessible and unlocked on moving day' : null,
     ].filter(Boolean),
   });
 
   const twoDayItems = [
-    hasPacking ? null : 'Finish all packing — only leave out what you need for the next 48 hours',
-    hasFridge  ? 'Defrost your refrigerator tonight — leave both doors open to fully dry overnight' : (hasAppl ? null : 'Defrost refrigerator and leave doors open overnight to dry completely'),
-    hasWasher  ? 'Drain and dry your washing machine — run a spin cycle, then disconnect the water hose' : null,
-    hasAppl    ? 'Drain dishwasher and dry interior — most movers won\'t move a wet appliance' : null,
+    hasPacking ? null : 'Finish all packing, only leave out what you need for the next 48 hours',
+    hasFridge  ? 'Defrost your refrigerator tonight, leave both doors open to fully dry overnight' : (hasAppl ? null : 'Defrost refrigerator and leave doors open overnight to dry completely'),
+    hasWasher  ? 'Drain and dry your washing machine, run a spin cycle, then disconnect the water hose' : null,
+    hasAppl    ? 'Drain dishwasher and dry interior, most movers won\'t move a wet appliance' : null,
     hasAppl    ? 'Confirm all appliance water lines are disconnected or arranged for VYV crew to handle' : null,
-    'Pack your "Open First" box — this stays in YOUR car, not on the truck',
+    'Pack your "Open First" box, this stays in YOUR car, not on the truck',
     'Charge all phones, tablets, and laptops fully tonight',
     'Fill your gas tank',
     'Check the weather forecast for moving day',
@@ -2704,12 +2704,12 @@ function buildChecklistPhases() {
   phases.push({ title: '2 Days Before Moving Day', items: twoDayItems });
 
   phases.push({
-    title: 'Your "Open First" Box — Goes in Your Car, Not the Truck',
+    title: 'Your "Open First" Box, Goes in Your Car, Not the Truck',
     items: [
       'Chargers for every phone, tablet, and laptop in the household',
       'A change of clothes and undergarments for everyone',
       'All daily medications and medical devices',
-      'Toiletries — toothbrush, toothpaste, deodorant, soap, and shampoo',
+      'Toiletries, toothbrush, toothpaste, deodorant, soap, and shampoo',
       'Toilet paper, paper towels, and hand soap for day one',
       'Sheets, pillows, and one blanket per person',
       'Snacks, water bottles, and your coffee maker',
@@ -2724,17 +2724,17 @@ function buildChecklistPhases() {
       'Be awake and ready 15 minutes before the crew\'s scheduled arrival',
       'Clear the driveway and all pathways from every room to the front door',
       'Have water, sports drinks, or snacks available for the crew',
-      'Keep kids in one room away from the work area — or better yet, out of the house',
+      'Keep kids in one room away from the work area, or better yet, out of the house',
       ...(S.hasKids ? ['Confirm childcare/sitter is set for today'] : []),
       ...(S.hasKids ? ['Set up a safe area for kids and pets during the move'] : []),
       'Do a complete walkthrough with the crew lead before anything is moved',
       hasSpecial ? `Point out your specialty items to the crew lead: ${specNames}` : null,
       hasDA      ? `Confirm which pieces need disassembly before the crew starts: ${daNames}` : null,
-      'Mark anything staying behind clearly — sticky notes on doors work well',
+      'Mark anything staying behind clearly, sticky notes on doors work well',
       'Do one final walkthrough before the truck leaves: every room, closet, cabinet, and drawer',
       'At the new home: walk every room with the crew lead and confirm placement before they leave',
       'Inspect all furniture and boxes for any damage before signing off',
-      hasStorage ? 'Confirm storage unit access at your facility — have the unit number and gate code ready' : null,
+      hasStorage ? 'Confirm storage unit access at your facility, have the unit number and gate code ready' : null,
     ].filter(Boolean),
   });
 
@@ -2783,27 +2783,27 @@ function buildText() {
   const isApt= APT_TYPES.includes(S.propType);
   const stairsStr = isApt && S.aptFloor
     ? S.aptFloor + (S.stairs!==null ? ' · ' + (S.stairs===0?'No stairs':S.stairs===4?'4+ flights':S.stairs+' flight(s)') : '')
-    : S.stairs===null?'—':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)';
+    : S.stairs===null?'-':S.stairs===0?'None':S.stairs===3?'3+ flights':S.stairs+' flight(s)';
 
   return [
     'VALIDATE YOUR VISION | MOVE PLAN & ESTIMATE',
     '='.repeat(44),'',
     `Name:    ${name}`,`Email:   ${em}`,`Phone:   ${ph}`,'',
-    `From:    ${document.getElementById('pickup-addr').value||'—'}`,
-    `To:      ${document.getElementById('dropoff-addr').value||'—'}`,
+    `From:    ${document.getElementById('pickup-addr').value||'-'}`,
+    `To:      ${document.getElementById('dropoff-addr').value||'-'}`,
     `Distance: ${(S.miles/2).toFixed(1)} mi one way (${S.miles.toFixed(1)} mi round trip)`,'',
-    `Property:    ${PL[S.propType]||'—'}`,
-    `Size:        ${SL[S.homeSize]||'—'}`,
-    `Furnishing:  ${FL[S.furnish]||'—'}`,
+    `Property:    ${PL[S.propType]||'-'}`,
+    `Size:        ${SL[S.homeSize]||'-'}`,
+    `Furnishing:  ${FL[S.furnish]||'-'}`,
     S.spaces.length ? `Extra areas: ${S.spaces.join(', ')}` : '',
     `Stairs:      ${stairsStr}`,
-    `Walk/carry:  ${CL[S.carry]||'—'}`,
+    `Walk/carry:  ${CL[S.carry]||'-'}`,
     `Specialty:   ${spec}`,
     `Disassembly: ${da}`,
     `Crew:        ${S.crewSize} movers @ $${S.crewRate}/hr`,
     `Packing:     ${PTL[S.packType]||'None'}${S.packingOn&&S.packers?' · '+S.packers+' packers @ $'+S.packerRate+'/hr':''}`,
-    `Storage:     ${STL[S.storage]||'—'}`,
-    `Move date:   ${DTL[S.moveDate]||'—'}`,'',
+    `Storage:     ${STL[S.storage]||'-'}`,
+    `Move date:   ${DTL[S.moveDate]||'-'}`,'',
     'ESTIMATED INVESTMENT', '-'.repeat(44),
     fmtR(r.totalLo, r.totalHi),
     `Estimated labor time: ${r.lo.toFixed(1)}–${r.hi.toFixed(1)} hours`,'',
@@ -2835,8 +2835,8 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
   const name = document.getElementById('lead-name').value.trim();
   const em   = document.getElementById('lead-email').value.trim();
   const ph   = document.getElementById('lead-phone').value.trim();
-  const from = document.getElementById('pickup-addr').value||'—';
-  const to   = document.getElementById('dropoff-addr').value||'—';
+  const from = document.getElementById('pickup-addr').value||'-';
+  const to   = document.getElementById('dropoff-addr').value||'-';
   const spec = S.specialty.map(s=>SPECL[s]||s).join(', ')||'None';
   const da   = S.disassembly.length ? S.disassembly.join(', ') : 'None needed';
   const incl = ['Professional Movers','Moving Truck & Transportation','Moving Equipment & Supplies','Travel Costs','Move Planning & Coordination',
@@ -2855,7 +2855,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
         <div style="font-size:14px;font-weight:700;color:#1c2b3a">${name}</div>
         <div style="font-size:12px;color:#3d5166">${em}</div>
         <div style="font-size:12px;color:#3d5166">${ph}</div>
-        <div style="font-size:12px;color:#566779;margin-top:6px">Move: ${DTL[S.moveDate]||'—'}</div>
+        <div style="font-size:12px;color:#566779;margin-top:6px">Move: ${DTL[S.moveDate]||'-'}</div>
       </div>
       <div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Move Route</div>
@@ -2867,10 +2867,10 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
       <div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#566779;font-weight:700;margin-bottom:5px">Home Details</div>
-        <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'—'} &middot; ${SL[S.homeSize]||'—'}</div>
-        <div style="font-size:12px;color:#3d5166;margin-top:2px">${FL[S.furnish]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166">${PL[S.propType]||'-'} &middot; ${SL[S.homeSize]||'-'}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">${FL[S.furnish]||'-'}</div>
         ${S.spaces.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Extra: ${S.spaces.join(', ')}</div>`:''}
-        <div style="font-size:12px;color:#3d5166;margin-top:2px">Walk: ${CL[S.carry]||'—'}</div>
+        <div style="font-size:12px;color:#3d5166;margin-top:2px">Walk: ${CL[S.carry]||'-'}</div>
         ${S.specialty.length?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Specialty: ${spec}</div>`:''}
         <div style="font-size:12px;color:#3d5166;margin-top:2px">Disassembly: ${da}</div>
         ${S.storage&&S.storage!=='no'?`<div style="font-size:12px;color:#3d5166;margin-top:2px">Storage: ${STL[S.storage]}</div>`:''}
