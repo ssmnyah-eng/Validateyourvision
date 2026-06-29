@@ -603,8 +603,8 @@ body{
       <div>
         <div class="badge">Validate Your Vision | Fredericksburg, VA</div>
         <h1 class="welcome-h">Let's Build<br>Your Move Plan</h1>
-        <p class="welcome-p" style="margin-top:14px">Moving can be stressful enough. Answer a few questions and we'll create a personalized moving estimate based on your specific situation.</p>
-        <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Start My Move Plan</button>
+        <p class="welcome-p" style="margin-top:14px">Answer a few questions and we'll build your personalized moving plan — including your estimate, a custom checklist, and everything you need to prepare for moving day.</p>
+        <button class="btn-main" style="max-width:260px;margin-top:28px" id="btn-start">Build My Moving Plan</button>
       </div>
     </div>
   </div>
@@ -885,7 +885,7 @@ body{
   <!-- Lead Capture -->
   <div class="screen" id="screen-lead">
     <h2 class="lead-h">Your Move Plan Is Ready</h2>
-    <p class="lead-p">Enter your contact information to view your personalized moving estimate.</p>
+    <p class="lead-p">Enter your contact info to view your moving plan and estimate.</p>
     <div class="frow"><label>Full Name</label><input type="text" id="lead-name" placeholder="Jane Smith"></div>
     <div class="frow"><label>Email Address</label><input type="email" id="lead-email" placeholder="jane@email.com"></div>
     <div class="frow"><label>Phone Number</label><input type="tel" id="lead-phone" placeholder="(540) 000-0000"></div>
@@ -1294,55 +1294,56 @@ const C = {
    ══════════════════════════════════════════ */
 const SPEC_CONFIG = {
   piano:      {label:'Piano',                  subQ:'What type of piano?',            extraTruck:['babygrand','grand'], options:[
-    {val:'spinet',    label:'Spinet / Console (~300 lbs)',    price:399},
-    {val:'studio',    label:'Studio Upright (~500–800 lbs)',  price:499},
-    {val:'babygrand', label:'Baby Grand (~500–600 lbs)',       price:599},
-    {val:'grand',     label:'Grand (~600–1,200 lbs)',          price:749},
-    {val:'concert',   label:'Concert Grand (1,400+ lbs)',      price:null, custom:true},
+    {val:'spinet',    label:'Spinet or Console',   price:375},
+    {val:'studio',    label:'Studio or Full Upright', price:475},
+    {val:'babygrand', label:'Baby Grand',           price:649},
+    {val:'grand',     label:'Grand Piano',          price:899},
+    {val:'concert',   label:'Concert Grand',        price:null, custom:true},
   ]},
-  safe:       {label:'Safe / Gun Safe',        subQ:'Roughly how heavy is the safe?', stairRate:200, extraTruck:['safe_800_1200'], options:[
-    {val:'safe_lt500',    label:'Under 500 lbs',         price:499},
-    {val:'safe_500_800',  label:'500–800 lbs',           price:649},
-    {val:'safe_800_1200', label:'800–1,200 lbs',         price:849},
-    {val:'safe_vault',    label:'1,200+ lbs (Vault)',    price:null, custom:true},
+  safe:       {label:'Safe / Gun Safe',        subQ:'Which best describes your safe?', stairRate:150, extraTruck:[], options:[
+    {val:'safe_sm',   label:'Small Safe or Handgun Safe',          price:299},
+    {val:'safe_med',  label:'Standard Gun Safe or Home Safe',      price:399},
+    {val:'safe_lg',   label:'Large Gun Safe or Heavy Floor Safe',  price:525},
+    {val:'safe_xl',   label:'Extra-Large Safe or Multi-Gun Cabinet', price:699},
+    {val:'safe_vault',label:'Vault or Commercial Safe',            price:null, custom:true},
   ]},
-  pool:       {label:'Pool Table',             subQ:'What size is the pool table?',   extraTruck:['pool_tournament'], options:[
-    {val:'pool_std',        label:'Standard 7–8 ft — includes disassembly, reassembly & leveling', price:499},
-    {val:'pool_full',       label:'Full Size 9 ft — includes disassembly, reassembly & leveling',  price:649},
-    {val:'pool_tournament', label:'Tournament 12 ft — includes disassembly, reassembly & leveling',price:849},
+  pool:       {label:'Pool Table',             subQ:'What size is the pool table?',   extraTruck:[], options:[
+    {val:'pool_std',        label:'7–8 ft — includes disassembly, setup & leveling', price:399},
+    {val:'pool_full',       label:'9 ft Slate — includes disassembly, setup & leveling', price:475},
+    {val:'pool_tournament', label:'12 ft Tournament — includes disassembly, setup & leveling', price:649},
   ]},
   hottub:     {label:'Hot Tub / Spa',          subQ:'What size is the hot tub?',      extraTruck:['hottub_lg'], options:[
     {val:'hottub_sm',  label:'Small (2–3 person)',    price:399},
     {val:'hottub_std', label:'Standard (4–6 person)', price:549},
-    {val:'hottub_lg',  label:'Large (7+ person)',      price:799},
+    {val:'hottub_lg',  label:'Large (7+ person)',      price:749},
   ]},
   sauna:      {label:'Sauna',                  subQ:'What type of sauna?',            options:[
-    {val:'sauna_infrared', label:'Infrared / Modular kit',  price:499},
-    {val:'sauna_barrel',   label:'Barrel sauna (~800 lbs)',  price:699},
-    {val:'sauna_custom',   label:'Custom-built sauna',       price:null, custom:true},
+    {val:'sauna_infrared', label:'Infrared or Modular Kit',  price:449},
+    {val:'sauna_barrel',   label:'Barrel Sauna',              price:649},
+    {val:'sauna_custom',   label:'Custom-Built Sauna',        price:null, custom:true},
   ]},
   fishtank:   {label:'Fish Tank / Aquarium',   subQ:'What size is the aquarium?',     options:[
-    {val:'tank_sm',     label:'Small (under 75 gallons)',  price:199},
-    {val:'tank_lg',     label:'Large (75–150 gallons)',    price:349},
-    {val:'tank_custom', label:'Custom / 200+ gallons',     price:null, custom:true},
+    {val:'tank_sm',     label:'Small (under 75 gallons)',  price:175},
+    {val:'tank_lg',     label:'Large (75–150 gallons)',    price:325},
+    {val:'tank_custom', label:'Custom or 200+ gallons',    price:null, custom:true},
   ]},
   clock:      {label:'Grandfather Clock',      subQ:'What type?',                     options:[
-    {val:'clock_std',     label:'Standard grandfather clock', price:299},
-    {val:'clock_antique', label:'Oversized or antique clock',  price:399},
+    {val:'clock_std',     label:'Standard Grandfather Clock', price:275},
+    {val:'clock_antique', label:'Oversized or Antique Clock', price:375},
   ]},
-  glass:      {label:'Large Glass / Mirrors',  price:199},
+  glass:      {label:'Large Glass / Mirrors',  price:175},
   artwork:    {label:'Large Artwork / Antiques', price:null, custom:true},
   commercial: {label:'Commercial Equipment',   price:null, custom:true},
   other:      {label:'Other Heavy Item',       price:null, custom:true},
 };
 
 const SPEC_SURCHARGE = {
-  stairs:    {label:'Stairs', perFlight:true, rate:75},
-  longcarry: {label:'Long carry from truck (>75 ft)', amount:100},
-  terrain:   {label:'Difficult terrain (slope / grass / gravel)', amount:100},
-  tight:     {label:'Tight access or doorway (<36")', amount:125},
-  elevator:  {label:'Elevator', amount:75},
-  shuttle:   {label:'Shuttle service', amount:300},
+  stairs:    {label:'Flight Fee', perFlight:true, rate:50},
+  longcarry: {label:'Extended carry (>75 ft from truck)', amount:100},
+  terrain:   {label:'Difficult terrain', amount:100},
+  tight:     {label:'Tight access or narrow doorway', amount:125},
+  elevator:  {label:'Elevator coordination', amount:75},
+  shuttle:   {label:'Shuttle service required', amount:300},
   hoist:     {label:'Hoist through window or balcony', amount:400},
   crane:     {label:'Crane required', custom:true},
 };
@@ -1566,7 +1567,8 @@ function calcSpecialty() {
       hasCustom = true;
     } else if (scCfg.perFlight) {
       const flights = S.specialtyFlights || 1;
-      const rate    = hasSafe ? 200 : scCfg.rate;
+      const safeStairRate = S.specialty.includes('safe') ? (SPEC_CONFIG.safe.stairRate || scCfg.rate) : scCfg.rate;
+      const rate    = hasSafe ? safeStairRate : scCfg.rate;
       const amt     = flights * rate;
       surLines.push({label:`${scCfg.label} (${flights} flight${flights>1?'s':''} × $${rate})`, price:amt});
       surTotal += amt;
