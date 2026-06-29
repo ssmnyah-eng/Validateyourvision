@@ -1570,7 +1570,7 @@ function calcSpecialty() {
       const safeStairRate = S.specialty.includes('safe') ? (SPEC_CONFIG.safe.stairRate || scCfg.rate) : scCfg.rate;
       const rate    = hasSafe ? safeStairRate : scCfg.rate;
       const amt     = flights * rate;
-      surLines.push({label:`${scCfg.label} (${flights} flight${flights>1?'s':''} × $${rate})`, price:amt});
+      surLines.push({label:scCfg.label, price:amt});
       surTotal += amt;
     } else {
       surLines.push({label:scCfg.label, price:scCfg.amount});
