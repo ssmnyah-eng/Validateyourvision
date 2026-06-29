@@ -2058,12 +2058,16 @@ const PRIORITY_MAP = {
   'Within 3–7 days':                  {level:2, label:'Priority 2 – High',      days:2},
   'Within 1–2 weeks':                 {level:3, label:'Priority 3 – Standard',  days:3},
   'Within 3–4 weeks':                 {level:4, label:'Priority 4 – Planned',   days:5},
-  'More than one month away':              {level:5, label:'Priority 5 – Future',    days:7},
-  'Not sure yet':                          {level:5, label:'Priority 5 – Future',    days:7},
-  'As Soon as Possible':                   {level:1, label:'Priority 1 – Emergency', days:1},
-  'Within 1 Month':                        {level:4, label:'Priority 4 – Planned',   days:5},
-  '1-3 Months':                            {level:5, label:'Priority 5 – Future',    days:7},
-  'Flexible / Not Sure':                   {level:5, label:'Priority 5 – Future',    days:7},
+  'More than one month away':         {level:5, label:'Priority 5 – Future',    days:7},
+  'Not sure yet':                     {level:5, label:'Priority 5 – Future',    days:7},
+  'As Soon as Possible':              {level:1, label:'Priority 1 – Emergency', days:1},
+  'Within 1 Month':                   {level:4, label:'Priority 4 – Planned',   days:5},
+  '1-3 Months':                       {level:5, label:'Priority 5 – Future',    days:7},
+  'Flexible / Not Sure':              {level:5, label:'Priority 5 – Future',    days:7},
+  'Within 7 Days':                    {level:2, label:'Priority 2 – High',      days:2},
+  'Within 30 Days':                   {level:4, label:'Priority 4 – Planned',   days:5},
+  '1–3 Months':                       {level:5, label:'Priority 5 – Future',    days:7},
+  'Just Planning Ahead':              {level:5, label:'Priority 5 – Future',    days:7},
 };
 
 function getPriority(timeline) {
@@ -2082,7 +2086,7 @@ const SIZE_LABEL  = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':
 const FURN_LABEL  = {light:'Lightly Furnished',average:'Average',full:'Fully Furnished',veryfull:'Very Heavily Furnished'};
 const CARRY_LABEL = {close:'Right at Door',medium:'Short Walk',long:'Moderate Walk',verylong:'Long Walk'};
 const PACK_LABEL  = {fragile:'Fragile Items Only',kitchen:'Kitchen Only',rooms:'Select Rooms',full:'Full Home Pack'};
-const DATE_LABEL  = {asap:'As Soon as Possible','1month':'Within 1 Month','3month':'1-3 Months',flexible:'Flexible / Not Sure'};
+const DATE_LABEL  = {week:'Within 7 Days',month:'Within 30 Days',quarter:'1–3 Months',planning:'Just Planning Ahead'};
 const CONF_LABEL  = {very:'Very Confident',mostly:'Mostly Sure',unsure:'Not Sure Yet'};
 const CX_LABEL    = {std:'Standard',mod:'Moderate',cpx:'Complex'};
 
@@ -2280,8 +2284,7 @@ function renderMoveSummary(r) {
   document.getElementById('summary-to').textContent   = toCity;
 
   const dateMap = {
-    flexible:'Flexible / TBD', next7:'Within 7 days', next30:'Within 30 days',
-    next60:'Within 60 days', next90:'Within 90 days', planning:'Planning ahead'
+    week:'Within 7 Days', month:'Within 30 Days', quarter:'1–3 Months', planning:'Just Planning Ahead'
   };
   document.getElementById('summary-date').textContent  = dateMap[S.moveDate] || (S.moveDate || '—');
   document.getElementById('summary-miles').textContent = S.miles ? (S.miles/2).toFixed(1)+' mi one way' : '—';
@@ -2448,7 +2451,7 @@ async function downloadPlan() {
   doc.setFontSize(13); doc.setFont('helvetica','bold'); doc.setTextColor(...navy);
   doc.text((from || 'Origin') + '  →  ' + (to || 'Destination'), margin + 4, y + 10);
   doc.setFontSize(8.5); doc.setFont('helvetica','normal'); doc.setTextColor(...muted);
-  const dateMap2 = {flexible:'Flexible / TBD', next7:'Within 7 days', next30:'Within 30 days', next60:'Within 60 days', next90:'Within 90 days', planning:'Planning ahead'};
+  const dateMap2 = {week:'Within 7 Days', month:'Within 30 Days', quarter:'1–3 Months', planning:'Just Planning Ahead'};
   const summaryParts = [
     S.moveDate ? (dateMap2[S.moveDate]||S.moveDate) : null,
     S.miles ? ((S.miles/2).toFixed(1) + ' mi one way') : null,
@@ -2636,7 +2639,7 @@ function buildChecklistPhases() {
   const hasPacking = !!S.packingOn;
   const hasStorage = S.storage && S.storage !== 'none';
   const hasStairs  = (S.stairs && S.stairs > 0) || (S.destStairs && S.destStairs > 0);
-  const isUrgent   = S.moveDate === 'next7';
+  const isUrgent   = S.moveDate === 'week';
   const specNames  = S.specialty.map(k => SPEC_CONFIG[k]?.label || k).join(', ');
   const daNames    = S.disassembly.join(', ');
 
