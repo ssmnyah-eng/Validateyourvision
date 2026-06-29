@@ -2513,13 +2513,14 @@ async function downloadPlan() {
     phase.items.forEach(item => {
       if (y > 270) newPage();
       const done = checkedItems.has(item);
-      doc.setFillColor(done ? ...[30,107,74] : ...[220,210,240]);
+      if (done) { doc.setFillColor(30,107,74); } else { doc.setFillColor(220,210,240); }
       doc.roundedRect(margin, y - 3.5, 5, 5, 1, 1, 'F');
       if (done) {
         doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(...white);
         doc.text('✓', margin + 0.8, y + 0.2);
       }
-      doc.setFontSize(8.5); doc.setFont('helvetica', done ? 'normal' : 'normal'); doc.setTextColor(done ? ...[150,140,165] : ...navy);
+      if (done) { doc.setTextColor(150,140,165); } else { doc.setTextColor(...navy); }
+      doc.setFontSize(8.5); doc.setFont('helvetica','normal');
       const lines = doc.splitTextToSize(item, cw - 9);
       doc.text(lines, margin + 7, y);
       y += lines.length * 5 + 1;
