@@ -89,11 +89,15 @@
   "hasMap": "https://validateyourvision.com/pricing-estimator.html"
 }
 </script>
+<!-- Security: upgrade any stray HTTP sub-resources to HTTPS so browsers never show "Not Secure" -->
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<!-- Speed: preconnect so DNS + TLS handshake happens in parallel with HTML parse -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Speed: load fonts without blocking render — swap in once loaded -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&display=swap"></noscript>
+<!-- Speed: jsPDF + html2canvas only needed when user downloads PDF — lazy loaded then -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initMaps" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -2353,6 +2357,15 @@ function confirmMove(source) {
    PDF DOWNLOAD
    ══════════════════════════════════════════ */
 async function downloadPlan() {
+  // Lazy-load jsPDF only when user actually requests a PDF download
+  if (!window.jspdf) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({unit:'mm', format:'a4'});
   const W = 210, margin = 16, cw = W - margin*2;
