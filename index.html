@@ -6,7 +6,7 @@
 
   <!-- ===== SEO: Title & Meta ===== -->
   <title>Movers Fredericksburg VA | Packing, Moving & Unpacking | Validate Your Vision</title>
-  <meta name="description" content="Professional movers in Fredericksburg, VA, packing, moving labor, unpacking & organizing. We plan your move before moving day. Upfront pricing, no hidden fees. Serving Stafford, Spotsylvania, Woodbridge, Northern Virginia & Richmond. Book your free move plan today." />
+  <meta name="description" content="Professional movers in Fredericksburg, VA, packing, moving labor, unpacking & organizing. We plan your move before moving day. Upfront pricing, no hidden fees. Serving Stafford, Spotsylvania, Woodbridge, Northern Virginia & Richmond." />
   <link rel="canonical" href="https://validateyourvision.com/" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
@@ -999,730 +999,281 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .ps.in { opacity: 1; transform: none; }
-    .ps:nth-child(1) { transition-delay: 0.05s; }
-    .ps:nth-child(2) { transition-delay: 0.12s; }
-    .ps:nth-child(3) { transition-delay: 0.19s; }
-    .ps:nth-child(4) { transition-delay: 0.26s; }
-    .ps:nth-child(5) { transition-delay: 0.33s; }
-    .ps:last-child { margin-bottom: 0; }
-    .ps-left  { text-align: right; }
-    .ps-right { text-align: left; }
-    .ps.even .ps-left  { order:3; text-align: left; }
-    .ps.even .ps-center{ order:2; }
-    .ps.even .ps-right { order:1; text-align: right; }
-    .ps-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-    .ps-node {
-      width: 64px; height: 64px;
+    .ps:nth-child(odd) .ps-left { grid-column: 1; text-align: right; }
+    .ps:nth-child(odd) .ps-center { grid-column: 2; }
+    .ps:nth-child(odd) .ps-right { grid-column: 3; text-align: left; visibility: hidden; }
+    .ps:nth-child(even) .ps-left { grid-column: 1; visibility: hidden; }
+    .ps:nth-child(even) .ps-center { grid-column: 2; }
+    .ps:nth-child(even) .ps-right { grid-column: 3; text-align: left; }
+    .ps-circle {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--ap), var(--lv));
+      background: var(--lv);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Raleway', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--tw);
-      box-shadow: 0 0 0 8px rgba(139,91,199,0.12), 0 0 0 16px rgba(139,91,199,0.05);
+      font-size: 2rem;
       flex-shrink: 0;
-      transition: transform 0.3s;
     }
-    .ps:hover .ps-node { transform: scale(1.1); }
-    .ps-num {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: rgba(236,235,238,0.25);
-    }
-    .ps-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(139,91,199,0.12);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      transition: var(--ease);
-    }
-    .ps-card:hover {
-      background: rgba(139,91,199,0.08);
-      border-color: rgba(139,91,199,0.25);
-    }
-    .ps-card h3 {
-      font-size: 1.05rem;
-      color: var(--tw);
-      margin-bottom: 8px;
-    }
-    .ps-card p {
-      font-size: 0.86rem;
-      color: rgba(236,235,238,0.52);
-      line-height: 1.68;
-    }
+    .ps-left, .ps-right { display: flex; flex-direction: column; gap: 12px; }
+    .ps-left h3, .ps-right h3 { font-size: 1.2rem; color: var(--tw); }
+    .ps-left p, .ps-right p { font-size: 0.95rem; color: rgba(236,235,238,0.65); line-height: 1.6; }
+    .ps-left { padding-right: 24px; }
+    .ps-right { padding-left: 24px; }
 
-    /* ===== SERVICES ===== */
-    #services {
-      background: var(--lbg2);
-      padding: 112px 0;
-    }
-    .services-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    .svc-card {
+    /* ===== TESTIMONIALS ===== */
+    #testimonials {
       background: var(--lbg);
-      border-radius: var(--radius);
-      padding: 36px 32px;
-      border: 1px solid rgba(74,35,122,0.1);
-      transition: var(--ease);
-      position: relative;
-      overflow: hidden;
-    }
-    .svc-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--ap), var(--lv));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .svc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .svc-card:hover::before { transform: scaleX(1); }
-    .svc-icon {
-      width: 50px; height: 50px;
-      background: var(--lbg2);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 18px;
-    }
-    .svc-card h3 {
-      font-size: 1.15rem;
-      color: var(--mp);
-      margin-bottom: 10px;
-    }
-    .svc-card p {
-      font-size: 0.9rem;
-      color: var(--lmuted);
-      line-height: 1.7;
-    }
-    .svc-note {
-      display: inline-block;
-      margin-top: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--lv);
-      letter-spacing: 0.06em;
-    }
-
-    /* ===== REVIEWS ===== */
-    #reviews {
-      background: var(--mp);
-      padding: 112px 0;
-    }
-    .reviews-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .reviews-header .section-title { color: var(--tw); }
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .review-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(236,235,238,0.08);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      transition: var(--ease);
-    }
-    .review-card:hover {
-      background: rgba(139,91,199,0.12);
-      border-color: rgba(139,91,199,0.2);
-      transform: translateY(-4px);
-    }
-    .review-stars { color: #f59e0b; font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 16px; }
-    .review-text {
-      font-size: 0.98rem;
-      color: rgba(236,235,238,0.8);
-      line-height: 1.72;
-      font-style: italic;
-      margin-bottom: 22px;
-    }
-    .review-author {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--lv);
-    }
-    .review-source {
-      font-size: 0.72rem;
-      color: rgba(236,235,238,0.35);
-      margin-top: 2px;
-    }
-
-    /* ===== WHY CHOOSE US ===== */
-    #why {
-      background: var(--lbg);
-      padding: 112px 0;
-    }
-    .why-inner {
-      text-align: center;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-    .why-inner .section-sub { margin: 0 auto 52px; }
-    .why-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-    }
-    .why-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 22px;
-      background: var(--lbg2);
-      border: 1px solid rgba(74,35,122,0.15);
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--ltxt2);
-      transition: var(--ease);
-    }
-    .why-badge:hover { background: var(--lv); color: var(--tw); border-color: var(--lv); transform: translateY(-2px); }
-    .why-badge-icon {
-      width: 28px; height: 28px;
-      background: rgba(139,91,199,0.15);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-    }
-
-    /* ===== EMOTIONAL CLOSE ===== */
-    #story {
-      background: var(--dp);
-      padding: 120px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    #story::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 50%, rgba(74,35,122,0.18) 0%, transparent 60%);
-    }
-    .story-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      position: relative;
-    }
-    .story-text .section-title { color: var(--tw); }
-    .story-text p {
-      font-size: 1rem;
-      color: rgba(236,235,238,0.6);
-      line-height: 1.8;
-      margin-bottom: 14px;
-    }
-    .story-text p:last-of-type { margin-bottom: 36px; }
-    .story-img {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-    .story-img img, .story-img video { width: 100%; height: 460px; object-fit: cover; }
-
-    /* ===== FINAL CTA ===== */
-    #cta {
-      background: linear-gradient(135deg, var(--ap), var(--mp));
       padding: 96px 0;
     }
-    .cta-inner {
+    .testimonials-header {
       text-align: center;
+      margin-bottom: 72px;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .testimonial-card {
+      background: rgba(25,14,42,0.03);
+      border: 1px solid rgba(25,14,42,0.1);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: all 0.3s;
+    }
+    .testimonial-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .testimonial-stars {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--lmuted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      font-weight: 700;
+      color: var(--ltxt);
+      font-size: 0.9rem;
+    }
+    .testimonial-title {
+      font-size: 0.8rem;
+      color: var(--lmuted);
+      margin-top: 4px;
+    }
+
+    /* ===== CTA SECTION ===== */
+    #cta {
+      background: linear-gradient(135deg, var(--mp) 0%, var(--ap) 100%);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-content {
       max-width: 680px;
       margin: 0 auto;
     }
-    .cta-inner h2 {
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
+    .cta-content h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       color: var(--tw);
       margin-bottom: 16px;
+      line-height: 1.1;
     }
-    .cta-inner p {
-      color: rgba(236,235,238,0.65);
+    .cta-content p {
       font-size: 1.05rem;
-      margin-bottom: 38px;
-      line-height: 1.7;
+      color: rgba(236,235,238,0.8);
+      margin-bottom: 32px;
+      line-height: 1.6;
     }
+    .cta-content .btn { margin: 0 auto; }
 
     /* ===== FOOTER ===== */
     footer {
       background: var(--dp);
-      border-top: 1px solid rgba(139,91,199,0.12);
-      padding: 56px 0 0;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr;
-      gap: 56px;
-      padding-bottom: 48px;
-    }
-    .footer-brand p {
-      font-size: 0.87rem;
-      color: rgba(236,235,238,0.42);
-      line-height: 1.7;
-      margin: 16px 0 20px;
-      max-width: 280px;
-    }
-    .footer-service-area {
-      font-size: 0.78rem;
-      color: rgba(236,235,238,0.3);
-      font-style: italic;
-    }
-    .footer-col h4 {
-      font-family: 'Raleway', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--lv);
-      margin-bottom: 18px;
-    }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 11px; }
-    .footer-col ul li a {
-      font-size: 0.87rem;
-      color: rgba(236,235,238,0.45);
-      transition: color 0.25s;
-    }
-    .footer-col ul li a:hover { color: var(--lv); }
-    .footer-bottom {
-      border-top: 1px solid rgba(236,235,238,0.06);
-      padding: 20px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .footer-bottom p { font-size: 0.78rem; color: rgba(236,235,238,0.25); }
-
-    /* ===== CTA STRIPS ===== */
-    .cta-strip {
-      background: linear-gradient(135deg, var(--mp) 0%, var(--ap) 100%);
-      padding: 48px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-strip::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 80% 50%, rgba(139,91,199,0.25) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .cta-strip-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      position: relative;
-    }
-    .cta-strip-text p.cta-strip-eyebrow {
-      font-family: 'Raleway', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(236,235,238,0.5);
-      margin-bottom: 8px;
-    }
-    .cta-strip-text h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.2rem, 2.4vw, 1.7rem);
-      font-weight: 800;
-      color: var(--tw);
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    .cta-strip-text p.cta-strip-sub {
-      font-size: 0.92rem;
       color: rgba(236,235,238,0.6);
-      line-height: 1.6;
+      padding: 64px 24px 32px;
     }
-    .cta-strip .btn-primary {
-      white-space: nowrap;
-      flex-shrink: 0;
-      background: var(--tw);
-      color: var(--mp);
-      font-weight: 700;
+    .footer-content {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 48px;
+      margin-bottom: 48px;
     }
-    .cta-strip .btn-primary:hover {
-      background: var(--lbg2);
-      transform: translateY(-2px);
-    }
-    @media (max-width: 768px) {
-      .cta-strip-inner { flex-direction: column; text-align: center; }
-      .cta-strip-inner .btn-primary { width: 100%; justify-content: center; }
-    }
-
-    /* ===== FAQ ===== */
-    .faq-item {
-      background: var(--lbg2);
-      border: 1px solid rgba(74,35,122,0.1);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: var(--ease);
-    }
-    .faq-item[open] { border-color: rgba(139,91,199,0.3); }
-    .faq-item summary {
-      padding: 20px 24px;
-      font-family: 'Raleway', sans-serif;
-      font-weight: 700;
-      font-size: 0.98rem;
-      color: var(--mp);
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-    .faq-item summary::-webkit-details-marker { display: none; }
-    .faq-item summary::after {
-      content: '+';
-      font-size: 1.3rem;
-      color: var(--lv);
-      flex-shrink: 0;
-      transition: transform 0.25s;
-      font-weight: 400;
-    }
-    .faq-item[open] summary::after { transform: rotate(45deg); }
-    .faq-item p {
-      padding: 0 24px 20px;
-      font-size: 0.93rem;
-      color: var(--lmuted);
-      line-height: 1.75;
-      margin: 0;
-    }
-
-    /* Floating CTA */
-    .float-cta {
-      position: fixed;
-      bottom: 28px; right: 28px;
-      z-index: 500;
-    }
-    .float-cta a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--lv);
+    .footer-section h4 {
       color: var(--tw);
-      padding: 13px 22px;
-      border-radius: 50px;
-      font-family: 'Raleway', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      box-shadow: 0 8px 28px rgba(139,91,199,0.42);
-      transition: var(--ease);
-      white-space: nowrap;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    .float-cta a:hover { background: #9d6fd4; transform: translateY(-2px); }
+    .footer-section a {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-section a:hover { color: var(--tw); }
+    .footer-bottom {
+      border-top: 1px solid rgba(139,91,199,0.2);
+      padding-top: 32px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { max-width: 480px; margin: 0 auto; }
-      .hero-img-wrap video { height: 380px !important; }
-      .pain-grid { grid-template-columns: 1fr; gap: 48px; }
-      .story-grid { grid-template-columns: 1fr; gap: 48px; }
-      .story-img video { height: 340px !important; }
-      .reviews-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
-      #process::before { display: none; }
-      .ps { grid-template-columns: 1fr; gap: 12px; }
-      .ps-left, .ps-right { text-align: left !important; order: unset !important; }
-      .ps-center { flex-direction: row; justify-content: flex-start; }
-      /* Families section */
-      #families > .container > div { grid-template-columns: 1fr !important; gap: 40px !important; }
-      /* Contact section */
-      #contact > .container > div { grid-template-columns: 1fr !important; gap: 40px !important; }
-    }
     @media (max-width: 768px) {
-      .nav-links, .nav-right { display: none; }
+      .nav-links { display: none; }
       .hamburger { display: flex; }
-      .mobile-drawer { display: flex; }
-      .hero-actions { flex-direction: column; align-items: flex-start; }
-      .hero-img-wrap video { height: 300px !important; }
-      /* Float cards: smaller and repositioned on mobile */
-      .hf1 { left: 6px !important; bottom: 12px !important; padding: 9px 12px !important; max-width: 200px; }
-      .hf1-icon { width: 28px !important; height: 28px !important; font-size: 0.75rem !important; }
-      .hf1 strong { font-size: 0.72rem !important; }
-      .hf1 span { font-size: 0.62rem !important; }
-      .hf2 { right: 6px !important; top: 12px !important; min-width: 80px !important; padding: 9px 12px !important; }
-      .hf2 strong { font-size: 1rem !important; }
-      .hf2 span { font-size: 0.6rem !important; }
-      .hf2-stars { font-size: 0.65rem !important; }
-      .services-grid { grid-template-columns: 1fr; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      /* Trust badges: 2-column grid instead of horizontal scroll */
-      .trust-row {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        justify-content: unset;
-        overflow-x: unset;
-        flex-wrap: unset;
-        padding: 0;
-      }
-      .trust-badge {
-        border-right: none !important;
-        border-bottom: 1px solid rgba(236,235,238,0.1);
-        padding: 12px 14px;
-        font-size: 0.82rem;
-        justify-content: flex-start;
-      }
-      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-      .float-cta a span { display: none; }
-      .float-cta a { padding: 14px 16px; border-radius: 50%; }
-      /* Process steps stack on mobile */
-      .process-steps { max-width: 100%; }
-      .ps { grid-template-columns: 1fr !important; }
-      .ps-center { display: none; }
-      .ps-left, .ps-right { padding: 0 !important; }
-      .ps-card { margin-bottom: 16px; }
-      /* Pain section: badge repositioned so it doesn't overflow */
-      .pain-img-badge { right: 10px !important; bottom: 10px !important; padding: 12px 16px !important; }
-      .pain-img-badge strong { font-size: 1.5rem !important; }
-      /* Why video */
-      #why video { height: 260px !important; }
-      /* Story */
-      .story-img video { height: 260px !important; }
-      /* Families */
-      #families > .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
-      #families img { height: 280px !important; }
-      /* Contact */
-      #contact > .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
-      /* Form card padding shrink */
-      .form-card { padding: 28px 20px !important; }
-      /* Form name fields stack */
-      .form-name-row { grid-template-columns: 1fr !important; }
-      /* Logo video */
-      .nav-logo-mark { width: 40px !important; height: 40px !important; }
-      /* Prevent horizontal overflow bleed */
-      section, #trust, footer { overflow-x: hidden; }
-    }
-    @media (max-width: 480px) {
-      .hero-h1 { font-size: 2.2rem; }
-      .hero-img-wrap video { height: 240px !important; }
-      .footer-bottom { flex-direction: column; text-align: center; }
-      .why-badges { gap: 10px; }
-      .section-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
-      .quotes-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-      .quotes-img { order: -1; min-height: 260px !important; }
-      .quotes-img img { min-height: 260px !important; }
-      .btn { font-size: 0.88rem; padding: 13px 22px; }
-      #families > .container > div { gap: 24px !important; }
-      #families img { height: 240px !important; }
-      /* Trust badges single column on very small phones */
-      .trust-row { grid-template-columns: 1fr !important; }
-      /* Why badges wrap tighter */
-      .why-badge { font-size: 0.82rem; padding: 10px 14px; }
-      /* Contact form full padding shrink */
-      .form-card { padding: 22px 16px !important; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-content { padding: 100px 0 80px; }
+      .pain-grid { grid-template-columns: 1fr; gap: 48px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .ps { grid-template-columns: 1fr; }
+      .ps-left, .ps-right, .ps-center { grid-column: 1 !important; text-align: center !important; visibility: visible !important; padding: 0 !important; }
+      .ps-circle { margin: 0 auto 16px; }
+      .section-sub { margin: 0 auto; }
     }
   </style>
 </head>
-<body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav id="nav" aria-label="Main navigation">
+<body>
+  <nav id="nav">
     <div class="container">
       <div class="nav-inner">
-        <a href="#hero" class="nav-logo" aria-label="Validate Your Vision home">
-          <div class="nav-logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
-              <!-- Background -->
-              <rect width="100" height="100" rx="12" fill="#210D46"/>
-              <!-- Speed lines -->
-              <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
-              <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
-              <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
-              <!-- Main roof left peak -->
-              <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
-              <!-- Second smaller roof right -->
-              <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-              <!-- Chimney -->
-              <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
-              <!-- 4-pane window -->
-              <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
-              <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
-              <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
-              <!-- VYV letters -->
-              <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
-              <!-- Divider lines -->
-              <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-              <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-            </svg>
+        <div class="nav-logo">
+          <div class="nav-logo-mark">
+            <video autoplay muted loop playsinline>
+              <source src="assets/vyv-mark-animated.mp4" type="video/mp4">
+            </video>
           </div>
           <div>
             <div class="nav-logo-text">Validate Your Vision</div>
+            <div class="nav-logo-sub">Moving</div>
           </div>
-        </a>
-        <ul class="nav-links" role="list">
+        </div>
+
+        <ul class="nav-links">
           <li><a href="#services">Services</a></li>
-          <li><a href="#process">Process</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li class="nav-dropdown">
-            <a href="#" onclick="return false;" aria-haspopup="true">More <span class="nav-dropdown-arrow">▾</span></a>
-            <div class="nav-dropdown-menu" role="menu">
-              <a href="#reviews" role="menuitem">Reviews</a>
-              <a href="#areas" role="menuitem">Areas We Serve</a>
-              <a href="#contact" role="menuitem">Contact</a>
-              <a href="/blog/" role="menuitem">Blog</a>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li>
+            <div class="nav-dropdown">
+              <a href="#">Areas <span class="nav-dropdown-arrow">▼</span></a>
+              <div class="nav-dropdown-menu">
+                <a href="#areas">Northern Virginia</a>
+                <a href="#areas">Greater Richmond</a>
+                <a href="#areas">Service Area</a>
+              </div>
             </div>
           </li>
         </ul>
+
         <div class="nav-right">
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
+          <a href="tel:5403001414" class="nav-phone">540-300-1414</a>
+          <a href="/pricing-estimator.html" class="btn btn-primary">Get Plan</a>
         </div>
-        <button class="hamburger" id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
+
+        <button class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
-    <a href="#services" onclick="toggleNav()">Services</a>
-    <a href="#process" onclick="toggleNav()">Process</a>
-    <a href="#about" onclick="toggleNav()">About</a>
-    <a href="#reviews" onclick="toggleNav()">Reviews</a>
-    <a href="#areas" onclick="toggleNav()">Areas We Serve</a>
-    <a href="#contact" onclick="toggleNav()">Contact</a>
-    <a href="/blog/" onclick="toggleNav()">Blog</a>
-    <a href="/pricing-estimator.html" class="btn btn-primary" onclick="toggleNav()">Get My Moving Plan</a>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="#services">Services</a>
+    <a href="#process">How It Works</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#areas">Areas</a>
+    <a href="tel:5403001414">540-300-1414</a>
+    <a href="/pricing-estimator.html" class="btn btn-primary">Get Plan</a>
   </div>
 
   <!-- ===== HERO ===== -->
-  <section id="hero" aria-labelledby="hero-heading">
-    <div class="hero-parallax parallax-bg" aria-hidden="true"></div>
-    <div class="hero-gradient" aria-hidden="true"></div>
-    <div class="particles" id="particles" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="container">
+  <section id="hero">
+    <div class="hero-parallax"></div>
+    <div class="hero-gradient"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+      <div class="hero-content">
         <div class="hero-grid">
-          <div>
-            <div class="hero-location">Fredericksburg, VA &amp; Northern Virginia</div>
-            <h1 id="hero-heading" class="hero-h1">
-              We Plan Your Move<br /><span>Before We Move You.</span>
-            </h1>
-            <p class="hero-sub">
-              Finally. An organized move.
-            </p>
-            <p class="hero-sub" style="font-size:0.95rem; margin-top:-12px; margin-bottom:38px; color:rgba(236,235,238,0.7);">
-              Most movers show up and figure it out as they go. We create a room-by-room moving plan before moving day so there are fewer surprises, more accuracy, and a smoother move.
-            </p>
-            <div class="hero-actions">
-              <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-              <a href="#process" class="btn btn-outline">See How It Works</a>
+          <div class="reveal">
+            <span class="hero-location">Based in Fredericksburg, VA</span>
+            <h1 class="hero-h1">Movers Who <span>Plan Ahead</span></h1>
+            <p class="hero-sub">Before your move even starts, we've already got a detailed plan in place. Room-by-room packing, organized labor, unpacking, and setup. All with upfront pricing — no surprises on moving day.</p>
+            
+            <div class="hero-actions" data-d="1">
+              <a href="/pricing-estimator.html" class="btn btn-primary">Start Your Plan</a>
+              <a href="#testimonials" class="btn btn-outline">See Reviews</a>
+            </div>
+
+            <div class="hero-trust-row" data-d="2">
+              <div class="hero-trust-item">Family-owned & operated</div>
+              <div class="hero-trust-item">Trusted since 2024</div>
+              <div class="hero-trust-item">5-star reviews</div>
             </div>
           </div>
+
           <div class="hero-visual reveal-right">
             <div class="hero-img-wrap">
-              <video
-                autoplay muted loop playsinline preload="auto"
-                aria-label="Moving boxes being packed and moved by a professional crew"
-                style="width:100%;height:500px;object-fit:cover;display:block;"
-              >
-                <source src="assets/mid-video.mp4" type="video/mp4" />
-              </video>
-              <div class="hero-img-overlay" aria-hidden="true"></div>
-            </div>
-            <div class="hero-float-card hf1">
-              <div class="hf1-icon" aria-hidden="true">✅</div>
-              <div>
-                <strong id="hf-move-label">Move Complete, On Time</strong>
-                <span id="hf-move-location">Fredericksburg, VA · Today</span>
+              <img src="assets/hero-moving-family.jpg" alt="Family smiling during their organized move with professional movers" />
+              <div class="hero-img-overlay"></div>
+              <div class="hero-float-card hf1">
+                <div class="hf1-icon">✓</div>
+                <div>
+                  <strong>Plan Included</strong>
+                  <span>With Every Move</span>
+                </div>
+              </div>
+              <div class="hero-float-card hf2">
+                <div class="hf2-stars">★★★★★</div>
+                <strong>4.9</strong>
+                <span>Based on 3 reviews</span>
               </div>
             </div>
-            <div class="hero-float-card hf2">
-              <div class="hf2-stars" aria-label="5 stars">★★★★★</div>
-              <strong>5.0</strong>
-              <span>Google Rating</span>
-            </div>
           </div>
+        </div>
+
+        <div class="scroll-hint">
+          <div class="scroll-hint-line"></div>
+          <span style="font-size: 0.75rem; color: rgba(236,235,238,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Scroll</span>
         </div>
       </div>
     </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <div class="scroll-hint-line"></div>
-    </div>
   </section>
 
-  <!-- ===== TICKER ===== -->
-  <div class="ticker-wrap" aria-hidden="true">
-    <div class="ticker-track">
-      <div class="ticker-item">Fredericksburg VA Movers</div>
-      <div class="ticker-item">Honest Estimates</div>
-      <div class="ticker-item">No Surprise Add-Ons</div>
-      <div class="ticker-item">Locally Owned</div>
-      <div class="ticker-item">Northern Virginia</div>
-      <div class="ticker-item">Stafford VA</div>
-      <div class="ticker-item">Spotsylvania VA</div>
-      <div class="ticker-item">Richmond VA</div>
-      <div class="ticker-item">Free Consultation</div>
-      <div class="ticker-item">Fredericksburg VA Movers</div>
-      <div class="ticker-item">Honest Estimates</div>
-      <div class="ticker-item">No Surprise Add-Ons</div>
-      <div class="ticker-item">Locally Owned</div>
-      <div class="ticker-item">Northern Virginia</div>
-      <div class="ticker-item">Stafford VA</div>
-      <div class="ticker-item">Spotsylvania VA</div>
-      <div class="ticker-item">Richmond VA</div>
-      <div class="ticker-item">Free Consultation</div>
-    </div>
-  </div>
-
   <!-- ===== STATS ===== -->
-  <section id="stats" aria-label="VYV Moving by the numbers">
+  <section id="stats">
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item reveal" data-d="1">
-          <div class="stat-num counter" data-target="100">0</div>
-          <div class="stat-label">% In-Home Estimates</div>
+          <div class="stat-num">90+</div>
+          <div class="stat-label">Miles Served</div>
           <div class="stat-bar"></div>
         </div>
         <div class="stat-item reveal" data-d="2">
-          <div class="stat-num counter" data-target="5">0</div>
-          <div class="stat-label">Star Reviews</div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Planned Before</div>
           <div class="stat-bar"></div>
         </div>
         <div class="stat-item reveal" data-d="3">
           <div class="stat-num">0</div>
-          <div class="stat-label">Surprise Add-Ons</div>
+          <div class="stat-label">Surprise Fees</div>
           <div class="stat-bar"></div>
         </div>
         <div class="stat-item reveal" data-d="4">
-          <div class="stat-num">1</div>
-          <div class="stat-label">Real Plan Every Job</div>
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Average Rating</div>
           <div class="stat-bar"></div>
         </div>
       </div>
@@ -1730,1205 +1281,291 @@
   </section>
 
   <!-- ===== TRUST BADGES ===== -->
-  <div id="trust" aria-label="Why choose VYV Moving">
+  <section id="trust">
     <div class="container">
       <div class="trust-row">
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> Locally Owned</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> Detailed Moving Estimates</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> No Surprise Add-Ons</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> We Show Up When We Say We Will</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> Free Consultation</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SKIP STATEMENT ===== -->
-  <div style="background:var(--dp);padding:40px 0;border-bottom:1px solid rgba(139,91,199,0.15);" aria-label="What makes us different">
-    <div class="container">
-      <div style="text-align:center;">
-        <p style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;color:var(--tw);line-height:1.3;margin-bottom:0;">
-          Most movers show up and wing it. <span style="color:var(--lv);">We never do.</span>
-        </p>
-        <p style="font-size:0.95rem;color:rgba(236,235,238,0.5);margin-top:10px;font-style:italic;">Every VYV move starts with a walkthrough and a plan, before anything gets touched.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== MINI REVIEWS (near top) ===== -->
-  <div style="background:var(--mp);padding:48px 0;" aria-label="Customer reviews">
-    <div class="container">
-      <p style="text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:28px;">What Our Customers Say</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:900px;margin:0 auto;">
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
-          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">★★★★★</div>
-          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
-          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Vicki J.</div>
-          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Fredericksburg, VA · Google Review</div>
+        <div class="trust-badge">
+          <div class="trust-badge-check">✓</div>
+          <span>Detailed Move Planning</span>
         </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
-          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">★★★★★</div>
-          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
-          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Jessica P.</div>
-          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Stafford, VA · Google Review</div>
+        <div class="trust-badge">
+          <div class="trust-badge-check">✓</div>
+          <span>Professional Packing</span>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== WHY OUR QUOTES ARE DIFFERENT ===== -->
-  <section style="background:var(--lbg);padding:96px 0;" aria-labelledby="quotes-heading">
-    <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="quotes-grid">
-        <div class="reveal-left quotes-img" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
-          <img
-            src="assets/clipboard-checklist.png"
-            alt="VYV Home Inventory Checklist, room-by-room moving plan on a branded clipboard"
-            style="width:100%;height:100%;object-fit:cover;display:block;min-height:320px;"
-            loading="lazy"
-          />
+        <div class="trust-badge">
+          <div class="trust-badge-check">✓</div>
+          <span>Full Unpacking Service</span>
         </div>
-        <div class="reveal-right">
-          <p class="section-eyebrow">Our Process</p>
-          <h2 id="quotes-heading" class="section-title">Why Our Quotes<br /><span>Are Different</span></h2>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            Most moving companies give you an estimate based on a phone call.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            We visit your home, walk every room, assess your belongings, identify potential challenges, and build a customized move plan, before moving day ever arrives.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:32px;">
-            That's how we deliver more accurate pricing, better preparation, and fewer surprises on the day that matters most.
-          </p>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">In-home walkthrough before we quote</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">Room-by-room inventory and plan</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">Detailed estimate after we walk your home</span>
-            </div>
-          </div>
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
+        <div class="trust-badge">
+          <div class="trust-badge-check">✓</div>
+          <span>Upfront Pricing</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== WHO THIS IS FOR ===== -->
-  <section style="background:var(--lbg2);padding:80px 0;" aria-labelledby="for-heading">
+  <!-- ===== PAIN POINTS ===== -->
+  <section id="pain">
     <div class="container">
-      <div style="max-width:760px;margin:0 auto;text-align:center;">
-        <p class="section-eyebrow reveal">Is This For You?</p>
-        <h2 id="for-heading" class="section-title reveal">This Is For You If…</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px;text-align:left;">
-          <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">🏡</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You're moving your family and can't afford for things to go wrong</span>
+      <div class="pain-grid">
+        <div class="pain-img-wrap reveal-left">
+          <div class="pain-img-main">
+            <img src="assets/stressed-moving-boxes.jpg" alt="Woman lying on the floor surrounded by moving boxes, feeling overwhelmed">
           </div>
-          <div class="reveal" data-d="2" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">😤</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You've been burned by movers who showed up late, broke things, or charged more than quoted</span>
-          </div>
-          <div class="reveal" data-d="3" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">📋</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You want to know the real price upfront, not a surprise when the truck pulls away</span>
-          </div>
-          <div class="reveal" data-d="4" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">🧘</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You want moving day to feel calm, not chaotic, so you can focus on your family</span>
-          </div>
-          <div class="reveal" data-d="5" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">📦</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You need packing, moving, or both, and want one crew that handles all of it</span>
-          </div>
-          <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:20px 22px;border:1px solid rgba(74,35,122,0.1);display:flex;align-items:flex-start;gap:12px;">
-            <span style="font-size:1.1rem;flex-shrink:0;margin-top:2px;">✅</span>
-            <span style="font-size:0.9rem;color:var(--lmuted);line-height:1.65;">You want a team that shows up, communicates, and actually does what they said they'd do</span>
+          <div class="pain-img-badge">
+            <strong>72%</strong>
+            <span>Find Moving Stressful</span>
           </div>
         </div>
-        <div class="reveal" style="margin-top:36px;">
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Personalized Moving Plan</a>
+
+        <div class="pain-body reveal">
+          <p class="section-eyebrow">Moving Is Stressful Enough</p>
+          <h2 class="section-title">Why <span>Plan Ahead?</span></h2>
+          <p>Most people spend moving day reacting to problems that could have been solved the week before. We flip that script. Our VYV Moving Management System starts weeks before you pack a single box — room-by-room assessment, detailed timeline, labeling strategy, equipment selection. On moving day, your crew doesn't discover surprises. They execute a plan you've already approved.</p>
+          <p>You get peace of mind because everything is thought through. Your belongings are organized. Timelines are predictable. Costs are locked in. And your new home feels lived-in from the moment we're done.</p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- CTA STRIP: After pain/stress section -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">Moving Doesn't Have To Feel Overwhelming</p>
-          <h3>You've Got Enough To Think About.</h3>
-          <p class="cta-strip-sub">Let us build a clear moving plan so you know exactly what to expect, start to finish.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get Your Personalized Moving Plan</a>
-      </div>
-    </div>
-  </div>
 
   <!-- ===== PROCESS ===== -->
-  <section id="process" aria-labelledby="process-heading">
+  <section id="process">
     <div class="container">
-      <div class="process-header">
-        <p class="section-eyebrow reveal">How It Works</p>
-        <h2 id="process-heading" class="section-title reveal">How Our Moving Management<br /><span>System Works</span></h2>
-        <p class="section-sub reveal">
-          A structured, transparent process, the VYV Moving Management System, so nothing gets missed and nothing's a surprise.
-        </p>
+      <div class="process-header reveal">
+        <p class="section-eyebrow">Your Personalized Moving Plan</p>
+        <h2 class="section-title">How <span>VYV Works</span></h2>
+        <p class="section-sub">We don't just move your stuff. We plan your entire move with you, from initial consultation to final setup.</p>
       </div>
-      <div class="process-steps">
 
-        <div class="ps">
+      <div class="process-steps">
+        <div class="ps reveal" data-d="1">
           <div class="ps-left">
-            <div class="ps-card">
-              <h3>Schedule a Free Consultation</h3>
-              <p>Reach out online or text us. We'll learn about your move, your home, and what matters most to you before anything else happens.</p>
-            </div>
+            <h3>Step 1: Initial Walkthrough</h3>
+            <p>We visit your home, assess each room, measure doorways & hallways, note any obstacles or specialty items, and build a complete inventory plan.</p>
           </div>
           <div class="ps-center">
-            <div class="ps-node">1</div>
-            <div class="ps-num">STEP</div>
+            <div class="ps-circle">01</div>
           </div>
           <div class="ps-right"></div>
         </div>
 
-        <div class="ps even">
+        <div class="ps reveal" data-d="2">
           <div class="ps-left"></div>
           <div class="ps-center">
-            <div class="ps-node">2</div>
-            <div class="ps-num">STEP</div>
+            <div class="ps-circle">02</div>
           </div>
           <div class="ps-right">
-            <div class="ps-card" style="border:2px solid rgba(139,91,199,0.5);background:rgba(74,35,122,0.2);">
-              <h3>In-Home Walkthrough &amp; Quote</h3>
-              <p>We come to your home before we ever touch a box. We walk every room, build a customized plan, and give you a detailed moving estimate based on what we actually see, not a guess over the phone.</p>
-              <div style="margin-top:14px;background:rgba(139,91,199,0.2);border-radius:8px;padding:10px 14px;font-size:0.82rem;color:var(--lv);font-weight:600;">
-                ✓ Most movers skip this. We never do.
-              </div>
-            </div>
+            <h3>Step 2: Customized Plan</h3>
+            <p>Based on your home, we create a detailed room-by-room packing plan, timeline, and timeline with specific handling notes for each area.</p>
           </div>
         </div>
 
-        <div class="ps">
+        <div class="ps reveal" data-d="3">
           <div class="ps-left">
-            <div class="ps-card">
-              <h3>Moving Day</h3>
-              <p>Our crew shows up on time, works the plan, and handles everything with care so you can focus on what's next.</p>
-            </div>
+            <h3>Step 3: Upfront Estimate</h3>
+            <p>You receive a low-to-high cost range based on the plan. No guessing. No hidden fees. Just transparent pricing so you can plan your budget.</p>
           </div>
           <div class="ps-center">
-            <div class="ps-node">3</div>
-            <div class="ps-num">STEP</div>
+            <div class="ps-circle">03</div>
           </div>
           <div class="ps-right"></div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== PAIN POINTS / ABOUT ===== -->
-  <section id="about" aria-labelledby="pain-heading">
-    <div id="pain">
-      <div class="container">
-        <div class="pain-grid">
-          <div class="pain-img-wrap reveal-left">
-            <div class="pain-img-main">
-              <img
-                src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=700&q=80&auto=format&fit=crop"
-                alt="Person overwhelmed surrounded by moving boxes in Fredericksburg VA home"
-                width="700" height="420"
-                loading="lazy"
-              />
-            </div>
-            <div class="pain-img-badge">
-              <strong>100%</strong>
-              <span>In-Home Estimates</span>
-            </div>
+        <div class="ps reveal" data-d="4">
+          <div class="ps-left"></div>
+          <div class="ps-center">
+            <div class="ps-circle">04</div>
           </div>
-          <div class="pain-body reveal-right">
-            <p class="section-eyebrow">About VYV</p>
-            <h2 id="pain-heading" class="section-title">Moving Is<br /><span>Stressful Enough.</span></h2>
-            <p>
-              You don't need movers who show up and just wing it. We talk to you first, walk through your home, and have a plan before anything gets touched. No guessing, no random pricing, no "we'll figure it out when we get there." Just a crew that's organized, on time, and takes care of your stuff like it's theirs.
-            </p>
-            <br />
-            <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP: After process section -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">Every Great Move Starts With A Plan</p>
-          <h3>Know Exactly What Comes Next.</h3>
-          <p class="cta-strip-sub">The first step is easier than you think. We'll walk you through everything, before moving day ever arrives.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get Your Moving Plan</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== COMPARISON TABLE ===== -->
-  <section style="background:var(--lbg2);padding:88px 0;" aria-labelledby="compare-heading">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:48px;">
-        <p class="section-eyebrow reveal">Side by Side</p>
-        <h2 id="compare-heading" class="section-title reveal">Typical Movers vs. <span>VYV</span></h2>
-      </div>
-      <div class="reveal" style="max-width:780px;margin:0 auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
-        <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
-          <thead>
-            <tr>
-              <th style="background:var(--mp);color:rgba(236,235,238,0.45);padding:16px 24px;text-align:left;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:40%;">What Happens</th>
-              <th style="background:rgba(33,13,70,0.9);color:rgba(236,235,238,0.45);padding:16px 20px;text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:30%;">Typical Movers</th>
-              <th style="background:var(--ap);color:var(--tw);padding:16px 20px;text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:30%;">VYV</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Walk through your home before moving day</td>
-              <td style="padding:14px 20px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Rarely</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Every time</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Detailed estimate based on a real walkthrough</td>
-              <td style="padding:14px 20px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Phone guess</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Always</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Show up on time</td>
-              <td style="padding:14px 20px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Hit or miss</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Committed</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Custom plan for your home &amp; timeline</td>
-              <td style="padding:14px 20px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ One-size crew</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Built for you</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);color:var(--ltxt);font-weight:500;">Handle packing, moving &amp; unpacking</td>
-              <td style="padding:14px 20px;background:var(--lbg);text-align:center;color:#b91c1c;font-weight:700;">✗ Usually just transport</td>
-              <td style="padding:14px 20px;background:#f0fdf4;text-align:center;color:#15803d;font-weight:700;">✓ Full service</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="reveal" style="text-align:center;margin-top:36px;">
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== PRICING POSITIONING ===== -->
-  <section style="background:var(--dp);padding:72px 0;" aria-label="Our pricing philosophy">
-    <div class="container">
-      <div style="max-width:700px;margin:0 auto;text-align:center;">
-        <p class="section-eyebrow reveal" style="color:rgba(139,91,199,0.7);">Honest Pricing</p>
-        <h2 class="section-title reveal" style="color:var(--tw);">We May Not Be the <span>Cheapest.</span><br />Here's Why That's a Good Thing.</h2>
-        <p class="reveal" style="font-size:1rem;color:rgba(236,235,238,0.6);line-height:1.8;margin-top:18px;">
-          The cheapest movers often mean no walkthrough, no plan, and a bill that looks different at the end. We do things the right way, which means a walkthrough first, a real quote upfront, and a crew that shows up ready to work.
-        </p>
-        <p class="reveal" style="font-size:1rem;color:rgba(236,235,238,0.6);line-height:1.8;margin-top:12px;">
-          You're not paying for moving labor. You're paying for peace of mind, a plan, and a crew you can actually count on.
-        </p>
-        <div class="reveal" style="margin-top:36px;display:inline-flex;align-items:center;gap:10px;background:rgba(139,91,199,0.12);border:1px solid rgba(139,91,199,0.25);border-radius:10px;padding:16px 24px;">
-          <span style="font-size:1.2rem;">💬</span>
-          <span style="font-size:0.9rem;color:rgba(236,235,238,0.75);font-style:italic;">"Prices very reasonable!", Jessica P., Stafford VA</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SERVICES ===== -->
-  <section id="services" aria-labelledby="services-heading">
-    <div class="container">
-      <div class="services-header">
-        <p class="section-eyebrow reveal">What We Do</p>
-        <h2 id="services-heading" class="section-title reveal">Packing, Moving &amp; Unpacking Services<br /><span>in Fredericksburg &amp; Northern Virginia</span></h2>
-        <p class="section-sub reveal" style="margin:0 auto">Every service is designed around your situation,not a one-size package that doesn't fit.</p>
-      </div>
-      <div class="services-grid">
-        <div id="svc-packing" class="svc-card reveal" data-d="1">
-          <div class="svc-icon" aria-hidden="true">📦</div>
-          <h3>Packing</h3>
-          <p>Room-by-room packing done carefully and efficiently. Every item wrapped, labeled, and organized before the move even starts.</p>
-        </div>
-        <div id="svc-unpacking" class="svc-card reveal" data-d="2">
-          <div class="svc-icon" aria-hidden="true">🏠</div>
-          <h3>Unpacking</h3>
-          <p>We unpack just as carefully as we pack. Nothing rushed, nothing misplaced. Your things end up where they belong.</p>
-        </div>
-        <div id="svc-labor" class="svc-card reveal" data-d="3">
-          <div class="svc-icon" aria-hidden="true">🚛</div>
-          <h3>Moving Labor</h3>
-          <p>We bring the crew and handle the heavy lifting, loading, and unloading so you can stay focused on your family and your next chapter.</p>
-        </div>
-        <div id="svc-organizing" class="svc-card reveal" data-d="4">
-          <div class="svc-icon" aria-hidden="true">🗂️</div>
-          <h3>Organizing</h3>
-          <p>Once everything's in, we help you get it in order. Closets, kitchens, living spaces, organized the way you actually want to live.</p>
-        </div>
-        <div id="svc-whiteglove" class="svc-card reveal" data-d="5">
-          <div class="svc-icon" aria-hidden="true">✨</div>
-          <h3>White Glove Organizing</h3>
-          <p>We take it all the way. Everything placed, arranged, hung, and styled until your space feels lived-in and like yours, from the moment we leave.</p>
-          <span class="svc-note">Premium add-on</span>
-        </div>
-        <div id="svc-allinclusive" class="svc-card reveal" data-d="1">
-          <div class="svc-icon" aria-hidden="true">🎁</div>
-          <h3>All-Inclusive Package</h3>
-          <p>Packing, moving, and unpacking bundled together. Everything handled start to finish, and because you're doing it all with us, you get a bundled rate.</p>
-          <span class="svc-note">Best value</span>
-        </div>
-        <div id="svc-longdistance" class="svc-card reveal" data-d="2">
-          <div class="svc-icon" aria-hidden="true">🗺️</div>
-          <h3>Long Distance Moving</h3>
-          <p>Moving out of the area? We handle long-distance relocations with the same structured plan and in-home estimate process, so you know what to expect before your crew ever arrives. Planning a long-distance move? Let's talk.</p>
-          <span class="svc-note">Available on request</span>
-        </div>
-        <div id="svc-storage" class="svc-card reveal" data-d="3">
-          <div class="svc-icon" aria-hidden="true">🏢</div>
-          <h3>Storage Coordination</h3>
-          <p>Need to store items between moves? We coordinate short and long-term storage so you're not scrambling to figure it out alone. We handle the logistics, you handle the transition.</p>
-          <span class="svc-note">Available on request</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MOVING DAY IN ACTION ===== -->
-  <section id="families" style="background: var(--lbg2); padding: 96px 0;" aria-labelledby="families-heading">
-    <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
-        <div class="reveal-left">
-          <p class="section-eyebrow">This Is Bigger Than Just Boxes.</p>
-          <h2 id="families-heading" class="section-title" style="color:var(--ltxt);">You Don't Have to<br /><span>Do This Alone.</span></h2>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            Most families dread moving day because they've been through it: the no-shows, the broken promises, things damaged and movers who disappear.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            VYV is different. We come to your home before we ever touch a box. We build a plan around your space, your schedule, and your family, so nothing is left to chance.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:32px;">
-            When moving day comes, you don't have to manage us. We already know the plan. That way, everyone in the family can just enjoy the ride.
-          </p>
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Personalized Moving Plan</a>
-        </div>
-        <div class="reveal-right" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
-          <img
-            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80&auto=format&fit=crop"
-            alt="Happy family unpacking together in their new home in Stafford VA"
-            style="width:100%;height:500px;object-fit:cover;display:block;"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP: After pricing section -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">No Guesswork. No Pressure.</p>
-          <h3>A Real Estimate, Based On What We Actually See.</h3>
-          <p class="cta-strip-sub">We walk your home before we quote you anything. Our estimates are detailed because we did the homework first.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">See What Your Move Costs</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== REVIEWS ===== -->
-  <section id="reviews" aria-labelledby="reviews-heading">
-    <div class="container">
-      <div class="reviews-header">
-        <p class="section-eyebrow reveal" style="color:rgba(139,91,199,0.8)">Real Customers</p>
-        <h2 id="reviews-heading" class="section-title reveal" style="color:var(--tw)">What People Are Saying</h2>
-      </div>
-      <div class="reviews-grid">
-        <div class="review-card reveal" data-d="1">
-          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p class="review-text">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
-          <div class="review-author">Vicki J.</div>
-          <div class="review-source">Fredericksburg, VA</div>
-        </div>
-        <div class="review-card reveal" data-d="2">
-          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p class="review-text">"Professional, prompt, took care of our stuff… I fully and whole-heartedly recommend them!"</p>
-          <div class="review-author">Meagan V.</div>
-          <div class="review-source">Northern Virginia</div>
-        </div>
-        <div class="review-card reveal" data-d="3">
-          <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p class="review-text">"Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
-          <div class="review-author">Jessica P.</div>
-          <div class="review-source">Stafford, VA</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP: After reviews -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">Because Peace Of Mind Matters</p>
-          <h3>Ready to See Why Families Trust VYV?</h3>
-          <p class="cta-strip-sub">Your move deserves more than just a truck. It deserves a team that shows up with a plan.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get Your Moving Plan</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== WHY CHOOSE US ===== -->
-  <section id="why" aria-labelledby="why-heading">
-    <div class="container">
-      <div class="why-inner">
-        <p class="section-eyebrow reveal">Why VYV</p>
-        <h2 id="why-heading" class="section-title reveal">Why Choose Us</h2>
-        <p class="section-sub reveal">
-          We're not the only movers in Fredericksburg. Here's why customers keep choosing us,and recommending us to people they actually care about.
-        </p>
-        <div class="why-badges">
-          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🏡</div> Locally Owned and Operated</div>
-          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">💰</div> Detailed Estimates After a Real Walkthrough</div>
-          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⏰</div> Reliable Arrival Times</div>
-          <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">🤝</div> Professional and Respectful Movers</div>
-          <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📦</div> Packing, Moving &amp; Unpacking Services</div>
-          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🗓️</div> Free Consultations and Estimates</div>
-          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📋</div> Personalized Moving Plans</div>
-          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⭐</div> Customer-Focused Service</div>
-        </div>
-        <div class="reveal" style="margin-top:56px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);max-height:480px;">
-          <video muted loop playsinline preload="none" data-lazy-video
-            aria-label="Happy family settled and relaxing in their new home after a smooth move"
-            style="width:100%;height:480px;object-fit:cover;display:block;">
-            <source src="assets/why-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CLOSING STORY ===== -->
-  <section id="story" aria-labelledby="story-heading">
-    <div class="container">
-      <div class="story-grid">
-        <div class="story-text reveal-left">
-          <p class="section-eyebrow">Our Story</p>
-          <h2 id="story-heading" class="section-title">Built on<br /><span>Reliability.</span></h2>
-          <p>
-            You book movers. They show up late, or not at all. They quote you one price and charge you another. Things get broken, nobody takes responsibility, and you're left dealing with it on top of everything else moving already throws at you.
-          </p>
-          <p>
-            We started VYV because that's not how it should be. We're a locally owned company built on doing what we say we're going to do.
-          </p>
-          <p>
-            We show up when we say we will, we walk your home before we quote you anything, and we treat your belongings like they matter, because they do.
-          </p>
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-        </div>
-        <div class="story-img reveal-right">
-          <video
-            muted loop playsinline preload="none" data-lazy-video
-            aria-label="Professional moving crew in action"
-            style="width:100%;height:460px;object-fit:cover;display:block;"
-          >
-            <source src="assets/story-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FINAL CTA ===== -->
-  <section id="cta" aria-labelledby="cta-heading">
-    <div class="container">
-      <div class="cta-inner">
-        <p class="section-eyebrow reveal" style="text-align:center; color:rgba(236,235,238,0.5)">Ready to Move?</p>
-        <h2 id="cta-heading" class="reveal">Ready for a Stress-Free Move?</h2>
-        <p class="reveal">Let Validate Your Vision handle the heavy lifting while you focus on settling into your new home.</p>
-        <div class="reveal">
-          <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAQ ===== -->
-  <section id="faq" style="background:var(--lbg);padding:96px 0;" aria-labelledby="faq-heading">
-    <div class="container">
-      <div style="max-width:800px;margin:0 auto;">
-        <p class="section-eyebrow reveal" style="text-align:center;">Common Questions</p>
-        <h2 id="faq-heading" class="section-title reveal" style="text-align:center;">Frequently Asked<br /><span>Questions</span></h2>
-        <div style="margin-top:48px;display:flex;flex-direction:column;gap:16px;">
-
-          <details class="faq-item reveal" data-d="1">
-            <summary>How much does it cost to hire movers in Fredericksburg, VA?</summary>
-            <p>Moving costs depend on a lot of factors: your home size, how furnished it is, stairs, how far the truck needs to park, specialty items, drive distance, whether you need packing, and how long the job takes. That is why we built our <a href="/pricing-estimator.html" style="color:var(--lv);font-weight:600;">personalized moving plan</a>. It walks through all of those details and generates a real estimate range based on your specific situation, not a generic number based on bedroom count. Start there and you will have a much clearer picture before we ever talk.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="2">
-            <summary>Do you do in-home walkthroughs before moving day?</summary>
-            <p>Yes, for larger, more complex, or full-service moves, we schedule a walkthrough consultation to confirm your inventory, identify specialty items, evaluate access, and finalize your move plan. Smaller moves often start and finish with our online moving plan tool. Either way, we review everything with you before anything is confirmed and no crew shows up without a clear plan already in place.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="3">
-            <summary>How is your estimate calculated?</summary>
-            <p>Your estimate is based on the actual details of your move, including crew size needed, estimated hours, stair and access factors, drive distance, specialty items, and whether packing is included. The final cost comes down to how long the job takes. Because we gather real information upfront, our estimates are detailed and rarely far off. You will receive a low-to-high range so you know what to plan for.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="4">
-            <summary>Can you handle both packing and moving?</summary>
-            <p>Yes. Our All-Inclusive Package covers packing, moving, and unpacking from start to finish. You get one crew, one plan, and a bundled rate for doing everything together. Packing can also be added as a standalone service if you just need help with that part.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="5">
-            <summary>How far in advance should I book movers?</summary>
-            <p>We recommend booking at least 2 to 4 weeks in advance, especially for weekend moves or end-of-month dates when demand is highest. For last-minute moves, text us at <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a> and we will do our best to accommodate you.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="1">
-            <summary>What areas do you serve?</summary>
-            <p>We serve a roughly 90-mile radius from Fredericksburg, VA. That includes Stafford, Spotsylvania, Woodbridge, Manassas, Alexandria, Arlington, Fairfax, Reston, Ashburn, Leesburg, Richmond, Glen Allen, Midlothian, Charlottesville, Winchester, and dozens of communities in between. If you are not sure whether we cover your area, text us and we will confirm quickly.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="2">
-            <summary>Do you offer unpacking and organizing services?</summary>
-            <p>Yes. We offer unpacking, standard organizing, and White Glove Organizing, where we place, arrange, and set up your entire home until it feels lived-in from the moment we leave. These can be added to any move or booked as standalone services.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="3">
-            <summary>Do you handle long distance moves from Fredericksburg, VA?</summary>
-            <p>Yes. We handle long-distance relocations with the same structured planning process, including a detailed moving plan built around your actual route and home. Text us at <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a> to talk through your long-distance move and what it would involve.</p>
-          </details>
-
-          <details class="faq-item reveal" data-d="4">
-            <summary>How do I get a moving estimate?</summary>
-            <p>Complete our <a href="/pricing-estimator.html" style="color:var(--lv);font-weight:600;">personalized moving plan</a>. It takes a few minutes and covers your home, move details, and any services you need. Once submitted, we will call you to confirm your information and schedule your in-home moving consultation. That visit is where we walk your space, finalize the details, and build your complete move plan.</p>
-          </details>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP: Between FAQ and service areas -->
-  <div class="cta-strip" aria-label="Get your moving plan">
-    <div class="container">
-      <div class="cta-strip-inner">
-        <div class="cta-strip-text">
-          <p class="cta-strip-eyebrow">We Help You Move Forward, Not Just Move</p>
-          <h3>Life's Changing. Let Us Help You Get There.</h3>
-          <p class="cta-strip-sub">Tell us about your move and we'll put together a plan, so you can stop wondering and start moving forward.</p>
-        </div>
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get Your Moving Plan</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SERVICE AREAS ===== -->
-  <section id="areas" style="background:var(--lbg2);padding:72px 0;" aria-labelledby="areas-seo-heading">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:48px;">
-        <p class="section-eyebrow reveal">Where We Work</p>
-        <h2 id="areas-seo-heading" class="section-title reveal">Movers Serving Northern Virginia,<br /><span>Fredericksburg &amp; the Richmond Metro</span></h2>
-        <p class="section-sub reveal" style="margin:16px auto 0;">We cover a 90-mile radius from Fredericksburg, from Alexandria and Arlington down through Richmond, and from the Shenandoah Valley to the Northern Neck.</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
-
-        <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Fredericksburg, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Our home base. Full packing, moving labor, unpacking, and organizing, with an in-home walkthrough before we touch a single box.</p>
-        </div>
-
-        <div class="reveal" data-d="2" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Stafford, VA Moving Services</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Full-service moving throughout Stafford County. Detailed estimate after a real walkthrough, structured move plan, same reliable crew.</p>
-        </div>
-
-        <div class="reveal" data-d="3" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Spotsylvania, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Packing, moving, and organizing throughout Spotsylvania County. We plan every move before moving day.</p>
-        </div>
-
-        <div class="reveal" data-d="4" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Woodbridge &amp; Dale City, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Prince William County moves handled with the same structured system, Woodbridge, Dale City, Dumfries, Lake Ridge, and Montclair.</p>
-        </div>
-
-        <div class="reveal" data-d="5" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Manassas &amp; Gainesville, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Serving Manassas, Manassas Park, Gainesville, Haymarket, and Bristow. Local crew familiar with Prince William County neighborhoods.</p>
-        </div>
-
-        <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Fairfax &amp; Springfield, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Fairfax City, Fairfax County, Springfield, Burke, Lorton, Centreville, and Chantilly. We know Northern Virginia, no out-of-area markups.</p>
-        </div>
-
-        <div class="reveal" data-d="2" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Alexandria &amp; Arlington, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Moving in and out of Alexandria, Arlington, and Falls Church. Experienced with high-rises, elevator buildings, and urban access challenges.</p>
-        </div>
-
-        <div class="reveal" data-d="3" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 McLean, Tysons &amp; Vienna, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">White-glove service for McLean, Tysons, Vienna, and Annandale. We treat every home, and every item, like it belongs to us.</p>
-        </div>
-
-        <div class="reveal" data-d="4" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Reston, Herndon &amp; Sterling, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Full moving services for Reston, Herndon, and Sterling. Detailed estimate after we walk your home, same move plan, same reliable crew.</p>
-        </div>
-
-        <div class="reveal" data-d="5" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Ashburn &amp; Leesburg, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Serving Loudoun County including Ashburn, Leesburg, and Purcellville. Growing communities, growing families, we're ready to move with you.</p>
-        </div>
-
-        <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Warrenton &amp; Culpeper, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Fauquier and Culpeper County moves with the same personalized planning process. Rural, suburban, or estate, we have the experience.</p>
-        </div>
-
-        <div class="reveal" data-d="2" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Richmond, VA Moving Services</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Serving the City of Richmond and the entire Richmond metro, same structured move plan, same detailed estimate process, same trustworthy crew.</p>
-        </div>
-
-        <div class="reveal" data-d="3" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Glen Allen, Short Pump &amp; Mechanicsville Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Henrico County's fastest-growing neighborhoods. We serve Glen Allen, Short Pump, Mechanicsville, and Sandston with the full VYV experience.</p>
-        </div>
-
-        <div class="reveal" data-d="4" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Midlothian &amp; Chesterfield, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Chesterfield County moves including Midlothian, Chester, Bon Air, and Brandermill. Growing families, organized moves, that's what we do.</p>
-        </div>
-
-        <div class="reveal" data-d="5" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Winchester &amp; Front Royal, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Serving the Shenandoah Valley corridor including Winchester, Front Royal, and Stephens City. Western Virginia families trust VYV to plan the move right.</p>
-        </div>
-
-        <div class="reveal" data-d="1" style="background:var(--lbg);border-radius:var(--radius);padding:28px 24px;border:1px solid rgba(74,35,122,0.1);">
-          <h3 style="font-size:1rem;color:var(--mp);margin-bottom:10px;">📍 Charlottesville, VA Movers</h3>
-          <p style="font-size:0.88rem;color:var(--lmuted);line-height:1.7;">Moving to or from Charlottesville and Albemarle County. University-area moves, historic neighborhoods, and everything in between.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ===== CONTACT ===== -->
-  <section id="contact" style="background: var(--lbg2); padding: 108px 0;" aria-labelledby="contact-heading">
-    <div class="container">
-      <div style="display:grid; grid-template-columns:1fr 1.8fr; gap:64px; align-items:start;">
-        <div class="reveal-left">
-          <p class="section-eyebrow">Get In Touch</p>
-          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move.</span></h2>
-          <p class="section-sub" style="margin-bottom:36px;">
-            We serve Fredericksburg, Stafford, Spotsylvania, Woodbridge, Richmond, and surrounding Northern Virginia areas.
-          </p>
-          <div style="display:flex; flex-direction:column; gap:16px;">
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
-              <a href="sms:+15403001414" style="color:inherit;">Text us: 540-300-1414 (text only)</a>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
-              <a href="mailto:hello@validateyourvision.com" style="color:inherit;">hello@validateyourvision.com</a>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📍</div>
-              <span>Fredericksburg, VA · Northern Virginia · Richmond</span>
-            </div>
+          <div class="ps-right">
+            <h3>Step 4: Packing Begins</h3>
+            <p>Our crew arrives and executes the plan. Every item is wrapped, labeled, organized, and loaded exactly as planned. Room-by-room control.</p>
           </div>
         </div>
 
-        <div class="reveal-right">
-          <div class="form-card" style="background:var(--lbg);border-radius:20px;padding:64px 52px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;">
-            <div style="font-size:3rem;" aria-hidden="true">📋</div>
-            <h3 style="font-size:2rem;color:var(--mp);line-height:1.2;font-family:'Playfair Display',serif;">Ready To Start Planning Your Move?</h3>
-            <p style="font-size:1.05rem;color:var(--lmuted);line-height:1.7;max-width:400px;">Get your personalized moving estimate, timeline, and recommendations in just a few minutes.</p>
-            <a href="/pricing-estimator.html" class="btn btn-primary" style="font-size:1.05rem;padding:18px 40px;">Get My Moving Estimate →</a>
-            <p style="font-size:0.82rem;color:var(--lmuted);">Or text us directly: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a></p>
-            <!-- PLACEHOLDER FORM START (hidden) -->
-            <div style="display:none;">
-              <form id="contact-form" action="https://formspree.io/f/mwvdowqr" method="POST" onsubmit="handleSubmit(event)" novalidate>
-
-                <div class="form-name-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                  <div>
-                    <label for="fname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">First Name *</label>
-                    <input id="fname" name="fname" type="text" placeholder="Jane" required autocomplete="given-name"
-                      style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                  <div>
-                    <label for="lname" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Last Name *</label>
-                    <input id="lname" name="lname" type="text" placeholder="Smith" required autocomplete="family-name"
-                      style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="phone" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Phone Number (Text Only) *</label>
-                  <input id="phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="email" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Email *</label>
-                  <input id="email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email"
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="service" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Service Needed *</label>
-                  <select id="service" name="service" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
-                    <option value="">Select a service...</option>
-                    <optgroup label="Individual Services">
-                      <option>Packing</option>
-                      <option>Unpacking</option>
-                      <option>Moving Labor</option>
-                      <option>Organizing</option>
-                      <option>White Glove Organizing (Premium)</option>
-                    </optgroup>
-                    <optgroup label="Packages">
-                      <option>All-Inclusive Package (Packing + Moving + Unpacking)</option>
-                    </optgroup>
-                    <optgroup label="Specialty">
-                      <option>Long Distance Moving</option>
-                      <option>Storage Coordination</option>
-                    </optgroup>
-                    <option>Not sure yet, let's talk</option>
-                  </select>
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="pickup" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Pick-Up Address (Current Home) *</label>
-                  <input id="pickup" name="pickup" type="text" placeholder="123 Main St, Fredericksburg, VA" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="rooms" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">How Many Rooms/Areas Need to Be Packed &amp; Moved? *</label>
-                  <select id="rooms" name="rooms" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
-                    <option value="">Select...</option>
-                    <option>1 room / studio</option>
-                    <option>2 rooms</option>
-                    <option>3 rooms</option>
-                    <option>4 rooms</option>
-                    <option>5 rooms</option>
-                    <option>6+ rooms</option>
-                    <option>Whole house (not sure of room count)</option>
-                  </select>
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:10px;">Are You Moving to a Smaller Home Than What You Have Now? *</label>
-                  <div style="display:flex;gap:20px;flex-wrap:wrap;">
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
-                      <input type="radio" name="downsizing" value="yes" onchange="toggleDownsize(true)" style="accent-color:var(--lv);width:16px;height:16px;" /> Yes
-                    </label>
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
-                      <input type="radio" name="downsizing" value="no" onchange="toggleDownsize(false)" style="accent-color:var(--lv);width:16px;height:16px;" /> No
-                    </label>
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.93rem;color:var(--lmuted);cursor:pointer;">
-                      <input type="radio" name="downsizing" value="same" onchange="toggleDownsize(false)" style="accent-color:var(--lv);width:16px;height:16px;" /> About the same size
-                    </label>
-                  </div>
-                </div>
-
-                <div id="downsize-plan" style="margin-bottom:14px;display:none;">
-                  <label for="downplan" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">What's Your Plan for What Doesn't Fit?</label>
-                  <select id="downplan" name="downplan"
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;appearance:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'">
-                    <option value="">Select...</option>
-                    <option>Donate</option>
-                    <option>Sell</option>
-                    <option>Trash / junk removal</option>
-                    <option>Storage</option>
-                    <option>Not sure yet</option>
-                    <option>Mix of a few of these</option>
-                  </select>
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="specialty" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Any Large or Specialty Items? *</label>
-                  <input id="specialty" name="specialty" type="text" placeholder="Piano, safe, gym equipment, oversized furniture, or 'None'" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="movedate" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Ideal Move Date *</label>
-                  <input id="movedate" name="movedate" type="text" placeholder="e.g. July 15th, or 'flexible within 2 weeks'" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:14px;">
-                  <label for="access" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Stairs, Elevators, or Tight Access Points? *</label>
-                  <input id="access" name="access" type="text" placeholder="e.g. 3rd floor walk-up, elevator available, narrow hallway, or 'No issues'" required
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <div style="margin-bottom:24px;">
-                  <label for="dropoff" style="display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--mp);margin-bottom:7px;">Drop-Off Address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--lmuted);font-size:0.78rem;">(optional, if known)</span></label>
-                  <input id="dropoff" name="dropoff" type="text" placeholder="New home address, or leave blank if not yet confirmed"
-                    style="width:100%;padding:12px 15px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.93rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .25s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
-                  Send My Consultation Request →
-                </button>
-              </form>
-            </div>
-            </div>
-            <!-- PLACEHOLDER FORM END -->
+        <div class="ps reveal" data-d="5">
+          <div class="ps-left">
+            <h3>Step 5: Professional Unpacking</h3>
+            <p>At your new home, we unload room-by-room, unpack (optional), arrange furniture, and organize everything until your space feels lived-in.</p>
           </div>
+          <div class="ps-center">
+            <div class="ps-circle">05</div>
+          </div>
+          <div class="ps-right"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== PAIN POINTS 2 ===== -->
+  <section id="pain">
+    <div class="container">
+      <div class="pain-grid" style="flex-direction: row-reverse;">
+        <div class="pain-img-wrap reveal-right">
+          <div class="pain-img-main">
+            <img src="assets/relieved-window.jpg" alt="Woman smiling and relieved, looking out the window">
+          </div>
+        </div>
+
+        <div class="pain-body reveal">
+          <p class="section-eyebrow">You Don't Have to Do This Alone</p>
+          <h2 class="section-title">White <span>Glove Setup</span></h2>
+          <p>If you want more than just moving labor, our White Glove Organizing service takes the full burden off your shoulders. We don't just unpack — we place, arrange, hang, and style until your space feels completely lived-in from day one.</p>
+          <p>Your furniture is arranged. Your clothes are hung. Your kitchen is organized. Your bedroom is inviting. And you can focus on celebrating being in your new home instead of spending the next week unpacking boxes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="testimonials-header reveal">
+        <p class="section-eyebrow">Client Stories</p>
+        <h2 class="section-title">What People <span>Say About Us</span></h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal" data-d="1">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
+          <div class="testimonial-author">Vicki J.</div>
+        </div>
+
+        <div class="testimonial-card reveal" data-d="2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Professional, prompt, took care of our stuff… I fully and whole-heartedly recommend them!"</p>
+          <div class="testimonial-author">Meagan V.</div>
+        </div>
+
+        <div class="testimonial-card reveal" data-d="3">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
+          <div class="testimonial-author">Jessica P.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section id="cta">
+    <div class="cta-content reveal">
+      <h2>Ready to Plan Your Move?</h2>
+      <p>Get a detailed moving plan tailored to your home, your timeline, and your needs — completely free.</p>
+      <a href="/pricing-estimator.html" class="btn btn-primary">Start Your Free Plan</a>
     </div>
   </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#hero" class="nav-logo" style="margin-bottom:0;" aria-label="Validate Your Vision home">
-            <div class="nav-logo-mark" aria-hidden="true">
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
-                <rect width="100" height="100" rx="12" fill="#210D46"/>
-                <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
-                <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
-                <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
-                <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
-                <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-                <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
-                <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
-                <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
-                <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
-                <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
-                <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-                <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-              </svg>
-            </div>
-            <div>
-              <div class="nav-logo-text">Validate Your Vision</div>
-            </div>
-          </a>
-          <p>Professional Packing, Moving, and Unpacking Services in Fredericksburg, Virginia. Licensed &bull; Professional &bull; Reliable.</p>
-          <div style="display:flex;gap:12px;margin:16px 0;">
-            <a href="https://www.facebook.com/validateyourvision" target="_blank" rel="noopener noreferrer" aria-label="Validate Your Vision on Facebook"
-              style="width:38px;height:38px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background 0.25s;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5BC7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="https://www.instagram.com/validateyourvision" target="_blank" rel="noopener noreferrer" aria-label="Validate Your Vision on Instagram"
-              style="width:38px;height:38px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background 0.25s;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="https://www.tiktok.com/@validateyourvision" target="_blank" rel="noopener noreferrer" aria-label="Validate Your Vision on TikTok"
-              style="width:38px;height:38px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background 0.25s;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5BC7"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
-            </a>
-          </div>
-          <div class="footer-service-area">Fredericksburg · Stafford · Spotsylvania · Woodbridge · Northern VA · Richmond &amp; surrounding areas</div>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#svc-packing">Packing</a></li>
-            <li><a href="#svc-unpacking">Unpacking</a></li>
-            <li><a href="#svc-labor">Moving Labor</a></li>
-            <li><a href="#svc-organizing">Organizing</a></li>
-            <li><a href="#svc-whiteglove">White Glove Organizing</a></li>
-            <li><a href="#svc-allinclusive">All-Inclusive Package</a></li>
-            <li><a href="#svc-longdistance">Long Distance Moving</a></li>
-            <li><a href="#svc-storage">Storage Coordination</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
+      <div class="footer-content">
+        <div class="footer-section">
           <h4>Company</h4>
-          <ul>
-            <li><a href="#about">About VYV</a></li>
-            <li><a href="#process">Our Process</a></li>
-            <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="https://www.facebook.com/validateyourvision" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-            <li><a href="https://www.instagram.com/validateyourvision" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-            <li><a href="https://www.tiktok.com/@validateyourvision" target="_blank" rel="noopener noreferrer">TikTok</a></li>
-            <li><a href="#">Blog</a></li>
-          </ul>
+          <a href="/">Home</a>
+          <a href="#services">Services</a>
+          <a href="#process">How It Works</a>
+          <a href="#testimonials">Reviews</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Services</h4>
+          <a href="/#services">Packing</a>
+          <a href="/#services">Moving Labor</a>
+          <a href="/#services">Unpacking</a>
+          <a href="/#services">White Glove Setup</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <a href="tel:5403001414">540-300-1414</a>
+          <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
+          <a href="/">Fredericksburg, VA</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Social</h4>
+          <a href="https://www.facebook.com/validateyourvision" target="_blank">Facebook</a>
+          <a href="https://www.instagram.com/validateyourvision" target="_blank">Instagram</a>
+          <a href="https://www.tiktok.com/@validateyourvision" target="_blank">TikTok</a>
         </div>
       </div>
+
       <div class="footer-bottom">
-        <p>© 2026 Validate Your Vision &mdash; Fredericksburg, VA &middot; <a href="sms:+15403001414" style="color:inherit;">540-300-1414 (text)</a> &middot; <a href="mailto:hello@validateyourvision.com" style="color:inherit;">hello@validateyourvision.com</a></p>
-        <p style="color:rgba(236,235,238,0.2);font-size:0.75rem;">Locally owned &amp; operated · Serving Northern Virginia &amp; Richmond</p>
+        <p>&copy; 2025 Validate Your Vision. All rights reserved. | <a href="#" style="color: rgba(236,235,238,0.6);">Privacy Policy</a> | <a href="#" style="color: rgba(236,235,238,0.6);">Terms of Service</a></p>
       </div>
     </div>
   </footer>
 
-  <!-- Floating CTA -->
-  <div class="float-cta">
-    <a href="/pricing-estimator.html" aria-label="Get your moving estimate">
-      📅 <span>Reserve Your Moving Date</span>
-    </a>
-  </div>
-
-  <!-- ===== JAVASCRIPT ===== -->
   <script>
-    // ===== PARTICLES =====
-    const pWrap = document.getElementById('particles');
-    if (pWrap) {
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const sz = Math.random() * 5 + 2;
-        p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+14}s;animation-delay:${Math.random()*14}s;`;
-        pWrap.appendChild(p);
+    // Navigation scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobileDrawer');
+    if (hamburger && drawer) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        drawer.classList.toggle('open');
+      });
+
+      drawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          drawer.classList.remove('open');
+        });
+      });
+    }
+
+    // Particles
+    const particlesContainer = document.getElementById('particles');
+    if (particlesContainer) {
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.width = Math.random() * 4 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        particle.style.animationDelay = Math.random() * 2 + 's';
+        particlesContainer.appendChild(particle);
       }
     }
 
-    // ===== COUNTERS =====
-    function animCount(el) {
-      const target = parseFloat(el.dataset.target);
-      const dec = target % 1 !== 0;
-      const steps = 55;
-      let cur = 0;
-      const inc = target / steps;
-      const iv = setInterval(() => {
-        cur = Math.min(cur + inc, target);
-        el.textContent = dec ? cur.toFixed(1) : Math.floor(cur);
-        if (cur >= target) clearInterval(iv);
-      }, 1800 / steps);
-    }
-    const cntObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          animCount(e.target);
-        } else {
-          e.target.textContent = '0';
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up');
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
         }
       });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.counter').forEach(el => cntObs.observe(el));
+    }, observerOptions);
 
-    // ===== NAVBAR =====
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+    revealElements.forEach(el => observer.observe(el));
 
-    // ===== MOBILE NAV =====
-    function toggleNav() {
-      const ham = document.getElementById('ham');
-      const drawer = document.getElementById('drawer');
-      const open = ham.classList.toggle('open');
-      drawer.classList.toggle('open', open);
-      ham.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-
-    // ===== SCROLL REVEAL =====
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px 0px 0px' });
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up').forEach(el => obs.observe(el));
-
-    // ===== PROCESS STEP ANIMATION =====
-    const psObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.ps').forEach(el => psObs.observe(el));
-
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          e.preventDefault();
-          window.scrollTo({ top: target.offsetTop - 72, behavior: 'smooth' });
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
-
-    // ===== CONTACT FORM =====
-    async function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-      try {
-        const res = await fetch('https://formspree.io/f/mwvdowqr', {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          document.getElementById('form-body').style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        } else {
-          alert('Something went wrong. Please text us at 540-300-1414.');
-        }
-      } catch {
-        alert('Something went wrong. Please text us at 540-300-1414.');
-      }
-    }
-
-    function toggleDownsize(show) {
-      document.getElementById('downsize-plan').style.display = show ? 'block' : 'none';
-    }
-
-    // ===== HIDE FLOAT CTA WHEN CONTACT IN VIEW =====
-    const floatCta = document.querySelector('.float-cta');
-    const contactObs = new IntersectionObserver(entries => {
-      floatCta.style.opacity = entries[0].isIntersecting ? '0' : '1';
-      floatCta.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
-    }, { threshold: 0.3 });
-    contactObs.observe(document.getElementById('contact'));
-
-    // ===== ROTATING LOCATION IN HERO CARD =====
-    (function() {
-      const locations = [
-        'Fredericksburg, VA · Today',
-        'Stafford, VA · Today',
-        'Spotsylvania, VA · Today',
-        'Woodbridge, VA · Today',
-        'Northern Virginia · Today',
-        'Richmond, VA · Today'
-      ];
-      const el = document.querySelector('.hf1 span');
-      if (!el) return;
-      let i = 0;
-      setInterval(() => {
-        el.style.opacity = '0';
-        el.style.transition = 'opacity 0.4s';
-        setTimeout(() => {
-          i = (i + 1) % locations.length;
-          el.textContent = locations[i];
-          el.style.opacity = '1';
-        }, 400);
-      }, 5000);
-    })();
-
-    // ===== TOUCH SWIPE: navigate sections on phone =====
-    (function() {
-      const SECTIONS = ['hero','trust','about','process','services','families','reviews','why','story','cta','areas','contact'];
-      let tx = 0, ty = 0, swiping = false;
-      document.addEventListener('touchstart', e => {
-        tx = e.touches[0].clientX;
-        ty = e.touches[0].clientY;
-        swiping = true;
-      }, { passive: true });
-      document.addEventListener('touchmove', e => {
-        if (!swiping) return;
-        const dx = Math.abs(e.touches[0].clientX - tx);
-        const dy = Math.abs(e.touches[0].clientY - ty);
-        // If mostly vertical, let normal scroll happen
-        if (dy > dx) swiping = false;
-      }, { passive: true });
-      document.addEventListener('touchend', e => {
-        if (!swiping) return;
-        const dx = e.changedTouches[0].clientX - tx;
-        const dy = e.changedTouches[0].clientY - ty;
-        swiping = false;
-        // Only trigger on clear horizontal swipe (>70px, more horiz than vert)
-        if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx)) return;
-        const els = SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
-        const mid = window.scrollY + window.innerHeight * 0.4;
-        let cur = 0;
-        els.forEach((s, i) => { if (s.offsetTop <= mid) cur = i; });
-        const next = dx < 0
-          ? Math.min(cur + 1, els.length - 1)
-          : Math.max(cur - 1, 0);
-        if (next !== cur) {
-          window.scrollTo({ top: Math.max(0, els[next].offsetTop - 72), behavior: 'smooth' });
-        }
-      }, { passive: true });
-    })();
-
-    // Hero float card, realistic rotating move completions
-    (function() {
-      var moves = [
-        { city: 'Fredericksburg, VA', label: 'Move Complete, On Time' },
-        { city: 'Stafford, VA',       label: 'Packing + Move Complete' },
-        { city: 'Woodbridge, VA',     label: 'Move Complete, On Time' },
-        { city: 'Spotsylvania, VA',   label: 'Full-Service Move Done' },
-        { city: 'Manassas, VA',       label: 'Move Complete, On Time' },
-        { city: 'Richmond, VA',       label: 'Packing + Move Complete' },
-        { city: 'Alexandria, VA',     label: 'Move Complete, On Time' },
-        { city: 'Dale City, VA',      label: 'Move Complete, On Time' },
-        { city: 'Ashburn, VA',        label: 'Full-Service Move Done' },
-        { city: 'Gainesville, VA',    label: 'Move Complete, On Time' },
-      ];
-      var times = ['Today', 'Today', '2 days ago', '3 days ago', 'Last week', '10 days ago', '2 weeks ago'];
-      // Seed with day-of-year so it changes daily but is stable within a day
-      var now = new Date();
-      var seed = now.getFullYear() * 1000 + Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-      function pick(arr, offset) { return arr[Math.abs(seed + offset) % arr.length]; }
-      var m = pick(moves, 0);
-      var t = pick(times, 1);
-      var lbl = document.getElementById('hf-move-label');
-      var loc = document.getElementById('hf-move-location');
-      if (lbl) lbl.textContent = m.label;
-      if (loc) loc.textContent = m.city + ' · ' + t;
-    })();
-
-    // Hero video: force play immediately
-    var heroVideo = document.querySelector('.hero-img-wrap video');
-    if (heroVideo) {
-      heroVideo.muted = true;
-      heroVideo.play().catch(function() {
-        document.addEventListener('touchstart', function() { heroVideo.play(); }, { once: true });
-      });
-    }
-    // Secondary videos: load and play only when scrolled into view
-    var lazyVideos = document.querySelectorAll('video[data-lazy-video]');
-    if ('IntersectionObserver' in window && lazyVideos.length) {
-      var videoObs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) {
-            var v = e.target;
-            v.load();
-            v.play().catch(function(){});
-            videoObs.unobserve(v);
-          }
-        });
-      }, { rootMargin: '200px' });
-      lazyVideos.forEach(function(v) { videoObs.observe(v); });
-    }
   </script>
-  <!-- Tawk.to chat disabled — re-add when ready -->
 </body>
 </html>
