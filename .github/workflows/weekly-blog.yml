@@ -1,0 +1,50 @@
+name: Weekly Blog Draft
+
+on:
+  schedule:
+    # Every Saturday at 9 AM ET (13:00 UTC)
+    - cron: '0 13 * * 6'
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  generate-and-email:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate blog post
+        id: generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .github/scripts/generate_post.py | tee /tmp/generate_output.txt
+          echo "DRAFT_PATH=$(grep '^DRAFT_PATH=' /tmp/generate_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+          echo "DRAFT_FILENAME=$(grep '^DRAFT_FILENAME=' /tmp/generate_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+          echo "TOPIC_NUMBER=$(grep '^TOPIC_NUMBER=' /tmp/generate_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+
+      - name: Commit draft
+        run: |
+          git config user.name "VYV Blog Bot"
+          git config user.email "blog@validateyourvision.com"
+          git add blog/drafts/ blog/_published-topics.json
+          git commit -m "Draft: Topic ${{ steps.generate.outputs.TOPIC_NUMBER }} — ${{ steps.generate.outputs.DRAFT_FILENAME }}"
+          git push origin gh-pages
+
+      - name: Send approval email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DRAFT_PATH: ${{ steps.generate.outputs.DRAFT_PATH }}
+          REVISION: '0'
+          MODE: draft
+        run: python .github/scripts/send_email.py

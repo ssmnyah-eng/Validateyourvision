@@ -1,0 +1,77 @@
+name: Publish Approved Blog Post
+
+on:
+  repository_dispatch:
+    types: [publish-blog]
+  workflow_dispatch: # Manual fallback
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Publish post
+        id: publish
+        run: |
+          python .github/scripts/publish_post.py | tee /tmp/publish_output.txt
+          echo "LIVE_PATH=$(grep '^LIVE_PATH=' /tmp/publish_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+          echo "FILENAME=$(grep '^FILENAME=' /tmp/publish_output.txt | cut -d= -f2)" >> $GITHUB_OUTPUT
+
+      - name: Commit published post
+        run: |
+          git config user.name "VYV Blog Bot"
+          git config user.email "blog@validateyourvision.com"
+          git add blog/
+          git commit -m "Publish: ${{ steps.publish.outputs.FILENAME }}"
+          git push origin gh-pages
+
+      - name: Send confirmation email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.request
+
+          api_key = os.environ['RESEND_API_KEY']
+          filename = "${{ steps.publish.outputs.FILENAME }}"
+          url = f"https://validateyourvision.com/blog/{filename}"
+
+          email_html = f"""
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:40px 20px;">
+            <div style="background:linear-gradient(135deg,#210D46,#4A237A);padding:32px;border-radius:12px;text-align:center;margin-bottom:32px;">
+              <h1 style="color:#fff;font-size:24px;margin:0 0 8px;">✅ Post Published!</h1>
+              <p style="color:rgba(255,255,255,0.75);margin:0;font-size:15px;">Your blog post is now live on validateyourvision.com</p>
+            </div>
+            <p style="font-size:16px;color:#333;">Your post is live at:</p>
+            <a href="{url}" style="display:block;background:#8B5BC7;color:#fff;text-decoration:none;padding:16px 24px;border-radius:8px;text-align:center;font-size:15px;font-weight:700;margin:16px 0;">{url}</a>
+            <p style="font-size:14px;color:#777;">The next draft will arrive next Monday. Reply to that email with edits or APPROVED to publish.</p>
+          </div>"""
+
+          data = json.dumps({{
+            "from": "VYV Blog <blog@validateyourvision.com>",
+            "to": ["validateyourvision@gmail.com"],
+            "cc": ["nyahwood.va@gmail.com"],
+            "subject": f"✅ Published: {filename.replace('-', ' ').replace('.html', '').title()}",
+            "html": email_html
+          }}).encode()
+
+          req = urllib.request.Request(
+            'https://api.resend.com/emails',
+            data=data,
+            headers={{'Authorization': f'Bearer {{api_key}}', 'Content-Type': 'application/json'}}
+          )
+          urllib.request.urlopen(req)
+          print("Confirmation email sent.")
+          EOF
