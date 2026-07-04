@@ -2116,6 +2116,7 @@ async function submitLead(name, email, phone) {
         phone,
         submitted_at:     now,
         source:           'Pricing Estimator',
+        lead_action:      'Form Submitted',
         /* Route */
         pickup_address:   pickup,
         dropoff_address:  dropoff,
@@ -2164,6 +2165,43 @@ async function submitLead(name, email, phone) {
   }
 }
 
+// Auto-capture: fires as soon as name + email are filled, even if they never click the button
+let _autoCaptureSent = false;
+function tryAutoCapture() {
+  if (_autoCaptureSent) return;
+  const n = document.getElementById('lead-name').value.trim();
+  const e = document.getElementById('lead-email').value.trim();
+  if (!n || !e || !e.includes('@')) return;
+  _autoCaptureSent = true;
+  const _r = calc();
+  const pickup  = document.getElementById('pickup-addr').value.trim();
+  const dropoff = document.getElementById('dropoff-addr').value.trim();
+  if (INTEGRATIONS.ZAPIER_WEBHOOK) {
+    fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        type:             'auto_capture',
+        lead_action:      'Info Entered — No Action Taken',
+        customer_name:    n,
+        email:            e,
+        phone:            document.getElementById('lead-phone').value.trim(),
+        pickup_address:   pickup,
+        dropoff_address:  dropoff,
+        bedrooms:         SIZE_LABEL[S.homeSize]  || S.homeSize  || '',
+        property_type:    PROP_LABEL[S.propType]  || S.propType  || '',
+        move_timeline:    DATE_LABEL[S.moveDate]  || S.moveDate  || '',
+        estimate_low:     _r ? _r.totalLo : null,
+        estimate_high:    _r ? _r.totalHi : null,
+        submitted_at:     new Date().toISOString(),
+        source:           'Pricing Estimator',
+      }),
+    }).catch(()=>{});
+  }
+}
+document.getElementById('lead-email').addEventListener('blur', tryAutoCapture);
+document.getElementById('lead-phone').addEventListener('blur', tryAutoCapture);
+
 document.getElementById('btn-reveal').addEventListener('click', ()=>{
   const n = document.getElementById('lead-name').value.trim();
   const e = document.getElementById('lead-email').value.trim();
@@ -2171,6 +2209,7 @@ document.getElementById('btn-reveal').addEventListener('click', ()=>{
   const errEl = document.getElementById('lead-err');
   if (!n||!e||!p) { errEl.classList.remove('hidden'); return; }
   errEl.classList.add('hidden');
+  _autoCaptureSent = true; // prevent duplicate fire on submit
   submitLead(n, e, p);
   renderResults();
   show('results');
@@ -2325,6 +2364,7 @@ function confirmMove(source) {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         type:           'move_confirmation',
+        lead_action:    'Move Confirmed',
         customer_name:  name,
         email,
         phone,
@@ -2334,6 +2374,7 @@ function confirmMove(source) {
         crew_size:      S.crewSize,
         move_date:      S.moveDate,
         submitted_at:   new Date().toISOString(),
+        source:         'Pricing Estimator',
       }),
     }).catch(()=>{});
   }
@@ -2375,6 +2416,26 @@ async function downloadPlan() {
     document.getElementById('pdf-modal').scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
+  // Track PDF download
+  if (INTEGRATIONS.ZAPIER_WEBHOOK) {
+    const _r = calc();
+    fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        type:          'pdf_download',
+        lead_action:   'PDF Downloaded',
+        customer_name: document.getElementById('lead-name').value.trim(),
+        email:         document.getElementById('lead-email').value.trim(),
+        phone:         document.getElementById('lead-phone').value.trim(),
+        estimate_low:  _r ? _r.totalLo : null,
+        estimate_high: _r ? _r.totalHi : null,
+        submitted_at:  new Date().toISOString(),
+        source:        'Pricing Estimator',
+      }),
+    }).catch(()=>{});
+  }
+
   // Lazy-load jsPDF only when user actually requests a PDF download
   if (!window.jspdf) {
     await new Promise((resolve, reject) => {
