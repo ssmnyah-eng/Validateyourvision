@@ -1021,18 +1021,18 @@ input,select,textarea{font-size:16px !important}
         <div class="dep-box">
           <div class="dep-lbl">Booking Deposit</div>
           <div class="dep-amt" id="res-dep">-</div>
-          <div class="dep-note">Your deposit secures your move date and is applied toward your final balance. It is not an additional charge.</div>
+          <div class="dep-note">Pay this $50 deposit to secure your move date. It's applied toward your final balance — not an extra charge. Your final flat rate is locked in only after your virtual walkthrough.</div>
         </div>
 
-        <p class="disclaimer">This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.</p>
+        <p class="disclaimer">This estimate is your baseline blueprint — a starting point built from the information you provided. Your final flat rate is legally locked in only after your virtual walkthrough, where we see every room and every item. Any spaces, rooms, or items not visually inspected during that video call are explicitly excluded from the final price.</p>
       </div>
     </div>
 
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
-      <div class="mid-confirm-head">Does this look right for your move?</div>
-      <div class="mid-confirm-sub">If so, let us know and we'll reach out to confirm your details, answer questions, and get your date locked in.</div>
-      <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes, Confirm My Move</button>
+      <div class="mid-confirm-head">Ready to lock in your date?</div>
+      <div class="mid-confirm-sub">This estimate is your baseline blueprint. The next step is a $50 deposit to secure your date, then a 10–30 minute virtual walkthrough where we see everything we're moving. Your final flat rate gets locked in after that call.</div>
+      <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes, Secure My Move Date</button>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Not yet, save my plan as a PDF first</button>
     </div>
 
@@ -1323,7 +1323,7 @@ const C = {
   PACK_HRS:        {studio:[3,4],'1br':[3,4],'2br':[4,6],'3br':[6,8],'4br':[8,10]},
   PACK_MOD:        {fragile:.35, kitchen:.5, rooms:.75, full:1},
   VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75},
-  DEPOSIT:         {studio:370,'1br':370,'2br':370,'3br':370,'4br':400},
+  DEPOSIT:         {studio:50,'1br':50,'2br':50,'3br':50,'4br':50},
   CARRY_MOD:       {close:0, medium:.5, long:1, verylong:2},
   FURNISH_MOD:     {light:-1, average:0, full:1, veryfull:2},
   REC_CREW:        {studio:2,'1br':2,'2br':3,'3br':3,'4br':4},
@@ -2589,10 +2589,10 @@ async function downloadPlan() {
   });
 
   gap(3);
-  infoBox('Your deposit secures your move date and is applied toward your final balance, it is not an additional charge.', greenlt, green);
+  infoBox('Pay the $50 deposit to secure your move date. It goes toward your final balance. Your final flat rate is locked in only after your virtual walkthrough — any rooms or items not shown during that call are excluded from the price.', greenlt, green);
   gap(2);
   doc.setFontSize(7.5); doc.setFont('helvetica','italic'); doc.setTextColor(...muted);
-  const disc = doc.splitTextToSize('This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.', cw);
+  const disc = doc.splitTextToSize('This estimate is your baseline blueprint. Your final flat rate is locked in only after your virtual walkthrough, where we visually confirm every room and item. Any spaces, rooms, or items not shown during that call are explicitly excluded from the final price.', cw);
   doc.text(disc, margin, y); y += disc.length * 4 + 4;
 
   // ── PAGE 2: PRE-MOVE CHECKLIST ────────────────────────────
@@ -2916,7 +2916,7 @@ function buildText() {
     S.packingOn ? '  Professional Packing' : '','',
     '-'.repeat(44),
     `Booking Deposit: ${fmt(r.deposit)} (applied toward final balance)`,'',
-    'This estimate is intended for budgeting purposes. Final pricing may vary.',
+    'This estimate is your baseline blueprint. Final flat rate locked after virtual walkthrough.',
     `Generated: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,
   ].filter(l=>l!==null&&l!=='').join('\n');
 }
@@ -3002,7 +3002,7 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
       </div>
     </div>
     <div style="font-size:11px;color:#566779;font-style:italic;border-top:1px solid #d0dae3;padding-top:12px;line-height:1.6">
-      This estimate is generated using the information provided and is intended for budgeting purposes. Final pricing may vary based on inventory volume, accessibility, specialty items, packing requirements, and other conditions identified during the move planning process.
+      This estimate is your baseline blueprint. Your final flat rate is locked in only after your virtual walkthrough, where we visually confirm every room and item. Any spaces, rooms, or items not shown during that call are explicitly excluded from the final price.
     </div>`;
 
   t.style.display = 'block';
