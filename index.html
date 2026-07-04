@@ -1646,17 +1646,14 @@
           <div>
             <div class="hero-location">Fredericksburg, VA &amp; Northern Virginia</div>
             <h1 id="hero-heading" class="hero-h1">
-              We Plan Your Move<br /><span>Before We Move You.</span>
+              Moving Made Simple.
             </h1>
-            <p class="hero-sub">
-              Finally. An organized move.
-            </p>
-            <p class="hero-sub" style="font-size:0.95rem; margin-top:-12px; margin-bottom:38px; color:rgba(236,235,238,0.7);">
-              Most movers show up and figure it out as they go. We create a room-by-room moving plan before moving day so there are fewer surprises, more accuracy, and a smoother move.
+            <p class="hero-sub" style="margin-bottom:38px;">
+              We plan every move before we touch a box, so there's no guessing and no surprise charges.
             </p>
             <div class="hero-actions">
-              <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-              <a href="#process" class="btn btn-outline">See How It Works</a>
+              <a href="/pricing-estimator.html" class="btn btn-primary">Get My Free Moving Plan</a>
+              <a href="sms:+15403001414" class="btn btn-outline">Text Us: 540-300-1414</a>
             </div>
           </div>
           <div class="hero-visual reveal-right">
@@ -1688,6 +1685,45 @@
     </div>
     <div class="scroll-hint" aria-hidden="true">
       <div class="scroll-hint-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== QUICK CONTACT FORM (top) ===== -->
+  <section style="background:var(--lbg2);padding:48px 0;border-bottom:1px solid rgba(74,35,122,0.08);">
+    <div class="container">
+      <div style="max-width:680px;margin:0 auto;">
+        <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--mp);font-weight:700;margin-bottom:4px;text-align:center;">Have a question? Send us a quick message.</p>
+        <p style="text-align:center;font-size:0.85rem;color:var(--lmuted);margin-bottom:24px;">Text us: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a> — most replies within an hour</p>
+        <form id="top-contact-form" onsubmit="handleTopContactSubmit(event)" novalidate>
+          <div id="top-form-body" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:flex-end;">
+            <div>
+              <label for="tcf-name" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Name *</label>
+              <input id="tcf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
+                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+            </div>
+            <div>
+              <label for="tcf-phone" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Phone *</label>
+              <input id="tcf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
+                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+            </div>
+            <div>
+              <label for="tcf-msg" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Message *</label>
+              <input id="tcf-msg" name="message" type="text" placeholder="What do you need help with?" required
+                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+            </div>
+            <button type="submit" id="tcf-submit" class="btn btn-primary" style="white-space:nowrap;padding:12px 22px;font-size:0.88rem;">Send →</button>
+          </div>
+          <p id="top-form-success" style="display:none;text-align:center;color:var(--ap);font-weight:600;padding:12px 0;">Got it! We'll text you back soon.</p>
+        </form>
+        <style>
+          @media (max-width: 640px) {
+            #top-form-body { grid-template-columns: 1fr !important; }
+          }
+        </style>
+      </div>
     </div>
   </section>
 
@@ -1994,56 +2030,6 @@
     </div>
   </div>
 
-  <!-- ===== COMPARISON TABLE ===== -->
-  <section style="background:var(--lbg2);padding:88px 0;" aria-labelledby="compare-heading">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:48px;">
-        <p class="section-eyebrow reveal">Side by Side</p>
-        <h2 id="compare-heading" class="section-title reveal">Typical Movers vs. <span>VYV</span></h2>
-      </div>
-      <div class="reveal" style="max-width:780px;margin:0 auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
-        <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
-          <thead>
-            <tr>
-              <th style="background:var(--mp);color:rgba(236,235,238,0.45);padding:16px 24px;text-align:left;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:40%;">What Happens</th>
-              <th style="background:rgba(33,13,70,0.9);color:rgba(236,235,238,0.45);padding:16px 20px;text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:30%;">Typical Movers</th>
-              <th style="background:var(--ap);color:var(--tw);padding:16px 20px;text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;width:30%;">VYV</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Walk through your home before moving day</td>
-              <td style="padding:14px 20px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Rarely</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Every time</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Detailed estimate based on a real walkthrough</td>
-              <td style="padding:14px 20px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Phone guess</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Always</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Show up on time</td>
-              <td style="padding:14px 20px;background:var(--lbg);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ Hit or miss</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Committed</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);color:var(--ltxt);font-weight:500;">Custom plan for your home &amp; timeline</td>
-              <td style="padding:14px 20px;background:var(--lbg2);border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#b91c1c;font-weight:700;">✗ One-size crew</td>
-              <td style="padding:14px 20px;background:#f0fdf4;border-bottom:1px solid rgba(74,35,122,0.08);text-align:center;color:#15803d;font-weight:700;">✓ Built for you</td>
-            </tr>
-            <tr>
-              <td style="padding:14px 24px;background:var(--lbg);color:var(--ltxt);font-weight:500;">Handle packing, moving &amp; unpacking</td>
-              <td style="padding:14px 20px;background:var(--lbg);text-align:center;color:#b91c1c;font-weight:700;">✗ Usually just transport</td>
-              <td style="padding:14px 20px;background:#f0fdf4;text-align:center;color:#15803d;font-weight:700;">✓ Full service</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="reveal" style="text-align:center;margin-top:36px;">
-        <a href="/pricing-estimator.html" class="btn btn-primary">Get My Moving Plan</a>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== PRICING POSITIONING ===== -->
   <section style="background:var(--dp);padding:72px 0;" aria-label="Our pricing philosophy">
@@ -2077,45 +2063,57 @@
         <div id="svc-packing" class="svc-card reveal" data-d="1">
           <div class="svc-icon" aria-hidden="true">📦</div>
           <h3>Packing</h3>
-          <p>Room-by-room packing done carefully and efficiently. Every item wrapped, labeled, and organized before the move even starts.</p>
+          <p>We pack your things carefully, box by box.</p>
         </div>
         <div id="svc-unpacking" class="svc-card reveal" data-d="2">
           <div class="svc-icon" aria-hidden="true">🏠</div>
           <h3>Unpacking</h3>
-          <p>We unpack just as carefully as we pack. Nothing rushed, nothing misplaced. Your things end up where they belong.</p>
+          <p>We unpack it just as carefully. Everything ends up where it belongs.</p>
         </div>
         <div id="svc-labor" class="svc-card reveal" data-d="3">
           <div class="svc-icon" aria-hidden="true">🚛</div>
           <h3>Moving Labor</h3>
-          <p>We bring the crew and handle the heavy lifting, loading, and unloading so you can stay focused on your family and your next chapter.</p>
+          <p>We load, carry, and unload the heavy stuff so you don't have to.</p>
         </div>
         <div id="svc-organizing" class="svc-card reveal" data-d="4">
           <div class="svc-icon" aria-hidden="true">🗂️</div>
           <h3>Organizing</h3>
-          <p>Once everything's in, we help you get it in order. Closets, kitchens, living spaces, organized the way you actually want to live.</p>
+          <p>We help you get organized after the move — closets, kitchen, everywhere.</p>
         </div>
         <div id="svc-whiteglove" class="svc-card reveal" data-d="5">
           <div class="svc-icon" aria-hidden="true">✨</div>
           <h3>White Glove Organizing</h3>
-          <p>We take it all the way. Everything placed, arranged, hung, and styled until your space feels lived-in and like yours, from the moment we leave.</p>
+          <p>We take it all the way. Everything placed, arranged, and styled until the space feels like yours.</p>
           <span class="svc-note">Premium add-on</span>
         </div>
         <div id="svc-allinclusive" class="svc-card reveal" data-d="1">
           <div class="svc-icon" aria-hidden="true">🎁</div>
           <h3>All-Inclusive Package</h3>
-          <p>Packing, moving, and unpacking bundled together. Everything handled start to finish, and because you're doing it all with us, you get a bundled rate.</p>
+          <p>Packing, moving, and unpacking bundled together — everything start to finish, better rate.</p>
           <span class="svc-note">Best value</span>
         </div>
-        <div id="svc-longdistance" class="svc-card reveal" data-d="2">
+        <div id="svc-packingonly" class="svc-card reveal" data-d="2">
+          <div class="svc-icon" aria-hidden="true">🕐</div>
+          <h3>Packing Only</h3>
+          <p>Just need packing help? We do that too. $45/hr, 3-hour minimum.</p>
+          <a href="/pricing-estimator.html" class="svc-note" style="cursor:pointer;text-decoration:none;">Hourly booking →</a>
+        </div>
+        <div id="svc-eviction" class="svc-card reveal" data-d="3" style="border-color:rgba(192,132,252,0.3);background:linear-gradient(135deg,rgba(45,10,78,0.04),rgba(74,35,122,0.06));">
+          <div class="svc-icon" aria-hidden="true">⚡</div>
+          <h3>Same-Day Eviction Help</h3>
+          <p>Have to be out today? We move fast, no judgment.</p>
+          <a href="/eviction.html" class="svc-note" style="cursor:pointer;text-decoration:none;color:#8B5BC7;">Learn more →</a>
+        </div>
+        <div id="svc-longdistance" class="svc-card reveal" data-d="4">
           <div class="svc-icon" aria-hidden="true">🗺️</div>
           <h3>Long Distance Moving</h3>
-          <p>Moving out of the area? We handle long-distance relocations with the same structured plan and in-home estimate process, so you know what to expect before your crew ever arrives. Planning a long-distance move? Let's talk.</p>
+          <p>Moving out of the area? Same planning process, same care. Let's talk.</p>
           <span class="svc-note">Available on request</span>
         </div>
-        <div id="svc-storage" class="svc-card reveal" data-d="3">
+        <div id="svc-storage" class="svc-card reveal" data-d="5">
           <div class="svc-icon" aria-hidden="true">🏢</div>
           <h3>Storage Coordination</h3>
-          <p>Need to store items between moves? We coordinate short and long-term storage so you're not scrambling to figure it out alone. We handle the logistics, you handle the transition.</p>
+          <p>Need to store items between moves? We coordinate the logistics.</p>
           <span class="svc-note">Available on request</span>
         </div>
       </div>
@@ -2246,45 +2244,31 @@
           <div id="contact-form-wrap" style="background:var(--lbg);border-radius:20px;padding:40px 36px;box-shadow:var(--shadow);">
             <div id="form-body">
               <p style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--lv);margin-bottom:10px;">Send Us a Message</p>
-              <h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--mp);margin-bottom:6px;line-height:1.25;">Have a Question or Need a Quick Move?</h3>
-              <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:24px;line-height:1.6;">For general questions, urgent situations, or anything that doesn't fit the estimator — just fill this out and we'll get back to you fast.</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--mp);margin-bottom:6px;line-height:1.25;">Have a question? Send us a quick message.</h3>
+              <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:24px;line-height:1.6;">Most replies within an hour.</p>
               <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                  <div>
-                    <label for="cf-name" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Your Name *</label>
-                    <input id="cf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
-                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                  <div>
-                    <label for="cf-phone" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Phone (text only) *</label>
-                    <input id="cf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                </div>
                 <div style="margin-bottom:12px;">
-                  <label for="cf-email" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Email *</label>
-                  <input id="cf-email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email"
+                  <label for="cf-name" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Name *</label>
+                  <input id="cf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
                     style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
                 <div style="margin-bottom:12px;">
-                  <label for="cf-date" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Move Date <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--lmuted);font-size:0.78rem;">(if known)</span></label>
-                  <input id="cf-date" name="move_date" type="text" placeholder="e.g. Aug 10th, ASAP, or flexible"
+                  <label for="cf-phone" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Phone (text only) *</label>
+                  <input id="cf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
                     style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
                 </div>
                 <div style="margin-bottom:20px;">
                   <label for="cf-msg" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Message *</label>
-                  <textarea id="cf-msg" name="message" rows="4" placeholder="Tell us what you need — no question is too big or too last minute." required
+                  <textarea id="cf-msg" name="message" rows="4" placeholder="What do you need help with?" required
                     style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;resize:vertical;"
                     onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
                 </div>
                 <button type="submit" id="cf-submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.97rem;padding:15px;">
                   Send Message →
                 </button>
-                <p style="font-size:0.75rem;color:var(--lmuted);margin-top:10px;text-align:center;">Or text us now: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a></p>
+                <p style="font-size:0.75rem;color:var(--lmuted);margin-top:10px;text-align:center;">Or text us: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a> — most replies within an hour</p>
               </form>
             </div>
             <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
@@ -2308,14 +2292,10 @@
           We're a small team, and we take that seriously. Every job gets the same attention — no crews phoning it in, no surprises at the end.
         </p>
         <div class="why-badges">
-          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🏡</div> Locally Owned and Operated</div>
-          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">💰</div> Detailed Estimates After a Real Walkthrough</div>
-          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⏰</div> Reliable Arrival Times</div>
-          <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">🤝</div> Professional and Respectful Movers</div>
-          <div class="why-badge reveal" data-d="5"><div class="why-badge-icon">📦</div> Packing, Moving &amp; Unpacking Services</div>
-          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🗓️</div> Free Consultations and Estimates</div>
-          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">📋</div> Personalized Moving Plans</div>
-          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⭐</div> Customer-Focused Service</div>
+          <div class="why-badge reveal" data-d="1"><div class="why-badge-icon">🏡</div> Locally Owned</div>
+          <div class="why-badge reveal" data-d="2"><div class="why-badge-icon">💰</div> Real Walkthrough</div>
+          <div class="why-badge reveal" data-d="3"><div class="why-badge-icon">⏰</div> On-Time Crew</div>
+          <div class="why-badge reveal" data-d="4"><div class="why-badge-icon">🗓️</div> Free Consultation</div>
         </div>
         <div class="reveal" style="margin-top:56px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);max-height:480px;">
           <video muted loop playsinline preload="none" data-lazy-video
@@ -2701,6 +2681,22 @@
         }
       });
     });
+
+    // ===== TOP CONTACT FORM =====
+    async function handleTopContactSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('tcf-submit');
+      btn.disabled = true; btn.textContent = '…';
+      try {
+        const res = await fetch('https://formspree.io/f/mwvdowqr', {
+          method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('top-form-body').style.display = 'none';
+          document.getElementById('top-form-success').style.display = 'block';
+        } else { btn.disabled = false; btn.textContent = 'Send →'; alert('Please text us at 540-300-1414.'); }
+      } catch { btn.disabled = false; btn.textContent = 'Send →'; alert('Please text us at 540-300-1414.'); }
+    }
 
     // ===== CONTACT FORM =====
     async function handleContactSubmit(e) {
