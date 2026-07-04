@@ -2207,6 +2207,97 @@
     </div>
   </div>
 
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" style="background: var(--lbg2); padding: 108px 0;" aria-labelledby="contact-heading">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 1.8fr; gap:64px; align-items:start;">
+        <div class="reveal-left">
+          <p class="section-eyebrow">Get In Touch</p>
+          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move.</span></h2>
+          <p class="section-sub" style="margin-bottom:36px;">
+            We serve Fredericksburg, Stafford, Spotsylvania, Woodbridge, Richmond, and surrounding Northern Virginia areas.
+          </p>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
+              <a href="sms:+15403001414" style="color:inherit;">Text us: 540-300-1414 (text only)</a>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
+              <a href="mailto:hello@validateyourvision.com" style="color:inherit;">hello@validateyourvision.com</a>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
+              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📍</div>
+              <span>Fredericksburg, VA · Northern Virginia · Richmond</span>
+            </div>
+          </div>
+
+          <!-- Eviction callout -->
+          <div style="margin-top:32px;background:linear-gradient(135deg,#2d0a4e,var(--ap));border-radius:14px;padding:22px 20px;border-left:4px solid #c084fc;">
+            <p style="font-family:'Raleway',sans-serif;font-weight:800;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#e0c8ff;margin-bottom:6px;">⚡ Same-Day Eviction Moves</p>
+            <p style="color:rgba(236,235,238,0.88);font-size:0.9rem;line-height:1.6;margin-bottom:14px;">Being evicted and don't know where to start? We move fast. Text <strong style="color:#fff;">"EVICTION"</strong> to (540) 300-1414 and we'll walk you through it.</p>
+            <a href="sms:+15403001414&body=EVICTION" style="display:inline-flex;align-items:center;gap:7px;background:#c084fc;color:#190E2A;font-family:'Raleway',sans-serif;font-weight:800;font-size:0.82rem;padding:10px 18px;border-radius:50px;text-decoration:none;">
+              Text "EVICTION" Now →
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal-right">
+          <div id="contact-form-wrap" style="background:var(--lbg);border-radius:20px;padding:40px 36px;box-shadow:var(--shadow);">
+            <div id="form-body">
+              <p style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--lv);margin-bottom:10px;">Send Us a Message</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--mp);margin-bottom:6px;line-height:1.25;">Have a Question or Need a Quick Move?</h3>
+              <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:24px;line-height:1.6;">For general questions, urgent situations, or anything that doesn't fit the estimator — just fill this out and we'll get back to you fast.</p>
+              <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                  <div>
+                    <label for="cf-name" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Your Name *</label>
+                    <input id="cf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
+                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
+                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                  </div>
+                  <div>
+                    <label for="cf-phone" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Phone (text only) *</label>
+                    <input id="cf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
+                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
+                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                  </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <label for="cf-email" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Email *</label>
+                  <input id="cf-email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email"
+                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+                <div style="margin-bottom:12px;">
+                  <label for="cf-date" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Move Date <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--lmuted);font-size:0.78rem;">(if known)</span></label>
+                  <input id="cf-date" name="move_date" type="text" placeholder="e.g. Aug 10th, ASAP, or flexible"
+                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
+                </div>
+                <div style="margin-bottom:20px;">
+                  <label for="cf-msg" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Message *</label>
+                  <textarea id="cf-msg" name="message" rows="4" placeholder="Tell us what you need — no question is too big or too last minute." required
+                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;resize:vertical;"
+                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
+                </div>
+                <button type="submit" id="cf-submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.97rem;padding:15px;">
+                  Send Message →
+                </button>
+                <p style="font-size:0.75rem;color:var(--lmuted);margin-top:10px;text-align:center;">Or text us now: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a></p>
+              </form>
+            </div>
+            <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
+              <div style="font-size:3rem;margin-bottom:16px;">✅</div>
+              <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--mp);margin-bottom:10px;">Message Received!</h3>
+              <p style="color:var(--lmuted);font-size:0.95rem;line-height:1.7;">We'll follow up with you shortly. If it's urgent, text us directly at <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== WHY CHOOSE US ===== -->
   <section id="why" aria-labelledby="why-heading">
     <div class="container">
@@ -2448,97 +2539,6 @@
     </div>
   </section>
 
-
-  <!-- ===== CONTACT ===== -->
-  <section id="contact" style="background: var(--lbg2); padding: 108px 0;" aria-labelledby="contact-heading">
-    <div class="container">
-      <div style="display:grid; grid-template-columns:1fr 1.8fr; gap:64px; align-items:start;">
-        <div class="reveal-left">
-          <p class="section-eyebrow">Get In Touch</p>
-          <h2 id="contact-heading" class="section-title">Let's Talk About<br /><span>Your Move.</span></h2>
-          <p class="section-sub" style="margin-bottom:36px;">
-            We serve Fredericksburg, Stafford, Spotsylvania, Woodbridge, Richmond, and surrounding Northern Virginia areas.
-          </p>
-          <div style="display:flex; flex-direction:column; gap:16px;">
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📞</div>
-              <a href="sms:+15403001414" style="color:inherit;">Text us: 540-300-1414 (text only)</a>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">✉️</div>
-              <a href="mailto:hello@validateyourvision.com" style="color:inherit;">hello@validateyourvision.com</a>
-            </div>
-            <div style="display:flex; align-items:center; gap:12px; font-size:0.92rem; color:var(--lmuted);">
-              <div style="width:38px;height:38px;background:var(--lbg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid rgba(74,35,122,0.12);flex-shrink:0;" aria-hidden="true">📍</div>
-              <span>Fredericksburg, VA · Northern Virginia · Richmond</span>
-            </div>
-          </div>
-
-          <!-- Eviction callout -->
-          <div style="margin-top:32px;background:linear-gradient(135deg,#2d0a4e,var(--ap));border-radius:14px;padding:22px 20px;border-left:4px solid #c084fc;">
-            <p style="font-family:'Raleway',sans-serif;font-weight:800;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#e0c8ff;margin-bottom:6px;">⚡ Same-Day Eviction Moves</p>
-            <p style="color:rgba(236,235,238,0.88);font-size:0.9rem;line-height:1.6;margin-bottom:14px;">Being evicted and don't know where to start? We move fast. Text <strong style="color:#fff;">"EVICTION"</strong> to (540) 300-1414 and we'll walk you through it.</p>
-            <a href="sms:+15403001414&body=EVICTION" style="display:inline-flex;align-items:center;gap:7px;background:#c084fc;color:#190E2A;font-family:'Raleway',sans-serif;font-weight:800;font-size:0.82rem;padding:10px 18px;border-radius:50px;text-decoration:none;">
-              Text "EVICTION" Now →
-            </a>
-          </div>
-        </div>
-
-        <div class="reveal-right">
-          <div id="contact-form-wrap" style="background:var(--lbg);border-radius:20px;padding:40px 36px;box-shadow:var(--shadow);">
-            <div id="form-body">
-              <p style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--lv);margin-bottom:10px;">Send Us a Message</p>
-              <h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--mp);margin-bottom:6px;line-height:1.25;">Have a Question or Need a Quick Move?</h3>
-              <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:24px;line-height:1.6;">For general questions, urgent situations, or anything that doesn't fit the estimator — just fill this out and we'll get back to you fast.</p>
-              <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                  <div>
-                    <label for="cf-name" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Your Name *</label>
-                    <input id="cf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
-                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                  <div>
-                    <label for="cf-phone" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Phone (text only) *</label>
-                    <input id="cf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-                      style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                      onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                  </div>
-                </div>
-                <div style="margin-bottom:12px;">
-                  <label for="cf-email" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Email *</label>
-                  <input id="cf-email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email"
-                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-                <div style="margin-bottom:12px;">
-                  <label for="cf-date" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Move Date <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--lmuted);font-size:0.78rem;">(if known)</span></label>
-                  <input id="cf-date" name="move_date" type="text" placeholder="e.g. Aug 10th, ASAP, or flexible"
-                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-                </div>
-                <div style="margin-bottom:20px;">
-                  <label for="cf-msg" style="display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:6px;">Message *</label>
-                  <textarea id="cf-msg" name="message" rows="4" placeholder="Tell us what you need — no question is too big or too last minute." required
-                    style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ltxt);background:var(--lbg2);outline:none;transition:border-color .2s;resize:vertical;"
-                    onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'"></textarea>
-                </div>
-                <button type="submit" id="cf-submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.97rem;padding:15px;">
-                  Send Message →
-                </button>
-                <p style="font-size:0.75rem;color:var(--lmuted);margin-top:10px;text-align:center;">Or text us now: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a></p>
-              </form>
-            </div>
-            <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
-              <div style="font-size:3rem;margin-bottom:16px;">✅</div>
-              <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--mp);margin-bottom:10px;">Message Received!</h3>
-              <p style="color:var(--lmuted);font-size:0.95rem;line-height:1.7;">We'll follow up with you shortly. If it's urgent, text us directly at <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a>.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
