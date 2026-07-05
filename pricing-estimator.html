@@ -901,26 +901,26 @@ input,select,textarea{font-size:16px !important}
   <!-- Screen 6: Long Carry -->
   <div class="screen" id="screen-6">
     <p class="q-label">How far will the movers need to walk at your pick-up location?</p>
-    <p class="q-sub">Think about where the moving truck will be able to park</p>
+    <p class="q-sub">Think about where the moving truck will be able to park — stairs are counted separately</p>
     <div id="s6">
       <div class="opts" id="s6-origin">
-        <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance (driveway or building door)</small></span><span class="chk">&#10003;</span></button>
-        <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
-        <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="close" data-mod="0"><span>Right at the door or stairwell<small>Truck parks at the driveway, building entrance, or at the base of your stairs — no extra walking</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot, down a short driveway, or through a short hallway</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Around a building, through a long hallway, or into a complex</small></span><span class="chk">&#10003;</span></button>
         <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
       </div>
       <div id="s6-dest-wrap" style="display:none;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)">
         <p class="q-label" style="font-size:1.05rem;margin-bottom:8px">What about at your destination?</p>
-        <p class="q-sub" style="margin-bottom:12px">How far will movers need to walk at the drop-off location?</p>
+        <p class="q-sub" style="margin-bottom:12px">How far will movers need to walk at the drop-off location? Stairs are counted separately.</p>
         <div class="opts" id="s6-dest">
-          <button class="opt" data-val="close" data-mod="0"><span>Right at the door<small>Truck parks directly at the entrance</small></span><span class="chk">&#10003;</span></button>
-          <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot or down a short driveway</small></span><span class="chk">&#10003;</span></button>
-          <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Down a hallway, around a building, or through a complex</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="close" data-mod="0"><span>Right at the door or stairwell<small>Truck parks at the building entrance or base of stairs — no extra walking</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="medium" data-mod="0.5"><span>Short walk<small>Across a parking lot, short driveway, or brief hallway</small></span><span class="chk">&#10003;</span></button>
+          <button class="opt" data-val="long" data-mod="1"><span>Moderate walk<small>Around a building, through a long hallway, or into a complex</small></span><span class="chk">&#10003;</span></button>
           <button class="opt" data-val="verylong" data-mod="2"><span>Long walk<small>Across a large complex, parking structure, or gated area</small></span><span class="chk">&#10003;</span></button>
         </div>
       </div>
     </div>
-    <div class="tip"><strong>Move Planning Tip</strong>Every extra step adds up. Long carries can add more time to a move than almost any other single factor.</div>
+    <div class="tip"><strong>Move Planning Tip</strong>Stairs are already counted in your estimate. This question is only about flat walking distance from the truck to your door or stairwell entrance.</div>
   </div>
 
   <!-- Screen 7: Specialty Items + Appliances (multi) -->
@@ -2327,7 +2327,7 @@ function renderSpecialty() {
 const PL   = {apartment:'Apartment',condo:'Condo',townhome:'Townhome',house:'Single Family Home'};
 const SL   = {studio:'Studio','1br':'1 Bedroom','2br':'2 Bedrooms','3br':'3 Bedrooms','4br':'4+ Bedrooms'};
 const FL   = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully Furnished',veryfull:'Very Full / Heavy'};
-const CL   = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
+const CL   = {close:'Right at the door / stairwell',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
 const SPECL= {piano:'Piano',safe:'Safe / Gun Safe',pool:'Pool Table',fishtank:'Fish Tank / Aquarium',glass:'Large Glass / Mirrors',hottub:'Hot Tub / Spa',clock:'Grandfather Clock',artwork:'Large Artwork / Antiques',commercial:'Commercial Equipment'};
 const PTL  = {none:'None',fragile:'Fragile Items',kitchen:'Kitchen Only',rooms:'Several Rooms',full:'Full Home'};
 const STL  = {no:'Home to home',only:'Moving to storage unit',pickup:'Pickup from storage',dropoff:'Dropoff to storage',both:'Both'};
