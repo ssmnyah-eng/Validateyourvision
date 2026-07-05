@@ -1217,13 +1217,13 @@ input,select,textarea{font-size:16px !important}
   <!-- Screen 13b: Weekend + Move Month (affects pricing) -->
   <div class="screen" id="screen-13b">
     <p class="q-label">A few quick questions about your move date</p>
-    <p class="q-sub">Weekend, peak season, and evening moves are priced higher across all local companies</p>
+    <p class="q-sub">Answer a few quick questions so we can build the most accurate estimate for your move.</p>
 
     <div style="margin-bottom:20px">
       <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px;font-family:'Raleway',sans-serif">Are you planning a weekend move?</div>
       <div class="opts" id="s13b-weekend">
-        <button class="opt" data-val="no"><span>Weekday<small>Monday – Friday · Standard rate</small></span><span class="chk">&#10003;</span></button>
-        <button class="opt" data-val="yes"><span>Weekend<small>Saturday or Sunday · +15% to labor rate</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="no"><span>Weekday<small>Monday – Friday</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="yes"><span>Weekend<small>Saturday or Sunday</small></span><span class="chk">&#10003;</span></button>
       </div>
     </div>
 
@@ -1244,20 +1244,21 @@ input,select,textarea{font-size:16px !important}
         <option value="11">November</option>
         <option value="12">December</option>
       </select>
-      <div class="ibox hidden" id="s13b-peak-note" style="margin-top:6px;font-size:.84rem">&#x26A0; Peak season (May–Aug): moving rates across the DMV run 15–20% higher due to demand. This is factored into your estimate.</div>
+      <div class="hidden" id="s13b-peak-note"></div>
     </div>
 
     <div style="margin-top:20px">
       <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px;font-family:'Raleway',sans-serif">What time does your move start?</div>
       <div class="opts" id="s13b-time">
-        <button class="opt" data-val="morning"><span>Morning<small>8am – 12pm · Standard rate</small></span><span class="chk">&#10003;</span></button>
-        <button class="opt" data-val="afternoon"><span>Afternoon<small>12pm – 5pm · Standard rate</small></span><span class="chk">&#10003;</span></button>
-        <button class="opt" data-val="evening"><span>Evening / Night<small>After 5pm · +$95 after-hours fee</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="morning"><span>Morning<small>8am – 12pm</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="afternoon"><span>Afternoon<small>12pm – 5pm</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="evening"><span>Evening<small>5pm – 9pm</small></span><span class="chk">&#10003;</span></button>
+        <button class="opt" data-val="night"><span>Night<small>9pm or later</small></span><span class="chk">&#10003;</span></button>
       </div>
     </div>
 
     <button class="btn-main hidden mt8" id="s13b-cont">Continue</button>
-    <div class="tip"><strong>Why This Matters</strong>Weekend, peak season, and after-hours moves cost more industry-wide. Evening moves require extended crew scheduling and after-hours coordination — the $95 flat fee covers that overhead, not extra hours.</div>
+    <div class="tip"><strong>Why This Matters</strong>Start time affects crew scheduling and coordination — we want to make sure your team is set up for a smooth move from the first box to the last.</div>
   </div>
 
   <!-- Screen 14: Confidence -->
@@ -1732,7 +1733,7 @@ const C = {
   VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75,'5br':85},
   EQUIP_FEE:       45,      // labor-only equipment fee (dollies, straps, blankets) when customer has own truck
   STORAGE_STOP_FEE: 75,    // per storage stop — covers coordination/admin, separate from mileage
-  AFTER_HOURS_FEE:  95,    // flat fee for evening/night moves starting after 5pm
+  AFTER_HOURS_FEE:  {evening:75, night:95},
   VA_TAX_RATE:     0.053,   // 5.3% VA sales tax on tangible materials (boxes, covers, etc.)
   VALUATION_FEE:   {studio:25,'1br':25,'2br':35,'3br':50,'4br':65,'5br':80}, // cargo protection baked in
   PROT_MAT:        {light:15, average:25, full:45, veryfull:65}, // shrink wrap, runners, pads by furnish level
@@ -1850,7 +1851,7 @@ const S = {
   unpackService:    false,
   weekendMove:      false,
   moveMonth:        null, // 1–12, used for peak season pricing
-  afterHours:       false,
+  afterHours:       null,
   ownTruck:         false,
 };
 
@@ -2065,7 +2066,7 @@ function calc() {
   const visit      = C.VISIT[S.homeSize] || 85;
   const overhead   = 75;
   const streetFee  = S.parkingType === 'street' ? C.STREET_FEE : 0;
-  const afterHoursFee = S.afterHours ? C.AFTER_HOURS_FEE : 0;
+  const afterHoursFee = S.afterHours ? (C.AFTER_HOURS_FEE[S.afterHours] || 0) : 0;
   // Storage stop fee: per stop, separate from mileage (mileage = driving cost; stop fee = coordination overhead)
   const stopCount  = S.storage === 'both' ? 2 : (S.storage && S.storage !== 'no') ? 1 : 0;
   const storageFee = stopCount * C.STORAGE_STOP_FEE;
@@ -2743,7 +2744,8 @@ single('s13', btn => { S.moveDate = btn.dataset.val; });
     btn.addEventListener('click', () => {
       timeEl.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
       btn.classList.add('sel');
-      S.afterHours = btn.dataset.val === 'evening';
+      const v = btn.dataset.val;
+      S.afterHours = (v === 'evening' || v === 'night') ? v : null;
       timeDone = true;
       checkCont();
     });
