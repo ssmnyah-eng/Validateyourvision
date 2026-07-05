@@ -1333,7 +1333,7 @@ input,select,textarea{font-size:16px !important}
       </div>
       <div class="res-cta-pair">
         <button class="btn-lockin" onclick="confirmMove('top')">&#128274; Lock In My Moving Day — $50</button>
-        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" onclick="openWalkthrough(event)">&#128197; Book Virtual Walk-Through</a>
       </div>
       <p class="res-book-fine">$50 holds your date today. $450 deposit due after the walk-through. Both go toward your final balance.</p>
     </div>
@@ -1484,7 +1484,7 @@ input,select,textarea{font-size:16px !important}
       <div class="mid-confirm-sub">Lock in your moving day with $50 — or start with a free virtual walk-through. Either way, your price doesn't change until you say so.</div>
       <div class="res-cta-pair" style="margin-bottom:10px">
         <button class="btn-lockin" onclick="confirmMove('mid')">&#128274; Lock In My Moving Day — $50</button>
-        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" onclick="openWalkthrough(event)">&#128197; Book Virtual Walk-Through</a>
       </div>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Save my quote as a PDF first</button>
     </div>
@@ -1661,7 +1661,7 @@ input,select,textarea{font-size:16px !important}
       </div>
       <div class="res-cta-pair" style="margin-top:0">
         <button class="btn-lockin" onclick="confirmMove('bottom')">&#128274; Lock In My Moving Day — $50</button>
-        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" onclick="openWalkthrough(event)">&#128197; Book Virtual Walk-Through</a>
       </div>
       <p class="res-book-fine" style="text-align:center;margin-top:14px">Both amounts go toward your final balance. No surprise charges. Ever.</p>
       <div class="plan-cta-divider">or</div>
@@ -3265,6 +3265,13 @@ function skipPdfQuestions() {
   S._pdfAnswered = true;
   document.getElementById('pdf-modal').classList.add('hidden');
   downloadPlan();
+}
+
+function openWalkthrough(e) {
+  e.preventDefault();
+  const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
+  const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
+  window.open(url, '_blank', 'noopener');
 }
 
 async function downloadPlan() {
