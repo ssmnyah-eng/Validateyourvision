@@ -1023,9 +1023,9 @@ input,select,textarea{font-size:16px !important}
         <div class="spec-bill hidden" id="specialty-bill"></div>
 
         <div class="dep-box">
-          <div class="dep-lbl">Virtual Walkthrough Booking Fee</div>
+          <div class="dep-lbl">Priority Reservation</div>
           <div class="dep-amt" id="res-dep">-</div>
-          <div class="dep-note">This $50 books your virtual walkthrough. It's applied toward your final balance — everything is included in your price. On the call, we lock in your date, go over your contract, and set your final flat rate.</div>
+          <div class="dep-note">This $50 priority reservation secures your virtual walkthrough slot. After the call, a $450 move deposit locks in your moving date. Both amounts are applied toward your final balance — everything is included in your price. No hidden charges.</div>
         </div>
 
         <p class="disclaimer">This estimate is your baseline blueprint — a starting point built from the information you provided. Your final flat rate is legally locked in only after your virtual walkthrough, where we see every room and every item. Any spaces, rooms, or items not visually inspected during that video call are explicitly excluded from the final price.</p>
@@ -1035,7 +1035,7 @@ input,select,textarea{font-size:16px !important}
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
       <div class="mid-confirm-head">Ready to move forward?</div>
-      <div class="mid-confirm-sub">This estimate is your baseline blueprint. The next step is $50 to book your virtual walkthrough — a 10–30 minute video call where we go over everything, lock in your moving date, and finalize your flat rate.</div>
+      <div class="mid-confirm-sub">This estimate is your baseline blueprint. The next step is a $50 priority reservation to book your virtual walkthrough — a 10–30 minute video call where we confirm every detail and finalize your flat rate. After the call, a $450 move deposit locks in your date. Both are applied toward your final balance.</div>
       <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes, Book My Virtual Walkthrough</button>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Not yet, save my plan as a PDF first</button>
     </div>
@@ -2593,7 +2593,7 @@ async function downloadPlan() {
   });
 
   gap(3);
-  infoBox('The $50 walkthrough booking fee and your moving deposit are both applied toward your final balance — everything is included in your price. No hidden charges.', greenlt, green);
+  infoBox('The $50 priority reservation and your $450 move deposit are both applied toward your final balance — everything is included in your price. No hidden charges.', greenlt, green);
   gap(2);
   doc.setFontSize(7.5); doc.setFont('helvetica','italic'); doc.setTextColor(...muted);
   const disc = doc.splitTextToSize('This estimate is your baseline blueprint. Your final flat rate is locked in only after your virtual walkthrough, where we visually confirm every room and item. Any spaces, rooms, or items not shown during that call are explicitly excluded from the final price.', cw);
@@ -2919,7 +2919,8 @@ function buildText() {
     S.disassembly.length ? '  Furniture Disassembly & Reassembly' : '',
     S.packingOn ? '  Professional Packing' : '','',
     '-'.repeat(44),
-    `Virtual Walkthrough Booking: ${fmt(r.deposit)} (applied toward final balance)`,'',
+    `Walkthrough Priority Reservation: ${fmt(r.deposit)} (applied toward final balance)`,'',
+    'Move deposit of $450 due after walkthrough (also applied toward final balance)',''
     'This estimate is your baseline blueprint. Final flat rate locked after virtual walkthrough.',
     `Generated: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,
   ].filter(l=>l!==null&&l!=='').join('\n');
@@ -3000,9 +3001,9 @@ document.getElementById('btn-pdf').addEventListener('click', async ()=>{
         ${incl.map(i=>`<div style="font-size:11px;color:#3d5166;padding:2px 0">&#10003; ${i}</div>`).join('')}
       </div>
       <div style="background:#d4eddf;border:1px solid #9dd0b4;border-radius:8px;padding:14px">
-        <div style="font-size:10px;font-weight:700;color:#1e6b4a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Virtual Walkthrough Booking</div>
+        <div style="font-size:10px;font-weight:700;color:#1e6b4a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Priority Reservation</div>
         <div style="font-size:22px;font-weight:800;color:#1e6b4a">${fmt(r.deposit)}</div>
-        <div style="font-size:11px;color:#1e6b4a;margin-top:5px;line-height:1.5">Books your virtual walkthrough. Applied toward your final balance.</div>
+        <div style="font-size:11px;color:#1e6b4a;margin-top:5px;line-height:1.5">Secures your virtual walkthrough slot. A $450 move deposit locks in your date after the call. Both applied toward your final balance.</div>
       </div>
     </div>
     <div style="font-size:11px;color:#566779;font-style:italic;border-top:1px solid #d0dae3;padding-top:12px;line-height:1.6">
