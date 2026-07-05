@@ -1192,12 +1192,13 @@ input,select,textarea{font-size:16px !important}
 
   <!-- Screen 12: Storage -->
   <div class="screen" id="screen-12">
-    <p class="q-label">Does your move involve a storage unit?</p>
+    <p class="q-label">What does your move involve?</p>
     <div class="opts" id="s12">
-      <button class="opt" data-val="no"><span>No</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="pickup"><span>Picking up from a storage unit<small>We will collect items from your storage before the main move</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="dropoff"><span>Dropping off to a storage unit<small>Some or all items go to storage before your final destination</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="both"><span>Both pickup and delivery<small>Collecting from one storage and delivering to another</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="no"><span>Moving to a new home<small>Standard home-to-home move — no storage involved</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="only"><span>Moving to a storage unit<small>Everything goes to storage — no home destination</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="pickup"><span>Picking up from a storage unit<small>We collect items from your storage before the main move</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="dropoff"><span>Dropping off at a storage unit<small>Some or all items go to storage before your final destination</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="both"><span>Both pickup and drop-off<small>Collecting from one storage and delivering to another</small></span><span class="chk">&#10003;</span></button>
     </div>
     <div class="tip"><strong>Storage Stops</strong>Storage stops add time and coordination to any move. Telling us now means we plan for it from the start. Nothing gets rushed or missed..</div>
   </div>
@@ -1236,9 +1237,9 @@ input,select,textarea{font-size:16px !important}
         <option value="3">March</option>
         <option value="4">April</option>
         <option value="5">May</option>
-        <option value="6">June &#x26A0; Peak Season</option>
-        <option value="7">July &#x26A0; Peak Season</option>
-        <option value="8">August &#x26A0; Peak Season</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
         <option value="9">September</option>
         <option value="10">October</option>
         <option value="11">November</option>
@@ -2022,8 +2023,10 @@ function calc() {
   // Apply 15% stair penalty when total flights > 3
   const totalFlights = (S.stairs || 0) + (S.destStairs || 0);
   const stairMult = totalFlights > C.STAIR_PENALTY_THRESHOLD ? C.STAIR_PENALTY : 1;
-  const lo    = Math.max(C.MIN_HRS, (base[0] + extra) * stairMult);
-  const hi    = Math.max(C.MIN_HRS, (base[1] + extra) * stairMult) + C.HOUR_BUFFER;
+  const refCrew   = C.REC_CREW[S.homeSize] || 2;
+  const crewScale = refCrew / S.crewSize;
+  const lo    = Math.max(C.MIN_HRS, (base[0] + extra) * stairMult * crewScale);
+  const hi    = Math.max(C.MIN_HRS, (base[1] + extra) * stairMult * crewScale) + C.HOUR_BUFFER;
   // Weekend / peak season rate multiplier
   let rateMult = 1;
   if (S.weekendMove) rateMult *= C.WEEKEND_MULT;
@@ -2068,7 +2071,7 @@ function calc() {
   const streetFee  = S.parkingType === 'street' ? C.STREET_FEE : 0;
   const afterHoursFee = S.afterHours ? (C.AFTER_HOURS_FEE[S.afterHours] || 0) : 0;
   // Storage stop fee: per stop, separate from mileage (mileage = driving cost; stop fee = coordination overhead)
-  const stopCount  = S.storage === 'both' ? 2 : (S.storage && S.storage !== 'no') ? 1 : 0;
+  const stopCount  = S.storage === 'both' ? 2 : (S.storage && S.storage !== 'no' && S.storage !== 'only') ? 1 : 0;
   const storageFee = stopCount * C.STORAGE_STOP_FEE;
   const supplies   = (S.mattressCount || 0) * C.MATTRESS_COST + (S.wardrobeCount || 0) * C.WARDROBE_COST;
   const isTariff   = S.miles > C.VA_TARIFF_MILES;
@@ -2202,7 +2205,7 @@ const FL   = {light:'Lightly Furnished',average:'Average Furnished',full:'Fully 
 const CL   = {close:'Right at the door',medium:'Short walk',long:'Moderate walk',verylong:'Long walk'};
 const SPECL= {piano:'Piano',safe:'Safe / Gun Safe',pool:'Pool Table',fishtank:'Fish Tank / Aquarium',glass:'Large Glass / Mirrors',hottub:'Hot Tub / Spa',clock:'Grandfather Clock',artwork:'Large Artwork / Antiques',commercial:'Commercial Equipment'};
 const PTL  = {none:'None',fragile:'Fragile Items',kitchen:'Kitchen Only',rooms:'Several Rooms',full:'Full Home'};
-const STL  = {no:'No',pickup:'Pickup from storage',dropoff:'Dropoff to storage',both:'Both'};
+const STL  = {no:'Home to home',only:'Moving to storage unit',pickup:'Pickup from storage',dropoff:'Dropoff to storage',both:'Both'};
 const DTL  = {week:'Within 7 Days',month:'Within 30 Days',quarter:'1–3 Months',planning:'Just Planning Ahead'};
 
 /* ══════════════════════════════════════════
