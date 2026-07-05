@@ -464,7 +464,8 @@
     /* ===== NAVBAR ===== */
     #nav {
       position: fixed;
-      inset: 0 0 auto;
+      left: 0;
+      right: 0;
       z-index: 900;
       padding: 18px 0;
       transition: var(--ease);
@@ -1557,11 +1558,11 @@
 <body>
 
   <!-- ===== ANNOUNCEMENT BAR ===== -->
-  <div id="top-bar" style="background:var(--ap);color:var(--tw);text-align:center;padding:9px 16px;font-family:'Raleway',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.03em;position:relative;z-index:200;">
+  <div id="top-bar" style="background:var(--ap);color:var(--tw);text-align:center;padding:9px 16px;font-family:'Raleway',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.03em;position:fixed;top:0;left:0;right:0;z-index:1000;">
     Questions? Urgent move? &nbsp;
     <a href="sms:+15403001414" style="color:#e0c8ff;text-decoration:underline;text-underline-offset:2px;">Text us: (540) 300-1414</a>
     &nbsp;·&nbsp; Text only, we respond fast.
-    <button onclick="this.parentElement.style.display='none'" aria-label="Dismiss"
+    <button onclick="dismissBar()" aria-label="Dismiss"
       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(236,235,238,0.55);font-size:1.1rem;cursor:pointer;line-height:1;">✕</button>
   </div>
 
@@ -2863,6 +2864,26 @@
       }, { rootMargin: '200px' });
       lazyVideos.forEach(function(v) { videoObs.observe(v); });
     }
+  </script>
+  <script>
+    // Keep nav positioned below announcement bar
+    function positionNav() {
+      var bar = document.getElementById('top-bar');
+      var nav = document.getElementById('nav');
+      if (!nav) return;
+      var barH = (bar && bar.offsetParent !== null) ? bar.offsetHeight : 0;
+      nav.style.top = barH + 'px';
+      // also push hero content down so it's not hidden behind fixed nav+bar
+      var hero = document.getElementById('hero');
+      if (hero) hero.style.paddingTop = (barH + nav.offsetHeight) + 'px';
+    }
+    function dismissBar() {
+      var bar = document.getElementById('top-bar');
+      if (bar) bar.style.display = 'none';
+      positionNav();
+    }
+    window.addEventListener('load', positionNav);
+    window.addEventListener('resize', positionNav);
   </script>
   <!-- Tawk.to chat disabled, re-add when ready -->
 </body>
