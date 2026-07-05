@@ -347,12 +347,20 @@ input,select,textarea{font-size:16px !important}
 
 /* Results */
 /* Results top sections */
-.res-book-hero{background:var(--navy);color:#ECEBEE;border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:20px}
+.res-book-hero{background:var(--navy);color:#ECEBEE;border-radius:var(--r);padding:28px 24px;margin-bottom:20px}
 .res-book-tag{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(139,91,199,.85);margin-bottom:8px;font-family:'Raleway',sans-serif}
-.res-book-head{font-size:clamp(1.25rem,4vw,1.65rem);font-weight:800;font-family:'Playfair Display',serif;line-height:1.2;margin-bottom:10px}
-.res-book-sub{font-size:.88rem;color:rgba(236,235,238,.75);line-height:1.6;margin-bottom:18px}
-.btn-book-hero{display:inline-block;background:var(--accent);color:#fff;font-family:'Raleway',sans-serif;font-weight:800;font-size:.95rem;padding:14px 28px;border-radius:var(--r);text-decoration:none;transition:opacity .15s}
-.btn-book-hero:hover{opacity:.88}
+.res-book-head{font-size:clamp(1.25rem,4vw,1.65rem);font-weight:800;font-family:'Playfair Display',serif;line-height:1.25;margin-bottom:12px}
+.res-book-sub{font-size:.88rem;color:rgba(236,235,238,.8);line-height:1.65;margin-bottom:18px}
+.res-trust-row{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:20px}
+.res-trust-item{font-size:.78rem;font-weight:700;color:rgba(236,235,238,.75);font-family:'Raleway',sans-serif;display:flex;align-items:center;gap:5px}
+.res-trust-chk{color:#7ed9a8;font-size:.85rem}
+.res-cta-pair{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+@media(min-width:520px){.res-cta-pair{flex-direction:row}}
+.btn-lockin{flex:1;padding:15px 18px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-family:'Raleway',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;transition:opacity .15s;text-align:center}
+.btn-lockin:hover{opacity:.88}
+.btn-walkthrough{flex:1;padding:15px 18px;background:transparent;color:#ECEBEE;border:2px solid rgba(255,255,255,.3);border-radius:var(--r);font-family:'Raleway',sans-serif;font-weight:800;font-size:.92rem;text-decoration:none;transition:border-color .15s,background .15s;text-align:center;display:flex;align-items:center;justify-content:center}
+.btn-walkthrough:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
+.res-book-fine{font-size:.75rem;color:rgba(236,235,238,.5);line-height:1.5}
 .res-congrats{text-align:center;margin-bottom:20px;padding:0 4px}
 .res-congrats-icon{font-size:2rem;margin-bottom:8px}
 .res-est-top{background:var(--navy);color:#ECEBEE;border-radius:var(--r);padding:22px 24px;text-align:center;margin-bottom:16px}
@@ -360,6 +368,16 @@ input,select,textarea{font-size:16px !important}
 .res-est-top .invest-amt{color:#ECEBEE}
 .res-pdf-top{text-align:center;margin-bottom:24px}
 .res-pdf-note{font-size:.78rem;color:var(--muted);margin-top:8px;line-height:1.5}
+/* Bottom CTA testimonials + steps */
+.plan-cta-proof{background:rgba(139,91,199,.08);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:10px}
+.plan-cta-quote{font-size:.88rem;color:var(--navy);line-height:1.55;font-style:italic;margin-bottom:4px}
+.plan-cta-attr{font-size:.72rem;font-weight:700;color:var(--muted);font-family:'Raleway',sans-serif}
+.plan-cta-how{background:var(--bg);border-radius:var(--r);padding:16px 18px;margin:16px 0}
+.plan-cta-how-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;font-family:'Raleway',sans-serif}
+.plan-cta-step{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--navy);margin-bottom:8px;line-height:1.45}
+.plan-cta-num{background:var(--accent);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;font-family:'Raleway',sans-serif;margin-top:1px}
+.plan-cta .btn-walkthrough{color:var(--navy);border-color:var(--border)}
+.plan-cta .btn-walkthrough:hover{border-color:var(--accent);background:var(--accent-lt);color:var(--accent)}
 .res-h{font-size:clamp(1.3rem,4vw,1.8rem);font-weight:800;color:var(--navy);line-height:1.2;font-family:'Playfair Display',serif}
 .complexity{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700}
 .cx-std{background:#d4eddf;color:#1e6b4a}
@@ -1304,10 +1322,20 @@ input,select,textarea{font-size:16px !important}
 
     <!-- ① BOOK CTA — top of page -->
     <div class="res-book-hero">
-      <div class="res-book-tag">Next Step</div>
-      <div class="res-book-head">Book Your Virtual Walk-Through Today</div>
-      <p class="res-book-sub">We walk through your home virtually, confirm every detail, lock in your final price, and get you on the schedule. Takes about 20 minutes.</p>
-      <a class="btn-book-hero" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">Schedule My Walk-Through →</a>
+      <div class="res-book-tag">Your Price Is Ready. Your Date Isn't.</div>
+      <div class="res-book-head">Lock In Your Moving Day Before Someone Else Does.</div>
+      <p class="res-book-sub">Your estimate is built from your real home and real details — not a bedroom-count guess. The next step is a quick virtual walk-through where we confirm everything, activate your Price Protection Guarantee, and lock in your guaranteed flat rate. No surprises on moving day. No price changes when the truck arrives.</p>
+      <div class="res-trust-row">
+        <div class="res-trust-item"><span class="res-trust-chk">&#10003;</span>Licensed &amp; Insured</div>
+        <div class="res-trust-item"><span class="res-trust-chk">&#10003;</span>Background-Checked Crew</div>
+        <div class="res-trust-item"><span class="res-trust-chk">&#10003;</span>No Surprise Add-Ons</div>
+        <div class="res-trust-item"><span class="res-trust-chk">&#10003;</span>We Show Up When We Say</div>
+      </div>
+      <div class="res-cta-pair">
+        <button class="btn-lockin" onclick="confirmMove('top')">&#128274; Lock In My Moving Day — $50</button>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+      </div>
+      <p class="res-book-fine">$50 holds your date today. $450 deposit due after the walk-through. Both go toward your final balance.</p>
     </div>
 
     <!-- ② CONGRATS + ESTIMATE -->
@@ -1452,9 +1480,12 @@ input,select,textarea{font-size:16px !important}
 
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
-      <div class="mid-confirm-head">Ready to get your move on the books?</div>
-      <div class="mid-confirm-sub">Schedule a free 20-minute virtual walk-through. We'll review your home together, lock in the final price, and hold your moving day.</div>
-      <a class="btn-confirm-mid" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center">&#128197; Book My Walk-Through — It's Free</a>
+      <div class="mid-confirm-head">Your date won't hold itself.</div>
+      <div class="mid-confirm-sub">Lock in your moving day with $50 — or start with a free virtual walk-through. Either way, your price doesn't change until you say so.</div>
+      <div class="res-cta-pair" style="margin-bottom:10px">
+        <button class="btn-lockin" onclick="confirmMove('mid')">&#128274; Lock In My Moving Day — $50</button>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+      </div>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Save my quote as a PDF first</button>
     </div>
 
@@ -1610,16 +1641,33 @@ input,select,textarea{font-size:16px !important}
 
     <!-- CTA -->
     <div class="plan-cta" id="plan-cta-bottom">
-      <div class="plan-cta-head">Book Your Virtual Walk-Through</div>
-      <p class="plan-cta-sub">Free 20-minute call. We walk through your home virtually, confirm every detail, lock in your final price, and get you on the schedule. Your $50 date hold and $450 deposit both go toward your final balance.</p>
-      <a class="btn-call" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center">
-        <span class="btn-call-icon">&#128197;</span>
-        Schedule My Walk-Through — It's Free
-      </a>
+      <div class="plan-cta-head">This Is The Part That Matters.</div>
+      <p class="plan-cta-sub">You've already done the hard part — built your plan, got your number. Every day you wait is a day someone else takes your moving date. Most families who lose their preferred date wish they'd locked it in sooner.</p>
+      <div class="plan-cta-proof">
+        <div class="plan-cta-quote">"Absolutely one of the most professional, accommodating, and hard workers I have come across."</div>
+        <div class="plan-cta-attr">— Vicki J., Fredericksburg VA · Google Review ⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="plan-cta-proof">
+        <div class="plan-cta-quote">"Came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</div>
+        <div class="plan-cta-attr">— Jessica P., Stafford VA · Google Review ⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="plan-cta-how">
+        <div class="plan-cta-how-head">Here's what happens next:</div>
+        <div class="plan-cta-step"><span class="plan-cta-num">1</span><span>$50 locks your moving date — applied to your balance</span></div>
+        <div class="plan-cta-step"><span class="plan-cta-num">2</span><span>We schedule a 10–15 min virtual walk-through at your convenience</span></div>
+        <div class="plan-cta-step"><span class="plan-cta-num">3</span><span>We confirm every detail and activate your Price Protection Guarantee</span></div>
+        <div class="plan-cta-step"><span class="plan-cta-num">4</span><span>$450 deposit locks in your final price — no changes on moving day</span></div>
+        <div class="plan-cta-step"><span class="plan-cta-num">5</span><span>Your crew shows up with your blueprint in hand. Done.</span></div>
+      </div>
+      <div class="res-cta-pair" style="margin-top:0">
+        <button class="btn-lockin" onclick="confirmMove('bottom')">&#128274; Lock In My Moving Day — $50</button>
+        <a class="btn-walkthrough" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">&#128197; Book Virtual Walk-Through</a>
+      </div>
+      <p class="res-book-fine" style="text-align:center;margin-top:14px">Both amounts go toward your final balance. No surprise charges. Ever.</p>
       <div class="plan-cta-divider">or</div>
-      <button class="btn-pdf-dl" onclick="downloadPlan()">&#8595; Save My Quote as a PDF</button>
+      <button class="btn-pdf-dl" onclick="downloadPlan()">&#8595; Save My Quote as a PDF First</button>
       <a href="https://validateyourvision.com" class="btn-website">Return to the VYV Website</a>
-      <p class="plan-cta-note">Not ready to commit? Save your quote and come back when you are. We'll be here.</p>
+      <p class="plan-cta-note">Not ready today? Your quote is saved. We'll be here when you are.</p>
     </div>
 
     <!-- Confirmation Success -->
