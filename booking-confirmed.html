@@ -187,15 +187,22 @@
         <p class="card-label">How Did We Do?</p>
         <h2>Rate your booking experience</h2>
         <p style="font-size:0.9rem;color:var(--lmuted);margin-bottom:20px;">Was booking fast and easy? Let us know — your feedback helps us improve.</p>
-        <div class="stars" id="stars">
-          <span class="star" data-val="1">&#9733;</span>
-          <span class="star" data-val="2">&#9733;</span>
-          <span class="star" data-val="3">&#9733;</span>
-          <span class="star" data-val="4">&#9733;</span>
-          <span class="star" data-val="5">&#9733;</span>
-        </div>
-        <div class="rating-msg" id="rating-msg"></div>
-        <div id="rating-thanks" style="display:none;margin-top:14px;font-size:0.9rem;color:var(--lmuted);">Thank you! We appreciate you taking a second to share that.</div>
+        <form id="rating-form" action="https://formspree.io/f/mwvdowqr" method="POST">
+          <input type="hidden" name="form_type" value="Booking Experience Rating" />
+          <input type="hidden" name="rating" id="rating-input" value="" />
+          <div class="stars" id="stars">
+            <span class="star" data-val="1">&#9733;</span>
+            <span class="star" data-val="2">&#9733;</span>
+            <span class="star" data-val="3">&#9733;</span>
+            <span class="star" data-val="4">&#9733;</span>
+            <span class="star" data-val="5">&#9733;</span>
+          </div>
+          <div class="rating-msg" id="rating-msg"></div>
+          <div id="rating-submit" style="display:none;margin-top:16px;">
+            <button type="submit" style="background:var(--lv);color:var(--tw);font-family:'Raleway',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:50px;border:none;cursor:pointer;">Submit Rating</button>
+          </div>
+          <div id="rating-thanks" style="display:none;margin-top:14px;font-size:0.9rem;color:var(--lmuted);">Thank you! We appreciate you taking a second to share that.</div>
+        </form>
       </div>
 
       <div style="text-align:center;padding:8px 0 16px">
@@ -216,17 +223,28 @@
     const stars = document.querySelectorAll('.star');
     const msg = document.getElementById('rating-msg');
     const thanks = document.getElementById('rating-thanks');
-    const messages = ['','We hear you. Thank you for the honest feedback.','Thanks for letting us know. We will keep improving.','Glad it went smoothly! Thank you.','Really glad to hear that. Thank you!','That means everything to us. Thank you so much!'];
+    const submitBtn = document.getElementById('rating-submit');
+    const ratingInput = document.getElementById('rating-input');
+    const form = document.getElementById('rating-form');
+    const messages = ['','1 star — we hear you. Thank you for the honest feedback.','2 stars — thanks for letting us know. We will keep improving.','3 stars — glad it was okay. We will work to make it better.','4 stars — really glad to hear that. Thank you!','5 stars — that means everything to us. Thank you so much!'];
     let selected = 0;
     stars.forEach(s => {
       s.addEventListener('mouseover', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= s.dataset.val)); });
       s.addEventListener('mouseout', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected)); });
       s.addEventListener('click', () => {
         selected = s.dataset.val;
+        ratingInput.value = selected + ' out of 5 stars';
         stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected));
         msg.textContent = messages[selected];
-        thanks.style.display = 'block';
+        submitBtn.style.display = 'block';
       });
+    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selected) return;
+      await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      submitBtn.style.display = 'none';
+      thanks.style.display = 'block';
     });
   </script>
 </body>
