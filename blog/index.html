@@ -7,6 +7,11 @@
   <meta name="description" content="Moving tips, packing guides, and relocation advice from VYV — a locally owned moving company serving Fredericksburg, Northern Virginia, and Richmond, VA." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://validateyourvision.com/blog/" />
+  <meta property="og:image" content="https://validateyourvision.com/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://validateyourvision.com/assets/og-image.png" />
   <script type="application/ld+json">
   [
     {
@@ -60,7 +65,13 @@
     .nav-links a { color: rgba(236,235,238,0.8); font-size: 0.88rem; font-family: 'Raleway', sans-serif; font-weight: 600; transition: color 0.2s; }
     .nav-links a:hover { color: var(--tw); }
     .btn-nav { background: var(--lv); color: var(--tw) !important; padding: 10px 20px; border-radius: 50px; }
-    @media (max-width: 768px) { .nav-links { display: none; } }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:22px; height:2px; background:var(--tw); border-radius:2px; }
+    .mobile-drawer { display:none; flex-direction:column; gap:0; background:var(--mp); position:fixed; top:0; left:0; right:0; bottom:0; z-index:200; padding:80px 32px 32px; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer a { color:var(--tw); font-family:'Raleway',sans-serif; font-weight:700; font-size:1.1rem; padding:16px 0; border-bottom:1px solid rgba(236,235,238,0.08); }
+    .mobile-drawer .close-btn { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.5rem; cursor:pointer; }
+    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display:flex; } }
 
     /* HERO */
     .blog-hero { background: linear-gradient(135deg, var(--mp) 0%, var(--ap) 100%); padding: 80px 24px 56px; text-align: center; }
@@ -118,9 +129,21 @@
       <a href="/#services">Services</a>
       <a href="/#areas">Areas</a>
       <a href="/blog/" style="color:var(--tw);">Blog</a>
-      <a href="/pricing-estimator.html" class="btn-nav">Get My Moving Plan</a>
+      <a href="/pricing-estimator.html" class="btn-nav">Build My Blueprint</a>
     </div>
+    <button class="hamburger" onclick="document.getElementById('blog-drawer').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-drawer" id="blog-drawer">
+    <button class="close-btn" onclick="document.getElementById('blog-drawer').classList.remove('open')" aria-label="Close">✕</button>
+    <a href="/" onclick="document.getElementById('blog-drawer').classList.remove('open')">Home</a>
+    <a href="/#services" onclick="document.getElementById('blog-drawer').classList.remove('open')">Services</a>
+    <a href="/#areas" onclick="document.getElementById('blog-drawer').classList.remove('open')">Areas</a>
+    <a href="/blog/" onclick="document.getElementById('blog-drawer').classList.remove('open')">Blog</a>
+    <a href="/pricing-estimator.html" class="btn-nav" style="margin-top:24px;text-align:center;" onclick="document.getElementById('blog-drawer').classList.remove('open')">Build My Blueprint</a>
+  </div>
 
   <div class="blog-hero">
     <p>From the VYV Team</p>

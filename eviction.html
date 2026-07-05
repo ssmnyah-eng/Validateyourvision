@@ -4,28 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Same-Day Eviction Moving Help | Validate Your Vision | Fredericksburg, VA</title>
-  <meta name="description" content="Being evicted and need to move out today? VYV moves fast — no judgment. Text EVICTION to 540-300-1414 and we'll tell you exactly what we can do." />
+  <meta name="description" content="Being evicted and need to move out today? VYV moves fast, no judgment. Text EVICTION to 540-300-1414 and we'll tell you exactly what we can do." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://validateyourvision.com/eviction.html" />
   <meta property="og:title" content="Same-Day Eviction Moving Help | VYV" />
   <meta property="og:description" content="Need to move out today? Text EVICTION to 540-300-1414. We move fast, no judgment." />
   <meta property="og:url" content="https://validateyourvision.com/eviction.html" />
+  <meta property="og:image" content="https://validateyourvision.com/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://validateyourvision.com/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --dp:#190E2A; --mp:#210D46; --ap:#4A237A; --lv:#8B5BC7; --tw:#ECEBEE;
       --lbg:#ffffff; --lbg2:#F4F0FF; --ltxt:#1a1625; --lmuted:#5c5470;
-      --radius:16px; --shadow:0 4px 24px rgba(74,35,122,0.10);
+      --radius:16px;
     }
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     body { font-family:'Inter',sans-serif; background:var(--lbg); color:var(--ltxt); line-height:1.6; }
     a { color:inherit; text-decoration:none; }
 
-    nav { background:var(--dp); padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; }
+    /* ANNOUNCEMENT BAR */
+    #top-bar { background:var(--ap); color:var(--tw); text-align:center; padding:9px 48px 9px 16px; font-size:0.82rem; font-family:'Raleway',sans-serif; font-weight:600; position:relative; }
+    #top-bar a { color:#e9d5ff; text-decoration:underline; margin-left:6px; }
+    #top-bar button { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(236,235,238,0.6); font-size:1rem; cursor:pointer; padding:4px 8px; }
+
+    /* NAV */
+    nav { background:var(--dp); padding:0 24px; height:68px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
     .nav-logo { display:flex; align-items:center; gap:10px; color:var(--tw); font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; }
     .nav-logo svg { width:36px; height:36px; }
+    .nav-links { display:flex; align-items:center; gap:24px; }
+    .nav-links a { color:rgba(236,235,238,0.8); font-size:0.88rem; font-family:'Raleway',sans-serif; font-weight:600; }
+    .nav-links a:hover { color:var(--tw); }
+    .btn-nav { background:var(--lv); color:var(--tw) !important; padding:10px 20px; border-radius:50px; white-space:nowrap; }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:22px; height:2px; background:var(--tw); border-radius:2px; }
+    .mobile-drawer { display:none; flex-direction:column; gap:0; background:var(--mp); position:fixed; top:0; left:0; right:0; bottom:0; z-index:200; padding:80px 32px 32px; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer a { color:var(--tw); font-family:'Raleway',sans-serif; font-weight:700; font-size:1.1rem; padding:16px 0; border-bottom:1px solid rgba(236,235,238,0.08); }
+    .mobile-drawer .close-btn { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.5rem; cursor:pointer; }
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+    }
 
+    /* HERO */
     .hero { background:linear-gradient(135deg, var(--dp) 0%, var(--ap) 100%); padding:96px 24px 80px; text-align:center; }
     .hero .eyebrow { font-family:'Raleway',sans-serif; font-weight:700; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:#c084fc; margin-bottom:16px; }
     .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,7vw,3.4rem); color:var(--tw); line-height:1.15; margin-bottom:24px; }
@@ -41,22 +67,51 @@
     footer { background:var(--dp); color:rgba(236,235,238,0.5); text-align:center; padding:28px 24px; font-size:0.82rem; }
     footer a { color:rgba(236,235,238,0.5); }
     footer strong { color:var(--tw); }
+
+    @media (max-width:480px) {
+      .cta-btn { width:100%; justify-content:center; font-size:0.95rem; padding:16px 24px; }
+    }
   </style>
 </head>
 <body>
+
+  <div id="top-bar">
+    Questions? Urgent move?
+    <a href="sms:+15403001414">Text us: (540) 300-1414</a>
+    <button onclick="this.parentElement.style.display='none'" aria-label="Dismiss">✕</button>
+  </div>
 
   <nav>
     <a href="/" class="nav-logo">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,8 92,30 92,70 50,92 8,70 8,30" fill="none" stroke="#8B5BC7" stroke-width="6"/><polygon points="50,18 82,34 82,66 50,82 18,66 18,34" fill="#210D46"/><path d="M50 28 L68 38 L68 58 L50 68 L32 58 L32 38 Z" fill="#4A237A"/><path d="M50 38 L60 44 L60 56 L50 62 L40 56 L40 44 Z" fill="#8B5BC7"/><circle cx="50" cy="50" r="5" fill="#ECEBEE"/></svg>
       Validate Your Vision
     </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/#services">Services</a>
+      <a href="/#areas">Areas</a>
+      <a href="/blog/">Blog</a>
+      <a href="/pricing-estimator.html" class="btn-nav">Build My Blueprint</a>
+    </div>
+    <button class="hamburger" id="ham" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-drawer" id="drawer">
+    <button class="close-btn" onclick="document.getElementById('drawer').classList.remove('open')" aria-label="Close">✕</button>
+    <a href="/" onclick="document.getElementById('drawer').classList.remove('open')">Home</a>
+    <a href="/#services" onclick="document.getElementById('drawer').classList.remove('open')">Services</a>
+    <a href="/#areas" onclick="document.getElementById('drawer').classList.remove('open')">Areas</a>
+    <a href="/blog/" onclick="document.getElementById('drawer').classList.remove('open')">Blog</a>
+    <a href="/pricing-estimator.html" class="btn-nav" style="margin-top:24px;text-align:center;" onclick="document.getElementById('drawer').classList.remove('open')">Build My Blueprint</a>
+  </div>
 
   <div class="hero">
     <p class="eyebrow">⚡ Same-Day Help Available</p>
     <h1>Need to Move Out Today?</h1>
     <p>We know evictions happen fast and without warning. Text "EVICTION" to 540-300-1414 and we'll tell you exactly what we can do, today.</p>
-    <a href="sms:+15403001414&body=EVICTION" class="cta-btn">Text "EVICTION" Now →</a>
+    <a href="sms:+15403001414?body=EVICTION" class="cta-btn">Text "EVICTION" Now →</a>
     <p class="sub-note">No judgment. No long process. Just text us.</p>
   </div>
 
@@ -64,11 +119,11 @@
     <h2>We move fast when you need it most.</h2>
     <p>Evictions don't come with much notice. We get that. If you need to get your things out today, text us the word <strong>EVICTION</strong> and we'll respond quickly with what we can do, what we need from you, and how to get started.</p>
     <p>No long forms. No waiting days for a quote. Just a real conversation with our team.</p>
-    <a href="sms:+15403001414&body=EVICTION" class="cta-btn">Text "EVICTION" to 540-300-1414</a>
+    <a href="sms:+15403001414?body=EVICTION" class="cta-btn">Text "EVICTION" to 540-300-1414</a>
   </div>
 
   <footer>
-    <strong>Validate Your Vision</strong> &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp;
+    <strong>Validate Your Vision</strong> &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp; Licensed &amp; Insured &nbsp;·&nbsp;
     <a href="sms:+15403001414">540-300-1414 (text only)</a> &nbsp;·&nbsp;
     <a href="/">Back to main site</a>
   </footer>
