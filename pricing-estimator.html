@@ -1788,8 +1788,8 @@ const C = {
   TRUCK_MILE:      1.59,
   FUEL_BUFFER:     35,
   MIN_HRS:         4,
-  CREW_RATES:      {2:135, 3:185, 4:235, 5:280},
-  PACKER_RATES:    {2:115, 3:168, 4:215, 5:258},
+  CREW_RATES:      {2:135, 3:205, 4:270, 5:335},
+  PACKER_RATES:    {2:115, 3:175, 4:230, 5:285},
   MIN_PACK_HRS:    4,
   PROTECTION_FEE:  5,
   STREET_FEE:      50,    // flat street access surcharge
@@ -1806,10 +1806,10 @@ const C = {
   PEAK_MONTHS:    [5,6,7,8], // May–Aug peak season
   PEAK_MULT:      1.20,   // +20% crew/packer rate in peak season
   // Base hours at 2-mover baseline, average furnishing, no stairs — tight 0.5–0.75 hr spread
-  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.5],'2br':[4.5,5.25],'3br':[6.5,7.25],'4br':[8.5,9.5],'5br':[11.5,12.5]},
+  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.5],'2br':[4.5,5.0],'3br':[6.5,7.0],'4br':[8.5,9.0],'5br':[11.5,12.0]},
   // Per-factor time ranges: lo = best case, hi = realistic upper — each contributes a known amount
   STAIR_LO:       0.30,  // per flight (origin or dest)
-  STAIR_HI:       0.50,
+  STAIR_HI:       0.45,
   DISASSEMBLY_LO: 0.30,  // per item
   DISASSEMBLY_HI: 0.45,
   SPACE_LO:       0.35,  // per extra area (garage, attic, etc.)
@@ -2147,7 +2147,7 @@ function calc() {
   if (!S.homeSize || !S.crewSize) return null;
   const base  = C.BASE_HRS[S.homeSize];
   const cx    = calcComplexity();
-  const crewScale = 2 / S.crewSize;
+  const crewScale = Math.pow(2 / S.crewSize, 0.82);
   const roundHalf = x => Math.round(x * 2) / 2;
   const loRaw = Math.max(C.MIN_HRS, (base[0] + cx.lo) * crewScale);
   const hiRaw = Math.max(C.MIN_HRS, (base[1] + cx.hi) * crewScale);
