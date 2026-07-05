@@ -870,9 +870,9 @@ input,select,textarea{font-size:16px !important}
     <p class="q-sub">Packed and ready to go, your best guess is fine</p>
     <div class="opts" id="s3b">
       <button class="opt" data-val="few" data-mod="0"><span>Very few (under 15)<small>Minimal loose items, mostly furniture</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="some" data-mod="0.75"><span>Some (15–40 boxes)<small>A moderate amount, typical for a 1–2 bedroom move</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="many" data-mod="1.5"><span>Quite a few (40–80 boxes)<small>Several rooms worth of packed items</small></span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="alot" data-mod="2.5"><span>A lot (80+ boxes)<small>Heavy move, fully packed home or accumulated belongings</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="some" data-mod="0.5"><span>Some (15–30 boxes)<small>A moderate amount, typical for a 1–2 bedroom move</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="many" data-mod="1.0"><span>Quite a few (35–60 boxes)<small>Several rooms worth of packed items</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="alot" data-mod="2.0"><span>A lot (60+ boxes)<small>Heavy move, fully packed home or accumulated belongings</small></span><span class="chk">&#10003;</span></button>
     </div>
     <div class="tip"><strong>Move Planning Tip</strong>Box count is one of the most underestimated parts of a move. Each trip in and out of the truck adds up, especially with a full home.</div>
   </div>
@@ -1788,34 +1788,49 @@ const C = {
   TRUCK_MILE:      1.59,
   FUEL_BUFFER:     35,
   MIN_HRS:         3,
-  STAIR_HRS:       0.75,
-  DISASSEMBLY_HRS: 0.5,
   CREW_RATES:      {2:140, 3:195, 4:245, 5:295},
   PACKER_RATES:    {2:120, 3:175, 4:225, 5:270},
   MIN_PACK_HRS:    4,
   PROTECTION_FEE:  5,
-  OVERSIZED_HRS:   0.25,  // per oversized piece
-  ELEVATOR_HRS:    1,     // mandatory elevator cycling addition
-  STREET_HRS:      0.75,  // public street parking penalty
   STREET_FEE:      50,    // flat street access surcharge
-  STAIR_PENALTY:   1.15,  // multiplier when total flights > 3
-  STAIR_PENALTY_THRESHOLD: 3,
   MATTRESS_COST:   20,    // per mattress protector
   WARDROBE_COST:   15,    // per wardrobe box
   VA_TARIFF_MILES: 30,    // beyond this → tariff move
-  BOX_MAT_FEE:    {few:0, some:75, many:150, alot:250},
-  BOX_HRS:        {few:0, some:0.75, many:1.5, alot:2.5},
+  BOX_MAT_FEE:    {few:0, some:65, many:125, alot:200},
   PARTIAL_LABOR:  1.5,    // hrs per room (partial packing)
   PARTIAL_MAT:    45,     // material fee per room (partial)
   KITCHEN_GLASS_HRS: 1.5,
   WALL_ITEM_FEE:  25,     // per hanging art / wall TV
   UNPACK_MULT:    0.75,   // unpack is 75% of packing hours
-  HOUR_BUFFER:    0.5,    // added to high-end of every estimate
-  APPLIANCE_HRS:  {washerdryer:1.0, refrigerator:0.75, stove:0.5, dishwasher:0.25, deepfreezer:0.5},
   WEEKEND_MULT:   1.15,   // +15% to crew/packer rate on weekends
   PEAK_MONTHS:    [5,6,7,8], // May–Aug peak season
   PEAK_MULT:      1.20,   // +20% crew/packer rate in peak season
-  BASE_HRS:        {studio:[2,3],'1br':[3,4.5],'2br':[4,6],'3br':[6,8],'4br':[8,11],'5br':[11,14]},
+  // Base hours at 2-mover baseline, average furnishing, no stairs — tighter range for precision
+  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.75],'2br':[4.5,5.5],'3br':[6.5,7.5],'4br':[8.5,10],'5br':[11.5,13.5]},
+  // Per-factor time ranges: lo = best case, hi = realistic upper — each contributes a known amount
+  STAIR_LO:       0.30,  // per flight (origin or dest)
+  STAIR_HI:       0.50,
+  DISASSEMBLY_LO: 0.30,  // per item
+  DISASSEMBLY_HI: 0.45,
+  SPACE_LO:       0.35,  // per extra area (garage, attic, etc.)
+  SPACE_HI:       0.55,
+  OVERSIZED_LO:   0.15,  // per oversized piece
+  OVERSIZED_HI:   0.25,
+  ELEVATOR_LO:    0.75,  // elevator cycling
+  ELEVATOR_HI:    1.00,
+  STREET_LO:      0.50,  // public street parking
+  STREET_HI:      0.70,
+  FURN_LO:  {light:-0.75, average:0, full:0.50, veryfull:1.00},
+  FURN_HI:  {light:-0.50, average:0, full:0.85, veryfull:1.75},
+  CARRY_LO: {close:0, medium:0.20, long:0.45, verylong:0.75},
+  CARRY_HI: {close:0, medium:0.35, long:0.65, verylong:1.10},
+  BOX_LO:   {few:0, some:0.20, many:0.50, alot:1.00},
+  BOX_HI:   {few:0, some:0.35, many:0.80, alot:1.50},
+  APPLIANCE_LO: {washerdryer:0.75, refrigerator:0.50, stove:0.30, dishwasher:0.15, deepfreezer:0.30},
+  APPLIANCE_HI: {washerdryer:1.00, refrigerator:0.70, stove:0.45, dishwasher:0.20, deepfreezer:0.45},
+  // Cushion: lo padded up 5% (never underbid), hi padded up 8% (protected ceiling)
+  CUSHION_LO: 1.05,
+  CUSHION_HI: 1.08,
   PACK_HRS:        {studio:[4,5],'1br':[4,5],'2br':[4,6],'3br':[6,8],'4br':[8,10],'5br':[10,13]},
   PACK_MOD:        {fragile:.35, kitchen:.5, rooms:.75, full:1},
   VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75,'5br':85},
@@ -2081,19 +2096,45 @@ const fmtR     = (a,b) => fmt(a) + ' – ' + fmt(b);
 const roundUp5 = n => Math.ceil(n / 5) * 5;
 
 function calcComplexity() {
-  const sadd  = (S.stairs || 0) * C.STAIR_HRS + (S.destStairs || 0) * C.STAIR_HRS;
-  const dadd  = S.disassembly.length * C.DISASSEMBLY_HRS;
-  const spadd = S.spaces.length;
-  const fm    = S.furnMod;
-  const cm    = S.carryMod + S.destCarryMod;
-  const appl  = S.appliances.filter(a => a !== 'none')
-                  .reduce((sum, a) => sum + (C.APPLIANCE_HRS[a] || 0.5), 0);
-  const bm    = C.BOX_HRS[S.boxCount] || 0;
-  const ovsz  = Object.values(S.oversizedPieces || {}).reduce((a,b) => a + b, 0) * C.OVERSIZED_HRS;
-  const elev  = (S.elevator || S.specialtyAccess.includes('elevator')) ? C.ELEVATOR_HRS : 0;
-  const street= S.parkingType === 'street' ? C.STREET_HRS : 0;
-  return {sadd, dadd, spadd, fm, cm, appl, bm, ovsz, elev, street,
-          total: sadd + dadd + spadd + fm + cm + appl + bm + ovsz + elev + street};
+  const totalFlights  = (S.stairs || 0) + (S.destStairs || 0);
+  const stairLo = totalFlights * C.STAIR_LO;
+  const stairHi = totalFlights * C.STAIR_HI;
+
+  const dissLo  = S.disassembly.length * C.DISASSEMBLY_LO;
+  const dissHi  = S.disassembly.length * C.DISASSEMBLY_HI;
+
+  const spaceLo = S.spaces.length * C.SPACE_LO;
+  const spaceHi = S.spaces.length * C.SPACE_HI;
+
+  const furnLo  = C.FURN_LO[S.furnish] || 0;
+  const furnHi  = C.FURN_HI[S.furnish] || 0;
+
+  const carryLo = (C.CARRY_LO[S.carry] || 0) + (C.CARRY_LO[S.destCarry] || 0);
+  const carryHi = (C.CARRY_HI[S.carry] || 0) + (C.CARRY_HI[S.destCarry] || 0);
+
+  const appliances = S.appliances.filter(a => a !== 'none');
+  const applLo  = appliances.reduce((s, a) => s + (C.APPLIANCE_LO[a] || 0.30), 0);
+  const applHi  = appliances.reduce((s, a) => s + (C.APPLIANCE_HI[a] || 0.45), 0);
+
+  const boxLo   = C.BOX_LO[S.boxCount] || 0;
+  const boxHi   = C.BOX_HI[S.boxCount] || 0;
+
+  const ovszCount = Object.values(S.oversizedPieces || {}).reduce((a, b) => a + b, 0);
+  const ovszLo  = ovszCount * C.OVERSIZED_LO;
+  const ovszHi  = ovszCount * C.OVERSIZED_HI;
+
+  const hasElev = (S.elevator || S.specialtyAccess.includes('elevator'));
+  const elevLo  = hasElev ? C.ELEVATOR_LO : 0;
+  const elevHi  = hasElev ? C.ELEVATOR_HI : 0;
+
+  const isStreet = S.parkingType === 'street';
+  const streetLo = isStreet ? C.STREET_LO : 0;
+  const streetHi = isStreet ? C.STREET_HI : 0;
+
+  const lo = stairLo + dissLo + spaceLo + furnLo + carryLo + applLo + boxLo + ovszLo + elevLo + streetLo;
+  const hi = stairHi + dissHi + spaceHi + furnHi + carryHi + applHi + boxHi + ovszHi + elevHi + streetHi;
+  const total = (lo + hi) / 2;
+  return {lo, hi, total};
 }
 
 function calcRecommendedCrew() {
@@ -2106,13 +2147,11 @@ function calc() {
   if (!S.homeSize || !S.crewSize) return null;
   const base  = C.BASE_HRS[S.homeSize];
   const cx    = calcComplexity();
-  const extra = cx.total;
-  // Apply 15% stair penalty when total flights > 3
-  const totalFlights = (S.stairs || 0) + (S.destStairs || 0);
-  const stairMult = totalFlights > C.STAIR_PENALTY_THRESHOLD ? C.STAIR_PENALTY : 1;
   const crewScale = 2 / S.crewSize;
-  const lo    = Math.max(C.MIN_HRS, (base[0] + extra) * stairMult * crewScale);
-  const hi    = Math.max(C.MIN_HRS, (base[1] + extra) * stairMult * crewScale) + C.HOUR_BUFFER;
+  const loRaw = Math.max(C.MIN_HRS, (base[0] + cx.lo) * crewScale);
+  const hiRaw = Math.max(C.MIN_HRS, (base[1] + cx.hi) * crewScale);
+  const lo    = loRaw * C.CUSHION_LO;
+  const hi    = Math.max(lo + 0.5, hiRaw * C.CUSHION_HI);
   // Weekend / peak season rate multiplier
   let rateMult = 1;
   if (S.weekendMove) rateMult *= C.WEEKEND_MULT;
@@ -2175,8 +2214,8 @@ function calc() {
     deposit: C.DEPOSIT,
     holdFee: C.HOLD_FEE,
     effCrewRate, rateMult,
-    cx: extra <= 1 ? 'std' : extra <= 3 ? 'mod' : 'cpx',
-    stairPenalty: stairMult > 1,
+    cx: cx.total <= 0.75 ? 'std' : cx.total <= 2.5 ? 'mod' : 'cpx',
+    stairPenalty: false,
   };
 }
 
