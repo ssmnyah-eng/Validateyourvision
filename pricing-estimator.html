@@ -346,6 +346,20 @@ input,select,textarea{font-size:16px !important}
 .lead-p{font-size:.95rem;color:var(--muted);line-height:1.65}
 
 /* Results */
+/* Results top sections */
+.res-book-hero{background:var(--navy);color:#ECEBEE;border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:20px}
+.res-book-tag{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(139,91,199,.85);margin-bottom:8px;font-family:'Raleway',sans-serif}
+.res-book-head{font-size:clamp(1.25rem,4vw,1.65rem);font-weight:800;font-family:'Playfair Display',serif;line-height:1.2;margin-bottom:10px}
+.res-book-sub{font-size:.88rem;color:rgba(236,235,238,.75);line-height:1.6;margin-bottom:18px}
+.btn-book-hero{display:inline-block;background:var(--accent);color:#fff;font-family:'Raleway',sans-serif;font-weight:800;font-size:.95rem;padding:14px 28px;border-radius:var(--r);text-decoration:none;transition:opacity .15s}
+.btn-book-hero:hover{opacity:.88}
+.res-congrats{text-align:center;margin-bottom:20px;padding:0 4px}
+.res-congrats-icon{font-size:2rem;margin-bottom:8px}
+.res-est-top{background:var(--navy);color:#ECEBEE;border-radius:var(--r);padding:22px 24px;text-align:center;margin-bottom:16px}
+.res-est-top .invest-lbl{color:rgba(139,91,199,.85)}
+.res-est-top .invest-amt{color:#ECEBEE}
+.res-pdf-top{text-align:center;margin-bottom:24px}
+.res-pdf-note{font-size:.78rem;color:var(--muted);margin-top:8px;line-height:1.5}
 .res-h{font-size:clamp(1.3rem,4vw,1.8rem);font-weight:800;color:var(--navy);line-height:1.2;font-family:'Playfair Display',serif}
 .complexity{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700}
 .cx-std{background:#d4eddf;color:#1e6b4a}
@@ -1287,9 +1301,37 @@ input,select,textarea{font-size:16px !important}
 
   <!-- Results -->
   <div class="screen" id="screen-results">
-    <h2 class="res-h">Your VYV Moving Plan</h2>
-    <div id="move-id-badge" style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-family:'Raleway',sans-serif">Plan ID: <span id="move-id-val" style="color:var(--navy);font-variant-numeric:tabular-nums">—</span></div>
-    <div id="cx-badge"></div>
+
+    <!-- ① BOOK CTA — top of page -->
+    <div class="res-book-hero">
+      <div class="res-book-tag">Next Step</div>
+      <div class="res-book-head">Book Your Virtual Walk-Through Today</div>
+      <p class="res-book-sub">We walk through your home virtually, confirm every detail, lock in your final price, and get you on the schedule. Takes about 20 minutes.</p>
+      <a class="btn-book-hero" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener">Schedule My Walk-Through →</a>
+    </div>
+
+    <!-- ② CONGRATS + ESTIMATE -->
+    <div class="res-congrats">
+      <div class="res-congrats-icon">&#127881;</div>
+      <h2 class="res-h" style="margin-bottom:4px">Congratulations — Your Moving Plan Is Ready</h2>
+      <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">Everything you need to plan, budget, and prepare for your move is below.</p>
+    </div>
+
+    <!-- Estimate front and center -->
+    <div class="res-est-top">
+      <div class="invest-lbl" style="margin-bottom:4px">Your Estimated Investment</div>
+      <div class="invest-amt" id="res-total" style="font-size:2.2rem">-</div>
+      <div class="invest-hrs" id="res-hrs" style="margin-top:6px"></div>
+      <div id="cx-badge" style="margin-top:8px"></div>
+    </div>
+
+    <!-- ③ PDF CTA -->
+    <div class="res-pdf-top">
+      <button class="btn-main" onclick="downloadPlan()" style="width:100%;max-width:360px">&#8595; Download My Moving Plan PDF</button>
+      <p class="res-pdf-note">Your full checklist, move summary, and estimate in one document — give us a second to generate it.</p>
+    </div>
+
+    <div id="move-id-badge" style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 4px;font-family:'Raleway',sans-serif">Plan ID: <span id="move-id-val" style="color:var(--navy);font-variant-numeric:tabular-nums">—</span></div>
 
     <!-- Virginia tariff notice (shown when >30 miles) -->
     <div class="tariff-banner hidden" id="tariff-banner">
@@ -1368,10 +1410,7 @@ input,select,textarea{font-size:16px !important}
         </div>
 
         <div class="invest-card">
-          <div class="invest-lbl">Estimated Investment</div>
-          <div class="invest-amt" id="res-total">-</div>
           <div class="invest-note">Price range based on your move details</div>
-          <div class="invest-hrs" id="res-hrs"></div>
           <div class="conf-msg hidden" id="conf-msg"></div>
         </div>
 
@@ -1413,9 +1452,9 @@ input,select,textarea{font-size:16px !important}
 
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
-      <div class="mid-confirm-head">Ready to lock in your moving day?</div>
-      <div class="mid-confirm-sub">Pay $50 to hold your date. We'll schedule your virtual walkthrough, review everything together, and confirm your final estimate before moving day.</div>
-      <button class="btn-confirm-mid" onclick="confirmMove('mid')">&#128274; Lock In My Moving Day — $50</button>
+      <div class="mid-confirm-head">Ready to get your move on the books?</div>
+      <div class="mid-confirm-sub">Schedule a free 20-minute virtual walk-through. We'll review your home together, lock in the final price, and hold your moving day.</div>
+      <a class="btn-confirm-mid" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center">&#128197; Book My Walk-Through — It's Free</a>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Save my quote as a PDF first</button>
     </div>
 
@@ -1571,12 +1610,12 @@ input,select,textarea{font-size:16px !important}
 
     <!-- CTA -->
     <div class="plan-cta" id="plan-cta-bottom">
-      <div class="plan-cta-head">Lock In Your Moving Day</div>
-      <p class="plan-cta-sub">$50 holds your date today. We schedule your virtual walkthrough, lock in the final number together, then collect the $450 deposit after the walkthrough — before move day. Both amounts go toward your final balance.</p>
-      <button class="btn-call" id="btn-confirm-bottom" onclick="confirmMove('bottom')">
-        <span class="btn-call-icon">&#128274;</span>
-        Lock In My Moving Day — $50
-      </button>
+      <div class="plan-cta-head">Book Your Virtual Walk-Through</div>
+      <p class="plan-cta-sub">Free 20-minute call. We walk through your home virtually, confirm every detail, lock in your final price, and get you on the schedule. Your $50 date hold and $450 deposit both go toward your final balance.</p>
+      <a class="btn-call" href="https://cal.com/validate-your-vision-ukhtzp/virtualwalk" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center">
+        <span class="btn-call-icon">&#128197;</span>
+        Schedule My Walk-Through — It's Free
+      </a>
       <div class="plan-cta-divider">or</div>
       <button class="btn-pdf-dl" onclick="downloadPlan()">&#8595; Save My Quote as a PDF</button>
       <a href="https://validateyourvision.com" class="btn-website">Return to the VYV Website</a>
@@ -1586,8 +1625,8 @@ input,select,textarea{font-size:16px !important}
     <!-- Confirmation Success -->
     <div class="confirm-success hidden" id="confirm-success">
       <div class="confirm-icon">&#10003;</div>
-      <div class="confirm-head">Your truck is locked in — let's protect your price.</div>
-      <p class="confirm-body">We'll reach out within one business day to collect your $50 date hold and schedule your virtual walkthrough. On that call we'll walk through your inventory together, activate your Price Protection Guarantee, and see if we can drop your number even lower. The $450 deposit is due after the walkthrough — before move day. Both amounts go toward your final balance.</p>
+      <div class="confirm-head">You're on the calendar — we'll see you soon.</div>
+      <p class="confirm-body">Check your email for your booking confirmation. On the call we'll walk through your home virtually, confirm every detail, and lock in your final price. Your $50 date hold and $450 deposit both go toward your final balance.</p>
       <button class="btn-pdf-dl" onclick="downloadPlan()" style="margin:16px auto 0;display:block">&#8595; Save Your Quote as a PDF</button>
       <a href="https://validateyourvision.com" class="btn-back-site">&#8592; Back to Validate Your Vision</a>
     </div>
