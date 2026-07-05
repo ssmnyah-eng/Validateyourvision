@@ -1805,8 +1805,8 @@ const C = {
   WEEKEND_MULT:   1.15,   // +15% to crew/packer rate on weekends
   PEAK_MONTHS:    [5,6,7,8], // May–Aug peak season
   PEAK_MULT:      1.20,   // +20% crew/packer rate in peak season
-  // Base hours at 2-mover baseline, average furnishing, no stairs — tighter range for precision
-  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.75],'2br':[4.5,5.5],'3br':[6.5,7.5],'4br':[8.5,10],'5br':[11.5,13.5]},
+  // Base hours at 2-mover baseline, average furnishing, no stairs — tight 0.5–0.75 hr spread
+  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.5],'2br':[4.5,5.25],'3br':[6.5,7.25],'4br':[8.5,9.5],'5br':[11.5,12.5]},
   // Per-factor time ranges: lo = best case, hi = realistic upper — each contributes a known amount
   STAIR_LO:       0.30,  // per flight (origin or dest)
   STAIR_HI:       0.50,
@@ -1830,7 +1830,7 @@ const C = {
   APPLIANCE_HI: {washerdryer:1.00, refrigerator:0.70, stove:0.45, dishwasher:0.20, deepfreezer:0.45},
   // Cushion: lo padded up 5% (never underbid), hi padded up 8% (protected ceiling)
   CUSHION_LO: 1.05,
-  CUSHION_HI: 1.08,
+  CUSHION_HI: 1.05,
   PACK_HRS:        {studio:[4,5],'1br':[4,5],'2br':[4,6],'3br':[6,8],'4br':[8,10],'5br':[10,13]},
   PACK_MOD:        {fragile:.35, kitchen:.5, rooms:.75, full:1},
   VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75,'5br':85},
@@ -2148,10 +2148,11 @@ function calc() {
   const base  = C.BASE_HRS[S.homeSize];
   const cx    = calcComplexity();
   const crewScale = 2 / S.crewSize;
+  const roundHalf = x => Math.round(x * 2) / 2;
   const loRaw = Math.max(C.MIN_HRS, (base[0] + cx.lo) * crewScale);
   const hiRaw = Math.max(C.MIN_HRS, (base[1] + cx.hi) * crewScale);
-  const lo    = loRaw * C.CUSHION_LO;
-  const hi    = Math.max(lo + 0.5, hiRaw * C.CUSHION_HI);
+  const lo    = roundHalf(loRaw * C.CUSHION_LO);
+  const hi    = roundHalf(Math.max(lo + 0.5, hiRaw * C.CUSHION_HI));
   // Weekend / peak season rate multiplier
   let rateMult = 1;
   if (S.weekendMove) rateMult *= C.WEEKEND_MULT;
