@@ -60,6 +60,19 @@
     .callout-green strong{display:block;font-family:'Raleway',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#1e5c3f;margin-bottom:5px}
     .callout-green p{font-size:0.88rem;color:#1e5c3f;line-height:1.7;margin:0}
 
+    /* TIPS LIST */
+    .tips-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .tips-list li{display:flex;gap:10px;font-size:0.88rem;color:var(--lmuted);line-height:1.7;align-items:flex-start}
+    .tips-list li::before{content:"✓";color:var(--lv);font-weight:700;flex-shrink:0;margin-top:2px}
+    .tips-list li strong{color:var(--ltxt)}
+
+    /* STARS */
+    .stars{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
+    .star{font-size:2.4rem;color:#d0c8e0;cursor:pointer;transition:color 0.15s;user-select:none;line-height:1}
+    .star.active{color:#f4c430}
+    .star:hover{color:#f4c430}
+    .rating-msg{font-size:0.88rem;color:var(--lmuted);min-height:20px}
+
     /* FOOTER */
     footer{background:var(--dp);color:rgba(236,235,238,0.55);text-align:center;padding:32px 24px;font-size:0.82rem}
     footer a{color:rgba(236,235,238,0.55)}footer strong{color:var(--tw)}
@@ -97,7 +110,7 @@
     <div class="checkmark-circle">&#10003;</div>
     <p class="eyebrow">Walkthrough Reserved</p>
     <h1>You're <span>Booked.</span></h1>
-    <p>Your virtual walkthrough slot is confirmed. Check your email for your calendar invite. We will see you on the call.</p>
+    <p>That was easy. Thank you for choosing VYV — we are genuinely looking forward to your virtual walkthrough and making this move the smoothest one you have ever had.</p>
   </div>
 
   <div class="container">
@@ -153,6 +166,38 @@
         <a href="/" class="btn-secondary">Back to Main Site</a>
       </div>
 
+      <!-- MOVING TIPS -->
+      <div class="card">
+        <p class="card-label">Your Free Moving Guide</p>
+        <h2>Moving tips to get you ahead of the game</h2>
+        <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:18px;">We included a full moving tips PDF in your confirmation email. Here are the highlights to get you started now.</p>
+        <ul class="tips-list">
+          <li><strong>Start packing non-essentials early.</strong> Books, decor, seasonal items, and anything you will not need for the next few weeks should be boxed first. Label every box with the room and a quick description.</li>
+          <li><strong>Pack one room completely before starting another.</strong> Partial rooms on moving day slow everything down and increase the chance something gets left behind.</li>
+          <li><strong>Keep a moving day bag.</strong> Pack a separate bag with phone chargers, medications, toiletries, a change of clothes, and snacks. You will not want to dig through boxes for these on night one.</li>
+          <li><strong>Photograph your electronics setup before disconnecting.</strong> A quick photo of the back of your TV and router saves a lot of frustration when you are setting up in the new place.</li>
+          <li><strong>Defrost the freezer 24 hours before the move.</strong> We cannot transport a leaking appliance. Give it a full day to drain and dry.</li>
+          <li><strong>Reserve parking at both locations.</strong> If you are in an apartment, HOA community, or busy street, arrange parking for the truck in advance. Delays from parking issues are not covered under your flat rate.</li>
+          <li><strong>Do a final walkthrough before we leave.</strong> Check every closet, cabinet, garage shelf, and outdoor area. Once we are gone and the truck is unloaded, anything left behind is your responsibility to retrieve.</li>
+        </ul>
+      </div>
+
+      <!-- RATING -->
+      <div class="card" style="text-align:center;">
+        <p class="card-label">How Did We Do?</p>
+        <h2>Rate your booking experience</h2>
+        <p style="font-size:0.9rem;color:var(--lmuted);margin-bottom:20px;">Was booking fast and easy? Let us know — your feedback helps us improve.</p>
+        <div class="stars" id="stars">
+          <span class="star" data-val="1">&#9733;</span>
+          <span class="star" data-val="2">&#9733;</span>
+          <span class="star" data-val="3">&#9733;</span>
+          <span class="star" data-val="4">&#9733;</span>
+          <span class="star" data-val="5">&#9733;</span>
+        </div>
+        <div class="rating-msg" id="rating-msg"></div>
+        <div id="rating-thanks" style="display:none;margin-top:14px;font-size:0.9rem;color:var(--lmuted);">Thank you! We appreciate you taking a second to share that.</div>
+      </div>
+
       <div style="text-align:center;padding:8px 0 16px">
         <p style="font-size:0.82rem;color:var(--lmuted);">By booking you agree to our <a href="/policy.html" style="color:var(--lv);">booking and cancellation policies</a>.</p>
       </div>
@@ -167,6 +212,23 @@
     <a href="/policy.html">Policies &amp; Terms</a>
   </footer>
 
+  <script>
+    const stars = document.querySelectorAll('.star');
+    const msg = document.getElementById('rating-msg');
+    const thanks = document.getElementById('rating-thanks');
+    const messages = ['','We hear you. Thank you for the honest feedback.','Thanks for letting us know. We will keep improving.','Glad it went smoothly! Thank you.','Really glad to hear that. Thank you!','That means everything to us. Thank you so much!'];
+    let selected = 0;
+    stars.forEach(s => {
+      s.addEventListener('mouseover', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= s.dataset.val)); });
+      s.addEventListener('mouseout', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected)); });
+      s.addEventListener('click', () => {
+        selected = s.dataset.val;
+        stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected));
+        msg.textContent = messages[selected];
+        thanks.style.display = 'block';
+      });
+    });
+  </script>
 </body>
 </html>
  
