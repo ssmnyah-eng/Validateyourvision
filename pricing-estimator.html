@@ -1815,7 +1815,7 @@ const C = {
   WEEKEND_MULT:   1.15,   // +15% to crew/packer rate on weekends
   PEAK_MONTHS:    [5,6,7,8], // May–Aug peak season
   PEAK_MULT:      1.20,   // +20% crew/packer rate in peak season
-  BASE_HRS:        {studio:[3,3.5],'1br':[4,4.5],'2br':[5.5,6.5],'3br':[7.5,8.5],'4br':[9.5,11],'5br':[11,12.5]},
+  BASE_HRS:        {studio:[2,3],'1br':[3,4.5],'2br':[4,6],'3br':[6,8],'4br':[8,11],'5br':[11,14]},
   PACK_HRS:        {studio:[4,5],'1br':[4,5],'2br':[4,6],'3br':[6,8],'4br':[8,10],'5br':[10,13]},
   PACK_MOD:        {fragile:.35, kitchen:.5, rooms:.75, full:1},
   VISIT:           {studio:45,'1br':45,'2br':55,'3br':65,'4br':75,'5br':85},
@@ -2110,8 +2110,7 @@ function calc() {
   // Apply 15% stair penalty when total flights > 3
   const totalFlights = (S.stairs || 0) + (S.destStairs || 0);
   const stairMult = totalFlights > C.STAIR_PENALTY_THRESHOLD ? C.STAIR_PENALTY : 1;
-  const refCrew   = C.REC_CREW[S.homeSize] || 2;
-  const crewScale = refCrew / S.crewSize;
+  const crewScale = 2 / S.crewSize;
   const lo    = Math.max(C.MIN_HRS, (base[0] + extra) * stairMult * crewScale);
   const hi    = Math.max(C.MIN_HRS, (base[1] + extra) * stairMult * crewScale) + C.HOUR_BUFFER;
   // Weekend / peak season rate multiplier
