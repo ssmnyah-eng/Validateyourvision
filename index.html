@@ -2543,27 +2543,87 @@
     <div class="container">
       <div id="final-cta-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;max-width:1040px;margin:0 auto;">
 
-        <!-- Image side -->
-        <div id="final-cta-img" style="position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(140deg,var(--mp) 0%,var(--ap) 100%);">
-          <img src="/assets/moving-team.jpg"
-               alt="VYV moving crew preparing a structured move"
-               style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.85;"
-               loading="lazy"
-               onerror="this.style.display='none'">
-          <div style="position:absolute;inset:0;background:linear-gradient(140deg,rgba(33,13,70,0.55) 0%,rgba(74,35,122,0.45) 100%);display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;padding:24px;">
-              <div style="font-size:3rem;margin-bottom:10px;">🏠</div>
-              <div style="font-family:Georgia,serif;font-size:1.4rem;color:var(--tw);font-weight:700;line-height:1.3;">Your Move.<br>Your Blueprint.</div>
-            </div>
-          </div>
+        <!-- Box truck illustration -->
+        <div id="final-cta-img" style="border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(150deg,#1a0b30 0%,#2d0f52 50%,#3a1668 100%);display:flex;align-items:center;justify-content:center;padding:20px;">
+          <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" aria-label="VYV moving box truck" style="width:100%;max-width:400px;">
+            <!-- Road -->
+            <rect x="0" y="230" width="420" height="50" fill="#0f0820" rx="0"/>
+            <rect x="0" y="228" width="420" height="5" fill="#1e0f36"/>
+            <!-- Road dashes -->
+            <rect x="30" y="242" width="40" height="5" fill="#2d1a50" rx="2"/>
+            <rect x="110" y="242" width="40" height="5" fill="#2d1a50" rx="2"/>
+            <rect x="190" y="242" width="40" height="5" fill="#2d1a50" rx="2"/>
+            <rect x="270" y="242" width="40" height="5" fill="#2d1a50" rx="2"/>
+            <rect x="350" y="242" width="40" height="5" fill="#2d1a50" rx="2"/>
+
+            <!-- Truck body (cargo box) -->
+            <rect x="60" y="120" width="240" height="110" rx="6" fill="#210D46"/>
+            <rect x="60" y="120" width="240" height="110" rx="6" fill="none" stroke="#8B5BC7" stroke-width="2.5"/>
+
+            <!-- VYV branding on truck side -->
+            <rect x="72" y="132" width="216" height="86" rx="4" fill="#190E2A"/>
+            <text x="180" y="168" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="36" fill="#8B5BC7" text-anchor="middle" letter-spacing="2">VYV</text>
+            <text x="180" y="192" font-family="Arial,sans-serif" font-weight="600" font-size="11" fill="rgba(236,235,238,0.55)" text-anchor="middle" letter-spacing="1">VALIDATE YOUR VISION</text>
+            <!-- Stripe accent -->
+            <rect x="60" y="148" width="240" height="4" fill="#4A237A" opacity="0.6"/>
+            <rect x="60" y="195" width="240" height="4" fill="#4A237A" opacity="0.6"/>
+
+            <!-- Cab section -->
+            <rect x="300" y="155" width="80" height="75" rx="6" fill="#210D46" stroke="#8B5BC7" stroke-width="2"/>
+            <!-- Cab roof curve -->
+            <path d="M300 155 Q300 135 318 128 L365 128 Q378 128 380 142 L380 155 Z" fill="#2d0f52" stroke="#8B5BC7" stroke-width="2"/>
+            <!-- Cab window -->
+            <rect x="310" y="136" width="58" height="34" rx="4" fill="#0f0820" stroke="#6b3fa0" stroke-width="1.5"/>
+            <line x1="339" y1="136" x2="339" y2="170" stroke="#6b3fa0" stroke-width="1" opacity="0.6"/>
+            <!-- Window reflection -->
+            <line x1="316" y1="140" x2="316" y2="160" stroke="rgba(139,91,199,0.3)" stroke-width="2" stroke-linecap="round"/>
+            <!-- Cab door line -->
+            <line x1="300" y1="195" x2="300" y2="230" stroke="#6b3fa0" stroke-width="1.5"/>
+            <!-- Door handle -->
+            <rect x="303" y="207" width="12" height="4" rx="2" fill="#8B5BC7" opacity="0.7"/>
+            <!-- Headlight -->
+            <rect x="376" y="188" width="10" height="14" rx="3" fill="#c4a0f0" opacity="0.9"/>
+            <rect x="376" y="188" width="10" height="14" rx="3" fill="none" stroke="#8B5BC7" stroke-width="1"/>
+            <!-- Light beam -->
+            <polygon points="386,192 420,180 420,206 386,200" fill="rgba(196,160,240,0.08)"/>
+
+            <!-- Rear door details -->
+            <line x1="180" y1="120" x2="180" y2="230" stroke="#3a1a60" stroke-width="1.5"/>
+            <rect x="165" y="170" width="8" height="16" rx="3" fill="#4A237A" opacity="0.8"/>
+
+            <!-- Wheels -->
+            <!-- Front wheel -->
+            <circle cx="345" cy="232" r="22" fill="#0f0820" stroke="#8B5BC7" stroke-width="2.5"/>
+            <circle cx="345" cy="232" r="13" fill="#190E2A" stroke="#6b3fa0" stroke-width="1.5"/>
+            <circle cx="345" cy="232" r="5" fill="#8B5BC7"/>
+            <!-- Rear dual wheels -->
+            <circle cx="140" cy="232" r="22" fill="#0f0820" stroke="#8B5BC7" stroke-width="2.5"/>
+            <circle cx="140" cy="232" r="13" fill="#190E2A" stroke="#6b3fa0" stroke-width="1.5"/>
+            <circle cx="140" cy="232" r="5" fill="#8B5BC7"/>
+            <circle cx="100" cy="232" r="22" fill="#0f0820" stroke="#8B5BC7" stroke-width="2.5"/>
+            <circle cx="100" cy="232" r="13" fill="#190E2A" stroke="#6b3fa0" stroke-width="1.5"/>
+            <circle cx="100" cy="232" r="5" fill="#8B5BC7"/>
+
+            <!-- Undercarriage -->
+            <rect x="55" y="218" width="345" height="14" rx="4" fill="#190E2A" stroke="#2d1a50" stroke-width="1"/>
+
+            <!-- Stars / atmosphere -->
+            <circle cx="20" cy="30" r="1.5" fill="rgba(196,160,240,0.6)"/>
+            <circle cx="60" cy="55" r="1" fill="rgba(196,160,240,0.4)"/>
+            <circle cx="390" cy="20" r="1.5" fill="rgba(196,160,240,0.5)"/>
+            <circle cx="350" cy="65" r="1" fill="rgba(196,160,240,0.35)"/>
+            <circle cx="200" cy="25" r="1.2" fill="rgba(196,160,240,0.5)"/>
+            <circle cx="10" cy="80" r="1" fill="rgba(196,160,240,0.3)"/>
+            <circle cx="410" cy="90" r="1.2" fill="rgba(196,160,240,0.4)"/>
+          </svg>
         </div>
 
         <!-- Text side -->
         <div>
           <p style="font-size:0.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(139,91,199,0.7);margin-bottom:14px;">One Last Thing</p>
-          <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.7rem,4vw,2.4rem);color:var(--tw);line-height:1.2;margin-bottom:18px;">Your flat rate is<br><span style="color:#c4a0f0;">waiting for you.</span></h2>
-          <p style="font-size:0.97rem;color:rgba(236,235,238,0.78);line-height:1.8;margin-bottom:10px;">Most movers guess. We build. Tell us about your move and we will put together a real, detailed plan in 60 seconds, no phone call required.</p>
-          <p style="font-size:0.97rem;color:rgba(236,235,238,0.78);line-height:1.8;margin-bottom:28px;">Then we schedule a quick virtual walkthrough so there are zero surprises on moving day. Your price is locked in before we touch a single box.</p>
+          <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.7rem,4vw,2.4rem);color:var(--tw);line-height:1.2;margin-bottom:18px;">Still not convinced?<br><span style="color:#c4a0f0;">We thought you might say that.</span></h2>
+          <p style="font-size:0.97rem;color:rgba(236,235,238,0.78);line-height:1.8;margin-bottom:10px;">Most movers give you a guess over the phone and hope it sticks. We build your move on paper before we touch a single box. A real plan, a real price, locked in before moving day.</p>
+          <p style="font-size:0.97rem;color:rgba(236,235,238,0.78);line-height:1.8;margin-bottom:28px;">Takes 60 seconds online. No phone call. Your crew shows up already knowing what they are moving, where it is going, and what it costs. That price does not change.</p>
           <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
             <a href="/pricing-estimator.html" class="btn btn-primary" style="font-size:1rem;padding:16px 32px;">Build My Blueprint &nbsp; &rarr;</a>
             <span style="font-size:0.82rem;color:rgba(236,235,238,0.5);">Takes 60 seconds &nbsp;&middot;&nbsp; No phone call &nbsp;&middot;&nbsp; Guaranteed flat rate</span>
@@ -2576,7 +2636,7 @@
   <style>
     @media(max-width:700px){
       #final-cta-grid{grid-template-columns:1fr!important}
-      #final-cta-img{aspect-ratio:16/9!important}
+      #final-cta-img{aspect-ratio:16/9!important;padding:12px!important}
     }
   </style>
 
