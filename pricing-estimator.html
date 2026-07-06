@@ -576,6 +576,19 @@ input,select,textarea{font-size:16px !important}
 .cl-phase-row-title{font-size:.88rem;font-weight:600;color:var(--navy)}
 .cl-phase-row-count{font-size:.8rem;color:var(--accent);font-weight:700;background:var(--accent-lt);padding:3px 10px;border-radius:20px}
 .cl-pdf-note{font-size:.79rem;color:var(--muted);text-align:center;padding:12px 20px 16px;font-style:italic}
+/* ── Booking interstitial overlay ── */
+.book-overlay{position:fixed;inset:0;background:rgba(25,14,42,.82);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.book-overlay.hidden{display:none}
+.book-overlay-card{background:var(--white);border-radius:18px;padding:32px 24px;max-width:420px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(25,14,42,.35)}
+.book-overlay-icon{font-size:2.4rem;margin-bottom:8px}
+.book-overlay-head{font-size:1.2rem;font-weight:800;color:var(--navy);font-family:'Playfair Display',serif;margin-bottom:6px;text-wrap:balance}
+.book-overlay-sub{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:22px}
+.book-overlay-dl{width:100%;padding:15px 20px;background:var(--navy);color:#fff;border:none;border-radius:var(--r);font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:opacity .15s;margin-bottom:12px}
+.book-overlay-dl:hover{opacity:.88}
+.book-overlay-dl.done{background:var(--green);pointer-events:none}
+.book-overlay-continue{width:100%;padding:15px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:opacity .15s;margin-bottom:10px}
+.book-overlay-continue:hover{opacity:.88}
+.book-overlay-skip{font-size:.82rem;color:var(--muted);text-decoration:underline;background:none;border:none;cursor:pointer;padding:4px}
 .pdf-modal{background:var(--white);border:2px solid var(--accent);border-radius:var(--r);padding:24px 20px;margin:16px 0}
 .pdf-modal-head{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:4px}
 .pdf-modal-sub{font-size:.84rem;color:var(--muted);margin-bottom:20px}
@@ -1638,6 +1651,18 @@ input,select,textarea{font-size:16px !important}
       </div>
       <button class="btn-main" style="margin-top:16px" onclick="confirmPdfQuestions()">Generate My PDF</button>
       <button class="btn-sec" style="margin-top:8px" onclick="skipPdfQuestions()">Skip, Generate Now</button>
+    </div>
+
+    <!-- Booking interstitial overlay -->
+    <div class="book-overlay hidden" id="book-overlay">
+      <div class="book-overlay-card">
+        <div class="book-overlay-icon">📋</div>
+        <div class="book-overlay-head">Save Your Moving Blueprint First</div>
+        <div class="book-overlay-sub">Your full estimate, checklist, and move plan are in this PDF. Download it before you book so you have everything in one place.</div>
+        <button class="book-overlay-dl" id="book-overlay-dl-btn" onclick="overlayDownloadPdf()">&#8595; Download My Moving Blueprint PDF</button>
+        <button class="book-overlay-continue" id="book-overlay-continue-btn" onclick="overlayGoToBooking()">&#128197; Continue to Booking</button>
+        <button class="book-overlay-skip" onclick="overlayGoToBooking()">Skip — go straight to booking</button>
+      </div>
     </div>
 
     <!-- CTA -->
@@ -3252,6 +3277,29 @@ document.getElementById('crew-grid').addEventListener('click', e => {
 /* ══════════════════════════════════════════
    CONFIRM MOVE
    ══════════════════════════════════════════ */
+// Booking destination URL (set when user clicks any CTA)
+let _bookingUrl = '';
+
+function showBookingOverlay(calUrl) {
+  _bookingUrl = calUrl;
+  S._pdfAnswered = true; // skip the pdf-questions modal; overlay handles the download
+  document.getElementById('book-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function overlayDownloadPdf() {
+  const btn = document.getElementById('book-overlay-dl-btn');
+  btn.textContent = '✓ Saved! Continue to Booking ↓';
+  btn.classList.add('done');
+  downloadPlan();
+}
+
+function overlayGoToBooking() {
+  document.getElementById('book-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+  if (_bookingUrl) window.open(_bookingUrl, '_blank', 'noopener');
+}
+
 function confirmMove(source) {
   const name  = document.getElementById('lead-name').value.trim();
   const email = document.getElementById('lead-email').value.trim();
@@ -3280,10 +3328,9 @@ function confirmMove(source) {
     }).catch(()=>{});
   }
 
-  // Send them to cal.com to book the walkthrough (deposit collected there)
   const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
   const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
-  window.open(url, '_blank', 'noopener');
+  showBookingOverlay(url);
 }
 
 /* ══════════════════════════════════════════
@@ -3310,7 +3357,7 @@ function skipPdfQuestions() {
 }
 
 function openWalkthrough(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
   const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
   // Mark lead as Active Contact in Zoho CRM when they go to book
@@ -3334,7 +3381,7 @@ function openWalkthrough(e) {
       }),
     }).catch(()=>{});
   }
-  window.open(url, '_blank', 'noopener');
+  showBookingOverlay(url);
 }
 
 async function downloadPlan() {
