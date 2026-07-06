@@ -2953,90 +2953,85 @@ const CONF_LABEL  = {very:'Very Confident',mostly:'Mostly Sure',unsure:'Not Sure
 const CX_LABEL    = {std:'Standard',mod:'Moderate',cpx:'Complex'};
 
 async function submitLead(name, email, phone) {
-  const r   = calc();
-  const pickup  = document.getElementById('pickup-addr').value.trim();
-  const dropoff = document.getElementById('dropoff-addr').value.trim();
-  const now  = new Date().toISOString();
-
-  const floorInfo = S.aptFloor
-    ? `Floor ${S.aptFloor}${S.stairs ? `, ${S.stairs} flight${S.stairs>1?'s':''}` : ''}`
-    : S.stairs ? `${S.stairs} flight${S.stairs>1?'s':''}` : '';
-
-  const specR = calcSpecialty();
-  const invNotes = [
-    S.spaces.length         ? `Extra areas: ${S.spaces.join(', ')}`                                   : '',
-    S.specialty.length      ? `Specialty items: ${S.specialty.join(', ')}`                            : '',
-    Object.keys(S.specialtyDetails).length ? `Specialty details: ${Object.entries(S.specialtyDetails).map(([k,v])=>`${k}=${v}`).join(', ')}` : '',
-    S.specialtyAccess.length? `Specialty access: ${S.specialtyAccess.join(', ')}`                     : '',
-    specR && specR.needsExtraTruck ? 'May require additional truck trip for specialty items'           : '',
-    S.appliances.length     ? `Appliances: ${S.appliances.join(', ')}`                                : '',
-    S.disassembly.length    ? `Disassembly needed: ${S.disassembly.join(', ')}`                       : '',
-    S.boxCount              ? `Box count range: ${S.boxCount}`                                         : '',
-  ].filter(Boolean).join('\n');
-
   /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method:  'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        /* Customer */
-        move_id:          S.moveId,
-        type:             'quote_ready',
-        lead_action:      'Form Submitted',
-        crm_status:       'Lead',
-        send_pdf_email:   true,
-        customer_name:    name,
-        email,
-        phone,
-        submitted_at:     now,
-        source:           'Moving Blueprint Builder',
-        /* Route */
-        pickup_address:   pickup,
-        dropoff_address:  dropoff,
-        distance_one_way: r ? parseFloat(S.miles.toFixed(2)) : '',
-        distance_round_trip: r ? parseFloat(S.miles.toFixed(2)) : '',
-        drive_time:       S.driveTime || '',
-        /* Home */
-        property_type:    PROP_LABEL[S.propType]  || S.propType  || '',
-        bedrooms:         SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
-        furnishing_level: FURN_LABEL[S.furnish]   || S.furnish   || '',
-        floor_stairs:         floorInfo,
-        dest_stairs:          S.destStairs !== null ? S.destStairs : '',
-        walk_distance:        CARRY_LABEL[S.carry]      || S.carry      || '',
-        dest_walk_distance:   CARRY_LABEL[S.destCarry]  || S.destCarry  || '',
-        extra_spaces:         S.spaces.join(', '),
-        /* Services */
-        specialty_items:        S.specialty.join(', '),
-        specialty_details:      Object.entries(S.specialtyDetails).map(([k,v])=>`${k}:${v}`).join(', '),
-        specialty_access:       S.specialtyAccess.join(', '),
-        specialty_stair_flights:S.specialtyAccess.includes('stairs') ? S.specialtyFlights : '',
-        specialty_base_total:   (()=>{const sr=calcSpecialty();return sr?sr.baseTotal:''})(),
-        specialty_surcharge_total:(()=>{const sr=calcSpecialty();return sr?sr.surTotal:''})(),
-        specialty_grand_total:  (()=>{const sr=calcSpecialty();return sr?sr.grandTotal:''})(),
-        specialty_has_custom:   (()=>{const sr=calcSpecialty();return sr?sr.hasCustom:false})(),
-        appliances:             S.appliances.join(', '),
-        box_count:              S.boxCount || '',
-        disassembly:            S.disassembly.join(', '),
-        packing_type:     S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
-        packer_count:     S.packers || '',
-        storage_stop:     S.storage === 'yes' ? 'Yes' : 'No',
-        /* Pricing */
-        estimate_low:     r ? r.totalLo : '',
-        estimate_high:    r ? r.totalHi : '',
-        deposit_amount:   r ? r.deposit : '',
-        complexity:       r ? (CX_LABEL[r.cx] || r.cx) : '',
-        recommended_crew: C.REC_CREW[S.homeSize] || '',
-        /* Timeline & Priority */
-        move_timeline:         DATE_LABEL[S.moveDate]  || S.moveDate  || '',
-        confidence:            CONF_LABEL[S.confidence]|| S.confidence|| '',
-        priority_level:        getPriority(DATE_LABEL[S.moveDate] || S.moveDate).label,
-        consultation_due_by:   getDueDate(getPriority(DATE_LABEL[S.moveDate] || S.moveDate).days),
-        /* Notes */
-        inventory_notes:  invNotes,
-      }),
+      body: JSON.stringify(buildFullPayload({
+        type:           'quote_ready',
+        lead_action:    'Form Submitted',
+        crm_status:     'Lead',
+        send_pdf_email: true,
+      })),
     }).catch(() => {});
   }
+}
+
+function buildFullPayload(overrides) {
+  const r  = calc();
+  const sr = calcSpecialty();
+  const name   = document.getElementById('lead-name').value.trim();
+  const email  = document.getElementById('lead-email').value.trim();
+  const phone  = document.getElementById('lead-phone').value.trim();
+  const pickup = document.getElementById('pickup-addr').value.trim();
+  const dropoff= document.getElementById('dropoff-addr').value.trim();
+  const floorInfo = S.floor !== null ? (S.floor === 0 ? 'Ground floor / no stairs' : `${S.floor} flight${S.floor>1?'s':''} of stairs`) : '';
+  const invNotes = [...document.querySelectorAll('.inv-item')].map(el=>{
+    const nm = el.querySelector('.inv-name')?.value.trim();
+    const ct = el.querySelector('.inv-count')?.value.trim();
+    return nm ? `${nm}${ct?' x'+ct:''}` : '';
+  }).filter(Boolean).join(', ');
+  return {
+    move_id:                  S.moveId,
+    type:                     'auto_capture',
+    lead_action:              'Info Entered — No Action Taken',
+    crm_status:               'Lead',
+    customer_name:            name,
+    email,
+    phone,
+    submitted_at:             new Date().toISOString(),
+    source:                   'Moving Blueprint Builder',
+    pickup_address:           pickup,
+    dropoff_address:          dropoff,
+    distance_one_way:         r ? parseFloat(S.miles.toFixed(2)) : '',
+    distance_round_trip:      r ? parseFloat(S.miles.toFixed(2)) : '',
+    drive_time:               S.driveTime || '',
+    property_type:            PROP_LABEL[S.propType]  || S.propType  || '',
+    bedrooms:                 SIZE_LABEL[S.homeSize]   || S.homeSize  || '',
+    furnishing_level:         FURN_LABEL[S.furnish]   || S.furnish   || '',
+    floor_stairs:             floorInfo,
+    dest_stairs:              S.destStairs !== null ? S.destStairs : '',
+    walk_distance:            CARRY_LABEL[S.carry]     || S.carry     || '',
+    dest_walk_distance:       CARRY_LABEL[S.destCarry] || S.destCarry || '',
+    extra_spaces:             S.spaces.join(', '),
+    specialty_items:          S.specialty.join(', '),
+    specialty_details:        Object.entries(S.specialtyDetails).map(([k,v])=>`${k}:${v}`).join(', '),
+    specialty_access:         S.specialtyAccess.join(', '),
+    specialty_stair_flights:  S.specialtyAccess.includes('stairs') ? S.specialtyFlights : '',
+    specialty_base_total:     sr ? sr.baseTotal : '',
+    specialty_surcharge_total:sr ? sr.surTotal : '',
+    specialty_grand_total:    sr ? sr.grandTotal : '',
+    specialty_has_custom:     sr ? sr.hasCustom : false,
+    appliances:               S.appliances.join(', '),
+    box_count:                S.boxCount || '',
+    disassembly:              S.disassembly.join(', '),
+    packing_type:             S.packingOn ? (PACK_LABEL[S.packType] || S.packType) : 'None',
+    packer_count:             S.packers || '',
+    storage_stop:             S.storage === 'yes' ? 'Yes' : 'No',
+    estimate_low:             r ? r.totalLo : '',
+    estimate_high:            r ? r.totalHi : '',
+    deposit_amount:           r ? r.deposit : '',
+    complexity:               r ? (CX_LABEL[r.cx] || r.cx) : '',
+    recommended_crew:         C.REC_CREW[S.homeSize] || '',
+    crew_size:                S.crewSize || '',
+    move_timeline:            DATE_LABEL[S.moveDate]  || S.moveDate  || '',
+    confidence:               CONF_LABEL[S.confidence]|| S.confidence|| '',
+    priority_level:           getPriority(DATE_LABEL[S.moveDate] || S.moveDate).label,
+    consultation_due_by:      getDueDate(getPriority(DATE_LABEL[S.moveDate] || S.moveDate).days),
+    inventory_notes:          invNotes,
+    ...overrides,
+  };
 }
 
 // Auto-capture: fires as soon as name + email are filled, even if they never click the button
@@ -3047,30 +3042,15 @@ function tryAutoCapture() {
   const e = document.getElementById('lead-email').value.trim();
   if (!n || !e || !e.includes('@')) return;
   _autoCaptureSent = true;
-  const _r = calc();
-  const pickup  = document.getElementById('pickup-addr').value.trim();
-  const dropoff = document.getElementById('dropoff-addr').value.trim();
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        move_id:          S.moveId,
-        type:             'auto_capture',
-        lead_action:      'Info Entered — No Action Taken',
-        customer_name:    n,
-        email:            e,
-        phone:            document.getElementById('lead-phone').value.trim(),
-        pickup_address:   pickup,
-        dropoff_address:  dropoff,
-        bedrooms:         SIZE_LABEL[S.homeSize]  || S.homeSize  || '',
-        property_type:    PROP_LABEL[S.propType]  || S.propType  || '',
-        move_timeline:    DATE_LABEL[S.moveDate]  || S.moveDate  || '',
-        estimate_low:     _r ? _r.totalLo : null,
-        estimate_high:    _r ? _r.totalHi : null,
-        submitted_at:     new Date().toISOString(),
-        source:           'Moving Blueprint Builder',
-      }),
+      body: JSON.stringify(buildFullPayload({
+        type:        'auto_capture',
+        lead_action: 'Info Entered — No Action Taken',
+        crm_status:  'Lead',
+      })),
     }).catch(()=>{});
   }
 }
@@ -3301,30 +3281,16 @@ function overlayGoToBooking() {
 }
 
 function confirmMove(source) {
-  const name  = document.getElementById('lead-name').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-  const r = calc();
-
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        move_id:        S.moveId,
+      body: JSON.stringify(buildFullPayload({
         type:           'move_confirmation',
         lead_action:    'Date Hold Requested',
-        customer_name:  name,
-        email,
-        phone,
+        crm_status:     'Virtual Walkthrough',
         confirm_source: source,
-        estimate_low:   r ? r.totalLo : null,
-        estimate_high:  r ? r.totalHi : null,
-        crew_size:      S.crewSize,
-        move_date:      S.moveDate,
-        submitted_at:   new Date().toISOString(),
-        source:         'Moving Blueprint Builder',
-      }),
+      })),
     }).catch(()=>{});
   }
 
@@ -3360,25 +3326,15 @@ function openWalkthrough(e) {
   if (e) e.preventDefault();
   const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
   const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
-  // Mark lead as Active Contact in Zoho CRM when they go to book
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
-    const _r = calc();
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        move_id:       S.moveId,
-        type:          'walkthrough_initiated',
-        lead_action:   'Walkthrough Booking Started',
-        crm_status:    'Active Contact',
-        customer_name: document.getElementById('lead-name').value.trim(),
-        email:         document.getElementById('lead-email').value.trim(),
-        phone:         document.getElementById('lead-phone').value.trim(),
-        estimate_low:  _r ? _r.totalLo : null,
-        estimate_high: _r ? _r.totalHi : null,
-        submitted_at:  new Date().toISOString(),
-        source:        'Moving Blueprint Builder',
-      }),
+      body: JSON.stringify(buildFullPayload({
+        type:        'walkthrough_initiated',
+        lead_action: 'Walkthrough Booking Started',
+        crm_status:  'Virtual Walkthrough',
+      })),
     }).catch(()=>{});
   }
   showBookingOverlay(url);
@@ -3393,22 +3349,14 @@ async function downloadPlan() {
   }
   // Track PDF download
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
-    const _r = calc();
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        move_id:       S.moveId,
-        type:          'pdf_download',
-        lead_action:   'PDF Downloaded',
-        customer_name: document.getElementById('lead-name').value.trim(),
-        email:         document.getElementById('lead-email').value.trim(),
-        phone:         document.getElementById('lead-phone').value.trim(),
-        estimate_low:  _r ? _r.totalLo : null,
-        estimate_high: _r ? _r.totalHi : null,
-        submitted_at:  new Date().toISOString(),
-        source:        'Moving Blueprint Builder',
-      }),
+      body: JSON.stringify(buildFullPayload({
+        type:        'pdf_download',
+        lead_action: 'PDF Downloaded',
+        crm_status:  'PDF Downloaded',
+      })),
     }).catch(()=>{});
   }
 
