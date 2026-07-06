@@ -186,6 +186,7 @@ html,body{height:100%}
   --green-lt:#d4eddf;
   --white:#ffffff;
   --mist:#F7F4FF;
+  --bg:#F7F4FF;
   --border:rgba(74,35,122,.18);
   --text:#190E2A;
   --muted:#5a4a7a;
@@ -376,8 +377,8 @@ input,select,textarea{font-size:16px !important}
 .plan-cta-how-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;font-family:'Raleway',sans-serif}
 .plan-cta-step{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--navy);margin-bottom:8px;line-height:1.45}
 .plan-cta-num{background:var(--accent);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;font-family:'Raleway',sans-serif;margin-top:1px}
-.plan-cta .btn-walkthrough{color:var(--navy);border-color:var(--border)}
-.plan-cta .btn-walkthrough:hover{border-color:var(--accent);background:var(--accent-lt);color:var(--accent)}
+.plan-cta .btn-walkthrough{color:#fff;border-color:rgba(255,255,255,.4)}
+.plan-cta .btn-walkthrough:hover{border-color:#fff;background:rgba(255,255,255,.1);color:#fff}
 .res-h{font-size:clamp(1.3rem,4vw,1.8rem);font-weight:800;color:var(--navy);line-height:1.2;font-family:'Playfair Display',serif}
 .complexity{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700}
 .cx-std{background:#d4eddf;color:#1e6b4a}
@@ -2956,12 +2957,15 @@ async function submitLead(name, email, phone) {
       body: JSON.stringify({
         /* Customer */
         move_id:          S.moveId,
+        type:             'quote_ready',
+        lead_action:      'Form Submitted',
+        crm_status:       'Lead',
+        send_pdf_email:   true,
         customer_name:    name,
         email,
         phone,
         submitted_at:     now,
         source:           'Moving Blueprint Builder',
-        lead_action:      'Form Submitted',
         /* Route */
         pickup_address:   pickup,
         dropoff_address:  dropoff,
@@ -3276,11 +3280,10 @@ function confirmMove(source) {
     }).catch(()=>{});
   }
 
-  document.getElementById('mid-confirm').classList.add('hidden');
-  document.getElementById('plan-cta-bottom').classList.add('hidden');
-  const el = document.getElementById('confirm-success');
-  el.classList.remove('hidden');
-  el.scrollIntoView({behavior:'smooth', block:'center'});
+  // Send them to cal.com to book the walkthrough (deposit collected there)
+  const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
+  const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
+  window.open(url, '_blank', 'noopener');
 }
 
 /* ══════════════════════════════════════════
@@ -3310,6 +3313,27 @@ function openWalkthrough(e) {
   e.preventDefault();
   const base = 'https://cal.com/validate-your-vision-ukhtzp/virtualwalk';
   const url = S.moveId ? `${base}?move_id=${encodeURIComponent(S.moveId)}` : base;
+  // Mark lead as Active Contact in Zoho CRM when they go to book
+  if (INTEGRATIONS.ZAPIER_WEBHOOK) {
+    const _r = calc();
+    fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        move_id:       S.moveId,
+        type:          'walkthrough_initiated',
+        lead_action:   'Walkthrough Booking Started',
+        crm_status:    'Active Contact',
+        customer_name: document.getElementById('lead-name').value.trim(),
+        email:         document.getElementById('lead-email').value.trim(),
+        phone:         document.getElementById('lead-phone').value.trim(),
+        estimate_low:  _r ? _r.totalLo : null,
+        estimate_high: _r ? _r.totalHi : null,
+        submitted_at:  new Date().toISOString(),
+        source:        'Moving Blueprint Builder',
+      }),
+    }).catch(()=>{});
+  }
   window.open(url, '_blank', 'noopener');
 }
 
