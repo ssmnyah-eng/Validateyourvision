@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moving Blueprint Builder | Validate Your Vision | Fredericksburg, Northern Virginia &amp; Richmond</title>
 <meta name="description" content="Build your personalized Moving Blueprint with Validate Your Vision. Get a detailed estimate, custom checklist, and a complete plan for your move. Serving Fredericksburg, Northern Virginia, Richmond, and surrounding communities within 90 miles.">
@@ -1803,7 +1804,11 @@ input,select,textarea{font-size:16px !important}
    INTEGRATION CONFIG
    ══════════════════════════════════════════ */
 const INTEGRATIONS = {
-  ZAPIER_WEBHOOK: 'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
+  ZAPIER_WEBHOOK:        'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
+  EMAILJS_PUBLIC_KEY:    'GcsCx2LlQ3jkcUM0K',
+  EMAILJS_SERVICE_ID:    'service_v235clas',
+  EMAILJS_TEMPLATE_ID:   'template_vyv_plan', // ← paste your template ID here
+  EMAILJS_TO_EMAIL:      'ssmnyah@gmail.com',
 };
 
 const VYV_DEPOT_ZIP  = '22401';
@@ -2953,17 +2958,71 @@ const CONF_LABEL  = {very:'Very Confident',mostly:'Mostly Sure',unsure:'Not Sure
 const CX_LABEL    = {std:'Standard',mod:'Moderate',cpx:'Complex'};
 
 async function submitLead(name, email, phone) {
+  const payload = buildFullPayload({
+    type:           'quote_ready',
+    lead_action:    'Form Submitted',
+    crm_status:     'Lead',
+    send_pdf_email: true,
+  });
+
   /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
-      method:  'POST',
-      body: JSON.stringify(buildFullPayload({
-        type:           'quote_ready',
-        lead_action:    'Form Submitted',
-        crm_status:     'Lead',
-        send_pdf_email: true,
-      })),
+      method: 'POST',
+      body:   JSON.stringify(payload),
     }).catch(() => {});
+  }
+
+  /* ── EmailJS backup: sends full plan directly to your inbox ── */
+  if (INTEGRATIONS.EMAILJS_SERVICE_ID && INTEGRATIONS.EMAILJS_TEMPLATE_ID) {
+    try {
+      emailjs.init(INTEGRATIONS.EMAILJS_PUBLIC_KEY);
+      emailjs.send(INTEGRATIONS.EMAILJS_SERVICE_ID, INTEGRATIONS.EMAILJS_TEMPLATE_ID, {
+        to_email:                INTEGRATIONS.EMAILJS_TO_EMAIL,
+        move_id:                 payload.move_id,
+        customer_name:           payload.customer_name,
+        email:                   payload.email,
+        phone:                   payload.phone,
+        submitted_at:            payload.submitted_at,
+        pickup_address:          payload.pickup_address,
+        dropoff_address:         payload.dropoff_address,
+        distance_one_way:        payload.distance_one_way,
+        distance_round_trip:     payload.distance_round_trip,
+        drive_time:              payload.drive_time,
+        property_type:           payload.property_type,
+        bedrooms:                payload.bedrooms,
+        furnishing_level:        payload.furnishing_level,
+        floor_stairs:            payload.floor_stairs,
+        dest_stairs:             payload.dest_stairs,
+        walk_distance:           payload.walk_distance,
+        dest_walk_distance:      payload.dest_walk_distance,
+        extra_spaces:            payload.extra_spaces,
+        specialty_items:         payload.specialty_items,
+        specialty_details:       payload.specialty_details,
+        specialty_access:        payload.specialty_access,
+        specialty_stair_flights: payload.specialty_stair_flights,
+        specialty_base_total:    payload.specialty_base_total,
+        specialty_surcharge_total: payload.specialty_surcharge_total,
+        specialty_grand_total:   payload.specialty_grand_total,
+        appliances:              payload.appliances,
+        box_count:               payload.box_count,
+        disassembly:             payload.disassembly,
+        packing_type:            payload.packing_type,
+        packer_count:            payload.packer_count,
+        storage_stop:            payload.storage_stop,
+        estimate_low:            payload.estimate_low,
+        estimate_high:           payload.estimate_high,
+        deposit_amount:          payload.deposit_amount,
+        complexity:              payload.complexity,
+        recommended_crew:        payload.recommended_crew,
+        crew_size:               payload.crew_size,
+        move_timeline:           payload.move_timeline,
+        confidence:              payload.confidence,
+        priority_level:          payload.priority_level,
+        consultation_due_by:     payload.consultation_due_by,
+        inventory_notes:         payload.inventory_notes,
+      });
+    } catch(e) {}
   }
 }
 
