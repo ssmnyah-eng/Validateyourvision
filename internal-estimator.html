@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VYV Internal Estimator</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --border: #ddd;
+  --text: #1a1a1a;
+  --sub: #666;
+  --accent: #1a4a8a;
+  --accent-light: #e8f0fb;
+  --green: #1a7a3a;
+  --green-bg: #e8f7ed;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --yellow: #7a5a00;
+  --yellow-bg: #fff8e1;
+  --radius: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.subtitle { color: var(--sub); font-size: 13px; margin-bottom: 20px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 700px) { .grid, .grid-3 { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.card h2 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--accent);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+label { display: block; font-size: 12px; font-weight: 600; color: var(--sub); margin-bottom: 4px; margin-top: 10px; }
+label:first-of-type { margin-top: 0; }
+
+input[type=text], input[type=email], input[type=tel], input[type=number], select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+  outline: none;
+  transition: border-color .15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+textarea { resize: vertical; min-height: 60px; }
+
+.check-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; cursor: pointer; }
+.check-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+
+/* Results */
+#results {
+  position: sticky;
+  bottom: 0;
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+}
+#results h2 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 12px; border: none; padding: 0; text-transform: none; letter-spacing: 0; }
+
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+
+.r-box {
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.r-box .r-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+.r-box .r-val { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.r-box .r-sub { font-size: 11px; margin-top: 2px; opacity: .75; }
+
+.r-blue   { background: var(--accent-light); color: var(--accent); }
+.r-green  { background: var(--green-bg);    color: var(--green); }
+.r-yellow { background: var(--yellow-bg);   color: var(--yellow); }
+.r-red    { background: var(--red-bg);      color: var(--red); }
+
+.breakdown { font-size: 12px; color: var(--sub); margin-bottom: 14px; line-height: 1.8; }
+.breakdown span { color: var(--text); font-weight: 600; }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+button.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+button.btn:hover { opacity: .85; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-secondary { background: #eee; color: var(--text); }
+.btn-green { background: var(--green); color: #fff; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+.tag-peak { background: #fff3cd; color: #856404; }
+.tag-weekend { background: #f8d7da; color: #842029; }
+
+#save-status { font-size: 13px; color: var(--green); display: none; margin-top: 8px; }
+
+/* Specialty rows */
+.spec-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.spec-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+.spec-row label { margin: 0; font-size: 13px; font-weight: 400; color: var(--text); flex: 1; cursor: pointer; }
+.spec-row .spec-price { font-size: 12px; color: var(--sub); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<h1>VYV Internal Estimator</h1>
+<p class="subtitle">Virtual consultation tool — for your eyes only</p>
+
+<!-- Customer Info -->
+<div class="card">
+  <h2>Customer Info</h2>
+  <div class="grid">
+    <div>
+      <label>Full Name</label>
+      <input type="text" id="c-name" placeholder="Jane Smith" oninput="recalc()">
+    </div>
+    <div>
+      <label>Phone</label>
+      <input type="tel" id="c-phone" placeholder="(555) 000-0000" oninput="recalc()">
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="email" id="c-email" placeholder="jane@email.com" oninput="recalc()">
+    </div>
+    <div>
+      <label>Move ID (if already in system)</label>
+      <input type="text" id="c-moveid" placeholder="VYV-XXXXXX" oninput="recalc()">
+    </div>
+  </div>
+  <div style="margin-top:12px">
+    <label>Pickup Address</label>
+    <input type="text" id="c-pickup" placeholder="123 Main St, Fredericksburg, VA" oninput="recalc()">
+  </div>
+  <div style="margin-top:10px">
+    <label>Drop-off Address</label>
+    <input type="text" id="c-dropoff" placeholder="456 Oak Ave, Richmond, VA" oninput="recalc()">
+  </div>
+</div>
+
+<!-- Move Details -->
+<div class="grid">
+  <div class="card">
+    <h2>Property</h2>
+    <label>Property Type</label>
+    <select id="prop-type" onchange="recalc()">
+      <option value="">— Select —</option>
+      <option value="house">House</option>
+      <option value="apartment">Apartment</option>
+      <option value="condo">Condo</option>
+      <option value="townhome">Townhome</option>
+    </select>
+
+    <label>Bedrooms / Size</label>
+    <select id="home-size" onchange="recalc()">
+      <option value="">— Select —</option>
+      <option value="studio">Studio</option>
+      <option value="1br">1 Bedroom</option>
+      <option value="2br">2 Bedrooms</option>
+      <option value="3br">3 Bedrooms</option>
+      <option value="4br">4 Bedrooms</option>
+      <option value="5br">5+ Bedrooms</option>
+    </select>
+
+    <label>Furnishing Level</label>
+    <select id="furnish" onchange="recalc()">
+      <option value="average">Average</option>
+      <option value="light">Lightly Furnished</option>
+      <option value="full">Fully Furnished</option>
+      <option value="veryfull">Very Heavily Furnished</option>
+    </select>
+
+    <label>Extra Spaces (check all that apply)</label>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="spaces-wrap">
+      <label class="check-row"><input type="checkbox" class="space-chk" value="garage" onchange="recalc()"> Garage</label>
+      <label class="check-row"><input type="checkbox" class="space-chk" value="attic" onchange="recalc()"> Attic</label>
+      <label class="check-row"><input type="checkbox" class="space-chk" value="basement" onchange="recalc()"> Basement</label>
+      <label class="check-row"><input type="checkbox" class="space-chk" value="shed" onchange="recalc()"> Shed</label>
+      <label class="check-row"><input type="checkbox" class="space-chk" value="office" onchange="recalc()"> Home Office</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Access & Distance</h2>
+    <label>Distance — One Way (miles)</label>
+    <input type="number" id="miles" min="0" step="0.1" placeholder="0" oninput="recalc()">
+
+    <label>Origin Stair Flights</label>
+    <input type="number" id="stairs-origin" min="0" max="10" value="0" oninput="recalc()">
+
+    <label>Destination Stair Flights</label>
+    <input type="number" id="stairs-dest" min="0" max="10" value="0" oninput="recalc()">
+
+    <label>Origin Walk Distance</label>
+    <select id="walk-origin" onchange="recalc()">
+      <option value="close">Right at Door</option>
+      <option value="medium">Short Walk</option>
+      <option value="long">Moderate Walk</option>
+      <option value="verylong">Long Walk</option>
+    </select>
+
+    <label>Destination Walk Distance</label>
+    <select id="walk-dest" onchange="recalc()">
+      <option value="close">Right at Door</option>
+      <option value="medium">Short Walk</option>
+      <option value="long">Moderate Walk</option>
+      <option value="verylong">Long Walk</option>
+    </select>
+
+    <label class="check-row" style="margin-top:10px"><input type="checkbox" id="has-elevator" onchange="recalc()"> Elevator involved</label>
+    <label class="check-row"><input type="checkbox" id="street-parking" onchange="recalc()"> Street parking only</label>
+    <label class="check-row"><input type="checkbox" id="own-truck" onchange="recalc()"> Customer has own truck</label>
+  </div>
+</div>
+
+<!-- Crew & Schedule -->
+<div class="grid">
+  <div class="card">
+    <h2>Crew</h2>
+    <label>Crew Size</label>
+    <select id="crew-size" onchange="recalc()">
+      <option value="">— Select —</option>
+      <option value="2">2 Movers — $135/hr</option>
+      <option value="3">3 Movers — $205/hr</option>
+      <option value="4">4 Movers — $270/hr</option>
+      <option value="5">5 Movers — $335/hr</option>
+    </select>
+
+    <label>Disassembly Items</label>
+    <input type="number" id="disassembly" min="0" value="0" placeholder="# of items" oninput="recalc()">
+
+    <label>Box Count</label>
+    <select id="box-count" onchange="recalc()">
+      <option value="few">Few (under 15)</option>
+      <option value="some" selected>Some (15–35)</option>
+      <option value="many">Quite a few (35–60)</option>
+      <option value="alot">A lot (60+)</option>
+    </select>
+
+    <label>Appliances (check all)</label>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
+      <label class="check-row"><input type="checkbox" class="appl-chk" value="washerdryer" onchange="recalc()"> Washer/Dryer</label>
+      <label class="check-row"><input type="checkbox" class="appl-chk" value="refrigerator" onchange="recalc()"> Refrigerator</label>
+      <label class="check-row"><input type="checkbox" class="appl-chk" value="stove" onchange="recalc()"> Stove</label>
+      <label class="check-row"><input type="checkbox" class="appl-chk" value="dishwasher" onchange="recalc()"> Dishwasher</label>
+      <label class="check-row"><input type="checkbox" class="appl-chk" value="deepfreezer" onchange="recalc()"> Deep Freezer</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Schedule & Rates</h2>
+    <label>Move Month</label>
+    <select id="move-month" onchange="recalc()">
+      <option value="">— Unknown —</option>
+      <option value="1">January</option>
+      <option value="2">February</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May ⚡ Peak</option>
+      <option value="6">June ⚡ Peak</option>
+      <option value="7">July ⚡ Peak</option>
+      <option value="8">August ⚡ Peak</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+
+    <label class="check-row" style="margin-top:12px"><input type="checkbox" id="is-weekend" onchange="recalc()"> Weekend move (+15%)</label>
+
+    <label style="margin-top:12px">Storage Stop</label>
+    <select id="storage" onchange="recalc()">
+      <option value="no">No storage</option>
+      <option value="yes">Yes — storage stop</option>
+    </select>
+
+    <label>Wall Items (art, TVs, mirrors)</label>
+    <input type="number" id="wall-items" min="0" value="0" oninput="recalc()">
+
+    <label>Move Timeline</label>
+    <select id="timeline" onchange="recalc()">
+      <option value="">— Unknown —</option>
+      <option value="week">Within 7 Days</option>
+      <option value="month">Within 30 Days</option>
+      <option value="quarter">1–3 Months</option>
+      <option value="planning">Just Planning Ahead</option>
+    </select>
+  </div>
+</div>
+
+<!-- Packing -->
+<div class="card">
+  <h2>Packing Services</h2>
+  <div class="grid">
+    <div>
+      <label>Packing Type</label>
+      <select id="pack-type" onchange="recalc()">
+        <option value="none">No Packing</option>
+        <option value="fragile">Fragile Items Only</option>
+        <option value="kitchen">Kitchen Only</option>
+        <option value="rooms">Several Rooms</option>
+        <option value="full">Full Home Packing</option>
+      </select>
+
+      <div id="pack-crew-wrap" style="display:none">
+        <label>Packer Count</label>
+        <select id="packer-count" onchange="recalc()">
+          <option value="2">2 Packers — $115/hr</option>
+          <option value="3">3 Packers — $175/hr</option>
+          <option value="4">4 Packers — $230/hr</option>
+          <option value="5">5 Packers — $285/hr</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label class="check-row" style="margin-top:4px"><input type="checkbox" id="pack-glass" onchange="recalc()"> Needs kitchen glassware packed (+1.5 hrs)</label>
+      <label class="check-row"><input type="checkbox" id="unpack-service" onchange="recalc()"> Add unpacking service (75% of pack hrs)</label>
+    </div>
+  </div>
+</div>
+
+<!-- Specialty Items -->
+<div class="card">
+  <h2>Specialty Items</h2>
+  <div class="grid-3">
+    <div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-piano-spinet" data-price="375" onchange="recalc()"><label for="spec-piano-spinet">Spinet/Console Piano</label><span class="spec-price">$375</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-piano-studio" data-price="475" onchange="recalc()"><label for="spec-piano-studio">Studio/Upright Piano</label><span class="spec-price">$475</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-piano-baby" data-price="649" onchange="recalc()"><label for="spec-piano-baby">Baby Grand Piano</label><span class="spec-price">$649</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-piano-grand" data-price="899" onchange="recalc()"><label for="spec-piano-grand">Grand Piano</label><span class="spec-price">$899</span></div>
+    </div>
+    <div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-safe-small" data-price="150" onchange="recalc()"><label for="spec-safe-small">Safe (under 300 lbs)</label><span class="spec-price">$150</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-safe-large" data-price="275" onchange="recalc()"><label for="spec-safe-large">Safe (300–600 lbs)</label><span class="spec-price">$275</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-pool-table" data-price="450" onchange="recalc()"><label for="spec-pool-table">Pool Table</label><span class="spec-price">$450</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-hot-tub" data-price="550" onchange="recalc()"><label for="spec-hot-tub">Hot Tub</label><span class="spec-price">$550</span></div>
+    </div>
+    <div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-gun-safe" data-price="325" onchange="recalc()"><label for="spec-gun-safe">Gun Safe (300–800 lbs)</label><span class="spec-price">$325</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-arcade" data-price="175" onchange="recalc()"><label for="spec-arcade">Arcade Cabinet</label><span class="spec-price">$175</span></div>
+      <div class="spec-row"><input type="checkbox" class="spec-chk" id="spec-statue" data-price="200" onchange="recalc()"><label for="spec-statue">Large Statue / Sculpture</label><span class="spec-price">$200</span></div>
+      <div style="margin-top:8px">
+        <label>Custom Specialty Item Price ($)</label>
+        <input type="number" id="spec-custom" min="0" value="0" placeholder="0" oninput="recalc()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="card">
+  <h2>Consultation Notes</h2>
+  <textarea id="notes" placeholder="Anything else relevant — access issues, fragile items, client concerns, special requests…" oninput="recalc()"></textarea>
+</div>
+
+<!-- Results -->
+<div id="results">
+  <h2>💰 Estimate Breakdown <span id="rate-tags"></span></h2>
+  <div class="result-grid">
+    <div class="r-box r-blue">
+      <div class="r-label">Customer Pays</div>
+      <div class="r-val" id="r-total">—</div>
+      <div class="r-sub" id="r-range"></div>
+    </div>
+    <div class="r-box r-yellow">
+      <div class="r-label">Worker Pay</div>
+      <div class="r-val" id="r-workers">—</div>
+      <div class="r-sub" id="r-workers-sub"></div>
+    </div>
+    <div class="r-box r-green">
+      <div class="r-label">Business Net</div>
+      <div class="r-val" id="r-profit">—</div>
+      <div class="r-sub" id="r-profit-sub"></div>
+    </div>
+    <div class="r-box r-blue" style="background:#f0f4ff">
+      <div class="r-label">Deposit</div>
+      <div class="r-val" id="r-deposit">$450</div>
+      <div class="r-sub">Due at booking</div>
+    </div>
+  </div>
+
+  <div class="breakdown" id="r-breakdown"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="savePlan()">Save Plan (Email to Me)</button>
+    <button class="btn btn-secondary" onclick="printPlan()">Print / PDF</button>
+    <button class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+  </div>
+  <div id="save-status">✓ Plan sent to validateyourvision@gmail.com</div>
+</div>
+
+<script>
+/* ─── Pricing Constants (matches main calculator) ─── */
+const C = {
+  TRUCK_BASE:      150,
+  TRUCK_MILE:      1.59,
+  FUEL_BUFFER:     35,
+  MIN_HRS:         4,
+  CREW_RATES:      {2:135, 3:205, 4:270, 5:335},
+  PACKER_RATES:    {2:115, 3:175, 4:230, 5:285},
+  MIN_PACK_HRS:    4,
+  WALL_ITEM_FEE:   25,
+  UNPACK_MULT:     0.75,
+  WEEKEND_MULT:    1.15,
+  PEAK_MONTHS:     [5,6,7,8],
+  PEAK_MULT:       1.20,
+  STORAGE_STOP:    75,
+  DEPOSIT:         450,
+  EQUIP_FEE:       45,
+  BASE_HRS:        {studio:[2,2.5],'1br':[3,3.5],'2br':[4.5,5.0],'3br':[6.5,7.0],'4br':[8.5,9.0],'5br':[11.5,12.0]},
+  STAIR_LO:        0.30, STAIR_HI: 0.45,
+  DISASSEMBLY_LO:  0.30, DISASSEMBLY_HI: 0.45,
+  SPACE_LO:        0.35, SPACE_HI: 0.55,
+  ELEVATOR_LO:     0.75, ELEVATOR_HI: 1.00,
+  STREET_LO:       0.50, STREET_HI: 0.70,
+  FURN_LO:  {light:-0.75, average:0, full:0.50, veryfull:1.00},
+  FURN_HI:  {light:-0.50, average:0, full:0.85, veryfull:1.75},
+  CARRY_LO: {close:0, medium:0.20, long:0.45, verylong:0.75},
+  CARRY_HI: {close:0, medium:0.35, long:0.65, verylong:1.10},
+  BOX_LO:   {few:0, some:0.20, many:0.50, alot:1.00},
+  BOX_HI:   {few:0, some:0.35, many:0.80, alot:1.50},
+  APPLIANCE_LO: {washerdryer:0.75, refrigerator:0.50, stove:0.30, dishwasher:0.15, deepfreezer:0.30},
+  APPLIANCE_HI: {washerdryer:1.00, refrigerator:0.70, stove:0.45, dishwasher:0.20, deepfreezer:0.45},
+  CUSHION_LO:  1.05, CUSHION_HI: 1.05,
+  PACK_HRS:    {studio:[4,5],'1br':[4,5],'2br':[4,6],'3br':[6,8],'4br':[8,10],'5br':[10,13]},
+  PACK_MOD:    {fragile:.35, kitchen:.5, rooms:.75, full:1},
+  PARTIAL_LABOR: 1.5,
+  KITCHEN_GLASS_HRS: 1.5,
+  BOX_MAT_FEE: {few:0, some:65, many:125, alot:200},
+  PARTIAL_MAT:  45,
+};
+
+const fmt = n => '$' + Math.round(n).toLocaleString();
+const roundUp5 = n => Math.ceil(n / 5) * 5;
+const roundHalf = x => Math.round(x * 2) / 2;
+
+let lastResult = null;
+
+function get(id) { return document.getElementById(id); }
+function val(id)  { return get(id)?.value || ''; }
+function num(id)  { return parseFloat(val(id)) || 0; }
+function chk(id)  { return get(id)?.checked || false; }
+function chkArr(cls) { return [...document.querySelectorAll('.' + cls + ':checked')].map(el => el.value); }
+
+function recalc() {
+  const homeSize  = val('home-size');
+  const crewSize  = parseInt(val('crew-size')) || 0;
+  const miles     = num('miles');
+  const furnish   = val('furnish') || 'average';
+  const walkO     = val('walk-origin') || 'close';
+  const walkD     = val('walk-dest')   || 'close';
+  const stairsO   = num('stairs-origin');
+  const stairsD   = num('stairs-dest');
+  const elevator  = chk('has-elevator');
+  const streetPk  = chk('street-parking');
+  const ownTruck  = chk('own-truck');
+  const weekend   = chk('is-weekend');
+  const month     = parseInt(val('move-month')) || 0;
+  const diss      = num('disassembly');
+  const boxes     = val('box-count') || 'some';
+  const spaces    = chkArr('space-chk');
+  const appliances = chkArr('appl-chk');
+  const wallItems = num('wall-items');
+  const storage   = val('storage') === 'yes';
+  const packType  = val('pack-type');
+  const packGlass = chk('pack-glass');
+  const unpack    = chk('unpack-service');
+  const packers   = parseInt(val('packer-count')) || 2;
+
+  const packOn = packType !== 'none' && packType !== '';
+
+  /* Show/hide packer crew selector */
+  get('pack-crew-wrap').style.display = packOn ? 'block' : 'none';
+
+  if (!homeSize || !crewSize) {
+    setEmpty();
+    return;
+  }
+
+  /* Rate multiplier */
+  let rateMult = 1;
+  if (weekend) rateMult *= C.WEEKEND_MULT;
+  if (month && C.PEAK_MONTHS.includes(month)) rateMult *= C.PEAK_MULT;
+
+  const effCrewRate   = Math.round(C.CREW_RATES[crewSize]   * rateMult);
+  const effPackerRate = Math.round(C.PACKER_RATES[packers]  * rateMult);
+
+  /* Complexity */
+  const cxLo = (stairsO + stairsD) * C.STAIR_LO
+    + diss * C.DISASSEMBLY_LO
+    + spaces.length * C.SPACE_LO
+    + (C.FURN_LO[furnish] || 0)
+    + (C.CARRY_LO[walkO] || 0) + (C.CARRY_LO[walkD] || 0)
+    + appliances.reduce((s,a) => s + (C.APPLIANCE_LO[a] || 0), 0)
+    + (C.BOX_LO[boxes] || 0)
+    + (elevator ? C.ELEVATOR_LO : 0)
+    + (streetPk ? C.STREET_LO : 0);
+
+  const cxHi = (stairsO + stairsD) * C.STAIR_HI
+    + diss * C.DISASSEMBLY_HI
+    + spaces.length * C.SPACE_HI
+    + (C.FURN_HI[furnish] || 0)
+    + (C.CARRY_HI[walkO] || 0) + (C.CARRY_HI[walkD] || 0)
+    + appliances.reduce((s,a) => s + (C.APPLIANCE_HI[a] || 0), 0)
+    + (C.BOX_HI[boxes] || 0)
+    + (elevator ? C.ELEVATOR_HI : 0)
+    + (streetPk ? C.STREET_HI : 0);
+
+  /* Labor hours */
+  const base = C.BASE_HRS[homeSize];
+  const crewScale = Math.pow(2 / crewSize, 0.82);
+  const loRaw = Math.max(C.MIN_HRS, (base[0] + cxLo) * crewScale);
+  const hiRaw = Math.max(C.MIN_HRS, (base[1] + cxHi) * crewScale);
+  const loHrs = roundHalf(loRaw * C.CUSHION_LO);
+  const hiHrs = roundHalf(Math.max(loHrs + 0.5, hiRaw * C.CUSHION_HI));
+
+  /* Labor cost */
+  const llab = loHrs * effCrewRate;
+  const hlab = hiHrs * effCrewRate;
+
+  /* Truck */
+  const truck = ownTruck ? 0 : roundUp5(C.TRUCK_BASE + miles * C.TRUCK_MILE + C.FUEL_BUFFER);
+  const equipFee = ownTruck ? C.EQUIP_FEE : 0;
+
+  /* Packing */
+  let lp = 0, hp = 0, packHrsLo = 0, packHrsHi = 0;
+  if (packOn) {
+    const ph  = C.PACK_HRS[homeSize] || [4,5];
+    const pm  = C.PACK_MOD[packType] || 1;
+    const glassAdd = packGlass ? C.KITCHEN_GLASS_HRS : 0;
+    packHrsLo = Math.max(C.MIN_PACK_HRS, ph[0] * pm) + glassAdd;
+    packHrsHi = Math.max(C.MIN_PACK_HRS, ph[1] * pm) + glassAdd;
+    lp = packHrsLo * effPackerRate;
+    hp = packHrsHi * effPackerRate;
+    if (unpack) {
+      lp += packHrsLo * C.UNPACK_MULT * effPackerRate;
+      hp += packHrsHi * C.UNPACK_MULT * effPackerRate;
+    }
+  }
+
+  /* Specialty */
+  const specTotal = [...document.querySelectorAll('.spec-chk:checked')]
+    .reduce((s, el) => s + parseFloat(el.dataset.price || 0), 0)
+    + num('spec-custom');
+
+  /* Other fees */
+  const wallFee = wallItems * C.WALL_ITEM_FEE;
+  const storageFee = storage ? C.STORAGE_STOP : 0;
+
+  /* Totals */
+  const totalLo = llab + truck + equipFee + lp + specTotal + wallFee + storageFee;
+  const totalHi = hlab + truck + equipFee + hp + specTotal + wallFee + storageFee;
+
+  /* Worker pay — crew gets their hourly, packers get theirs */
+  const workerCrewLo = loHrs * C.CREW_RATES[crewSize];   // before markup
+  const workerCrewHi = hiHrs * C.CREW_RATES[crewSize];
+  const workerPackLo = packOn ? packHrsLo * C.PACKER_RATES[packers] * (unpack ? (1 + C.UNPACK_MULT) : 1) : 0;
+  const workerPackHi = packOn ? packHrsHi * C.PACKER_RATES[packers] * (unpack ? (1 + C.UNPACK_MULT) : 1) : 0;
+  const workerTotalLo = workerCrewLo + workerPackLo;
+  const workerTotalHi = workerCrewHi + workerPackHi;
+
+  /* Business net = total customer pays − worker pay − truck cost − specialty (pass-through) */
+  const bizLo = totalLo - workerTotalLo - truck - specTotal;
+  const bizHi = totalHi - workerTotalHi - truck - specTotal;
+
+  /* Rate tags */
+  let tags = '';
+  if (weekend) tags += '<span class="tag tag-weekend">Weekend +15%</span>';
+  if (month && C.PEAK_MONTHS.includes(month)) tags += '<span class="tag tag-peak">Peak Season +20%</span>';
+  get('rate-tags').innerHTML = tags;
+
+  /* Render */
+  get('r-total').textContent   = fmt(totalLo) + ' – ' + fmt(totalHi);
+  get('r-range').textContent   = `${loHrs}–${hiHrs} hrs × ${fmt(effCrewRate)}/hr`;
+  get('r-workers').textContent = fmt(workerTotalLo) + ' – ' + fmt(workerTotalHi);
+  get('r-workers-sub').textContent = `${crewSize} movers${packOn ? ` + ${packers} packers` : ''}`;
+  get('r-profit').textContent  = fmt(bizLo) + ' – ' + fmt(bizHi);
+  get('r-profit-sub').textContent = 'After labor & truck';
+
+  /* Breakdown */
+  let bd = '';
+  bd += `Labor: <span>${fmt(llab)} – ${fmt(hlab)}</span> (${loHrs}–${hiHrs} hrs @ ${fmt(effCrewRate)}/hr)`;
+  if (!ownTruck) bd += `&nbsp;&nbsp;|&nbsp;&nbsp; Truck: <span>${fmt(truck)}</span>`;
+  if (packOn)    bd += `&nbsp;&nbsp;|&nbsp;&nbsp; Packing: <span>${fmt(lp)} – ${fmt(hp)}</span>`;
+  if (specTotal) bd += `&nbsp;&nbsp;|&nbsp;&nbsp; Specialty: <span>${fmt(specTotal)}</span>`;
+  if (wallFee)   bd += `&nbsp;&nbsp;|&nbsp;&nbsp; Wall items: <span>${fmt(wallFee)}</span>`;
+  if (storageFee) bd += `&nbsp;&nbsp;|&nbsp;&nbsp; Storage stop: <span>${fmt(storageFee)}</span>`;
+  get('r-breakdown').innerHTML = bd;
+
+  lastResult = {
+    customer_name: val('c-name'), phone: val('c-phone'), email: val('c-email'),
+    move_id: val('c-moveid'), pickup: val('c-pickup'), dropoff: val('c-dropoff'),
+    miles, home_size: homeSize, furnish, crew_size: crewSize, packers: packOn ? packers : 0,
+    stairs_origin: stairsO, stairs_dest: stairsD, elevator, street_parking: streetPk,
+    walk_origin: walkO, walk_dest: walkD, spaces: spaces.join(', '),
+    appliances: appliances.join(', '), disassembly: diss, boxes,
+    pack_type: packType, pack_glass: packGlass, unpack_service: unpack,
+    specialty_total: specTotal, wall_items: wallItems, storage_stop: storage,
+    weekend, peak: month && C.PEAK_MONTHS.includes(month),
+    labor_hrs_lo: loHrs, labor_hrs_hi: hiHrs, crew_rate: effCrewRate,
+    estimate_low: Math.round(totalLo), estimate_high: Math.round(totalHi),
+    worker_pay_lo: Math.round(workerTotalLo), worker_pay_hi: Math.round(workerTotalHi),
+    biz_net_lo: Math.round(bizLo), biz_net_hi: Math.round(bizHi),
+    deposit: C.DEPOSIT, truck_cost: truck,
+    notes: val('notes'),
+  };
+}
+
+function setEmpty() {
+  ['r-total','r-workers','r-profit','r-range','r-workers-sub','r-profit-sub','r-breakdown','rate-tags']
+    .forEach(id => { const el = get(id); if (el) el.textContent = ''; });
+  get('r-total').textContent   = '—';
+  get('r-workers').textContent = '—';
+  get('r-profit').textContent  = '—';
+  get('r-deposit').textContent = '$450';
+  lastResult = null;
+}
+
+function savePlan() {
+  if (!lastResult) { alert('Fill in at least home size and crew size first.'); return; }
+  emailjs.init('GcsCx2LlQ3jkcUM0K');
+  emailjs.send('service_v235clas', 'template_8vuosui', {
+    to_email:         'validateyourvision@gmail.com',
+    move_id:          lastResult.move_id || '(internal)',
+    customer_name:    lastResult.customer_name || '(not entered)',
+    email:            lastResult.email,
+    phone:            lastResult.phone,
+    submitted_at:     new Date().toLocaleString(),
+    pickup_address:   lastResult.pickup,
+    dropoff_address:  lastResult.dropoff,
+    distance_one_way: lastResult.miles,
+    distance_round_trip: lastResult.miles * 2,
+    drive_time:       '',
+    property_type:    lastResult.home_size,
+    bedrooms:         lastResult.home_size,
+    furnishing_level: lastResult.furnish,
+    floor_stairs:     lastResult.stairs_origin + ' flights',
+    dest_stairs:      lastResult.stairs_dest,
+    walk_distance:    lastResult.walk_origin,
+    dest_walk_distance: lastResult.walk_dest,
+    extra_spaces:     lastResult.spaces,
+    specialty_items:  '',
+    specialty_details:'',
+    specialty_access: '',
+    specialty_stair_flights: '',
+    specialty_base_total:    lastResult.specialty_total,
+    specialty_surcharge_total: '',
+    specialty_grand_total:   lastResult.specialty_total,
+    appliances:       lastResult.appliances,
+    box_count:        lastResult.boxes,
+    disassembly:      lastResult.disassembly,
+    packing_type:     lastResult.pack_type,
+    packer_count:     lastResult.packers,
+    storage_stop:     lastResult.storage_stop ? 'Yes' : 'No',
+    estimate_low:     '$' + lastResult.estimate_low.toLocaleString(),
+    estimate_high:    '$' + lastResult.estimate_high.toLocaleString(),
+    deposit_amount:   '$' + lastResult.deposit,
+    complexity:       '',
+    recommended_crew: lastResult.crew_size,
+    crew_size:        lastResult.crew_size,
+    move_timeline:    '',
+    confidence:       '',
+    priority_level:   '',
+    consultation_due_by: '',
+    inventory_notes:  `WORKER PAY: $${lastResult.worker_pay_lo}–$${lastResult.worker_pay_hi} | BIZ NET: $${lastResult.biz_net_lo}–$${lastResult.biz_net_hi} | TRUCK: $${lastResult.truck_cost} | NOTES: ${lastResult.notes}`,
+  }).then(() => {
+    const s = get('save-status');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 4000);
+  }).catch(e => alert('Email failed: ' + e.text));
+}
+
+function printPlan() {
+  window.print();
+}
+
+function clearForm() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text], input[type=email], input[type=tel], input[type=number], textarea')
+    .forEach(el => { el.value = el.type === 'number' ? '0' : ''; });
+  document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
+  document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+  setEmpty();
+}
+
+/* Init */
+recalc();
+</script>
+</body>
+</html>

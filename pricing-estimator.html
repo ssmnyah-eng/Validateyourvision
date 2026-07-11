@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moving Blueprint Builder | Validate Your Vision | Fredericksburg, Northern Virginia &amp; Richmond</title>
 <meta name="description" content="Build your personalized Moving Blueprint with Validate Your Vision. Get a detailed estimate, custom checklist, and a complete plan for your move. Serving Fredericksburg, Northern Virginia, Richmond, and surrounding communities within 90 miles.">
@@ -1167,7 +1168,7 @@ input,select,textarea{font-size:16px !important}
       <option value="partial">Partial Packing — Specific Rooms Only</option>
     </select>
     <div id="s10b-rooms-wrap" style="display:none">
-      <p class="q-sub" style="margin-bottom:10px">Select each room that needs packing. Each room adds 1.5 hrs labor + $45 in materials.</p>
+      <p class="q-sub" style="margin-bottom:10px">Select each room that needs packing.</p>
       <div class="room-chips" id="s10b-rooms">
         <button class="room-chip" data-room="kitchen">Kitchen</button>
         <button class="room-chip" data-room="living">Living Room</button>
@@ -1193,10 +1194,10 @@ input,select,textarea{font-size:16px !important}
     <p class="q-label">A couple more packing details</p>
     <div class="check-row" id="s10c-glass-row">
       <div class="check-box" id="s10c-glass-box">&#10003;</div>
-      <div class="check-text">Does our crew need to pack your kitchen glassware &amp; dishes?<small>Adds 1.5 hrs to packing — glassware requires individual wrapping and careful layering</small></div>
+      <div class="check-text">Does our crew need to pack your kitchen glassware &amp; dishes?<small>Glassware requires individual wrapping and careful layering</small></div>
     </div>
     <p class="q-label" style="margin-top:20px;margin-bottom:8px">Hanging wall art, framed pictures, or wall-mounted TVs?</p>
-    <p class="q-sub">$25 per item — includes wrapping, padding, and careful removal</p>
+    <p class="q-sub">Includes wrapping, padding, and careful removal</p>
     <div class="counter-item" style="max-width:280px">
       <div class="counter-label">Wall Items<small>Art, mirrors, TVs, clocks</small></div>
       <div class="counter-ctrl">
@@ -1212,12 +1213,12 @@ input,select,textarea{font-size:16px !important}
   <!-- Screen 10d: Unpack Service Toggle -->
   <div class="screen" id="screen-10d">
     <p class="q-label">Would you like unpacking assistance at your new home?</p>
-    <p class="q-sub">Our crew unboxes and places your items — billed at your packing rate</p>
+    <p class="q-sub">Our crew unboxes and places your items — same team, same day</p>
     <div class="toggle-row" id="s10d-toggle">
       <div class="toggle-switch"></div>
       <div>
         <div class="toggle-label">Yes, add unpacking service</div>
-        <div class="toggle-sub">We unpack at your new home after delivery. Billed at 75% of your packing hours (a 25% speed discount since items are already wrapped and organized).</div>
+        <div class="toggle-sub">We unpack at your new home after delivery. Items are already wrapped so it goes faster — pricing confirmed during your consultation.</div>
       </div>
     </div>
     <button class="btn-main" id="s10d-cont" style="margin-top:20px">Continue</button>
@@ -1228,12 +1229,12 @@ input,select,textarea{font-size:16px !important}
   <div class="screen" id="screen-11">
     <p class="q-label">How many professional packers would you like?</p>
     <div class="opts" id="s11">
-      <button class="opt" data-val="2" data-rate="120"><span>2 Packers | $120/hr</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="3" data-rate="175"><span>3 Packers | $175/hr</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="4" data-rate="225"><span>4 Packers | $225/hr</span><span class="chk">&#10003;</span></button>
-      <button class="opt" data-val="5" data-rate="270"><span>5 Packers | $270/hr</span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="2" data-rate="120"><span>2 Packers<small>Great for smaller homes or partial packing</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="3" data-rate="175"><span>3 Packers<small>Best for 2–3 bedroom homes</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="4" data-rate="225"><span>4 Packers<small>Ideal for larger homes or full-home packing</small></span><span class="chk">&#10003;</span></button>
+      <button class="opt" data-val="5" data-rate="270"><span>5 Packers<small>Maximum speed for large or time-sensitive jobs</small></span><span class="chk">&#10003;</span></button>
     </div>
-    <div class="tip"><strong>Packing Services</strong>Packing materials (boxes, wrap, tape, and padding) typically range from $180 for smaller homes to $750+ for larger ones, confirmed during your Move Planning Consultation.</div>
+    <div class="tip"><strong>Packing Services</strong>Packing materials — boxes, wrap, tape, and padding — are confirmed during your Move Planning Consultation based on your home size and scope.</div>
   </div>
 
   <!-- Screen 12: Storage -->
@@ -1803,7 +1804,11 @@ input,select,textarea{font-size:16px !important}
    INTEGRATION CONFIG
    ══════════════════════════════════════════ */
 const INTEGRATIONS = {
-  ZAPIER_WEBHOOK: 'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
+  ZAPIER_WEBHOOK:        'https://hooks.zapier.com/hooks/catch/28078912/42awlyu/',
+  EMAILJS_PUBLIC_KEY:    'GcsCx2LlQ3jkcUM0K',
+  EMAILJS_SERVICE_ID:    'service_v235clas',
+  EMAILJS_TEMPLATE_ID:   'template_8vuosui',
+  EMAILJS_TO_EMAIL:      'validateyourvision@gmail.com',
 };
 
 const VYV_DEPOT_ZIP  = '22401';
@@ -2953,17 +2958,71 @@ const CONF_LABEL  = {very:'Very Confident',mostly:'Mostly Sure',unsure:'Not Sure
 const CX_LABEL    = {std:'Standard',mod:'Moderate',cpx:'Complex'};
 
 async function submitLead(name, email, phone) {
+  const payload = buildFullPayload({
+    type:           'quote_ready',
+    lead_action:    'Form Submitted',
+    crm_status:     'Lead',
+    send_pdf_email: true,
+  });
+
   /* ── Send everything to Zapier (routes to Airtable + Zoho CRM) ── */
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
-      method:  'POST',
-      body: JSON.stringify(buildFullPayload({
-        type:           'quote_ready',
-        lead_action:    'Form Submitted',
-        crm_status:     'Lead',
-        send_pdf_email: true,
-      })),
+      method: 'POST',
+      body:   JSON.stringify(payload),
     }).catch(() => {});
+  }
+
+  /* ── EmailJS backup: sends full plan directly to your inbox ── */
+  if (INTEGRATIONS.EMAILJS_SERVICE_ID && INTEGRATIONS.EMAILJS_TEMPLATE_ID) {
+    try {
+      emailjs.init(INTEGRATIONS.EMAILJS_PUBLIC_KEY);
+      emailjs.send(INTEGRATIONS.EMAILJS_SERVICE_ID, INTEGRATIONS.EMAILJS_TEMPLATE_ID, {
+        to_email:                INTEGRATIONS.EMAILJS_TO_EMAIL,
+        move_id:                 payload.move_id,
+        customer_name:           payload.customer_name,
+        email:                   payload.email,
+        phone:                   payload.phone,
+        submitted_at:            payload.submitted_at,
+        pickup_address:          payload.pickup_address,
+        dropoff_address:         payload.dropoff_address,
+        distance_one_way:        payload.distance_one_way,
+        distance_round_trip:     payload.distance_round_trip,
+        drive_time:              payload.drive_time,
+        property_type:           payload.property_type,
+        bedrooms:                payload.bedrooms,
+        furnishing_level:        payload.furnishing_level,
+        floor_stairs:            payload.floor_stairs,
+        dest_stairs:             payload.dest_stairs,
+        walk_distance:           payload.walk_distance,
+        dest_walk_distance:      payload.dest_walk_distance,
+        extra_spaces:            payload.extra_spaces,
+        specialty_items:         payload.specialty_items,
+        specialty_details:       payload.specialty_details,
+        specialty_access:        payload.specialty_access,
+        specialty_stair_flights: payload.specialty_stair_flights,
+        specialty_base_total:    payload.specialty_base_total,
+        specialty_surcharge_total: payload.specialty_surcharge_total,
+        specialty_grand_total:   payload.specialty_grand_total,
+        appliances:              payload.appliances,
+        box_count:               payload.box_count,
+        disassembly:             payload.disassembly,
+        packing_type:            payload.packing_type,
+        packer_count:            payload.packer_count,
+        storage_stop:            payload.storage_stop,
+        estimate_low:            payload.estimate_low,
+        estimate_high:           payload.estimate_high,
+        deposit_amount:          payload.deposit_amount,
+        complexity:              payload.complexity,
+        recommended_crew:        payload.recommended_crew,
+        crew_size:               payload.crew_size,
+        move_timeline:           payload.move_timeline,
+        confidence:              payload.confidence,
+        priority_level:          payload.priority_level,
+        consultation_due_by:     payload.consultation_due_by,
+        inventory_notes:         payload.inventory_notes,
+      });
+    } catch(e) {}
   }
 }
 
