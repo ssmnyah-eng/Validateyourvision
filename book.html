@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick Your Move Date | Validate Your Vision Moving</title>
+  <meta name="description" content="Choose your move date and preferred start time. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
+
+    /* ── Top nav bar ── */
+    .topbar {
+      background: #190E2A;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 58px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .topbar-logo-mark { width: 36px; height: 36px; }
+    .topbar-logo-text { font-weight: 800; font-size: 0.95rem; color: #ECEBEE; }
+    .topbar-back {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(236,235,238,0.7); font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; cursor: pointer; background: none; border: none;
+    }
+    .topbar-back:hover { color: #ECEBEE; }
+    .topbar-sms {
+      display: flex; align-items: center; gap: 7px;
+      color: #ECEBEE; font-weight: 600; font-size: 0.88rem;
+      text-decoration: none;
+    }
+
+    /* ── Progress bar ── */
+    .progress-bar { height: 4px; background: rgba(139,91,199,0.2); }
+    .progress-fill { height: 100%; width: 33%; background: linear-gradient(90deg,#8B5BC7,#16a34a); transition: width 0.4s; }
+
+    /* ── Main layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 62px);
+    }
+
+    /* ── Left panel ── */
+    .left-panel {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+    .left-inner { width: 100%; max-width: 440px; }
+
+    .step-label { font-size: 0.72rem; font-weight: 700; color: #8B5BC7; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    h1 { font-size: 1.45rem; font-weight: 800; color: #190E2A; margin-bottom: 8px; }
+    .subtitle { font-size: 0.88rem; color: #5c4a7a; margin-bottom: 32px; line-height: 1.6; }
+    .subtitle a { color: #8B5BC7; font-weight: 600; text-decoration: none; }
+
+    /* ── Calendar ── */
+    .cal-wrap {
+      background: #ffffff;
+      border: 1px solid #ede6ff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 24px rgba(74,35,122,0.08);
+    }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .cal-month { font-weight: 700; font-size: 1rem; color: #190E2A; }
+    .cal-nav {
+      background: none; border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #8B5BC7; font-size: 1.1rem;
+      transition: background 0.15s;
+    }
+    .cal-nav:hover { background: #F4F0FF; }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7,1fr);
+      gap: 4px;
+      text-align: center;
+    }
+    .cal-dow {
+      font-size: 0.72rem; font-weight: 700;
+      color: #8B5BC7; padding: 4px 0 10px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      color: #190E2A;
+      position: relative;
+    }
+    .cal-day:hover { background: #F4F0FF; }
+    .cal-day.today { border-color: #8B5BC7; }
+    .cal-day.selected { background: #8B5BC7; color: #ffffff; border-color: #8B5BC7; }
+    .cal-day.selected:hover { background: #4A237A; }
+    .cal-day.past { color: #ccc; cursor: not-allowed; pointer-events: none; }
+    .cal-day.empty { cursor: default; pointer-events: none; }
+    .cal-day.sunday { color: #d97706; }
+    .cal-day.sunday.past { color: #f0d9a8; }
+
+    /* ── AM/PM selector ── */
+    .time-select { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .time-btn {
+      padding: 14px 12px;
+      border-radius: 10px;
+      border: 2px solid #ede6ff;
+      background: #ffffff;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #190E2A;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .time-btn:hover { border-color: #8B5BC7; background: #F4F0FF; }
+    .time-btn.active { background: #190E2A; color: #ffffff; border-color: #190E2A; }
+    .time-desc {
+      font-size: 0.75rem; font-weight: 500;
+      color: rgba(236,235,238,0.7);
+      margin-top: 4px; line-height: 1.4;
+    }
+    .time-btn:not(.active) .time-desc { color: #8B5BC7; }
+
+    /* ── Continue button ── */
+    .continue-wrap { margin-top: 28px; }
+    .btn-continue {
+      width: 100%; padding: 16px;
+      background: #16a34a; color: #ffffff;
+      border: none; border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+    }
+    .btn-continue:hover { background: #15803d; }
+    .btn-continue:active { transform: scale(0.98); }
+    .btn-continue:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
+
+    .selected-date-label {
+      text-align: center; font-size: 0.82rem; color: #5c4a7a;
+      margin-top: 10px; min-height: 20px;
+    }
+
+    /* ── Right panel: map ── */
+    .right-panel { position: relative; background: #e8e4f0; }
+    .right-panel iframe { width: 100%; height: 100%; border: none; display: block; }
+    .map-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: #190E2A; color: #ECEBEE;
+      padding: 8px 16px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 600;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; }
+      .right-panel { display: none; }
+      .left-panel { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <a href="/" onclick="history.back();return false;" class="topbar-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <a href="/" class="topbar-logo">
+      <svg class="topbar-logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="12" fill="#210D46"/>
+        <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+      </svg>
+      <span class="topbar-logo-text">Validate Your Vision</span>
+    </a>
+    <a href="sms:+15403001414" class="topbar-sms">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      (540) 300-1414
+    </a>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- LEFT: calendar -->
+    <div class="left-panel">
+      <div class="left-inner">
+        <div class="step-label">Step 1 of 3</div>
+        <h1>What date would you like to move?</h1>
+        <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can change this at any time.</p>
+
+        <div class="cal-wrap">
+          <!-- Calendar header -->
+          <div class="cal-header">
+            <button class="cal-nav" id="prevBtn" onclick="changeMonth(-1)">&#8249;</button>
+            <div class="cal-month" id="calMonth"></div>
+            <button class="cal-nav" id="nextBtn" onclick="changeMonth(1)">&#8250;</button>
+          </div>
+          <!-- Day-of-week labels -->
+          <div class="cal-grid" id="calGrid">
+            <div class="cal-dow">S</div>
+            <div class="cal-dow">M</div>
+            <div class="cal-dow">T</div>
+            <div class="cal-dow">W</div>
+            <div class="cal-dow">T</div>
+            <div class="cal-dow">F</div>
+            <div class="cal-dow">S</div>
+          </div>
+
+          <!-- AM / PM -->
+          <div class="time-select" id="timeSelect" style="display:none;">
+            <button class="time-btn" id="amBtn" onclick="selectTime('AM')">
+              Select AM
+              <div class="time-desc">Your move will start at 7 AM sharp. Great for early birds!</div>
+            </button>
+            <button class="time-btn" id="pmBtn" onclick="selectTime('PM')">
+              Select PM
+              <div class="time-desc">PM moves start after our crew finishes their AM move.</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="selected-date-label" id="selectedLabel"></div>
+
+        <div class="continue-wrap">
+          <button class="btn-continue" id="continueBtn" disabled onclick="goNext()">CONTINUE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: map -->
+    <div class="right-panel">
+      <div class="map-badge">Serving Fredericksburg &amp; Northern VA</div>
+      <iframe
+        title="VYV Service Area Map"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99496.88!2d-77.5506!3d38.3032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b6c1cf1bfde319%3A0x81f19c4c2a1d3acd!2sFredericksburg%2C%20VA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus">
+      </iframe>
+    </div>
+
+  </div>
+
+  <script>
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+    let selectedDate = null;
+    let selectedTime = null;
+
+    function changeMonth(delta) {
+      viewMonth += delta;
+      if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+      if (viewMonth < 0)  { viewMonth = 11; viewYear--; }
+      renderCal();
+    }
+
+    function renderCal() {
+      document.getElementById('calMonth').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+      const grid = document.getElementById('calGrid');
+      // Remove old day cells (keep the 7 DOW headers)
+      while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+      // Disable prev button if we're in current month
+      const nowY = today.getFullYear(), nowM = today.getMonth();
+      document.getElementById('prevBtn').disabled = (viewYear === nowY && viewMonth === nowM);
+
+      const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      // Empty cells before first day
+      for (let i = 0; i < firstDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(viewYear, viewMonth, d);
+        const el = document.createElement('div');
+        el.className = 'cal-day';
+        el.textContent = d;
+
+        if (date.getDay() === 0) el.classList.add('sunday');
+        if (date < today) {
+          el.classList.add('past');
+        } else {
+          if (date.getTime() === today.getTime()) el.classList.add('today');
+          if (selectedDate && date.getTime() === selectedDate.getTime()) el.classList.add('selected');
+          el.addEventListener('click', () => selectDay(date));
+        }
+        grid.appendChild(el);
+      }
+    }
+
+    function selectDay(date) {
+      selectedDate = date;
+      selectedTime = null;
+      document.getElementById('amBtn').classList.remove('active');
+      document.getElementById('pmBtn').classList.remove('active');
+      document.getElementById('timeSelect').style.display = 'grid';
+      document.getElementById('continueBtn').disabled = true;
+      updateLabel();
+      renderCal();
+    }
+
+    function selectTime(t) {
+      selectedTime = t;
+      document.getElementById('amBtn').classList.toggle('active', t === 'AM');
+      document.getElementById('pmBtn').classList.toggle('active', t === 'PM');
+      document.getElementById('continueBtn').disabled = false;
+      document.getElementById('progress').style.width = '50%';
+      updateLabel();
+    }
+
+    function updateLabel() {
+      const lbl = document.getElementById('selectedLabel');
+      if (selectedDate && selectedTime) {
+        const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+        lbl.textContent = selectedDate.toLocaleDateString('en-US', opts) + ' · ' + selectedTime + ' Start';
+      } else if (selectedDate) {
+        lbl.textContent = 'Great! Now choose your start time below.';
+      } else {
+        lbl.textContent = '';
+      }
+    }
+
+    function goNext() {
+      if (!selectedDate || !selectedTime) return;
+      const iso = selectedDate.toISOString().split('T')[0];
+      // Carry existing URL params forward
+      const params = new URLSearchParams(window.location.search);
+      params.set('date', iso);
+      params.set('time', selectedTime);
+      window.location.href = '/booking-confirmed.html?' + params.toString();
+    }
+
+    renderCal();
+  </script>
+</body>
+</html>
