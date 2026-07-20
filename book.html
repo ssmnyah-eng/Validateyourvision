@@ -1102,7 +1102,7 @@
   async function _fetchAC(query, inputId, stopIndex) {
     const drop = _acDrops[inputId];
     try {
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=7&lang=en`;
+      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=7&lang=en&lat=38.3032&lon=-77.4605&location_bias_scale=0.5`;
       const res  = await fetch(url);
       const data = await res.json();
       drop.innerHTML = '';
