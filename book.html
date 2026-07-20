@@ -364,13 +364,15 @@
             <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving From</label>
             <input id="s0-from" type="text" placeholder="Current address or city" autocomplete="off"
               style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'"
+              oninput="updateMapFromStep0()" />
           </div>
           <div>
             <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving To</label>
             <input id="s0-to" type="text" placeholder="Destination address or city" autocomplete="off"
               style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'"
+              oninput="updateMapFromStep0()" />
           </div>
         </div>
 
@@ -706,7 +708,7 @@
       loading="lazy"
       allowfullscreen
       referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99496.88!2d-77.5506!3d38.3032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b6c1cf1bfde319%3A0x81f19c4c2a1d3acd!2sFredericksburg%2C%20VA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus">
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=Virginia,USA&zoom=7">
     </iframe>
   </div>
 </div>
@@ -1113,15 +1115,37 @@
 
   function initGooglePlaces() {} // no-op, kept for safety
 
+  function updateMapFromStep0() {
+    const from  = (document.getElementById('s0-from')||{}).value||'';
+    const to    = (document.getElementById('s0-to')||{}).value||'';
+    const frame = document.getElementById('mapFrame');
+    const KEY   = 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY';
+    if (from && to) {
+      frame.src = `https://www.google.com/maps/embed/v1/directions?key=${KEY}&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}`;
+    } else if (from) {
+      frame.src = `https://www.google.com/maps/embed/v1/place?key=${KEY}&q=${encodeURIComponent(from)}`;
+    } else if (to) {
+      frame.src = `https://www.google.com/maps/embed/v1/place?key=${KEY}&q=${encodeURIComponent(to)}`;
+    }
+  }
+
   function updateMap() {
     const addrs = stops.map(s => s.address).filter(Boolean);
-    if (addrs.length < 2) return;
-    const origin = encodeURIComponent(addrs[0]);
-    const dest = encodeURIComponent(addrs[addrs.length - 1]);
-    const waypoints = addrs.slice(1,-1).map(a => encodeURIComponent(a)).join('|');
-    let src = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=${origin}&destination=${dest}`;
-    if (waypoints) src += `&waypoints=${waypoints}`;
-    document.getElementById('mapFrame').src = src;
+    const frame = document.getElementById('mapFrame');
+    const KEY = 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY';
+    if (addrs.length === 0) return;
+    if (addrs.length === 1) {
+      // Show just the one address
+      frame.src = `https://www.google.com/maps/embed/v1/place?key=${KEY}&q=${encodeURIComponent(addrs[0])}`;
+    } else {
+      // Show directions between all stops
+      const origin = encodeURIComponent(addrs[0]);
+      const dest   = encodeURIComponent(addrs[addrs.length - 1]);
+      const waypoints = addrs.slice(1, -1).map(a => encodeURIComponent(a)).join('|');
+      let src = `https://www.google.com/maps/embed/v1/directions?key=${KEY}&origin=${origin}&destination=${dest}`;
+      if (waypoints) src += `&waypoints=${waypoints}`;
+      frame.src = src;
+    }
   }
 
   // ── Step 4 ─────────────────────────────────────────────
