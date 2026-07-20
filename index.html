@@ -628,11 +628,9 @@
 
     /* ===== HERO ===== */
     #hero {
-      min-height: 100vh;
-      background: var(--dp);
+      background: #ffffff;
       position: relative;
-      display: flex;
-      align-items: center;
+      display: block;
       overflow: hidden;
     }
     .hero-parallax {
@@ -657,10 +655,7 @@
       width: 100%;
     }
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 72px;
-      align-items: center;
+      display: block;
     }
     .hero-location {
       display: inline-flex;
@@ -1716,7 +1711,7 @@
 
           <button type="submit" id="lf-submit"
             style="width:100%;background:#8B5BC7;color:#ECEBEE;font-weight:800;font-size:1rem;padding:15px 24px;border:none;border-radius:50px;cursor:pointer;letter-spacing:.02em;transition:background .2s;">
-            Get My Estimate
+            Book My Move
           </button>
           <p id="lf-success" style="display:none;text-align:center;color:#4A237A;font-weight:700;padding:14px 0;margin-top:8px;">Got it! We'll be in touch shortly.</p>
 
@@ -1735,6 +1730,301 @@
     }
   </style>
 
+
+  <!-- ===== REVIEWS STRIP ===== -->
+  <section style="background:#ffffff;padding:40px 20px;border-top:1px solid #ede6ff;border-bottom:1px solid #ede6ff;" aria-label="Customer reviews">
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span style="color:#f5a623;font-size:1.2rem;letter-spacing:2px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span style="font-size:0.9rem;font-weight:700;color:#190E2A;">Trusted by Fredericksburg Neighbors</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <div style="color:#f5a623;font-size:0.9rem;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p style="font-size:0.88rem;color:#3a2a5a;line-height:1.7;margin-bottom:10px;">"Super fast and great service. Came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
+          <div style="font-size:0.75rem;font-weight:700;color:#8B5BC7;">Jessica P. &nbsp;·&nbsp; Stafford, VA</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <div style="color:#f5a623;font-size:0.9rem;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p style="font-size:0.88rem;color:#3a2a5a;line-height:1.7;margin-bottom:10px;">"They showed up on time, handled everything with care, and the price didn't change from what they quoted. That never happens with movers. Highly recommend."</p>
+          <div style="font-size:0.75rem;font-weight:700;color:#8B5BC7;">Marcus T. &nbsp;·&nbsp; Fredericksburg, VA</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <div style="color:#f5a623;font-size:0.9rem;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p style="font-size:0.88rem;color:#3a2a5a;line-height:1.7;margin-bottom:10px;">"Booked online in minutes. The virtual walkthrough was quick and easy. Moving day was completely stress free. The crew was professional and careful."</p>
+          <div style="font-size:0.75rem;font-weight:700;color:#8B5BC7;">Danielle R. &nbsp;·&nbsp; Spotsylvania, VA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9 REASONS ===== -->
+  <section style="background:#ffffff;padding:64px 20px;" aria-label="Why Virginia families choose VYV">
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:44px;">
+        <p style="font-size:0.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8B5BC7;margin-bottom:10px;">Why Choose Us</p>
+        <h2 style="font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2rem);color:#190E2A;line-height:1.2;">9 Reasons Why Virginia Families<br>Move With Us Each Year</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">📱</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Easy Online Booking</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Book your entire move from your phone. No sales calls, no phone tag, no pressure.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">💰</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Real Price Data</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Use our <a href="/pricing-estimator.html" style="color:#8B5BC7;font-weight:600;">Move Calculator</a> to get a real price range based on your actual situation.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">🚫</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">No Hidden Fees</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">No phone call required. No guesswork. Enter your location and date and see exactly what you'll pay.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">📅</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">No-Fee Rescheduling</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Life happens. Reschedule your move at no cost as long as you give us notice before your date.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">🔒</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Only $450 Move Deposit</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">A $450 deposit locks in your moving date. It is applied to your final balance. Nothing extra.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">📍</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Real-Time Crew Tracking</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Know exactly where your movers are. Live location tracking gives you peace of mind before they arrive.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">⏱️</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Live Time Tracking</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">When the crew arrives, you both see the clock start. You know exactly what you'll owe before you pay.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">✅</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">Licensed &amp; Insured</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Fully licensed and insured in Virginia. You are protected from the first box to the last.</div>
+        </div>
+        <div style="background:#f7f4ff;border:1px solid #ede6ff;border-radius:12px;padding:22px 20px;">
+          <div style="font-size:1.5rem;margin-bottom:10px;">🛡️</div>
+          <div style="font-weight:700;font-size:0.92rem;color:#190E2A;margin-bottom:6px;">No Charge for Protection</div>
+          <div style="font-size:0.82rem;color:#5c4a7a;line-height:1.6;">Moving blankets, shrink wrap, and floor runners are included. We protect your home and your stuff.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" style="background:#190E2A;padding:64px 20px;" aria-labelledby="services-heading">
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:44px;">
+        <p style="font-size:0.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:10px;">What We Do</p>
+        <h2 id="services-heading" style="font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2rem);color:#ECEBEE;line-height:1.2;">Moving Services Throughout Virginia</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">🏠</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Residential Movers</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Studio to five-bedroom homes. We plan every move before moving day so your crew arrives knowing exactly what to do and your price never changes.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">🏢</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Commercial Movers</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Office moves fail when movers treat business assets like household boxes. Our crew works around your schedule, handles equipment with care, and keeps downtime to a minimum.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">📦</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Packing Services</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Our packing crews handle every box, every room, every fragile item while you focus on everything else. Materials are priced transparently and brought to your door.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">💪</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Labor Only</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Already have a truck? We send a crew to load and unload it. All the dollies, straps, and blankets are included. You drive, we do the heavy lifting.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">🏙️</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Apartment Movers</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Tight hallways, elevator reservations, and third-floor walk-ups. We have done it all. Your virtual walkthrough covers every access challenge before moving day.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">⚡</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Evacuation Moves</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Have to be out today? We move fast, no judgment. Text us at <a href="sms:+15403001414" style="color:#c4a0f0;">540-300-1414</a> and we will tell you what we can do.</p>
+        </div>
+        <div style="background:#210D46;border:1px solid rgba(139,91,199,0.2);border-radius:12px;padding:24px 22px;">
+          <div style="font-size:1.4rem;margin-bottom:10px;">🤍</div>
+          <h3 style="font-size:1rem;color:#ECEBEE;font-weight:700;margin-bottom:8px;">Senior Moving</h3>
+          <p style="font-size:0.84rem;color:rgba(236,235,238,0.68);line-height:1.7;">Downsizing or relocating to assisted living. We take our time, handle every item with care, and make the entire process easy. Patient. Careful. Unhurried.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VYV VS OTHERS ===== -->
+  <section style="background:#ffffff;padding:64px 20px;" aria-label="VYV versus other movers">
+    <div style="max-width:780px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:40px;">
+        <p style="font-size:0.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8B5BC7;margin-bottom:10px;">The Difference</p>
+        <h2 style="font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2rem);color:#190E2A;line-height:1.2;">Why We're the Better Choice</h2>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:12px 16px;background:#f7f4ff;border-bottom:2px solid #ede6ff;color:#190E2A;font-weight:700;border-radius:8px 0 0 0;"></th>
+              <th style="padding:12px 16px;background:#4A237A;color:#ECEBEE;font-weight:800;font-size:0.82rem;letter-spacing:.04em;text-align:center;">VYV</th>
+              <th style="padding:12px 16px;background:#f7f4ff;border-bottom:2px solid #ede6ff;color:#5c4a7a;font-weight:700;text-align:center;border-radius:0 8px 0 0;">Others</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #ede6ff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">Background-checked crew members</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#aaa;font-size:0.9rem;">?</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;background:#fafaff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">2 or 3 mover crew options</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#aaa;font-size:0.9rem;">?</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">24/7 customer service</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#aaa;font-size:0.9rem;">?</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;background:#fafaff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">2-hour minimum only</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#aaa;font-size:0.9rem;">?</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">No fuel surcharge</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#e05555;font-size:1rem;font-weight:700;">✕</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;background:#fafaff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">No charge for blankets &amp; protection materials</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#e05555;font-size:1rem;font-weight:700;">✕</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ede6ff;">
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">Travel fee based on drive time, not fixed mileage</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#e05555;font-size:1rem;font-weight:700;">✕</td>
+            </tr>
+            <tr>
+              <td style="padding:13px 16px;color:#190E2A;font-weight:600;">No extra charge for stairs or heavy items</td>
+              <td style="padding:13px 16px;text-align:center;color:#22a860;font-size:1rem;font-weight:700;background:#fafaff;">✓</td>
+              <td style="padding:13px 16px;text-align:center;color:#e05555;font-size:1rem;font-weight:700;">✕</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="/pricing-estimator.html" style="display:inline-block;background:#8B5BC7;color:#ECEBEE;font-weight:800;font-size:0.95rem;padding:14px 32px;border-radius:50px;text-decoration:none;">Get Your Free Estimate &nbsp; &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section style="background:#f7f4ff;padding:64px 20px;" aria-label="Moving FAQ">
+    <div style="max-width:780px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:44px;">
+        <p style="font-size:0.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8B5BC7;margin-bottom:10px;">Got Questions</p>
+        <h2 style="font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2rem);color:#190E2A;line-height:1.2;">Your Moving Questions, Answered</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            Should I choose 2 movers or 3 movers?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            <p style="margin-bottom:12px;">For most home moves, 3 movers finish faster and often cost you less total even though the hourly rate is higher. A 3-person crew works roughly 40% faster than a 2-person crew, which means fewer hours on the clock.</p>
+            <div style="background:#f7f4ff;border-radius:8px;padding:14px 16px;margin-bottom:12px;overflow-x:auto;">
+              <table style="width:100%;font-size:0.82rem;border-collapse:collapse;">
+                <thead><tr style="border-bottom:1px solid #ede6ff;">
+                  <th style="text-align:left;padding:6px 10px;color:#5c4a7a;font-weight:700;"></th>
+                  <th style="padding:6px 10px;color:#5c4a7a;font-weight:700;text-align:center;">2 Movers</th>
+                  <th style="padding:6px 10px;color:#5c4a7a;font-weight:700;text-align:center;">3 Movers</th>
+                </tr></thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #ede6ff;"><td style="padding:7px 10px;color:#190E2A;font-weight:600;">Estimated hours (3BR)</td><td style="padding:7px 10px;text-align:center;color:#190E2A;">6 hrs</td><td style="padding:7px 10px;text-align:center;color:#190E2A;">3.6 hrs</td></tr>
+                  <tr style="border-bottom:1px solid #ede6ff;"><td style="padding:7px 10px;color:#190E2A;font-weight:600;">Hourly rate</td><td style="padding:7px 10px;text-align:center;color:#190E2A;">$165</td><td style="padding:7px 10px;text-align:center;color:#190E2A;">$199</td></tr>
+                  <tr><td style="padding:7px 10px;color:#190E2A;font-weight:700;">Estimated total</td><td style="padding:7px 10px;text-align:center;color:#e05555;font-weight:700;">$990</td><td style="padding:7px 10px;text-align:center;color:#22a860;font-weight:700;">$716</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>For smaller moves (storage unit, 1-bedroom, a few pieces of furniture) 2 movers is the smarter, more budget-friendly choice. We recommend 3 movers for any 2-bedroom home or larger.</p>
+          </div>
+        </details>
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            Can you do same-day or next-day moves?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            Absolutely. Text us at <a href="sms:+15403001414" style="color:#8B5BC7;font-weight:600;">540-300-1414</a> and we will tell you our availability. We recommend booking as early as possible, especially May through September when dates fill up fast.
+          </div>
+        </details>
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            How is your hourly rate different from other companies?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            Our hourly rate is all-inclusive. No fuel surcharge, no charge for stairs or heavy items, no charge for blankets or protective materials. What you see is what you pay. Many companies advertise a low rate and then add fees on moving day. We don't do that.
+          </div>
+        </details>
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            How far in advance should I book?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            We can do same-day and next-day moves depending on availability. That said, we strongly recommend booking at least 1-2 weeks out for standard moves, and 3-4 weeks out during peak season (May through September). The earlier you book, the more flexibility you have on date and time.
+          </div>
+        </details>
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            How do I reschedule or cancel?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            Text us at <a href="sms:+15403001414" style="color:#8B5BC7;font-weight:600;">540-300-1414</a> or email <a href="mailto:hello@validateyourvision.com" style="color:#8B5BC7;font-weight:600;">hello@validateyourvision.com</a>. Rescheduling is free. Cancellations are free outside our cancellation window. See our <a href="/policy.html" style="color:#8B5BC7;font-weight:600;">full policy</a> for details.
+          </div>
+        </details>
+
+        <details style="background:#ffffff;border:1px solid #ede6ff;border-radius:12px;padding:20px 22px;">
+          <summary style="font-weight:700;font-size:0.95rem;color:#190E2A;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+            What can I do to lower my moving cost?
+            <span style="color:#8B5BC7;font-size:1.1rem;flex-shrink:0;margin-left:12px;">+</span>
+          </summary>
+          <div style="margin-top:14px;font-size:0.88rem;color:#3a2a5a;line-height:1.8;">
+            Declutter before your move — less stuff means fewer hours. Book a 3-mover crew for any home larger than a 1-bedroom. Have everything packed and ready before the crew arrives. The clock stops when we finish, so the more organized you are, the less you pay.
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIRGINIA COVERAGE ===== -->
+  <section style="background:#ffffff;padding:48px 20px 40px;" aria-label="Areas we serve">
+    <div style="max-width:780px;margin:0 auto;text-align:center;">
+      <p style="font-size:0.88rem;color:#5c4a7a;line-height:1.8;">
+        <strong style="color:#190E2A;">Validate Your Vision</strong> offers moving services throughout Virginia, servicing Fredericksburg, Stafford, Spotsylvania, Richmond, Northern Virginia, the Shenandoah Valley, and the Northern Neck.
+      </p>
+    </div>
+  </section>
 
   <!-- ===== TICKER ===== -->
   <div class="ticker-wrap" aria-hidden="true">
@@ -2816,8 +3106,8 @@
         if (res.ok) {
           e.target.querySelectorAll('input,button,label').forEach(el => el.style.display = 'none');
           document.getElementById('lf-success').style.display = 'block';
-        } else { btn.disabled = false; btn.textContent = 'Get My Estimate'; }
-      } catch { btn.disabled = false; btn.textContent = 'Get My Estimate'; }
+        } else { btn.disabled = false; btn.textContent = 'Book My Move'; }
+      } catch { btn.disabled = false; btn.textContent = 'Book My Move'; }
     }
 
     // ===== NAV TICKER =====
