@@ -661,9 +661,11 @@
 <script>
   // ── Rates by day-of-week (0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat)
   const RATES = {
-    2: { 0:180, 1:170, 2:165, 3:170, 4:170, 5:180, 6:180 },
-    3: { 0:214, 1:204, 2:199, 3:204, 4:204, 5:214, 6:214 }
+    2: { 0:180, 1:165, 2:165, 3:170, 4:170, 5:180, 6:180 },
+    3: { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
   };
+  // Days that always show "Few Left" (2=Tue, 3=Wed)
+  const FEW_LEFT_DAYS = new Set([2, 3]);
 
   const MONTH_NAMES = ['January','February','March','April','May','June',
     'July','August','September','October','November','December'];
@@ -701,8 +703,8 @@
     const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
     const colors = ['#16a34a','#8B5BC7','#c2410c'];
     const dayDesc = crewSize === 2
-      ? ['Tuesdays','Mon/Wed/Thu','Fri/Sat/Sun']
-      : ['Tuesdays','Mon/Wed/Thu','Fri/Sat/Sun'];
+      ? ['Tue/Wed','Mon/Thu','Fri/Sat/Sun']
+      : ['Tue/Wed','Mon/Thu','Fri/Sat/Sun'];
     const lg = document.getElementById('priceLegend');
     lg.innerHTML = '';
     unique.forEach((r,i) => {
@@ -760,7 +762,8 @@
         const isSelected = selectedDate && date.getTime() === selectedDate.getTime();
         if (isSelected) el.classList.add('selected');
         const color = rateColor(rate);
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>`;
+        const fewLeft = FEW_LEFT_DAYS.has(dow);
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>${fewLeft ? `<div style="font-size:0.55rem;font-weight:800;color:${isSelected?'#fff':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">Few Left</div>` : ''}`;
         if (!isSelected) el.querySelector('.day-price').style.color = color;
         el.addEventListener('click', () => selectDay(date));
       }
