@@ -327,6 +327,59 @@
   <div class="left-panel">
     <div class="left-inner">
 
+      <!-- ══ STEP 0: Contact / Address Capture ══ -->
+      <div class="step" id="step0">
+        <div class="step-label">Step 1 of 7 &mdash; Your Info</div>
+        <h1>Let's start your reservation</h1>
+        <p class="subtitle">Tell us a little about your move and how to reach you.</p>
+
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:480px;margin-top:24px;">
+          <div style="display:flex;gap:12px;">
+            <div style="flex:1;">
+              <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">First Name</label>
+              <input id="s0-first" type="text" placeholder="First name" autocomplete="given-name"
+                style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+            </div>
+            <div style="flex:1;">
+              <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Last Name</label>
+              <input id="s0-last" type="text" placeholder="Last name" autocomplete="family-name"
+                style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Email</label>
+            <input id="s0-email" type="email" placeholder="your@email.com" autocomplete="email"
+              style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Phone Number</label>
+            <input id="s0-phone" type="tel" placeholder="(540) 555-0100" autocomplete="tel"
+              style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving From</label>
+            <input id="s0-from" type="text" placeholder="Current address or city" autocomplete="off"
+              style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving To</label>
+            <input id="s0-to" type="text" placeholder="Destination address or city" autocomplete="off"
+              style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+          </div>
+        </div>
+
+        <button onclick="goFromStep0()" style="margin-top:28px;background:#16a34a;color:#fff;font-weight:800;font-size:1rem;padding:16px 40px;border:none;border-radius:10px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;width:100%;max-width:480px;">
+          Continue &rarr;
+        </button>
+        <p style="margin-top:14px;font-size:0.78rem;color:#7c6a99;max-width:480px;">No spam. We only use this to confirm your reservation and send move-day info.</p>
+      </div>
+
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step active" id="step1">
         <div class="step-label">Step 1 of 3 &mdash; Crew Size</div>
@@ -677,6 +730,39 @@
   let selectedDate = null;
   let selectedTime = null;
 
+  // ── Step 0 helpers ──
+  let s0Data = {}; // populated either from URL params or Step 0 form
+
+  function goFromStep0() {
+    const first = document.getElementById('s0-first').value.trim();
+    const last  = document.getElementById('s0-last').value.trim();
+    const email = document.getElementById('s0-email').value.trim();
+    const phone = document.getElementById('s0-phone').value.trim();
+    const from  = document.getElementById('s0-from').value.trim();
+    const to    = document.getElementById('s0-to').value.trim();
+
+    const errs = [];
+    if (!first) errs.push('s0-first');
+    if (!last)  errs.push('s0-last');
+    if (!email) errs.push('s0-email');
+    if (!phone) errs.push('s0-phone');
+    if (!from)  errs.push('s0-from');
+    if (!to)    errs.push('s0-to');
+
+    errs.forEach(id => {
+      const el = document.getElementById(id);
+      el.style.borderColor = '#ef4444';
+      el.addEventListener('input', () => el.style.borderColor = '#d4c9e8', { once: true });
+    });
+    if (errs.length) { document.getElementById(errs[0]).focus(); return; }
+
+    s0Data = { name: first + ' ' + last, email, phone, from, to };
+    initStops();
+    document.getElementById('step0').classList.remove('active');
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '14%';
+  }
+
   function selectCrew(n) {
     crewSize = n;
     document.getElementById('card2').classList.toggle('selected', n === 2);
@@ -831,10 +917,11 @@
   let stops = [];
 
   function initStops() {
-    const p = new URLSearchParams(window.location.search);
+    const fromAddr = s0Data.from || new URLSearchParams(window.location.search).get('from') || '';
+    const toAddr   = s0Data.to   || new URLSearchParams(window.location.search).get('to')   || '';
     stops = [
-      { label: 'Moving from', address: p.get('from')||'', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
-      { label: 'Moving to',   address: p.get('to')||'',   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
+      { label: 'Moving from', address: fromAddr, propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
+      { label: 'Moving to',   address: toAddr,   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
     ];
     renderStops();
   }
@@ -1095,15 +1182,18 @@
     document.getElementById('step5').classList.remove('active');
     document.getElementById('step6').classList.add('active');
     document.getElementById('progressFill').style.width = '100%';
-    // Pre-fill from earlier form data
+    // Pre-fill from step 0 or URL params (URL params used when coming from homepage form)
     const params = new URLSearchParams(window.location.search);
-    if (params.get('name')) {
-      const parts = (params.get('name')||'').split(' ');
-      document.getElementById('cf-first').value = parts[0]||'';
-      document.getElementById('cf-last').value = parts.slice(1).join(' ')||'';
+    const fullName = s0Data.name || params.get('name') || '';
+    const prefEmail = s0Data.email || params.get('email') || '';
+    const prefPhone = s0Data.phone || params.get('phone') || '';
+    if (fullName) {
+      const parts = fullName.split(' ');
+      document.getElementById('cf-first').value = parts[0] || '';
+      document.getElementById('cf-last').value  = parts.slice(1).join(' ') || '';
     }
-    if (params.get('email')) document.getElementById('cf-email').value = params.get('email');
-    if (params.get('phone')) document.getElementById('cf-phone').value = params.get('phone');
+    if (prefEmail) document.getElementById('cf-email').value = prefEmail;
+    if (prefPhone) document.getElementById('cf-phone').value = prefPhone;
     // Show rate
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
@@ -1175,6 +1265,28 @@
       alert('Something went wrong. Please text us at (540) 300-1414.');
     }
   }
+
+  // ── Page load: skip Step 0 if URL params already have the info ──
+  (function() {
+    const p = new URLSearchParams(window.location.search);
+    const hasParams = p.get('name') && p.get('email') && p.get('phone') && p.get('from') && p.get('to');
+    if (hasParams) {
+      // Came from homepage form -- pre-load s0Data from URL params and go straight to crew selector
+      s0Data = {
+        name:  p.get('name'),
+        email: p.get('email'),
+        phone: p.get('phone'),
+        from:  p.get('from'),
+        to:    p.get('to')
+      };
+      // step1 is already active (default), step0 stays hidden
+    } else {
+      // Direct entry -- show step0 first
+      document.getElementById('step0').classList.add('active');
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('progressFill').style.width = '0%';
+    }
+  })();
 </script>
 </body>
 </html>
