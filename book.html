@@ -372,15 +372,13 @@
             <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving From</label>
             <input id="s0-from" type="text" placeholder="Current address or city" autocomplete="off"
               style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'"
-              oninput="updateMapFromStep0()" />
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
           </div>
           <div>
             <label style="display:block;font-size:0.78rem;font-weight:700;color:#5c4a7a;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;">Moving To</label>
             <input id="s0-to" type="text" placeholder="Destination address or city" autocomplete="off"
               style="width:100%;padding:13px 14px;border:1.5px solid #d4c9e8;border-radius:10px;font-size:0.95rem;color:#190E2A;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'"
-              oninput="updateMapFromStep0()" />
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
           </div>
         </div>
 
@@ -1004,7 +1002,7 @@
             <svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <input type="text" placeholder="Enter a location" id="addr-${i}"
               value="${stop.address||''}"
-              oninput="stops[${i}].address=this.value;updateMap()" />
+              oninput="stops[${i}].address=this.value" />
           </div>
           <div class="unit-field">
             <div style="position:relative;">
@@ -1102,36 +1100,29 @@
   async function _fetchAC(query, inputId, stopIndex) {
     const drop = _acDrops[inputId];
     try {
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=7&lang=en&lat=38.3032&lon=-77.4605&location_bias_scale=0.5`;
+      const url = `https://nominatim.openstreetmap.org/search?format=json&limit=7&countrycodes=us&viewbox=-83.7,39.5,-75.2,36.5&bounded=0&q=${encodeURIComponent(query)}`;
       const res  = await fetch(url);
       const data = await res.json();
       drop.innerHTML = '';
-      const features = (data.features || []).filter(f =>
-        f.properties.countrycode === 'US' || f.properties.country === 'United States of America'
-      );
-      if (!features.length) { drop.style.display = 'none'; return; }
-      features.forEach(f => {
-        const p = f.properties;
-        const num    = p.housenumber || '';
-        const street = p.street || '';
-        const city   = p.city || p.town || p.village || p.county || '';
-        const state  = p.state || '';
-        const zip    = p.postcode || '';
-        // Build two-line display like Google
-        const mainPart = [num, street].filter(Boolean).join(' ') || p.name || city;
-        const subParts = [city !== mainPart ? city : '', state, zip].filter(Boolean).join(', ');
-        const fullAddr = [mainPart, subParts].filter(Boolean).join(', ');
+      if (!data.length) { drop.style.display = 'none'; return; }
+      data.forEach(item => {
+        // Nominatim returns display_name like "123 Main St, Fredericksburg, Virginia, 22401, United States"
+        const full = item.display_name || '';
+        // Split into street/first part vs the rest
+        const parts = full.split(', ');
+        const mainPart = parts.slice(0, 2).join(', ');
+        const subPart  = parts.slice(2).join(', ').replace(', United States', '');
 
         const li = document.createElement('li');
         li.innerHTML = `
           <svg class="ac-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div><div class="ac-main">${mainPart}</div><div class="ac-sub">${subParts}</div></div>`;
+          <div><div class="ac-main">${mainPart}</div><div class="ac-sub">${subPart}</div></div>`;
         li.addEventListener('mousedown', e => {
           e.preventDefault();
           const el = document.getElementById(inputId);
-          el.value = fullAddr;
+          el.value = full.replace(', United States', '');
           drop.style.display = 'none';
-          if (stopIndex !== null) { stops[stopIndex].address = fullAddr; updateMap(); }
+          if (stopIndex !== null) { stops[stopIndex].address = el.value; updateMap(); }
           else { updateMapFromStep0(); }
         });
         drop.appendChild(li);
@@ -1158,15 +1149,14 @@
   }
 
   function updateMapFromStep0() {
-    const from = (document.getElementById('s0-from')||{}).value||'';
-    const to   = (document.getElementById('s0-to')||{}).value||'';
-    if (from || to) setMapSrc(from, to);
+    const from = (document.getElementById('s0-from')||{}).value.trim()||'';
+    const to   = (document.getElementById('s0-to')||{}).value.trim()||'';
+    if (from && to) setMapSrc(from, to);
   }
 
   function updateMap() {
     const addrs = stops.map(s => s.address).filter(Boolean);
-    if (!addrs.length) return;
-    setMapSrc(addrs[0], addrs.length > 1 ? addrs[addrs.length - 1] : '');
+    if (addrs.length >= 2) setMapSrc(addrs[0], addrs[addrs.length - 1]);
   }
 
   // ── Step 4 ─────────────────────────────────────────────
