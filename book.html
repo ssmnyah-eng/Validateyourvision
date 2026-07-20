@@ -1262,8 +1262,9 @@
   }
 
   function autoCalcTruckFee() {
-    const fromAddr = s0Data.from || new URLSearchParams(window.location.search).get('from') || (stops[0] && stops[0].address) || '';
-    const toAddr   = s0Data.to   || new URLSearchParams(window.location.search).get('to')   || (stops[stops.length-1] && stops[stops.length-1].address) || '';
+    // Prefer the refined stop addresses from Step 3 (Google Places formatted); fall back to Step 0 / URL params
+    const fromAddr = (stops[0] && stops[0].address) || s0Data.from || new URLSearchParams(window.location.search).get('from') || '';
+    const toAddr   = (stops.length > 1 && stops[stops.length-1].address) || s0Data.to || new URLSearchParams(window.location.search).get('to') || '';
     const display  = document.getElementById('summary-truck-display');
     const note     = document.getElementById('truck-distance-note');
 
@@ -1287,10 +1288,10 @@
         const miles  = Math.round(meters / 1609.34);
         truckFee     = calcTruckFeeFromMiles(miles);
         display.textContent = `$${truckFee}`;
-        note.textContent    = `Estimated based on ${miles} mile move`;
+        note.textContent    = `${miles} miles between your locations`;
       } else {
         truckFee = 99; display.textContent = '$99';
-        note.textContent = 'Estimated fee';
+        note.textContent = '';
       }
     });
   }
