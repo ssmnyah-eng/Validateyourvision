@@ -2505,6 +2505,28 @@
     // ===== LEAD CAPTURE FORM =====
     async function handleLeadFormSubmit(e) {
       e.preventDefault();
+      // Validate all required fields before proceeding
+      const fields = [
+        { id: 'lf-from',   label: 'Moving from address' },
+        { id: 'lf-to',     label: 'Moving to address' },
+        { id: 'lf-name',   label: 'Your name' },
+        { id: 'lf-email',  label: 'Your email' },
+        { id: 'lf-phone',  label: 'Your phone number' }
+      ];
+      let firstInvalid = null;
+      fields.forEach(f => {
+        const el = document.getElementById(f.id);
+        if (!el) return;
+        if (!el.value.trim()) {
+          el.style.borderColor = '#ef4444';
+          el.placeholder = f.label + ' is required';
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          el.style.borderColor = 'rgba(255,255,255,0.12)';
+        }
+      });
+      if (firstInvalid) { firstInvalid.focus(); return; }
+
       const btn = document.getElementById('lf-submit');
       btn.disabled = true; btn.textContent = 'Going…';
       const fd = new FormData(e.target);
