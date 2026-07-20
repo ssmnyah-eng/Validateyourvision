@@ -469,7 +469,176 @@
           </div>
         </div>
 
-        <button class="btn-continue" style="margin-top:20px;" onclick="submitAll()">CONTINUE</button>
+        <button class="btn-continue" style="margin-top:20px;" onclick="goToPackingStep()">CONTINUE</button>
+      </div>
+
+      <!-- ══ STEP 5: Packing / Unpacking Add-on ══ -->
+      <div class="step" id="step5">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToMoveInfo()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
+        </div>
+        <h1>Select Packing / Unpacking Services</h1>
+
+        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:20px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+          <div style="font-size:1.05rem;font-weight:800;color:#4A237A;margin-bottom:16px;">Get Settled Faster with Professional Packers</div>
+
+          <!-- Checkbox toggle -->
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;border:2px solid #ede6ff;border-radius:10px;padding:16px;transition:border-color 0.15s;" id="packingToggleLabel">
+            <input type="checkbox" id="addPackingCheck" onchange="togglePackingService()" style="width:18px;height:18px;margin-top:2px;accent-color:#8B5BC7;cursor:pointer;" />
+            <div style="flex:1;">
+              <div style="font-weight:700;color:#190E2A;margin-bottom:2px;">Add Packing / Unpacking Service</div>
+              <div style="font-size:0.78rem;color:#8B5BC7;font-weight:600;">$100/hr &nbsp;&middot;&nbsp; Fee calculated with your move total</div>
+            </div>
+          </label>
+
+          <!-- Packing detail (shown when checked) -->
+          <div id="packingDetail" style="display:none;margin-top:18px;">
+            <div style="font-size:0.82rem;font-weight:600;color:#190E2A;margin-bottom:10px;">Pick your packing/unpacking date:</div>
+
+            <!-- Mini calendar -->
+            <div class="cal-wrap" style="padding:16px;">
+              <div class="cal-header">
+                <button class="cal-nav" id="packPrevBtn" onclick="changePackMonth(-1)">&#8249;</button>
+                <div class="cal-month" id="packCalMonth"></div>
+                <button class="cal-nav" id="packNextBtn" onclick="changePackMonth(1)">&#8250;</button>
+              </div>
+              <div class="cal-grid" id="packCalGrid">
+                <div class="cal-dow">S</div><div class="cal-dow">M</div><div class="cal-dow">T</div>
+                <div class="cal-dow">W</div><div class="cal-dow">T</div><div class="cal-dow">F</div><div class="cal-dow">S</div>
+              </div>
+              <div class="time-select" id="packTimeSelect" style="display:none;">
+                <button class="time-btn" id="packAmBtn" onclick="selectPackTime('AM')">
+                  Select AM
+                  <div class="time-desc">Packing starts at 7 AM sharp.</div>
+                </button>
+                <button class="time-btn" id="packPmBtn" onclick="selectPackTime('PM')">
+                  Select PM
+                  <div class="time-desc">PM packing starts after our AM crew wraps up.</div>
+                </button>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;">
+              <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
+                <span>&#10003;</span> Each room organized exactly how you want it.
+              </div>
+              <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
+                <span>&#10003;</span> Kick your feet up and relax &mdash; we handle the boxes.
+              </div>
+              <div style="display:flex;gap:6px;align-items:flex-start;font-size:0.82rem;color:#16a34a;font-weight:600;">
+                <span>&#10003;</span> Want your closet color coordinated? No problem.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-continue" style="margin-top:20px;" onclick="goToFinalStep()">CONTINUE TO RESERVE YOUR CREW</button>
+      </div>
+
+      <!-- ══ STEP 6: Final Reservation ══ -->
+      <div class="step" id="step6">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToPacking()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
+        </div>
+
+        <h1 style="font-size:1.25rem;">Complete and reserve your spot.</h1>
+        <div style="font-size:0.82rem;color:#16a34a;font-weight:600;margin-bottom:20px;">&#10003; Priority reservation is fully refundable</div>
+
+        <!-- Urgency banner -->
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:0.82rem;color:#15803d;font-weight:600;text-align:center;">
+          Lock in your spot now &mdash; popular dates fill up fast in the Fredericksburg area.
+        </div>
+
+        <!-- Contact info -->
+        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+          <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Contact Information</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div style="position:relative;">
+              <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">First name</label>
+              <input type="text" id="cf-first" placeholder="First name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+            </div>
+            <div style="position:relative;">
+              <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Last name</label>
+              <input type="text" id="cf-last" placeholder="Last name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+            </div>
+          </div>
+          <div style="position:relative;margin-bottom:12px;">
+            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Your email</label>
+            <input type="email" id="cf-email" placeholder="your@email.com" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+          </div>
+          <div style="position:relative;margin-bottom:12px;">
+            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Phone number</label>
+            <input type="tel" id="cf-phone" placeholder="(555) 000-0000" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+          </div>
+          <div style="position:relative;">
+            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Notes for your crew (optional)</label>
+            <textarea id="cf-notes" placeholder="Gate code, elevator info, fragile items, etc." rows="3" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;resize:vertical;"></textarea>
+          </div>
+        </div>
+
+        <!-- Pricing breakdown -->
+        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+          <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Pricing Information</div>
+
+          <!-- Move reservation -->
+          <div style="font-weight:700;color:#4A237A;font-size:0.85rem;margin-bottom:8px;">Move Reservation</div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
+            <span>Hourly rate (2 hr minimum)</span>
+            <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:14px;">
+            <span>Truck fee <span style="font-size:0.72rem;">(estimated by drive time)</span></span>
+            <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">TBD at walkthrough</span>
+          </div>
+
+          <!-- Truck fee selector -->
+          <div style="background:#F4F0FF;border-radius:8px;padding:12px;margin-bottom:14px;">
+            <div style="font-size:0.75rem;font-weight:700;color:#4A237A;margin-bottom:8px;">Estimate your truck fee (return drive from your destination):</div>
+            <select id="truckFeeSelect" onchange="updateTruckFee()" style="width:100%;padding:9px 10px;border:1.5px solid #ddd6f7;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.82rem;color:#190E2A;background:#fff;outline:none;">
+              <option value="">Select approximate drive time...</option>
+              <option value="99">Under 30 min &mdash; $99</option>
+              <option value="125">31-60 min &mdash; $125</option>
+              <option value="250">1-2 hours &mdash; $250</option>
+              <option value="350">2-3 hours &mdash; $350</option>
+              <option value="475">3-4 hours &mdash; $475</option>
+              <option value="custom">4+ hours &mdash; Custom quote</option>
+            </select>
+          </div>
+
+          <!-- Packing line (shown if added) -->
+          <div id="packingPriceLine" style="display:none;">
+            <div style="font-weight:700;color:#4A237A;font-size:0.85rem;margin-bottom:8px;">Packing / Unpacking Service</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:14px;">
+              <span>Hourly rate (2 hr minimum)</span>
+              <span style="font-weight:700;color:#190E2A;">$100/hr</span>
+            </div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid #ede6ff;margin-bottom:14px;" />
+
+          <!-- Deposit -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-weight:800;color:#190E2A;font-size:0.95rem;">Priority reservation due today:</span>
+            <span style="font-weight:800;color:#16a34a;font-size:1.1rem;">$50</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:6px;">
+            <span>&#10003;</span> Free cancellation
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:6px;">
+            <span>&#10003;</span> $50 applied to your final balance
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;">
+            <span>&#10003;</span> Locks in your virtual walkthrough slot
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn">RESERVE MY SPOT &mdash; $50 TODAY</button>
+        <p style="text-align:center;font-size:0.73rem;color:#8B5BC7;margin-top:10px;line-height:1.6;">
+          After submitting, our team will reach out within 24 hours to confirm your walkthrough and process your $50 priority reservation. The remaining balance is due after your virtual walkthrough.
+        </p>
       </div>
 
     </div>
@@ -840,21 +1009,167 @@
     }
   }
 
-  function submitAll() {
-    if (!selectedDate || !selectedTime) return;
-    const iso = selectedDate.toISOString().split('T')[0];
-    const rate = RATES[crewSize][selectedDate.getDay()];
+  // ── Step 5: Packing calendar ───────────────────────────
+  let packViewYear, packViewMonth, packSelectedDate = null, packSelectedTime = null;
+  let addPackingService = false;
+  const PACK_RATE = 100;
+
+  function goToPackingStep() {
+    document.getElementById('step4').classList.remove('active');
+    document.getElementById('step5').classList.add('active');
+    document.getElementById('progressFill').style.width = '93%';
+    packViewYear = today.getFullYear();
+    packViewMonth = today.getMonth();
+    renderPackCal();
+  }
+
+  function goBackToMoveInfo() {
+    document.getElementById('step5').classList.remove('active');
+    document.getElementById('step4').classList.add('active');
+    document.getElementById('progressFill').style.width = '90%';
+  }
+
+  function togglePackingService() {
+    addPackingService = document.getElementById('addPackingCheck').checked;
+    document.getElementById('packingDetail').style.display = addPackingService ? 'block' : 'none';
+    document.getElementById('packingToggleLabel').style.borderColor = addPackingService ? '#8B5BC7' : '#ede6ff';
+  }
+
+  function changePackMonth(delta) {
+    packViewMonth += delta;
+    if (packViewMonth > 11) { packViewMonth = 0; packViewYear++; }
+    if (packViewMonth < 0)  { packViewMonth = 11; packViewYear--; }
+    renderPackCal();
+  }
+
+  function renderPackCal() {
+    document.getElementById('packCalMonth').textContent = MONTH_NAMES[packViewMonth] + ' ' + packViewYear;
+    const grid = document.getElementById('packCalGrid');
+    while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+    const nowY = today.getFullYear(), nowM = today.getMonth();
+    document.getElementById('packPrevBtn').disabled = (packViewYear === nowY && packViewMonth === nowM);
+
+    const firstDay = new Date(packViewYear, packViewMonth, 1).getDay();
+    const daysInMonth = new Date(packViewYear, packViewMonth + 1, 0).getDate();
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div'); el.className = 'cal-day empty'; grid.appendChild(el);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(packViewYear, packViewMonth, d);
+      const el = document.createElement('div'); el.className = 'cal-day';
+      if (date < today) {
+        el.classList.add('past');
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#bbb;">$${PACK_RATE}</div>`;
+      } else {
+        if (date.getTime() === today.getTime()) el.classList.add('today');
+        const isSel = packSelectedDate && date.getTime() === packSelectedDate.getTime();
+        if (isSel) el.classList.add('selected');
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-price style="color:${isSel?'#fff':'#16a34a'};">$${PACK_RATE}</div>`;
+        el.addEventListener('click', () => {
+          packSelectedDate = date; packSelectedTime = null;
+          document.getElementById('packAmBtn').classList.remove('active');
+          document.getElementById('packPmBtn').classList.remove('active');
+          document.getElementById('packTimeSelect').style.display = 'grid';
+          renderPackCal();
+        });
+      }
+      grid.appendChild(el);
+    }
+  }
+
+  function selectPackTime(t) {
+    packSelectedTime = t;
+    document.getElementById('packAmBtn').classList.toggle('active', t === 'AM');
+    document.getElementById('packPmBtn').classList.toggle('active', t === 'PM');
+  }
+
+  // ── Step 6: Final reservation ───────────────────────────
+  let truckFee = null;
+
+  function goToFinalStep() {
+    document.getElementById('step5').classList.remove('active');
+    document.getElementById('step6').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    // Pre-fill from earlier form data
     const params = new URLSearchParams(window.location.search);
-    params.set('date', iso);
-    params.set('time', selectedTime);
-    params.set('crew', crewSize);
-    params.set('rate', rate);
-    params.set('from', stops[0]?.address || '');
-    params.set('to', stops[stops.length-1]?.address || '');
-    params.set('stops', stops.length);
-    params.set('volume', moveVolume);
-    if (specialtyItems.length) params.set('specialty', specialtyItems.join(','));
-    window.location.href = '/booking-confirmed.html?' + params.toString();
+    if (params.get('name')) {
+      const parts = (params.get('name')||'').split(' ');
+      document.getElementById('cf-first').value = parts[0]||'';
+      document.getElementById('cf-last').value = parts.slice(1).join(' ')||'';
+    }
+    if (params.get('email')) document.getElementById('cf-email').value = params.get('email');
+    if (params.get('phone')) document.getElementById('cf-phone').value = params.get('phone');
+    // Show rate
+    const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
+    document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
+    // Show packing line
+    document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
+  }
+
+  function goBackToPacking() {
+    document.getElementById('step6').classList.remove('active');
+    document.getElementById('step5').classList.add('active');
+    document.getElementById('progressFill').style.width = '93%';
+  }
+
+  function updateTruckFee() {
+    const val = document.getElementById('truckFeeSelect').value;
+    const display = document.getElementById('summary-truck-display');
+    if (!val) { truckFee = null; display.textContent = 'TBD at walkthrough'; return; }
+    if (val === 'custom') { truckFee = 'custom'; display.textContent = 'Custom quote'; return; }
+    truckFee = parseInt(val);
+    display.textContent = `$${truckFee}`;
+  }
+
+  async function submitFinalReservation() {
+    const first = document.getElementById('cf-first').value.trim();
+    const last  = document.getElementById('cf-last').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    if (!first || !email || !phone) {
+      alert('Please fill in your first name, email, and phone number.');
+      return;
+    }
+    const btn = document.getElementById('finalSubmitBtn');
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
+    const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
+    const packDateStr = packSelectedDate ? packSelectedDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
+
+    const body = new FormData();
+    body.append('_subject', `VYV Priority Reservation - ${first} ${last} - ${dateStr}`);
+    body.append('Name', `${first} ${last}`);
+    body.append('Email', email);
+    body.append('Phone', phone);
+    body.append('Move Date', `${dateStr} ${selectedTime||''}`);
+    body.append('Crew Size', `${crewSize} Movers`);
+    body.append('Rate', `$${rate}/hr`);
+    body.append('Truck Fee', truckFee ? `$${truckFee}` : 'TBD at walkthrough');
+    body.append('Moving From', stops[0]?.address || '');
+    body.append('Moving To', stops[stops.length-1]?.address || '');
+    body.append('Number of Stops', stops.length);
+    body.append('Belongings Volume', moveVolume);
+    body.append('Specialty Items', specialtyItems.join(', ') || 'None');
+    body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
+    body.append('Notes', document.getElementById('cf-notes').value);
+    body.append('Deposit', '$50 priority reservation');
+
+    try {
+      const res = await fetch('https://formspree.io/f/mwvdowqr', {
+        method:'POST', body, headers:{'Accept':'application/json'}
+      });
+      if (res.ok) {
+        window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
+      } else {
+        btn.disabled = false; btn.textContent = 'RESERVE MY SPOT - $50 TODAY';
+        alert('Something went wrong. Please text us at (540) 300-1414.');
+      }
+    } catch {
+      btn.disabled = false; btn.textContent = 'RESERVE MY SPOT - $50 TODAY';
+      alert('Something went wrong. Please text us at (540) 300-1414.');
+    }
   }
 </script>
 </body>
