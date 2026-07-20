@@ -367,17 +367,16 @@
   function buildLegend() {
     const rates = RATES[crewSize];
     const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
-    const colors = ['#16a34a','#8B5BC7','#190E2A'];
-    const dayLabels = {
-      165:'Tue', 170:'Mon/Wed/Thu', 175:'', 180:'Fri/Sat/Sun',
-      199:'Tue', 204:'Mon/Wed/Thu', 214:'Fri/Sat/Sun'
-    };
+    const colors = ['#16a34a','#8B5BC7','#c2410c'];
+    const dayDesc = crewSize === 2
+      ? ['Tuesdays','Mon/Wed/Thu','Fri/Sat/Sun']
+      : ['Tuesdays','Mon/Wed/Thu','Fri/Sat/Sun'];
     const lg = document.getElementById('priceLegend');
     lg.innerHTML = '';
     unique.forEach((r,i) => {
       lg.innerHTML += `<div class="legend-item">
         <div class="legend-dot" style="background:${colors[i]||'#aaa'}"></div>
-        $${r}/hr
+        <span><strong>$${r}/hr</strong> &mdash; ${dayDesc[i]}</span>
       </div>`;
     });
   }
@@ -387,7 +386,7 @@
     const min = Math.min(...rates);
     const max = Math.max(...rates);
     if (rate === min) return '#16a34a';
-    if (rate === max) return '#190E2A';
+    if (rate === max) return '#c2410c';
     return '#8B5BC7';
   }
 
@@ -423,12 +422,14 @@
 
       if (date < today) {
         el.classList.add('past');
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#ccc;">$${rate}</div>`;
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#bbb;">$${rate}</div>`;
       } else {
         if (date.getTime() === today.getTime()) el.classList.add('today');
-        if (selectedDate && date.getTime() === selectedDate.getTime()) el.classList.add('selected');
+        const isSelected = selectedDate && date.getTime() === selectedDate.getTime();
+        if (isSelected) el.classList.add('selected');
         const color = rateColor(rate);
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:${el.classList.contains('selected')?'#fff':color};">$${rate}</div>`;
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>`;
+        if (!isSelected) el.querySelector('.day-price').style.color = color;
         el.addEventListener('click', () => selectDay(date));
       }
       grid.appendChild(el);
