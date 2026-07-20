@@ -328,7 +328,7 @@
 
   <!-- ===== FONTS: Space Grotesk (headlines) + Inter (body) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Raleway:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ===== RESET ===== */
@@ -346,6 +346,8 @@
       --ltxt:#190E2A;
       --ltxt2:#4A237A;
       --lmuted:#5a4a7a;
+      --green:#16a34a;
+      --green-h:#15803d;
 
       --radius: 14px;
       --shadow: 0 16px 48px rgba(25,14,42,0.14);
@@ -355,14 +357,13 @@
 
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', 'Inter', sans-serif;
       color: var(--ltxt);
       background: var(--lbg);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    h1,h2 { font-family: 'Playfair Display', serif; line-height: 1.1; font-weight: 800; }
-    h3,h4 { font-family: 'Raleway', sans-serif; line-height: 1.15; font-weight: 700; }
+    h1,h2,h3,h4 { font-family: 'Poppins', 'Inter', sans-serif; line-height: 1.15; font-weight: 800; }
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
 
@@ -383,7 +384,7 @@
     /* ===== UTILITY ===== */
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
     .section-eyebrow {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.2em;
@@ -411,7 +412,7 @@
       gap: 8px;
       padding: 15px 34px;
       border-radius: 8px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
@@ -420,14 +421,17 @@
       letter-spacing: 0.01em;
     }
     .btn-primary {
-      background: var(--lv);
-      color: var(--tw);
-      box-shadow: 0 6px 24px rgba(139,91,199,0.32);
+      background: var(--green);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.30);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .btn-primary:hover {
-      background: #9d6fd4;
+      background: var(--green-h);
       transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(139,91,199,0.42);
+      box-shadow: 0 8px 24px rgba(22,163,74,0.38);
     }
     .btn-outline {
       background: transparent;
@@ -532,7 +536,7 @@
     .nav-dropdown-menu a::after { display: none; }
     .nav-dropdown-menu a:hover { color: var(--tw); background: rgba(139,91,199,0.15); }
     .nav-logo-text {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 700;
       font-size: 1.25rem;
       color: var(--tw);
@@ -618,7 +622,7 @@
     }
     .mobile-drawer.open { transform: none; }
     .mobile-drawer a {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--tw);
@@ -827,7 +831,7 @@
     }
     .stat-item:hover { background: rgba(139,91,199,0.1); }
     .stat-num {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: clamp(2.2rem, 3.5vw, 3.4rem);
       font-weight: 700;
       color: var(--lv);
@@ -935,7 +939,7 @@
     }
     .pain-img-badge strong {
       display: block;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 2rem;
       font-weight: 700;
       color: var(--lv);
@@ -1024,7 +1028,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
       color: var(--tw);
@@ -1161,7 +1165,7 @@
       margin-bottom: 22px;
     }
     .review-author {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
       font-size: 0.9rem;
       color: var(--lv);
@@ -1295,7 +1299,7 @@
       font-style: italic;
     }
     .footer-col h4 {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -1344,7 +1348,7 @@
       position: relative;
     }
     .cta-strip-text p.cta-strip-eyebrow {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -1353,7 +1357,7 @@
       margin-bottom: 8px;
     }
     .cta-strip-text h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: clamp(1.2rem, 2.4vw, 1.7rem);
       font-weight: 800;
       color: var(--tw);
@@ -1368,12 +1372,12 @@
     .cta-strip .btn-primary {
       white-space: nowrap;
       flex-shrink: 0;
-      background: var(--tw);
-      color: var(--mp);
+      background: var(--green);
+      color: #ffffff;
       font-weight: 700;
     }
     .cta-strip .btn-primary:hover {
-      background: var(--lbg2);
+      background: var(--green-h);
       transform: translateY(-2px);
     }
     @media (max-width: 768px) {
@@ -1392,7 +1396,7 @@
     .faq-item[open] { border-color: rgba(139,91,199,0.3); }
     .faq-item summary {
       padding: 20px 24px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 700;
       font-size: 0.98rem;
       color: var(--mp);
@@ -1431,18 +1435,18 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--lv);
-      color: var(--tw);
+      background: var(--green);
+      color: #ffffff;
       padding: 13px 22px;
       border-radius: 50px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 0.88rem;
-      font-weight: 600;
-      box-shadow: 0 8px 28px rgba(139,91,199,0.42);
+      font-weight: 700;
+      box-shadow: 0 8px 28px rgba(22,163,74,0.38);
       transition: var(--ease);
       white-space: nowrap;
     }
-    .float-cta a:hover { background: #9d6fd4; transform: translateY(-2px); }
+    .float-cta a:hover { background: var(--green-h); transform: translateY(-2px); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
@@ -1575,7 +1579,7 @@
             <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
           </svg>
         </div>
-        <span style="font-family:Georgia,serif;font-size:0.92rem;font-weight:700;color:#ECEBEE;line-height:1.2;display:none;" class="nav-brand-text">Validate Your Vision</span>
+        <span style="font-family:'Poppins',sans-serif;font-size:0.92rem;font-weight:700;color:#ECEBEE;line-height:1.2;display:none;" class="nav-brand-text">Validate Your Vision</span>
       </a>
 
       <!-- Sliding ticker -->
@@ -1688,25 +1692,15 @@
             </div>
           </div>
 
-          <!-- Star rating -->
+          <!-- Facebook 5-star rating -->
           <div style="border-top:1px solid #ede6ff;padding-top:18px;text-align:center;">
-            <div style="font-size:0.78rem;color:#5c4a7a;margin-bottom:6px;">5.0 based on 50+ reviews</div>
-            <div style="color:#f5a623;font-size:1.2rem;letter-spacing:2px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <!-- Social proof logos -->
-            <div style="display:flex;justify-content:center;align-items:center;gap:12px;">
-              <!-- Google G -->
-              <div style="width:40px;height:40px;border-radius:8px;border:1px solid #eee;display:flex;align-items:center;justify-content:center;background:#fff;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-              </div>
-              <!-- Facebook -->
-              <div style="width:40px;height:40px;border-radius:8px;background:#1877F2;display:flex;align-items:center;justify-content:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:#1877F2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
               </div>
-              <!-- Licensed badge -->
-              <div style="width:40px;height:40px;border-radius:8px;border:1px solid #eee;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;">
-                <div style="font-size:0.42rem;font-weight:800;color:#190E2A;letter-spacing:0.05em;line-height:1;">LIC.</div>
-                <div style="font-size:0.52rem;font-weight:800;color:#8B5BC7;line-height:1;">&amp;</div>
-                <div style="font-size:0.42rem;font-weight:800;color:#190E2A;letter-spacing:0.05em;line-height:1;">INS.</div>
+              <div>
+                <div style="color:#f5a623;font-size:1.1rem;letter-spacing:1px;line-height:1;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div style="font-size:0.72rem;color:#5c4a7a;margin-top:3px;">5.0 &middot; Facebook Reviews</div>
               </div>
             </div>
           </div>
@@ -1768,7 +1762,7 @@
             <!-- Submit button -->
             <div style="flex:0 0 auto;">
               <button type="submit" id="lf-submit"
-                style="white-space:nowrap;background:#8B5BC7;color:#fff;font-weight:800;font-size:0.88rem;padding:14px 22px;border:none;border-radius:8px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:background .2s;">
+                style="white-space:nowrap;background:#16a34a;color:#fff;font-weight:800;font-size:0.88rem;padding:14px 22px;border:none;border-radius:8px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:background .2s;">
                 Book My Move
               </button>
             </div>
@@ -2156,7 +2150,7 @@
         </div>
       </div>
       <div style="text-align:center;margin-top:32px;">
-        <a href="#lead-form" style="display:inline-block;background:#8B5BC7;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.02em;">Get Your Free Estimate</a>
+        <a href="#lead-form" style="display:inline-block;background:#16a34a;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
       </div>
     </div>
   </section>
@@ -2193,7 +2187,7 @@
           <span style="color:#190E2A;font-weight:600;font-size:0.9rem;">Stafford</span>
         </div>
       </div>
-      <a href="#lead-form" style="display:inline-block;background:#8B5BC7;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.02em;">Get Your Free Estimate</a>
+      <a href="#lead-form" style="display:inline-block;background:#16a34a;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
     </div>
   </section>
 
