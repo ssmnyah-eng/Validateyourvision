@@ -1582,19 +1582,22 @@
         <span style="font-family:'Poppins',sans-serif;font-size:0.92rem;font-weight:700;color:#ECEBEE;line-height:1.2;display:none;" class="nav-brand-text">Validate Your Vision</span>
       </a>
 
-      <!-- Sliding ticker -->
-      <div class="nav-ticker" aria-live="polite" aria-label="Key features">
-        <div class="nav-ticker-inner" id="navTicker">
-          <span class="nav-tick active">Transparent Pricing, No Hidden Fees</span>
-          <span class="nav-tick">Minimum 2 Hour Hourly Rate</span>
-          <span class="nav-tick">Book Quickly and Easily Online</span>
-        </div>
+      <!-- Nav links center -->
+      <div class="nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
+        <a href="/pricing-estimator.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Move Calculator</a>
+        <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services</a>
+        <a href="#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Reviews</a>
+        <a href="#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">FAQ</a>
+        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Blog</a>
       </div>
 
       <!-- Right side -->
-      <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;">
-        <a href="sms:+15403001414" style="color:rgba(236,235,238,0.85);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="nav-phone">(540) 300-1414</a>
-        <a href="#lead-form" class="btn btn-primary" style="padding:9px 18px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <a href="sms:+15403001414" style="display:flex;align-items:center;gap:6px;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="nav-phone">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (540) 300-1414
+        </a>
+        <a href="#lead-form" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
         <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
           style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
@@ -1620,11 +1623,11 @@
   <style>
     #nav { background: var(--dp); position: fixed; top: 0; left: 0; right: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
     .nav-ticker { flex: 1; overflow: hidden; margin: 0 24px; }
-    .nav-ticker-inner { position: relative; height: 20px; }
+    .nav-ticker-inner { position: relative; height: 24px; }
     .nav-tick {
       position: absolute; left: 0; right: 0; text-align: center;
-      font-size: 0.78rem; font-weight: 700; letter-spacing: .04em;
-      color: rgba(196,160,240,0.9);
+      font-size: 0.92rem; font-weight: 600; letter-spacing: .02em;
+      color: #ffffff;
       opacity: 0; transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -1641,68 +1644,64 @@
   <!-- ===== HERO VIDEO + LEAD FORM ===== -->
   <section id="hero" style="padding-top:64px;background:#ffffff;" aria-label="Validate Your Vision moving company">
 
-    <!-- TOP ROW: Video left + Card right -->
-    <div style="position:relative;background:#0f0820;overflow:hidden;">
-      <div style="display:flex;align-items:stretch;min-height:460px;max-height:560px;">
+    <!-- VIDEO: full width, card floats over right side -->
+    <div style="position:relative;background:#0f0820;overflow:hidden;height:clamp(380px,55vw,520px);">
 
-        <!-- Video (left ~65%) -->
-        <div style="position:relative;flex:1 1 65%;overflow:hidden;">
-          <video autoplay muted loop playsinline preload="auto"
-            aria-label="VYV moving crew in action"
-            style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.85;">
-            <source src="assets/mid-video.mp4" type="video/mp4" />
-          </video>
-          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,14,42,0.1) 30%,rgba(25,14,42,0.72) 100%);"></div>
-          <!-- animated headline over video -->
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 36px;">
-            <h1 style="font-size:clamp(1.4rem,3vw,2.2rem);color:#ffffff;font-weight:800;line-height:1.2;margin:0;">
-              Professional Movers.<br>
-              <span style="color:#c4a0f0;" id="hero-anim">Great People.</span>
-            </h1>
+      <!-- Full-width video background -->
+      <video autoplay muted loop playsinline preload="auto"
+        aria-label="VYV moving crew in action"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;">
+        <source src="assets/mid-video.mp4" type="video/mp4" />
+      </video>
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,14,42,0.08) 20%,rgba(25,14,42,0.65) 100%);"></div>
+
+      <!-- Headline bottom-left over video -->
+      <div style="position:absolute;bottom:0;left:0;padding:28px 36px;max-width:60%;">
+        <h1 style="font-family:'Poppins',sans-serif;font-size:clamp(1.3rem,2.8vw,2rem);color:#ffffff;font-weight:800;line-height:1.2;margin:0;">
+          Professional Movers.<br>
+          <span style="color:#c4a0f0;" id="hero-anim">Great People.</span>
+        </h1>
+      </div>
+
+      <!-- Floating white card over right side of video -->
+      <div id="hero-float-card" style="position:absolute;top:50%;right:40px;transform:translateY(-50%);width:300px;background:#ffffff;border-radius:14px;padding:24px 22px;box-shadow:0 8px 40px rgba(0,0,0,0.28);">
+
+        <h2 style="font-family:'Poppins',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:18px;line-height:1.2;text-align:center;">
+          <span style="color:#8B5BC7;">Simplify</span> <span style="color:#190E2A;">Your Move</span>
+        </h2>
+
+        <!-- 3-step progress -->
+        <div style="display:flex;align-items:flex-start;margin-bottom:18px;">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="2 6.5 5 9.5 11 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:'Poppins',sans-serif;font-size:0.68rem;color:#5c4a7a;margin-top:5px;line-height:1.3;">Tell us about<br>your move</div>
+          </div>
+          <div style="flex:0 0 20px;height:2px;background:#16a34a;margin-top:13px;"></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="2 6.5 5 9.5 11 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:'Poppins',sans-serif;font-size:0.68rem;color:#5c4a7a;margin-top:5px;line-height:1.3;">Set your<br>move date</div>
+          </div>
+          <div style="flex:0 0 20px;height:2px;background:#16a34a;margin-top:13px;"></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="2 6.5 5 9.5 11 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:'Poppins',sans-serif;font-size:0.68rem;color:#5c4a7a;margin-top:5px;line-height:1.3;">Book your<br>crew online</div>
           </div>
         </div>
 
-        <!-- White card (right ~35%) -->
-        <div style="flex:0 0 360px;background:#ffffff;padding:36px 32px;display:flex;flex-direction:column;justify-content:center;box-shadow:-8px 0 32px rgba(25,14,42,0.18);">
-          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:20px;line-height:1.2;">
-            <span style="color:#8B5BC7;">Simplify</span> <span style="color:#190E2A;">Your Move</span>
-          </h2>
-
-          <!-- 3-step progress -->
-          <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:24px;">
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
-              <div style="width:28px;height:28px;border-radius:50%;background:#8B5BC7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2 7 5.5 10.5 12 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div style="font-size:0.72rem;color:#5c4a7a;margin-top:6px;line-height:1.3;">Tell us about<br>your move</div>
-            </div>
-            <div style="flex:0 0 24px;height:2px;background:#8B5BC7;margin-top:14px;"></div>
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
-              <div style="width:28px;height:28px;border-radius:50%;background:#8B5BC7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2 7 5.5 10.5 12 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div style="font-size:0.72rem;color:#5c4a7a;margin-top:6px;line-height:1.3;">Set your<br>move date</div>
-            </div>
-            <div style="flex:0 0 24px;height:2px;background:#8B5BC7;margin-top:14px;"></div>
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
-              <div style="width:28px;height:28px;border-radius:50%;background:#8B5BC7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2 7 5.5 10.5 12 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div style="font-size:0.72rem;color:#5c4a7a;margin-top:6px;line-height:1.3;">Book your<br>crew online</div>
-            </div>
+        <!-- Facebook 5-star -->
+        <div style="border-top:1px solid #f0eaff;padding-top:14px;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <div style="width:30px;height:30px;border-radius:6px;background:#1877F2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </div>
-
-          <!-- Facebook 5-star rating -->
-          <div style="border-top:1px solid #ede6ff;padding-top:18px;text-align:center;">
-            <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
-              <div style="width:36px;height:36px;border-radius:8px;background:#1877F2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </div>
-              <div>
-                <div style="color:#f5a623;font-size:1.1rem;letter-spacing:1px;line-height:1;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <div style="font-size:0.72rem;color:#5c4a7a;margin-top:3px;">5.0 &middot; Facebook Reviews</div>
-              </div>
-            </div>
+          <div>
+            <div style="color:#f5a623;font-size:0.95rem;letter-spacing:1px;line-height:1;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div style="font-family:'Poppins',sans-serif;font-size:0.65rem;color:#5c4a7a;margin-top:2px;">5.0 &middot; Facebook Reviews</div>
           </div>
         </div>
 
@@ -1790,13 +1789,15 @@
   </section>
 
   <style>
-    /* Hero card hidden on mobile, fields stack */
-    @media(max-width:768px){
-      #hero > div:first-child > div { flex-direction: column !important; }
-      #hero > div:first-child > div > div:last-child { flex: 0 0 auto !important; box-shadow: none !important; }
+    /* Hero floating card hidden on small screens */
+    @media(max-width:680px){
+      #hero-float-card { display: none !important; }
       #lf-fields-row { flex-direction: column !important; }
-      #lf-fields-row > div, #lf-fields-row > div:last-child { flex: 1 1 100% !important; min-width: 0 !important; }
+      #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; }
       #lf-fields-row button { width: 100% !important; }
+    }
+    @media(max-width:900px){
+      #hero-float-card { width: 240px !important; right: 16px !important; padding: 16px 14px !important; }
     }
   </style>
 
@@ -1819,7 +1820,7 @@
   <!-- ===== NEW HOMEPAGE SECTIONS (3MM-style layout) ===== -->
 
   <!-- TRUST FEATURE CARDS -->
-  <section style="background:#F4F0FF;padding:56px 20px;" aria-label="Why choose VYV">
+  <section style="background:#ffffff;padding:56px 20px;" aria-label="Why choose VYV">
     <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
       <div style="background:#ffffff;border-radius:12px;padding:32px 28px;box-shadow:0 2px 12px rgba(74,35,122,0.07);">
         <div style="margin-bottom:16px;">
@@ -1984,7 +1985,7 @@
   </section>
 
   <!-- TRUSTED BY NEIGHBORS (Video Social Proof) -->
-  <section style="background:#ffffff;padding:64px 20px;" aria-label="Customer video testimonials">
+  <section style="background:#F4F0FF;padding:64px 20px;" aria-label="Customer video testimonials">
     <div style="max-width:1100px;margin:0 auto;">
       <h2 style="text-align:center;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#190E2A;margin-bottom:40px;"><span style="color:#8B5BC7;">Trusted</span> by Virginia Neighbors</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:20px;">
