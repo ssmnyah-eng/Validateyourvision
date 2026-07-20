@@ -1100,35 +1100,53 @@
   async function _fetchAC(query, inputId, stopIndex) {
     const drop = _acDrops[inputId];
     try {
-      const url = `https://nominatim.openstreetmap.org/search?format=json&limit=7&countrycodes=us&viewbox=-83.7,39.5,-75.2,36.5&bounded=0&q=${encodeURIComponent(query)}`;
+      // Photon by Komoot -- CORS-friendly, no key needed, biased toward VA/DC service area
+      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=8&lang=en&lat=38.8&lon=-77.4`;
       const res  = await fetch(url);
+      if (!res.ok) { console.error('Autocomplete HTTP error', res.status); drop.style.display = 'none'; return; }
       const data = await res.json();
+      const features = (data.features || []).filter(f => {
+        const cc = (f.properties.countrycode || '').toUpperCase();
+        return cc === 'US';
+      });
       drop.innerHTML = '';
-      if (!data.length) { drop.style.display = 'none'; return; }
-      data.forEach(item => {
-        // Nominatim returns display_name like "123 Main St, Fredericksburg, Virginia, 22401, United States"
-        const full = item.display_name || '';
-        // Split into street/first part vs the rest
-        const parts = full.split(', ');
-        const mainPart = parts.slice(0, 2).join(', ');
-        const subPart  = parts.slice(2).join(', ').replace(', United States', '');
+      if (!features.length) { drop.style.display = 'none'; return; }
+      features.forEach(f => {
+        const p = f.properties;
+        // Build a full address string from Photon properties
+        const num    = p.housenumber || '';
+        const street = p.street || '';
+        const name   = p.name || '';
+        const city   = p.city || p.town || p.village || p.county || '';
+        const state  = p.state || '';
+        const zip    = p.postcode || '';
+
+        // Line 1: street address or place name
+        const line1 = [num, street].filter(Boolean).join(' ') || name || city;
+        // Line 2: city, state zip
+        const line2 = [city && city !== line1 ? city : '', state, zip].filter(Boolean).join(', ');
+        // Full address to put in the input
+        const fullAddr = [line1, line2].filter(Boolean).join(', ');
 
         const li = document.createElement('li');
         li.innerHTML = `
           <svg class="ac-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div><div class="ac-main">${mainPart}</div><div class="ac-sub">${subPart}</div></div>`;
+          <div><div class="ac-main">${line1}</div><div class="ac-sub">${line2}</div></div>`;
         li.addEventListener('mousedown', e => {
           e.preventDefault();
           const el = document.getElementById(inputId);
-          el.value = full.replace(', United States', '');
+          el.value = fullAddr;
           drop.style.display = 'none';
-          if (stopIndex !== null) { stops[stopIndex].address = el.value; updateMap(); }
+          if (stopIndex !== null) { stops[stopIndex].address = fullAddr; updateMap(); }
           else { updateMapFromStep0(); }
         });
         drop.appendChild(li);
       });
       drop.style.display = 'block';
-    } catch { drop.style.display = 'none'; }
+    } catch(err) {
+      console.error('Autocomplete error:', err);
+      drop.style.display = 'none';
+    }
   }
 
   function attachPlacesToStops() {
