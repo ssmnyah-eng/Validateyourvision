@@ -422,8 +422,54 @@
         <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
           <button class="btn-outline" onclick="goBackToCalendar()">&#8592; Previous</button>
           <button class="btn-add-stop" onclick="addStop()">+ Add a Stop</button>
-          <button class="btn-continue" style="flex:1;margin-top:0;" onclick="submitDetails()">CONTINUE</button>
+          <button class="btn-continue" style="flex:1;margin-top:0;" onclick="goToMoveInfo()">CONTINUE</button>
         </div>
+      </div>
+
+      <!-- ══ STEP 4: Move Info ══ -->
+      <div class="step" id="step4">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;cursor:pointer;" onclick="goBackToDetails()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
+        </div>
+
+        <h1>Please tell us more about your move.</h1>
+
+        <!-- Volume -->
+        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:24px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:4px;">
+            How much of your belongings are you moving?
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1.5px solid #8B5BC7;color:#8B5BC7;font-size:0.6rem;font-weight:800;margin-left:5px;cursor:help;" title="This helps us understand the scope of your move. It does not affect your rate.">i</span>
+          </div>
+          <div style="font-size:0.75rem;color:#8B5BC7;margin-bottom:14px;">Does not impact pricing</div>
+          <div class="chip-group" id="volumeChips">
+            <button class="chip active" onclick="selectSingle('volumeChips',this,'volume','everything')">Everything's going</button>
+            <button class="chip" onclick="selectSingle('volumeChips',this,'volume','most')">Most of my items</button>
+            <button class="chip" onclick="selectSingle('volumeChips',this,'volume','half')">About half of my belongings</button>
+            <button class="chip" onclick="selectSingle('volumeChips',this,'volume','few')">Just a few items</button>
+          </div>
+        </div>
+
+        <!-- Specialty items -->
+        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:4px;">
+            Are you moving any of these items?
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1.5px solid #8B5BC7;color:#8B5BC7;font-size:0.6rem;font-weight:800;margin-left:5px;cursor:help;" title="These items require extra care. Our team will note them during your virtual walkthrough.">i</span>
+          </div>
+          <div style="font-size:0.75rem;color:#8B5BC7;margin-bottom:14px;">Select all that apply &mdash; noted for your virtual walkthrough</div>
+          <div class="chip-group" id="specialtyChips">
+            <button class="chip" onclick="toggleMulti(this,'specialty','antiques')">Antiques</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','gun_safe')">Gun Safes</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','piano')">Pianos</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','pool_table')">Pool Tables</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','hot_tub')">Hot Tubs</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','large_tv')">Large TVs (65"+)</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','artwork')">Artwork / Mirrors</button>
+            <button class="chip" onclick="toggleMulti(this,'specialty','none')">None of these</button>
+          </div>
+        </div>
+
+        <button class="btn-continue" style="margin-top:20px;" onclick="submitAll()">CONTINUE</button>
       </div>
 
     </div>
@@ -751,7 +797,50 @@
     document.getElementById('mapFrame').src = src;
   }
 
-  function submitDetails() {
+  // ── Step 4 ─────────────────────────────────────────────
+  let moveVolume = 'everything';
+  let specialtyItems = [];
+
+  function goToMoveInfo() {
+    document.getElementById('step3').classList.remove('active');
+    document.getElementById('step4').classList.add('active');
+    document.getElementById('progressFill').style.width = '90%';
+  }
+
+  function goBackToDetails() {
+    document.getElementById('step4').classList.remove('active');
+    document.getElementById('step3').classList.add('active');
+    document.getElementById('progressFill').style.width = '80%';
+  }
+
+  function selectSingle(groupId, el, stateKey, value) {
+    document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    if (stateKey === 'volume') moveVolume = value;
+  }
+
+  function toggleMulti(el, stateKey, value) {
+    if (value === 'none') {
+      specialtyItems = [];
+      document.getElementById('specialtyChips').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      return;
+    }
+    // Deselect "None" if something else picked
+    document.getElementById('specialtyChips').querySelectorAll('.chip').forEach(c => {
+      if (c.textContent.trim() === 'None of these') c.classList.remove('active');
+    });
+    specialtyItems = specialtyItems.filter(v => v !== 'none');
+
+    el.classList.toggle('active');
+    if (el.classList.contains('active')) {
+      if (!specialtyItems.includes(value)) specialtyItems.push(value);
+    } else {
+      specialtyItems = specialtyItems.filter(v => v !== value);
+    }
+  }
+
+  function submitAll() {
     if (!selectedDate || !selectedTime) return;
     const iso = selectedDate.toISOString().split('T')[0];
     const rate = RATES[crewSize][selectedDate.getDay()];
@@ -760,9 +849,11 @@
     params.set('time', selectedTime);
     params.set('crew', crewSize);
     params.set('rate', rate);
-    params.set('from', stops[0].address || '');
-    params.set('to', stops[stops.length-1].address || '');
+    params.set('from', stops[0]?.address || '');
+    params.set('to', stops[stops.length-1]?.address || '');
     params.set('stops', stops.length);
+    params.set('volume', moveVolume);
+    if (specialtyItems.length) params.set('specialty', specialtyItems.join(','));
     window.location.href = '/booking-confirmed.html?' + params.toString();
   }
 </script>
