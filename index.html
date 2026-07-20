@@ -1557,69 +1557,50 @@
 </head>
 <body>
 
-  <!-- ===== ANNOUNCEMENT BAR ===== -->
-  <div id="top-bar" style="background:var(--ap);color:var(--tw);text-align:center;padding:9px 16px;font-family:'Raleway',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.03em;position:fixed;top:0;left:0;right:0;z-index:1000;">
-    Questions? Urgent move? &nbsp;
-    <a href="sms:+15403001414" style="color:#e0c8ff;text-decoration:underline;text-underline-offset:2px;">Text us: (540) 300-1414</a>
-    &nbsp;·&nbsp; Text only, we respond fast.
-    <button onclick="dismissBar()" aria-label="Dismiss"
-      style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(236,235,238,0.55);font-size:1.1rem;cursor:pointer;line-height:1;">✕</button>
-  </div>
-
   <!-- ===== NAVBAR ===== -->
   <nav id="nav" aria-label="Main navigation">
-    <div class="container">
-      <div class="nav-inner">
-        <a href="#hero" class="nav-logo" aria-label="Validate Your Vision home">
-          <div class="nav-logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
-              <!-- Background -->
-              <rect width="100" height="100" rx="12" fill="#210D46"/>
-              <!-- Speed lines -->
-              <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
-              <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
-              <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
-              <!-- Main roof left peak -->
-              <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
-              <!-- Second smaller roof right -->
-              <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-              <!-- Chimney -->
-              <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
-              <!-- 4-pane window -->
-              <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
-              <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
-              <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
-              <!-- VYV letters -->
-              <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
-              <!-- Divider lines -->
-              <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-              <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
-            </svg>
-          </div>
-          <div>
-            <div class="nav-logo-text">Validate Your Vision</div>
-          </div>
-        </a>
-        <ul class="nav-links" role="list">
-          <li><a href="#services">Services</a></li>
-          <li><a href="#process">Process</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li class="nav-dropdown">
-            <a href="#" onclick="return false;" aria-haspopup="true">More <span class="nav-dropdown-arrow">▾</span></a>
-            <div class="nav-dropdown-menu" role="menu">
-              <a href="#reviews" role="menuitem">Reviews</a>
-              <a href="#areas" role="menuitem">Areas We Serve</a>
-              <a href="#contact" role="menuitem">Contact</a>
-              <a href="/blog/" role="menuitem">Blog</a>
-            </div>
-          </li>
-        </ul>
-        <div class="nav-right">
-          <a href="/pricing-estimator.html" class="btn btn-primary">Build My Blueprint</a>
+    <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;max-width:1200px;margin:0 auto;">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="Validate Your Vision home" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;display:block;">
+            <rect width="100" height="100" rx="12" fill="#210D46"/>
+            <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+            <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+            <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
+            <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
+            <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
+            <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
+            <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+            <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+            <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+          </svg>
         </div>
-        <button class="hamburger" id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
+        <span style="font-family:Georgia,serif;font-size:0.92rem;font-weight:700;color:#ECEBEE;line-height:1.2;display:none;" class="nav-brand-text">Validate Your Vision</span>
+      </a>
+
+      <!-- Sliding ticker -->
+      <div class="nav-ticker" aria-live="polite" aria-label="Key features">
+        <div class="nav-ticker-inner" id="navTicker">
+          <span class="nav-tick active">Transparent Pricing, No Hidden Fees</span>
+          <span class="nav-tick">Minimum 2 Hour Hourly Rate</span>
+          <span class="nav-tick">Book Quickly and Easily Online</span>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;">
+        <a href="sms:+15403001414" style="color:rgba(236,235,238,0.85);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="nav-phone">(540) 300-1414</a>
+        <a href="#lead-form" class="btn btn-primary" style="padding:9px 18px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
+        <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
+          style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
         </button>
       </div>
     </div>
@@ -1634,100 +1615,132 @@
     <a href="#areas" onclick="toggleNav()">Areas We Serve</a>
     <a href="#contact" onclick="toggleNav()">Contact</a>
     <a href="/blog/" onclick="toggleNav()">Blog</a>
-    <a href="/pricing-estimator.html" class="btn btn-primary" onclick="toggleNav()">Build My Blueprint</a>
+    <a href="#lead-form" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
   </div>
 
-  <!-- ===== HERO ===== -->
-  <section id="hero" aria-labelledby="hero-heading">
-    <div class="hero-parallax parallax-bg" aria-hidden="true"></div>
-    <div class="hero-gradient" aria-hidden="true"></div>
-    <div class="particles" id="particles" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <div class="hero-location">Fredericksburg, VA &amp; Northern Virginia</div>
-            <h1 id="hero-heading" class="hero-h1">
-              Build Your Plan.<br />Get Your Guaranteed Flat Rate.<br />Book Online in 60 Seconds.
-            </h1>
-            <p class="hero-sub" style="margin-bottom:38px;">
-              We didn't build another contact form. We built the Moving Blueprint Builder, a complete moving system you control from your phone. No sales calls. No phone tag. No pressure.
-            </p>
-            <div class="hero-actions">
-              <a href="/pricing-estimator.html" class="btn btn-primary">🔧 Launch The Moving Blueprint Builder</a>
-              <a href="sms:+15403001414" class="btn btn-outline">Text Us: 540-300-1414</a>
-            </div>
-          </div>
-          <div class="hero-visual reveal-right">
-            <div class="hero-img-wrap">
-              <video
-                autoplay muted loop playsinline preload="auto"
-                aria-label="Moving boxes being packed and moved by a professional crew"
-                style="width:100%;height:500px;object-fit:cover;display:block;"
-              >
-                <source src="assets/mid-video.mp4" type="video/mp4" />
-              </video>
-              <div class="hero-img-overlay" aria-hidden="true"></div>
-            </div>
-            <div class="hero-float-card hf1">
-              <div class="hf1-icon" aria-hidden="true">✅</div>
-              <div>
-                <strong id="hf-move-label">Move Complete, On Time</strong>
-                <span id="hf-move-location">Fredericksburg, VA · Today</span>
-              </div>
-            </div>
-            <div class="hero-float-card hf2">
-              <div class="hf2-stars" aria-label="5 stars">★★★★★</div>
-              <strong>5.0</strong>
-              <span>Google Rating</span>
-            </div>
-          </div>
+  <style>
+    #nav { background: var(--dp); position: fixed; top: 0; left: 0; right: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
+    .nav-ticker { flex: 1; overflow: hidden; margin: 0 24px; }
+    .nav-ticker-inner { position: relative; height: 20px; }
+    .nav-tick {
+      position: absolute; left: 0; right: 0; text-align: center;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: .04em;
+      color: rgba(196,160,240,0.9);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .nav-tick.active { opacity: 1; transform: translateY(0); }
+    .nav-tick.exit { opacity: 0; transform: translateY(-10px); }
+    @media(max-width:600px){
+      .nav-ticker { display: none; }
+      .nav-phone { display: none; }
+      .nav-brand-text { display: block !important; }
+    }
+  </style>
+
+  <!-- ===== HERO VIDEO ===== -->
+  <section id="hero" style="padding-top:64px;background:var(--dp);" aria-label="Validate Your Vision moving company">
+    <div style="max-width:1100px;margin:0 auto;padding:40px 20px 0;">
+      <!-- Video box -->
+      <div style="position:relative;border-radius:16px;overflow:hidden;background:#0f0820;aspect-ratio:16/9;max-height:520px;">
+        <video
+          autoplay muted loop playsinline preload="auto"
+          aria-label="VYV moving crew in action"
+          style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.75;"
+        >
+          <source src="assets/mid-video.mp4" type="video/mp4" />
+        </video>
+        <!-- Gradient overlay -->
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(25,14,42,0.1) 40%, rgba(25,14,42,0.82) 100%);"></div>
+        <!-- Bottom text -->
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 32px;">
+          <p style="font-size:0.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,160,240,0.8);margin-bottom:8px;">Locally Owned &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp; Licensed &amp; Insured</p>
+          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.4rem,4vw,2.4rem);color:#ECEBEE;line-height:1.2;font-weight:700;">Professional Movers Who Show Up<br><span style="color:#c4a0f0;">On Time, On Budget, Every Time.</span></h1>
         </div>
       </div>
     </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <div class="scroll-hint-line"></div>
+  </section>
+
+  <!-- ===== LEAD FORM ===== -->
+  <section id="lead-form" style="background:var(--dp);padding:48px 20px 64px;" aria-label="Get your moving estimate">
+    <div style="max-width:680px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <p style="font-size:0.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:10px;">Free Estimate</p>
+        <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,5vw,2.2rem);color:#ECEBEE;line-height:1.2;margin-bottom:12px;">Simplify Your Move.</h2>
+        <p style="font-size:0.92rem;color:rgba(236,235,238,0.65);line-height:1.7;">Tell us where you're moving and we'll get you a quote. No phone call required.</p>
+      </div>
+
+      <form id="lead-capture-form" onsubmit="handleLeadFormSubmit(event)" novalidate
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(139,91,199,0.25);border-radius:16px;padding:32px 28px;">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <label for="lf-from" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Moving From *</label>
+            <input id="lf-from" name="moving_from" type="text" placeholder="City or ZIP" required autocomplete="off"
+              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
+          </div>
+          <div>
+            <label for="lf-to" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Moving To *</label>
+            <input id="lf-to" name="moving_to" type="text" placeholder="City or ZIP" required autocomplete="off"
+              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <label for="lf-name" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Full Name *</label>
+            <input id="lf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
+              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
+          </div>
+          <div>
+            <label for="lf-email" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Email *</label>
+            <input id="lf-email" name="email" type="email" placeholder="you@email.com" required autocomplete="email"
+              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label for="lf-phone" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Phone Number *</label>
+          <input id="lf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
+            style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
+            onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
+        </div>
+
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:24px;">
+          <input type="checkbox" id="lf-consent" name="consent" required
+            style="margin-top:3px;width:16px;height:16px;accent-color:#8B5BC7;flex-shrink:0;" />
+          <span style="font-size:0.78rem;color:rgba(236,235,238,0.55);line-height:1.6;">
+            I agree to receive texts and calls from Validate Your Vision regarding my move. We do not sell your data to anyone for any purpose. &nbsp;<a href="/policy.html" style="color:#8B5BC7;">Terms &amp; Privacy</a>
+          </span>
+        </label>
+
+        <input type="hidden" name="form_type" value="Lead Capture" />
+
+        <button type="submit" id="lf-submit"
+          style="width:100%;background:#8B5BC7;color:#ECEBEE;font-weight:800;font-size:1rem;padding:15px 24px;border:none;border-radius:50px;cursor:pointer;letter-spacing:.02em;transition:background .2s;">
+          Get My Estimate
+        </button>
+        <p id="lf-success" style="display:none;text-align:center;color:#c4a0f0;font-weight:600;padding:12px 0;margin-top:12px;">Got it! We'll be in touch shortly.</p>
+
+        <p style="text-align:center;margin-top:16px;">
+          <a href="/pricing-estimator.html" style="font-size:0.85rem;color:rgba(196,160,240,0.75);font-weight:600;text-decoration:none;">See full pricing &nbsp; &rarr;</a>
+        </p>
+      </form>
     </div>
   </section>
 
-  <!-- ===== QUICK CONTACT FORM (top) ===== -->
-  <section style="background:var(--lbg2);padding:48px 0;border-bottom:1px solid rgba(74,35,122,0.08);">
-    <div class="container">
-      <div style="max-width:680px;margin:0 auto;">
-        <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--mp);font-weight:700;margin-bottom:4px;text-align:center;">Have a question? Send us a quick message.</p>
-        <p style="text-align:center;font-size:0.85rem;color:var(--lmuted);margin-bottom:24px;">Text us: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a>, most replies within an hour</p>
-        <form id="top-contact-form" onsubmit="handleTopContactSubmit(event)" novalidate>
-          <div id="top-form-body" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:flex-end;">
-            <div>
-              <label for="tcf-name" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Name *</label>
-              <input id="tcf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <div>
-              <label for="tcf-phone" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Phone *</label>
-              <input id="tcf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <div>
-              <label for="tcf-msg" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Message *</label>
-              <input id="tcf-msg" name="message" type="text" placeholder="What do you need help with?" required
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <button type="submit" id="tcf-submit" class="btn btn-primary" style="white-space:nowrap;padding:12px 22px;font-size:0.88rem;">Send →</button>
-          </div>
-          <p id="top-form-success" style="display:none;text-align:center;color:var(--ap);font-weight:600;padding:12px 0;">Got it! We'll text you back soon.</p>
-        </form>
-        <style>
-          @media (max-width: 768px) {
-            #top-form-body { grid-template-columns: 1fr !important; }
-          }
-        </style>
-      </div>
-    </div>
-  </section>
+  <style>
+    @media(max-width:600px){
+      #lead-capture-form { padding: 22px 16px !important; }
+      #lead-capture-form > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+
 
   <!-- ===== TICKER ===== -->
   <div class="ticker-wrap" aria-hidden="true">
@@ -2802,21 +2815,35 @@
       });
     });
 
-    // ===== TOP CONTACT FORM =====
-    async function handleTopContactSubmit(e) {
+    // ===== LEAD CAPTURE FORM =====
+    async function handleLeadFormSubmit(e) {
       e.preventDefault();
-      const btn = document.getElementById('tcf-submit');
-      btn.disabled = true; btn.textContent = '…';
+      const btn = document.getElementById('lf-submit');
+      btn.disabled = true; btn.textContent = 'Sending…';
       try {
         const res = await fetch('https://formspree.io/f/mwvdowqr', {
           method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          document.getElementById('top-form-body').style.display = 'none';
-          document.getElementById('top-form-success').style.display = 'block';
-        } else { btn.disabled = false; btn.textContent = 'Send →'; alert('Please text us at 540-300-1414.'); }
-      } catch { btn.disabled = false; btn.textContent = 'Send →'; alert('Please text us at 540-300-1414.'); }
+          e.target.querySelectorAll('input,button,label').forEach(el => el.style.display = 'none');
+          document.getElementById('lf-success').style.display = 'block';
+        } else { btn.disabled = false; btn.textContent = 'Get My Estimate'; }
+      } catch { btn.disabled = false; btn.textContent = 'Get My Estimate'; }
     }
+
+    // ===== NAV TICKER =====
+    (function() {
+      const ticks = document.querySelectorAll('.nav-tick');
+      let cur = 0;
+      if (!ticks.length) return;
+      setInterval(() => {
+        ticks[cur].classList.remove('active');
+        ticks[cur].classList.add('exit');
+        setTimeout(() => { ticks[cur].classList.remove('exit'); }, 500);
+        cur = (cur + 1) % ticks.length;
+        ticks[cur].classList.add('active');
+      }, 3000);
+    })();
 
     // ===== CONTACT FORM =====
     async function handleContactSubmit(e) {
@@ -2968,23 +2995,11 @@
   </script>
   <script>
     // Keep nav positioned below announcement bar
-    function positionNav() {
-      var bar = document.getElementById('top-bar');
-      var nav = document.getElementById('nav');
-      if (!nav) return;
-      var barH = (bar && bar.offsetParent !== null) ? bar.offsetHeight : 0;
-      nav.style.top = barH + 'px';
-      // also push hero content down so it's not hidden behind fixed nav+bar
+    // Nav is fixed at top:0, hero has padding-top:64px via CSS
+    window.addEventListener('load', function() {
       var hero = document.getElementById('hero');
-      if (hero) hero.style.paddingTop = (barH + nav.offsetHeight) + 'px';
-    }
-    function dismissBar() {
-      var bar = document.getElementById('top-bar');
-      if (bar) bar.style.display = 'none';
-      positionNav();
-    }
-    window.addEventListener('load', positionNav);
-    window.addEventListener('resize', positionNav);
+      if (hero) hero.style.paddingTop = '64px';
+    });
   </script>
   <!-- Tawk.to chat disabled, re-add when ready -->
 </body>
