@@ -2506,23 +2506,25 @@
     async function handleLeadFormSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('lf-submit');
-      btn.disabled = true; btn.textContent = 'Sending…';
+      btn.disabled = true; btn.textContent = 'Going…';
       const fd = new FormData(e.target);
-      try {
-        const res = await fetch('https://formspree.io/f/mwvdowqr', {
-          method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          // Pass lead info to booking calendar
-          const params = new URLSearchParams();
-          params.set('name', fd.get('name') || '');
-          params.set('email', fd.get('email') || '');
-          params.set('phone', fd.get('phone') || '');
-          params.set('from', fd.get('moving_from') || '');
-          params.set('to', fd.get('moving_to') || '');
-          window.location.href = '/book.html?' + params.toString();
-        } else { btn.disabled = false; btn.textContent = 'Book My Move'; }
-      } catch { btn.disabled = false; btn.textContent = 'Book My Move'; }
+
+      // Build redirect URL immediately — don't wait on Formspree
+      const params = new URLSearchParams();
+      params.set('name', fd.get('name') || '');
+      params.set('email', fd.get('email') || '');
+      params.set('phone', fd.get('phone') || '');
+      params.set('from', fd.get('moving_from') || '');
+      params.set('to', fd.get('moving_to') || '');
+      const dest = '/book.html?' + params.toString();
+
+      // Fire Formspree in background, don't block redirect
+      fetch('https://formspree.io/f/mwvdowqr', {
+        method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+      }).catch(() => {});
+
+      // Redirect immediately
+      window.location.href = dest;
     }
 
     // ===== NAV TICKER =====

@@ -831,9 +831,10 @@
   let stops = [];
 
   function initStops() {
+    const p = new URLSearchParams(window.location.search);
     stops = [
-      { label: 'Moving from', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
-      { label: 'Moving to',   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
+      { label: 'Moving from', address: p.get('from')||'', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
+      { label: 'Moving to',   address: p.get('to')||'',   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
     ];
     renderStops();
   }
