@@ -193,6 +193,106 @@
     }
     .btn-back:hover { color: #4A237A; }
 
+    /* ── Stop cards ── */
+    .stop-card {
+      background: #fff;
+      border: 1px solid #ede6ff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px rgba(74,35,122,0.06);
+    }
+    .stop-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .stop-title { font-weight: 800; font-size: 0.92rem; color: #190E2A; }
+    .stop-controls { display: flex; gap: 4px; }
+    .stop-ctrl-btn {
+      width: 30px; height: 30px; border-radius: 7px; border: 1px solid #ede6ff;
+      background: #f7f5ff; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; color: #8B5BC7;
+      font-size: 0.85rem; transition: background 0.15s;
+    }
+    .stop-ctrl-btn:hover { background: #ede6ff; }
+    .stop-ctrl-btn.del { color: #dc2626; border-color: #fee2e2; background: #fff5f5; }
+    .stop-ctrl-btn.del:hover { background: #fee2e2; }
+
+    /* Address row */
+    .addr-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .addr-field {
+      flex: 1; position: relative;
+    }
+    .addr-field input, .unit-field input {
+      width: 100%; padding: 11px 12px 11px 34px;
+      border: 1.5px solid #ddd6f7; border-radius: 9px;
+      font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: #190E2A;
+      background: #fafafa; outline: none; transition: border-color 0.15s;
+    }
+    .addr-field input:focus, .unit-field input:focus { border-color: #8B5BC7; background: #fff; }
+    .addr-field .pin-icon {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      color: #8B5BC7;
+    }
+    .unit-field { width: 90px; }
+    .unit-field input { padding-left: 12px; }
+    .field-label {
+      font-size: 0.65rem; font-weight: 700; color: #8B5BC7; letter-spacing: 0.08em;
+      text-transform: uppercase; position: absolute; top: -8px; left: 10px;
+      background: #fff; padding: 0 4px;
+    }
+
+    /* Chip groups */
+    .chip-group-label {
+      font-size: 0.75rem; font-weight: 700; color: #190E2A;
+      margin-bottom: 8px; margin-top: 14px;
+    }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+    .chip {
+      padding: 6px 14px; border-radius: 30px;
+      border: 1.5px solid #ddd6f7; background: #fff;
+      font-family: 'Poppins', sans-serif; font-size: 0.78rem;
+      font-weight: 600; color: #4A237A; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .chip:hover { border-color: #8B5BC7; background: #F4F0FF; }
+    .chip.active { background: #190E2A; border-color: #190E2A; color: #fff; }
+    .chip-circle {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid #ddd6f7; background: #fff;
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      font-weight: 700; color: #4A237A; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .chip-circle:hover { border-color: #8B5BC7; background: #F4F0FF; }
+    .chip-circle.active { background: #190E2A; border-color: #190E2A; color: #fff; }
+
+    /* Bottom buttons */
+    .btn-outline {
+      padding: 13px 20px; border-radius: 10px;
+      border: 2px solid #190E2A; background: #fff;
+      font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: 0.88rem; color: #190E2A; cursor: pointer;
+      transition: background 0.15s; white-space: nowrap;
+    }
+    .btn-outline:hover { background: #f0edf8; }
+    .btn-add-stop {
+      padding: 13px 20px; border-radius: 10px;
+      border: 2px dashed #8B5BC7; background: #fff;
+      font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: 0.88rem; color: #8B5BC7; cursor: pointer;
+      transition: background 0.15s; white-space: nowrap;
+    }
+    .btn-add-stop:hover { background: #F4F0FF; }
+
+    /* Sticky map */
+    .right-panel {
+      position: sticky; top: 58px;
+      height: calc(100vh - 58px);
+    }
+
     @media (max-width: 780px) {
       .layout { grid-template-columns: 1fr; }
       .right-panel { display: none; }
@@ -306,17 +406,34 @@
         </div>
 
         <div class="selected-label" id="selectedLabel"></div>
-        <button class="btn-continue" id="dateContinueBtn" disabled onclick="goToConfirm()">CONTINUE</button>
+        <button class="btn-continue" id="dateContinueBtn" disabled onclick="goToDetails()">CONTINUE</button>
         <button class="btn-back" onclick="goBack()">&#8592; Change crew size</button>
+      </div>
+
+      <!-- ══ STEP 3: Move Details / Stops ══ -->
+      <div class="step" id="step3">
+        <div class="step-label">Step 3 of 3 &mdash; Move Details</div>
+        <h1>Where are you moving?</h1>
+        <p class="subtitle">Tell us about each location so we can plan your move accurately.</p>
+
+        <div id="stops-list"></div>
+
+        <!-- Bottom action bar -->
+        <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+          <button class="btn-outline" onclick="goBackToCalendar()">&#8592; Previous</button>
+          <button class="btn-add-stop" onclick="addStop()">+ Add a Stop</button>
+          <button class="btn-continue" style="flex:1;margin-top:0;" onclick="submitDetails()">CONTINUE</button>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- Map -->
-  <div class="right-panel">
-    <div class="map-badge">Serving Fredericksburg &amp; Northern VA</div>
+  <!-- Map (sticky right panel) -->
+  <div class="right-panel" id="mapPanel">
+    <div class="map-badge" id="mapBadge">Serving Fredericksburg &amp; Northern VA</div>
     <iframe
+      id="mapFrame"
       title="VYV Service Area"
       loading="lazy"
       allowfullscreen
@@ -472,7 +589,169 @@
     }
   }
 
-  function goToConfirm() {
+  function goToDetails() {
+    if (!selectedDate || !selectedTime) return;
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step3').classList.add('active');
+    document.getElementById('progressFill').style.width = '80%';
+    if (document.getElementById('stops-list').children.length === 0) {
+      initStops();
+    }
+  }
+
+  function goBackToCalendar() {
+    document.getElementById('step3').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '75%';
+  }
+
+  // ── Stops ──────────────────────────────────────────────
+  const PROP_TYPES = ['Home/Townhouse','Apartment','Highrise','Office','Storage'];
+  const SQ_FT = ['0-1000','1000-1500','1500-2000','2000-3000','3000+'];
+  const GARAGE = ['None','1 Car','2 Car','3+ Car'];
+
+  let stops = [];
+
+  function initStops() {
+    stops = [
+      { label: 'Moving from', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
+      { label: 'Moving to',   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
+    ];
+    renderStops();
+  }
+
+  function addStop() {
+    // Insert in the middle (before the last stop)
+    const midIndex = Math.max(1, stops.length - 1);
+    stops.splice(midIndex, 0, {
+      label: 'Stop', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null
+    });
+    renderStops();
+    // Scroll to new stop
+    const cards = document.querySelectorAll('.stop-card');
+    if (cards[midIndex]) cards[midIndex].scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+
+  function moveStop(index, dir) {
+    const target = index + dir;
+    if (target < 0 || target >= stops.length) return;
+    [stops[index], stops[target]] = [stops[target], stops[index]];
+    renderStops();
+  }
+
+  function deleteStop(index) {
+    if (stops.length <= 2) return;
+    stops.splice(index, 1);
+    renderStops();
+  }
+
+  function setField(index, field, value) {
+    stops[index][field] = value;
+  }
+
+  function renderStops() {
+    const list = document.getElementById('stops-list');
+    list.innerHTML = '';
+    const labels = stops.map((s, i) => {
+      if (i === 0) return 'Moving from';
+      if (i === stops.length - 1) return 'Moving to';
+      return `Stop ${i}`;
+    });
+
+    stops.forEach((stop, i) => {
+      const canUp = i > 0;
+      const canDown = i < stops.length - 1;
+      const canDelete = stops.length > 2;
+
+      const card = document.createElement('div');
+      card.className = 'stop-card';
+      card.innerHTML = `
+        <div class="stop-header">
+          <div class="stop-title">Stop ${i + 1} &mdash; <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
+          <div class="stop-controls">
+            <button class="stop-ctrl-btn" title="Move up" onclick="moveStop(${i},-1)" ${!canUp?'disabled style="opacity:0.3;cursor:default;"':''}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            </button>
+            <button class="stop-ctrl-btn" title="Move down" onclick="moveStop(${i},1)" ${!canDown?'disabled style="opacity:0.3;cursor:default;"':''}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            ${canDelete ? `<button class="stop-ctrl-btn del" title="Remove stop" onclick="deleteStop(${i})">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>` : ''}
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="addr-row">
+          <div class="addr-field">
+            <span class="field-label">${labels[i]}</span>
+            <svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <input type="text" placeholder="Enter a location" id="addr-${i}"
+              value="${stop.address||''}"
+              oninput="stops[${i}].address=this.value;updateMap()" />
+          </div>
+          <div class="unit-field">
+            <div style="position:relative;">
+              <input type="text" placeholder="Unit" id="unit-${i}" value="${stop.unit||''}"
+                oninput="stops[${i}].unit=this.value" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Property Type -->
+        <div class="chip-group-label">Property Type</div>
+        <div class="chip-group">
+          ${PROP_TYPES.map(pt => `<button class="chip${stop.propType===pt?' active':''}" onclick="selectChip(${i},'propType','${pt}',this)">${pt}</button>`).join('')}
+        </div>
+
+        <!-- Bedrooms -->
+        <div class="chip-group-label">Bedrooms</div>
+        <div class="chip-group">
+          ${[1,2,3,4,'5+'].map(b => `<button class="chip-circle${stop.beds==b?' active':''}" onclick="selectChip(${i},'beds','${b}',this)">${b}</button>`).join('')}
+        </div>
+
+        <!-- Square Footage -->
+        <div class="chip-group-label">Square Footage</div>
+        <div class="chip-group">
+          ${SQ_FT.map(sf => `<button class="chip${stop.sqft===sf?' active':''}" onclick="selectChip(${i},'sqft','${sf}',this)">${sf}</button>`).join('')}
+        </div>
+
+        <!-- Garage -->
+        <div class="chip-group-label">Garage</div>
+        <div class="chip-group">
+          ${GARAGE.map(g => `<button class="chip${stop.garage===g?' active':''}" onclick="selectChip(${i},'garage','${g}',this)">${g}</button>`).join('')}
+        </div>
+
+        <!-- Stories -->
+        <div class="chip-group-label">Stories</div>
+        <div class="chip-group">
+          ${[1,2,3,'4+'].map(s => `<button class="chip-circle${stop.stories==s?' active':''}" onclick="selectChip(${i},'stories','${s}',this)">${s}</button>`).join('')}
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function selectChip(stopIndex, field, value, el) {
+    stops[stopIndex][field] = value;
+    // Toggle active within the chip group
+    const group = el.parentElement;
+    group.querySelectorAll('.chip,.chip-circle').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function updateMap() {
+    const addrs = stops.map(s => s.address).filter(Boolean);
+    if (addrs.length < 2) return;
+    const origin = encodeURIComponent(addrs[0]);
+    const dest = encodeURIComponent(addrs[addrs.length - 1]);
+    const waypoints = addrs.slice(1,-1).map(a => encodeURIComponent(a)).join('|');
+    let src = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=${origin}&destination=${dest}`;
+    if (waypoints) src += `&waypoints=${waypoints}`;
+    document.getElementById('mapFrame').src = src;
+  }
+
+  function submitDetails() {
     if (!selectedDate || !selectedTime) return;
     const iso = selectedDate.toISOString().split('T')[0];
     const rate = RATES[crewSize][selectedDate.getDay()];
@@ -481,6 +760,9 @@
     params.set('time', selectedTime);
     params.set('crew', crewSize);
     params.set('rate', rate);
+    params.set('from', stops[0].address || '');
+    params.set('to', stops[stops.length-1].address || '');
+    params.set('stops', stops.length);
     window.location.href = '/booking-confirmed.html?' + params.toString();
   }
 </script>
