@@ -7,6 +7,7 @@
   <meta name="description" content="Choose your crew size and move date. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&libraries=places&callback=initGooglePlaces" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
@@ -1036,6 +1037,8 @@
       `;
       list.appendChild(card);
     });
+    // Attach Places autocomplete to freshly rendered inputs
+    attachPlacesToStops();
   }
 
   function selectChip(stopIndex, field, value, el) {
@@ -1044,6 +1047,43 @@
     const group = el.parentElement;
     group.querySelectorAll('.chip,.chip-circle').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
+  }
+
+  // ── Google Places Autocomplete ──────────────────────────
+  let placesReady = false;
+
+  function initGooglePlaces() {
+    placesReady = true;
+    // Attach to Step 0 address fields
+    attachPlaces('s0-from', null);
+    attachPlaces('s0-to', null);
+    // Attach to any already-rendered stop inputs
+    attachPlacesToStops();
+  }
+
+  function attachPlaces(inputId, stopIndex) {
+    const el = document.getElementById(inputId);
+    if (!el || el._acAttached) return;
+    el._acAttached = true;
+    const ac = new google.maps.places.Autocomplete(el, {
+      types: ['address'],
+      componentRestrictions: { country: 'us' },
+      fields: ['formatted_address']
+    });
+    ac.addListener('place_changed', () => {
+      const place = ac.getPlace();
+      const addr = place.formatted_address || el.value;
+      el.value = addr;
+      if (stopIndex !== null) {
+        stops[stopIndex].address = addr;
+        updateMap();
+      }
+    });
+  }
+
+  function attachPlacesToStops() {
+    if (!placesReady) return;
+    stops.forEach((_, i) => attachPlaces(`addr-${i}`, i));
   }
 
   function updateMap() {
