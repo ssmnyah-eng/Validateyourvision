@@ -545,7 +545,7 @@
             <input type="checkbox" id="addPackingCheck" onchange="togglePackingService()" style="width:18px;height:18px;margin-top:2px;accent-color:#8B5BC7;cursor:pointer;" />
             <div style="flex:1;">
               <div style="font-weight:700;color:#190E2A;margin-bottom:2px;">Add Packing / Unpacking Service</div>
-              <div style="font-size:0.78rem;color:#8B5BC7;font-weight:600;">$100/hr &nbsp;&middot;&nbsp; Fee calculated with your move total</div>
+              <div style="font-size:0.78rem;color:#8B5BC7;font-weight:600;">Same day-of-week pricing as your move &nbsp;&middot;&nbsp; Starting at $199/hr</div>
             </div>
           </label>
 
@@ -668,8 +668,8 @@
           <div id="packingPriceLine" style="display:none;">
             <div style="font-weight:700;color:#4A237A;font-size:0.85rem;margin-bottom:8px;">Packing / Unpacking Service</div>
             <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:14px;">
-              <span>Hourly rate (2 hr minimum)</span>
-              <span style="font-weight:700;color:#190E2A;">$100/hr</span>
+              <span>Hourly rate (3 packers, 2 hr minimum)</span>
+              <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
             </div>
           </div>
 
@@ -1149,7 +1149,8 @@
   // ── Step 5: Packing calendar ───────────────────────────
   let packViewYear, packViewMonth, packSelectedDate = null, packSelectedTime = null;
   let addPackingService = false;
-  const PACK_RATE = 100;
+  // Packing uses same rates as 3 movers
+  const PACK_RATES = RATES[3]; // { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
 
   function goToPackingStep() {
     document.getElementById('step4').classList.remove('active');
@@ -1192,17 +1193,26 @@
     for (let i = 0; i < firstDay; i++) {
       const el = document.createElement('div'); el.className = 'cal-day empty'; grid.appendChild(el);
     }
+    const packRateValues = Object.values(PACK_RATES);
+    const packMin = Math.min(...packRateValues);
+    const packMax = Math.max(...packRateValues);
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(packViewYear, packViewMonth, d);
+      const dow  = date.getDay();
+      const rate = PACK_RATES[dow];
       const el = document.createElement('div'); el.className = 'cal-day';
       if (date < today) {
         el.classList.add('past');
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#bbb;">$${PACK_RATE}</div>`;
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#bbb;">$${rate}</div>`;
       } else {
         if (date.getTime() === today.getTime()) el.classList.add('today');
         const isSel = packSelectedDate && date.getTime() === packSelectedDate.getTime();
         if (isSel) el.classList.add('selected');
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-price style="color:${isSel?'#fff':'#16a34a'};">$${PACK_RATE}</div>`;
+        const priceColor = isSel ? '#fff' : (rate === packMin ? '#16a34a' : rate === packMax ? '#c2410c' : '#8B5BC7');
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-price style="color:${priceColor};">$${rate}</div>`;
+        if (FEW_LEFT_DAYS.has(dow)) {
+          el.innerHTML += `<div style="font-size:0.55rem;color:${isSel?'#fff':'#dc2626'};font-weight:700;line-height:1;">Few Left</div>`;
+        }
         el.addEventListener('click', () => {
           packSelectedDate = date; packSelectedTime = null;
           document.getElementById('packAmBtn').classList.remove('active');
@@ -1245,6 +1255,10 @@
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
     // Show packing line
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
+    if (addPackingService && packSelectedDate) {
+      const packRate = PACK_RATES[packSelectedDate.getDay()];
+      document.getElementById('packRateDisplay').textContent = `$${packRate}/hr`;
+    }
   }
 
   function goBackToPacking() {
