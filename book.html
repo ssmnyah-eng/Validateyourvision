@@ -7,14 +7,8 @@
   <meta name="description" content="Choose your crew size and move date. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    .ac-drop { position:absolute;z-index:99999;left:0;right:0;top:100%;margin:0;padding:4px 0;list-style:none;background:#fff;border-radius:4px;box-shadow:0 2px 6px 2px rgba(0,0,0,0.2);max-height:260px;overflow-y:auto;display:none; }
-    .ac-drop li { padding:10px 16px;cursor:pointer;font-size:0.9rem;color:#333;line-height:1.4;display:flex;align-items:flex-start;gap:10px; }
-    .ac-drop li:hover, .ac-drop li.ac-active { background:#f5f5f5; }
-    .ac-drop li .ac-icon { color:#777;margin-top:2px;flex-shrink:0; }
-    .ac-drop li .ac-main { font-weight:500;color:#111; }
-    .ac-drop li .ac-sub { font-size:0.82rem;color:#777; }
-  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initGooglePlaces" async defer></script>
+  <style>.pac-container{z-index:99999!important;font-family:'Poppins',sans-serif;}</style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
@@ -1056,104 +1050,34 @@
     el.classList.add('active');
   }
 
-  // ── Address Autocomplete (Photon / OpenStreetMap) ──────
-  const _acTimers = {}, _acDrops = {};
+  // ── Address Autocomplete (Google Places) ───────────────
+  const _acInstances = {};
+  const PLACES_OPTS = { types: ['address'], componentRestrictions: { country: 'us' } };
 
   function attachPlaces(inputId, stopIndex) {
     const el = document.getElementById(inputId);
-    if (!el || el._acAttached) return;
-    el._acAttached = true;
-
-    const wrap = el.parentElement;
-    wrap.style.position = 'relative';
-    const drop = document.createElement('ul');
-    drop.className = 'ac-drop';
-    wrap.appendChild(drop);
-    _acDrops[inputId] = drop;
-
-    let activeIdx = -1;
-
-    el.addEventListener('input', () => {
-      clearTimeout(_acTimers[inputId]);
-      activeIdx = -1;
-      const q = el.value.trim();
-      if (q.length < 2) { drop.style.display = 'none'; return; }
-      _acTimers[inputId] = setTimeout(() => _fetchAC(q, inputId, stopIndex), 100);
+    if (!el || _acInstances[inputId]) return;
+    const ac = new google.maps.places.Autocomplete(el, PLACES_OPTS);
+    _acInstances[inputId] = ac;
+    ac.addListener('place_changed', () => {
+      const place = ac.getPlace();
+      const addr = place.formatted_address || el.value;
+      el.value = addr;
+      if (stopIndex !== null) { stops[stopIndex].address = addr; updateMap(); }
+      else { updateMapFromStep0(); }
     });
-
-    el.addEventListener('keydown', e => {
-      const items = drop.querySelectorAll('li');
-      if (!items.length || drop.style.display === 'none') return;
-      if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); _highlight(items, activeIdx); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); _highlight(items, activeIdx); }
-      else if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); items[activeIdx].click(); }
-      else if (e.key === 'Escape') { drop.style.display = 'none'; }
-    });
-
-    document.addEventListener('click', e => { if (!wrap.contains(e.target)) drop.style.display = 'none'; });
-  }
-
-  function _highlight(items, idx) {
-    items.forEach((li, i) => li.classList.toggle('ac-active', i === idx));
-  }
-
-  async function _fetchAC(query, inputId, stopIndex) {
-    const drop = _acDrops[inputId];
-    try {
-      // Photon by Komoot -- CORS-friendly, no key needed, biased toward VA/DC service area
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=8&lang=en&lat=38.8&lon=-77.4`;
-      const res  = await fetch(url);
-      if (!res.ok) { console.error('Autocomplete HTTP error', res.status); drop.style.display = 'none'; return; }
-      const data = await res.json();
-      const features = (data.features || []).filter(f => {
-        const cc = (f.properties.countrycode || '').toUpperCase();
-        return cc === 'US';
-      });
-      drop.innerHTML = '';
-      if (!features.length) { drop.style.display = 'none'; return; }
-      features.forEach(f => {
-        const p = f.properties;
-        // Build a full address string from Photon properties
-        const num    = p.housenumber || '';
-        const street = p.street || '';
-        const name   = p.name || '';
-        const city   = p.city || p.town || p.village || p.county || '';
-        const state  = p.state || '';
-        const zip    = p.postcode || '';
-
-        // Line 1: street address or place name
-        const line1 = [num, street].filter(Boolean).join(' ') || name || city;
-        // Line 2: city, state zip
-        const line2 = [city && city !== line1 ? city : '', state, zip].filter(Boolean).join(', ');
-        // Full address to put in the input
-        const fullAddr = [line1, line2].filter(Boolean).join(', ');
-
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <svg class="ac-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div><div class="ac-main">${line1}</div><div class="ac-sub">${line2}</div></div>`;
-        li.addEventListener('mousedown', e => {
-          e.preventDefault();
-          const el = document.getElementById(inputId);
-          el.value = fullAddr;
-          drop.style.display = 'none';
-          if (stopIndex !== null) { stops[stopIndex].address = fullAddr; updateMap(); }
-          else { updateMapFromStep0(); }
-        });
-        drop.appendChild(li);
-      });
-      drop.style.display = 'block';
-    } catch(err) {
-      console.error('Autocomplete error:', err);
-      drop.style.display = 'none';
-    }
   }
 
   function attachPlacesToStops() {
+    if (typeof google === 'undefined') return;
     stops.forEach((_, i) => attachPlaces(`addr-${i}`, i));
   }
 
-  function initGooglePlaces() {}
+  function initGooglePlaces() {
+    attachPlaces('s0-from', null);
+    attachPlaces('s0-to', null);
+    attachPlacesToStops();
+  }
 
   function setMapSrc(from, to) {
     const frame = document.getElementById('mapFrame');
@@ -1401,12 +1325,10 @@
       };
       // step1 is already active (default), step0 stays hidden
     } else {
-      // Direct entry -- show step0 first, attach autocomplete to its fields
+      // Direct entry -- show step0 first (Google Places callback handles autocomplete)
       document.getElementById('step0').classList.add('active');
       document.getElementById('step1').classList.remove('active');
       document.getElementById('progressFill').style.width = '0%';
-      attachPlaces('s0-from', null);
-      attachPlaces('s0-to', null);
     }
   })();
 </script>
