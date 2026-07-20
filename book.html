@@ -645,24 +645,11 @@
             <span>Hourly rate (2 hr minimum)</span>
             <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:14px;">
-            <span>Truck fee <span style="font-size:0.72rem;">(estimated by drive time)</span></span>
-            <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">TBD at walkthrough</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:#5c4a7a;margin-bottom:6px;">
+            <span>Truck fee <span style="font-size:0.72rem;">(based on move distance)</span></span>
+            <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
           </div>
-
-          <!-- Truck fee selector -->
-          <div style="background:#F4F0FF;border-radius:8px;padding:12px;margin-bottom:14px;">
-            <div style="font-size:0.75rem;font-weight:700;color:#4A237A;margin-bottom:8px;">Estimate your truck fee (return drive from your destination):</div>
-            <select id="truckFeeSelect" onchange="updateTruckFee()" style="width:100%;padding:9px 10px;border:1.5px solid #ddd6f7;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.82rem;color:#190E2A;background:#fff;outline:none;">
-              <option value="">Select approximate drive time...</option>
-              <option value="99">Under 30 min &mdash; $99</option>
-              <option value="125">31-60 min &mdash; $125</option>
-              <option value="250">1-2 hours &mdash; $250</option>
-              <option value="350">2-3 hours &mdash; $350</option>
-              <option value="475">3-4 hours &mdash; $475</option>
-              <option value="custom">4+ hours &mdash; Custom quote</option>
-            </select>
-          </div>
+          <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:14px;"></div>
 
           <!-- Packing line (shown if added) -->
           <div id="packingPriceLine" style="display:none;">
@@ -1253,6 +1240,8 @@
     // Show rate
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
+    // Auto-calculate truck fee from addresses
+    autoCalcTruckFee();
     // Show packing line
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
@@ -1267,13 +1256,43 @@
     document.getElementById('progressFill').style.width = '93%';
   }
 
-  function updateTruckFee() {
-    const val = document.getElementById('truckFeeSelect').value;
-    const display = document.getElementById('summary-truck-display');
-    if (!val) { truckFee = null; display.textContent = 'TBD at walkthrough'; return; }
-    if (val === 'custom') { truckFee = 'custom'; display.textContent = 'Custom quote'; return; }
-    truckFee = parseInt(val);
-    display.textContent = `$${truckFee}`;
+  function calcTruckFeeFromMiles(miles) {
+    if (miles <= 50) return 99;
+    return 125;
+  }
+
+  function autoCalcTruckFee() {
+    const fromAddr = s0Data.from || new URLSearchParams(window.location.search).get('from') || (stops[0] && stops[0].address) || '';
+    const toAddr   = s0Data.to   || new URLSearchParams(window.location.search).get('to')   || (stops[stops.length-1] && stops[stops.length-1].address) || '';
+    const display  = document.getElementById('summary-truck-display');
+    const note     = document.getElementById('truck-distance-note');
+
+    if (!fromAddr || !toAddr || typeof google === 'undefined') {
+      truckFee = 99; display.textContent = '$99'; note.textContent = '';
+      return;
+    }
+
+    display.textContent = 'Calculating...';
+    note.textContent = '';
+
+    const svc = new google.maps.DistanceMatrixService();
+    svc.getDistanceMatrix({
+      origins: [fromAddr],
+      destinations: [toAddr],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    }, (res, status) => {
+      if (status === 'OK' && res.rows[0].elements[0].status === 'OK') {
+        const meters = res.rows[0].elements[0].distance.value;
+        const miles  = Math.round(meters / 1609.34);
+        truckFee     = calcTruckFeeFromMiles(miles);
+        display.textContent = `$${truckFee}`;
+        note.textContent    = `Estimated based on ${miles} mile move`;
+      } else {
+        truckFee = 99; display.textContent = '$99';
+        note.textContent = 'Estimated fee';
+      }
+    });
   }
 
   async function submitFinalReservation() {
