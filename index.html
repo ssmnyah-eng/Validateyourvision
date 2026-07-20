@@ -1639,105 +1639,99 @@
     }
   </style>
 
-  <!-- ===== HERO VIDEO ===== -->
-  <section id="hero" style="padding-top:64px;background:var(--dp);" aria-label="Validate Your Vision moving company">
-    <div style="max-width:1100px;margin:0 auto;padding:40px 20px 0;">
-      <!-- Video box -->
-      <div style="position:relative;border-radius:16px;overflow:hidden;background:#0f0820;aspect-ratio:16/9;max-height:520px;">
-        <video
-          autoplay muted loop playsinline preload="auto"
-          aria-label="VYV moving crew in action"
-          style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.75;"
-        >
-          <source src="assets/mid-video.mp4" type="video/mp4" />
-        </video>
-        <!-- Gradient overlay -->
-        <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(25,14,42,0.1) 40%, rgba(25,14,42,0.82) 100%);"></div>
-        <!-- Bottom text -->
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 32px;">
-          <p style="font-size:0.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,160,240,0.8);margin-bottom:8px;">Locally Owned &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp; Licensed &amp; Insured</p>
-          <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.4rem,4vw,2.4rem);color:#ECEBEE;line-height:1.2;font-weight:700;">Professional Movers Who Show Up<br><span style="color:#c4a0f0;">On Time, On Budget, Every Time.</span></h1>
-        </div>
+  <!-- ===== HERO VIDEO + LEAD FORM ===== -->
+  <section id="hero" style="padding-top:64px;background:#ffffff;" aria-label="Validate Your Vision moving company">
+
+    <!-- Video: full width, flush under nav -->
+    <div style="position:relative;background:#0f0820;aspect-ratio:16/9;max-height:560px;overflow:hidden;">
+      <video autoplay muted loop playsinline preload="auto"
+        aria-label="VYV moving crew in action"
+        style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.8;">
+        <source src="assets/mid-video.mp4" type="video/mp4" />
+      </video>
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,14,42,0.05) 30%,rgba(25,14,42,0.78) 100%);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 32px;">
+        <p style="font-size:0.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,160,240,0.85);margin-bottom:8px;">Locally Owned &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp; Licensed &amp; Insured</p>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.3rem,3.5vw,2.2rem);color:#ECEBEE;line-height:1.2;font-weight:700;margin:0;">Professional Movers Who Show Up<br><span style="color:#c4a0f0;">On Time, On Budget, Every Time.</span></h1>
       </div>
     </div>
-  </section>
 
-  <!-- ===== LEAD FORM ===== -->
-  <section id="lead-form" style="background:var(--dp);padding:48px 20px 64px;" aria-label="Get your moving estimate">
-    <div style="max-width:680px;margin:0 auto;">
-      <div style="text-align:center;margin-bottom:32px;">
-        <p style="font-size:0.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:10px;">Free Estimate</p>
-        <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,5vw,2.2rem);color:#ECEBEE;line-height:1.2;margin-bottom:12px;">Simplify Your Move.</h2>
-        <p style="font-size:0.92rem;color:rgba(236,235,238,0.65);line-height:1.7;">Tell us where you're moving and we'll get you a quote. No phone call required.</p>
+    <!-- Lead form: white bg, zero gap from video -->
+    <div id="lead-form" style="background:#ffffff;padding:40px 20px 52px;">
+      <div style="max-width:700px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:28px;">
+          <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.5rem,4vw,2rem);color:#190E2A;line-height:1.2;margin-bottom:10px;">Simplify Your Move.</h2>
+          <p style="font-size:0.9rem;color:#5c4a7a;line-height:1.7;">Tell us where you're moving and we'll get back to you fast. No phone call required.</p>
+        </div>
+
+        <form id="lead-capture-form" onsubmit="handleLeadFormSubmit(event)" novalidate
+          style="background:#f7f4ff;border:1.5px solid rgba(74,35,122,0.12);border-radius:16px;padding:32px 28px;">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="lf-grid">
+            <div>
+              <label for="lf-from" style="display:block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A237A;margin-bottom:5px;">Moving From *</label>
+              <input id="lf-from" name="moving_from" type="text" placeholder="City or ZIP" required autocomplete="off"
+                style="width:100%;padding:11px 13px;border:1.5px solid #d8cff0;border-radius:8px;font-size:0.9rem;color:#190E2A;background:#fff;outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d8cff0'" />
+            </div>
+            <div>
+              <label for="lf-to" style="display:block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A237A;margin-bottom:5px;">Moving To *</label>
+              <input id="lf-to" name="moving_to" type="text" placeholder="City or ZIP" required autocomplete="off"
+                style="width:100%;padding:11px 13px;border:1.5px solid #d8cff0;border-radius:8px;font-size:0.9rem;color:#190E2A;background:#fff;outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d8cff0'" />
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="lf-grid">
+            <div>
+              <label for="lf-name" style="display:block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A237A;margin-bottom:5px;">Full Name *</label>
+              <input id="lf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
+                style="width:100%;padding:11px 13px;border:1.5px solid #d8cff0;border-radius:8px;font-size:0.9rem;color:#190E2A;background:#fff;outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d8cff0'" />
+            </div>
+            <div>
+              <label for="lf-email" style="display:block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A237A;margin-bottom:5px;">Email *</label>
+              <input id="lf-email" name="email" type="email" placeholder="you@email.com" required autocomplete="email"
+                style="width:100%;padding:11px 13px;border:1.5px solid #d8cff0;border-radius:8px;font-size:0.9rem;color:#190E2A;background:#fff;outline:none;transition:border-color .2s;"
+                onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d8cff0'" />
+            </div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <label for="lf-phone" style="display:block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A237A;margin-bottom:5px;">Phone Number *</label>
+            <input id="lf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
+              style="width:100%;padding:11px 13px;border:1.5px solid #d8cff0;border-radius:8px;font-size:0.9rem;color:#190E2A;background:#fff;outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d8cff0'" />
+          </div>
+
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:22px;">
+            <input type="checkbox" id="lf-consent" name="consent" required
+              style="margin-top:3px;width:16px;height:16px;accent-color:#8B5BC7;flex-shrink:0;" />
+            <span style="font-size:0.77rem;color:#5c4a7a;line-height:1.6;">
+              I agree to receive texts and calls from Validate Your Vision regarding my move. We do not sell your data to anyone for any purpose. <a href="/policy.html" style="color:#8B5BC7;">Terms &amp; Privacy</a>
+            </span>
+          </label>
+
+          <input type="hidden" name="form_type" value="Lead Capture" />
+
+          <button type="submit" id="lf-submit"
+            style="width:100%;background:#8B5BC7;color:#ECEBEE;font-weight:800;font-size:1rem;padding:15px 24px;border:none;border-radius:50px;cursor:pointer;letter-spacing:.02em;transition:background .2s;">
+            Get My Estimate
+          </button>
+          <p id="lf-success" style="display:none;text-align:center;color:#4A237A;font-weight:700;padding:14px 0;margin-top:8px;">Got it! We'll be in touch shortly.</p>
+
+          <p style="text-align:center;margin-top:14px;">
+            <a href="/pricing-estimator.html" style="font-size:0.84rem;color:#8B5BC7;font-weight:600;text-decoration:none;">See full pricing &nbsp; &rarr;</a>
+          </p>
+        </form>
       </div>
-
-      <form id="lead-capture-form" onsubmit="handleLeadFormSubmit(event)" novalidate
-        style="background:rgba(255,255,255,0.04);border:1px solid rgba(139,91,199,0.25);border-radius:16px;padding:32px 28px;">
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-          <div>
-            <label for="lf-from" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Moving From *</label>
-            <input id="lf-from" name="moving_from" type="text" placeholder="City or ZIP" required autocomplete="off"
-              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
-          </div>
-          <div>
-            <label for="lf-to" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Moving To *</label>
-            <input id="lf-to" name="moving_to" type="text" placeholder="City or ZIP" required autocomplete="off"
-              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-          <div>
-            <label for="lf-name" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Full Name *</label>
-            <input id="lf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
-              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
-          </div>
-          <div>
-            <label for="lf-email" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Email *</label>
-            <input id="lf-email" name="email" type="email" placeholder="you@email.com" required autocomplete="email"
-              style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
-              onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
-          </div>
-        </div>
-
-        <div style="margin-bottom:20px;">
-          <label for="lf-phone" style="display:block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(196,160,240,0.9);margin-bottom:6px;">Phone Number *</label>
-          <input id="lf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-            style="width:100%;padding:12px 14px;border:1.5px solid rgba(139,91,199,0.3);border-radius:9px;font-size:0.9rem;color:#ECEBEE;background:rgba(255,255,255,0.06);outline:none;transition:border-color .2s;"
-            onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='rgba(139,91,199,0.3)'" />
-        </div>
-
-        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:24px;">
-          <input type="checkbox" id="lf-consent" name="consent" required
-            style="margin-top:3px;width:16px;height:16px;accent-color:#8B5BC7;flex-shrink:0;" />
-          <span style="font-size:0.78rem;color:rgba(236,235,238,0.55);line-height:1.6;">
-            I agree to receive texts and calls from Validate Your Vision regarding my move. We do not sell your data to anyone for any purpose. &nbsp;<a href="/policy.html" style="color:#8B5BC7;">Terms &amp; Privacy</a>
-          </span>
-        </label>
-
-        <input type="hidden" name="form_type" value="Lead Capture" />
-
-        <button type="submit" id="lf-submit"
-          style="width:100%;background:#8B5BC7;color:#ECEBEE;font-weight:800;font-size:1rem;padding:15px 24px;border:none;border-radius:50px;cursor:pointer;letter-spacing:.02em;transition:background .2s;">
-          Get My Estimate
-        </button>
-        <p id="lf-success" style="display:none;text-align:center;color:#c4a0f0;font-weight:600;padding:12px 0;margin-top:12px;">Got it! We'll be in touch shortly.</p>
-
-        <p style="text-align:center;margin-top:16px;">
-          <a href="/pricing-estimator.html" style="font-size:0.85rem;color:rgba(196,160,240,0.75);font-weight:600;text-decoration:none;">See full pricing &nbsp; &rarr;</a>
-        </p>
-      </form>
     </div>
   </section>
 
   <style>
     @media(max-width:600px){
-      #lead-capture-form { padding: 22px 16px !important; }
-      #lead-capture-form > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      #lead-capture-form { padding: 20px 14px !important; }
+      .lf-grid { grid-template-columns: 1fr !important; }
     }
   </style>
 
@@ -1771,11 +1765,6 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item reveal" data-d="1">
-          <div class="stat-num counter" data-target="100">0</div>
-          <div class="stat-label">% Virtual Walkthroughs</div>
-          <div class="stat-bar"></div>
-        </div>
-        <div class="stat-item reveal" data-d="2">
           <div class="stat-num counter" data-target="5">0</div>
           <div class="stat-label">Star Reviews</div>
           <div class="stat-bar"></div>
