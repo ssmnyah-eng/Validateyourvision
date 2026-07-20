@@ -8,11 +8,12 @@
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    .ac-drop { position:absolute;z-index:99999;left:0;right:0;top:calc(100% + 4px);margin:0;padding:0;list-style:none;background:#fff;border:1.5px solid #8B5BC7;border-radius:10px;box-shadow:0 8px 24px rgba(25,14,42,0.15);max-height:240px;overflow-y:auto;display:none; }
-    .ac-drop li { padding:10px 14px;cursor:pointer;font-size:0.87rem;color:#190E2A;border-bottom:1px solid #f0ebff;line-height:1.35; }
-    .ac-drop li:last-child { border-bottom:none; }
-    .ac-drop li:hover, .ac-drop li.ac-active { background:#F4F0FF; }
-    .ac-drop li strong { color:#4A237A; }
+    .ac-drop { position:absolute;z-index:99999;left:0;right:0;top:100%;margin:0;padding:4px 0;list-style:none;background:#fff;border-radius:4px;box-shadow:0 2px 6px 2px rgba(0,0,0,0.2);max-height:260px;overflow-y:auto;display:none; }
+    .ac-drop li { padding:10px 16px;cursor:pointer;font-size:0.9rem;color:#333;line-height:1.4;display:flex;align-items:flex-start;gap:10px; }
+    .ac-drop li:hover, .ac-drop li.ac-active { background:#f5f5f5; }
+    .ac-drop li .ac-icon { color:#777;margin-top:2px;flex-shrink:0; }
+    .ac-drop li .ac-main { font-weight:500;color:#111; }
+    .ac-drop li .ac-sub { font-size:0.82rem;color:#777; }
   </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1079,7 +1080,7 @@
       activeIdx = -1;
       const q = el.value.trim();
       if (q.length < 2) { drop.style.display = 'none'; return; }
-      _acTimers[inputId] = setTimeout(() => _fetchAC(q, inputId, stopIndex), 180);
+      _acTimers[inputId] = setTimeout(() => _fetchAC(q, inputId, stopIndex), 100);
     });
 
     el.addEventListener('keydown', e => {
@@ -1101,26 +1102,36 @@
   async function _fetchAC(query, inputId, stopIndex) {
     const drop = _acDrops[inputId];
     try {
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=6&lang=en&bbox=-80.0,36.5,-75.0,39.5`;
+      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=7&lang=en`;
       const res  = await fetch(url);
       const data = await res.json();
       drop.innerHTML = '';
-      const features = (data.features || []).filter(f => f.properties.country === 'United States of America' || f.properties.countrycode === 'US');
+      const features = (data.features || []).filter(f =>
+        f.properties.countrycode === 'US' || f.properties.country === 'United States of America'
+      );
       if (!features.length) { drop.style.display = 'none'; return; }
       features.forEach(f => {
         const p = f.properties;
-        const street = [p.housenumber, p.street].filter(Boolean).join(' ');
-        const city   = p.city || p.town || p.village || '';
+        const num    = p.housenumber || '';
+        const street = p.street || '';
+        const city   = p.city || p.town || p.village || p.county || '';
         const state  = p.state || '';
-        const label  = [street || p.name, city, state].filter(Boolean).join(', ');
+        const zip    = p.postcode || '';
+        // Build two-line display like Google
+        const mainPart = [num, street].filter(Boolean).join(' ') || p.name || city;
+        const subParts = [city !== mainPart ? city : '', state, zip].filter(Boolean).join(', ');
+        const fullAddr = [mainPart, subParts].filter(Boolean).join(', ');
+
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${street || p.name || city}</strong>${city && street ? ', ' + city : ''}${state ? ', ' + state : ''}`;
+        li.innerHTML = `
+          <svg class="ac-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><div class="ac-main">${mainPart}</div><div class="ac-sub">${subParts}</div></div>`;
         li.addEventListener('mousedown', e => {
           e.preventDefault();
           const el = document.getElementById(inputId);
-          el.value = label;
+          el.value = fullAddr;
           drop.style.display = 'none';
-          if (stopIndex !== null) { stops[stopIndex].address = label; updateMap(); }
+          if (stopIndex !== null) { stops[stopIndex].address = fullAddr; updateMap(); }
           else { updateMapFromStep0(); }
         });
         drop.appendChild(li);
