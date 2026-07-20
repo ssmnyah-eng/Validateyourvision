@@ -7,7 +7,6 @@
   <meta name="description" content="Choose your crew size and move date. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&libraries=places&callback=initGooglePlaces" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
@@ -1049,42 +1048,70 @@
     el.classList.add('active');
   }
 
-  // ── Google Places Autocomplete ──────────────────────────
-  let placesReady = false;
-
-  function initGooglePlaces() {
-    placesReady = true;
-    // Attach to Step 0 address fields
-    attachPlaces('s0-from', null);
-    attachPlaces('s0-to', null);
-    // Attach to any already-rendered stop inputs
-    attachPlacesToStops();
-  }
+  // ── Address Autocomplete (OpenStreetMap Nominatim) ─────
+  const acTimers = {};
+  const acDropdowns = {};
 
   function attachPlaces(inputId, stopIndex) {
     const el = document.getElementById(inputId);
     if (!el || el._acAttached) return;
     el._acAttached = true;
-    const ac = new google.maps.places.Autocomplete(el, {
-      types: ['address'],
-      componentRestrictions: { country: 'us' },
-      fields: ['formatted_address']
+
+    // Create dropdown container
+    const wrap = el.closest('div') || el.parentElement;
+    wrap.style.position = 'relative';
+    const drop = document.createElement('ul');
+    drop.style.cssText = 'position:absolute;z-index:9999;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:#fff;border:1.5px solid #8B5BC7;border-radius:10px;box-shadow:0 8px 24px rgba(25,14,42,0.15);max-height:220px;overflow-y:auto;display:none;';
+    wrap.appendChild(drop);
+    acDropdowns[inputId] = drop;
+
+    el.addEventListener('input', () => {
+      clearTimeout(acTimers[inputId]);
+      const q = el.value.trim();
+      if (q.length < 3) { drop.style.display = 'none'; return; }
+      acTimers[inputId] = setTimeout(() => fetchSuggestions(q, inputId, stopIndex), 300);
     });
-    ac.addListener('place_changed', () => {
-      const place = ac.getPlace();
-      const addr = place.formatted_address || el.value;
-      el.value = addr;
-      if (stopIndex !== null) {
-        stops[stopIndex].address = addr;
-        updateMap();
-      }
+
+    el.addEventListener('blur', () => setTimeout(() => { drop.style.display = 'none'; }, 200));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Escape') drop.style.display = 'none';
     });
   }
 
+  async function fetchSuggestions(query, inputId, stopIndex) {
+    const drop = acDropdowns[inputId];
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&countrycodes=us&q=${encodeURIComponent(query)}`;
+      const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+      const data = await res.json();
+      drop.innerHTML = '';
+      if (!data.length) { drop.style.display = 'none'; return; }
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item.display_name;
+        li.style.cssText = 'padding:10px 14px;cursor:pointer;font-size:0.88rem;color:#190E2A;border-bottom:1px solid #f0ebff;line-height:1.4;';
+        li.addEventListener('mouseover', () => li.style.background = '#F4F0FF');
+        li.addEventListener('mouseout',  () => li.style.background = '');
+        li.addEventListener('mousedown', () => {
+          const el = document.getElementById(inputId);
+          el.value = item.display_name;
+          drop.style.display = 'none';
+          if (stopIndex !== null) {
+            stops[stopIndex].address = item.display_name;
+            updateMap();
+          }
+        });
+        drop.appendChild(li);
+      });
+      drop.style.display = 'block';
+    } catch { drop.style.display = 'none'; }
+  }
+
   function attachPlacesToStops() {
-    if (!placesReady) return;
     stops.forEach((_, i) => attachPlaces(`addr-${i}`, i));
   }
+
+  function initGooglePlaces() {} // no-op, kept for safety
 
   function updateMap() {
     const addrs = stops.map(s => s.address).filter(Boolean);
@@ -1321,10 +1348,12 @@
       };
       // step1 is already active (default), step0 stays hidden
     } else {
-      // Direct entry -- show step0 first
+      // Direct entry -- show step0 first, attach autocomplete to its fields
       document.getElementById('step0').classList.add('active');
       document.getElementById('step1').classList.remove('active');
       document.getElementById('progressFill').style.width = '0%';
+      attachPlaces('s0-from', null);
+      attachPlaces('s0-to', null);
     }
   })();
 </script>
