@@ -14,6 +14,8 @@
     body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
 
     /* ── Top nav bar ── */
+    .vyv-tip::after { content: attr(data-tip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; font-size:0.78rem; font-weight:400; line-height:1.5; padding:10px 14px; border-radius:8px; width:260px; text-align:left; pointer-events:none; opacity:0; white-space:normal; z-index:9999; transition:opacity .15s; }
+    .vyv-tip:hover::after { opacity:1; }
     .topbar {
       background: #190E2A;
       display: flex; align-items: center; justify-content: space-between;
@@ -492,11 +494,11 @@
 
         <!-- Volume -->
         <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:24px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
-          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:4px;">
+          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
             How much of your belongings are you moving?
-            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1.5px solid #8B5BC7;color:#8B5BC7;font-size:0.6rem;font-weight:800;margin-left:5px;cursor:help;" title="This helps us understand the scope of your move. It does not affect your rate.">i</span>
+            <span style="font-weight:500;color:#6b5b8a;">(Does not impact pricing)</span>
+            <span class="vyv-tip" data-tip="Hourly pricing does not change depending on how much of your belongings you are moving. Your crew needs this information to be prepared for the move." style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid #b99fda;color:#8B5BC7;font-size:0.65rem;font-weight:800;cursor:help;position:relative;flex-shrink:0;">&#9432;</span>
           </div>
-          <div style="font-size:0.75rem;color:#8B5BC7;margin-bottom:14px;">Does not impact pricing</div>
           <div class="chip-group" id="volumeChips">
             <button class="chip active" onclick="selectSingle('volumeChips',this,'volume','everything')">Everything's going</button>
             <button class="chip" onclick="selectSingle('volumeChips',this,'volume','most')">Most of my items</button>
@@ -507,11 +509,11 @@
 
         <!-- Specialty items -->
         <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
-          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:4px;">
+          <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
             Are you moving any of these items?
-            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1.5px solid #8B5BC7;color:#8B5BC7;font-size:0.6rem;font-weight:800;margin-left:5px;cursor:help;" title="These items require extra care. Our team will note them during your virtual walkthrough.">i</span>
+            <span style="font-weight:500;color:#6b5b8a;">(No extra charges)</span>
+            <span class="vyv-tip" data-tip="We do not charge extra for these items. Your crew needs this information to have special equipment ready and be prepared for the move. Please disconnect any appliances with water connections 12 hours before your service." style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid #b99fda;color:#8B5BC7;font-size:0.65rem;font-weight:800;cursor:help;position:relative;flex-shrink:0;">&#9432;</span>
           </div>
-          <div style="font-size:0.75rem;color:#8B5BC7;margin-bottom:14px;">Select all that apply &mdash; noted for your virtual walkthrough</div>
           <div class="chip-group" id="specialtyChips">
             <button class="chip" onclick="toggleMulti(this,'specialty','antiques')">Antiques</button>
             <button class="chip" onclick="toggleMulti(this,'specialty','gun_safe')">Gun Safes</button>
