@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pick Your Move Date | Validate Your Vision Moving</title>
-  <meta name="description" content="Choose your move date and preferred start time. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
+  <title>Book Your Move | Validate Your Vision Moving</title>
+  <meta name="description" content="Choose your crew size and move date. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -14,17 +14,11 @@
     /* ── Top nav bar ── */
     .topbar {
       background: #190E2A;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      height: 58px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 58px;
+      position: sticky; top: 0; z-index: 100;
     }
     .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .topbar-logo-mark { width: 36px; height: 36px; }
     .topbar-logo-text { font-weight: 800; font-size: 0.95rem; color: #ECEBEE; }
     .topbar-back {
       display: flex; align-items: center; gap: 6px;
@@ -34,135 +28,25 @@
     .topbar-back:hover { color: #ECEBEE; }
     .topbar-sms {
       display: flex; align-items: center; gap: 7px;
-      color: #ECEBEE; font-weight: 600; font-size: 0.88rem;
-      text-decoration: none;
+      color: #ECEBEE; font-weight: 600; font-size: 0.88rem; text-decoration: none;
     }
 
     /* ── Progress bar ── */
     .progress-bar { height: 4px; background: rgba(139,91,199,0.2); }
-    .progress-fill { height: 100%; width: 33%; background: linear-gradient(90deg,#8B5BC7,#16a34a); transition: width 0.4s; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg,#8B5BC7,#16a34a); transition: width 0.4s; }
 
-    /* ── Main layout ── */
+    /* ── Layout ── */
     .layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: calc(100vh - 62px);
     }
-
-    /* ── Left panel ── */
     .left-panel {
       padding: 48px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: flex; flex-direction: column; align-items: center;
       overflow-y: auto;
     }
-    .left-inner { width: 100%; max-width: 440px; }
-
-    .step-label { font-size: 0.72rem; font-weight: 700; color: #8B5BC7; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
-    h1 { font-size: 1.45rem; font-weight: 800; color: #190E2A; margin-bottom: 8px; }
-    .subtitle { font-size: 0.88rem; color: #5c4a7a; margin-bottom: 32px; line-height: 1.6; }
-    .subtitle a { color: #8B5BC7; font-weight: 600; text-decoration: none; }
-
-    /* ── Calendar ── */
-    .cal-wrap {
-      background: #ffffff;
-      border: 1px solid #ede6ff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 24px rgba(74,35,122,0.08);
-    }
-    .cal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .cal-month { font-weight: 700; font-size: 1rem; color: #190E2A; }
-    .cal-nav {
-      background: none; border: none; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: #8B5BC7; font-size: 1.1rem;
-      transition: background 0.15s;
-    }
-    .cal-nav:hover { background: #F4F0FF; }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7,1fr);
-      gap: 4px;
-      text-align: center;
-    }
-    .cal-dow {
-      font-size: 0.72rem; font-weight: 700;
-      color: #8B5BC7; padding: 4px 0 10px;
-      text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .cal-day {
-      aspect-ratio: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      border-radius: 10px;
-      font-size: 0.9rem; font-weight: 600;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: background 0.15s, border-color 0.15s;
-      color: #190E2A;
-      position: relative;
-    }
-    .cal-day:hover { background: #F4F0FF; }
-    .cal-day.today { border-color: #8B5BC7; }
-    .cal-day.selected { background: #8B5BC7; color: #ffffff; border-color: #8B5BC7; }
-    .cal-day.selected:hover { background: #4A237A; }
-    .cal-day.past { color: #ccc; cursor: not-allowed; pointer-events: none; }
-    .cal-day.empty { cursor: default; pointer-events: none; }
-    .cal-day.sunday { color: #d97706; }
-    .cal-day.sunday.past { color: #f0d9a8; }
-
-    /* ── AM/PM selector ── */
-    .time-select { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-    .time-btn {
-      padding: 14px 12px;
-      border-radius: 10px;
-      border: 2px solid #ede6ff;
-      background: #ffffff;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: #190E2A;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .time-btn:hover { border-color: #8B5BC7; background: #F4F0FF; }
-    .time-btn.active { background: #190E2A; color: #ffffff; border-color: #190E2A; }
-    .time-desc {
-      font-size: 0.75rem; font-weight: 500;
-      color: rgba(236,235,238,0.7);
-      margin-top: 4px; line-height: 1.4;
-    }
-    .time-btn:not(.active) .time-desc { color: #8B5BC7; }
-
-    /* ── Continue button ── */
-    .continue-wrap { margin-top: 28px; }
-    .btn-continue {
-      width: 100%; padding: 16px;
-      background: #16a34a; color: #ffffff;
-      border: none; border-radius: 10px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      box-shadow: 0 4px 16px rgba(22,163,74,0.3);
-    }
-    .btn-continue:hover { background: #15803d; }
-    .btn-continue:active { transform: scale(0.98); }
-    .btn-continue:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
-
-    .selected-date-label {
-      text-align: center; font-size: 0.82rem; color: #5c4a7a;
-      margin-top: 10px; min-height: 20px;
-    }
-
-    /* ── Right panel: map ── */
+    .left-inner { width: 100%; max-width: 460px; }
     .right-panel { position: relative; background: #e8e4f0; }
     .right-panel iframe { width: 100%; height: 100%; border: none; display: block; }
     .map-badge {
@@ -171,57 +55,233 @@
       padding: 8px 16px; border-radius: 20px;
       font-size: 0.78rem; font-weight: 600;
       box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      pointer-events: none;
     }
 
-    /* ── Mobile ── */
+    /* ── Steps ── */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-label { font-size: 0.72rem; font-weight: 700; color: #8B5BC7; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    h1 { font-size: 1.4rem; font-weight: 800; color: #190E2A; margin-bottom: 8px; line-height: 1.3; }
+    .subtitle { font-size: 0.88rem; color: #5c4a7a; margin-bottom: 28px; line-height: 1.6; }
+    .subtitle a { color: #8B5BC7; font-weight: 600; text-decoration: none; }
+
+    /* ── Crew cards ── */
+    .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+    .crew-card {
+      border: 2px solid #ede6ff; border-radius: 14px;
+      background: #fff; padding: 22px 18px;
+      cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+      text-align: center; position: relative;
+    }
+    .crew-card:hover { border-color: #8B5BC7; box-shadow: 0 4px 20px rgba(139,91,199,0.12); }
+    .crew-card.selected { border-color: #16a34a; box-shadow: 0 4px 20px rgba(22,163,74,0.18); }
+    .crew-card .badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: #16a34a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .crew-icon { font-size: 2rem; margin-bottom: 10px; }
+    .crew-title { font-weight: 800; font-size: 1rem; color: #190E2A; margin-bottom: 4px; }
+    .crew-rate { font-size: 0.82rem; color: #8B5BC7; font-weight: 600; margin-bottom: 12px; }
+    .crew-pros { text-align: left; list-style: none; }
+    .crew-pros li { font-size: 0.78rem; color: #5c4a7a; line-height: 1.6; padding: 2px 0; }
+    .crew-pros li::before { content: '✓ '; color: #16a34a; font-weight: 700; }
+
+    .why-3 {
+      background: #F4F0FF; border-left: 3px solid #8B5BC7;
+      border-radius: 0 10px 10px 0; padding: 14px 16px;
+      font-size: 0.82rem; color: #4A237A; line-height: 1.6; margin-bottom: 24px;
+    }
+    .why-3 strong { color: #190E2A; }
+
+    /* ── Calendar ── */
+    .cal-wrap {
+      background: #fff; border: 1px solid #ede6ff;
+      border-radius: 16px; padding: 24px;
+      box-shadow: 0 4px 24px rgba(74,35,122,0.08);
+    }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cal-month { font-weight: 700; font-size: 1rem; color: #190E2A; }
+    .cal-nav {
+      background: none; border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #8B5BC7; font-size: 1.2rem; transition: background 0.15s;
+    }
+    .cal-nav:hover { background: #F4F0FF; }
+    .cal-nav:disabled { color: #ccc; cursor: not-allowed; }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7,1fr);
+      gap: 3px; text-align: center;
+    }
+    .cal-dow {
+      font-size: 0.68rem; font-weight: 700; color: #8B5BC7;
+      padding: 4px 0 10px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .cal-day {
+      border-radius: 10px; cursor: pointer;
+      border: 2px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      padding: 6px 2px 7px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 52px;
+    }
+    .cal-day:hover:not(.past):not(.empty) { background: #F4F0FF; }
+    .cal-day.today { border-color: #8B5BC7; }
+    .cal-day.selected { background: #16a34a; border-color: #16a34a; }
+    .cal-day.past { cursor: not-allowed; opacity: 0.35; }
+    .cal-day.empty { cursor: default; }
+    .day-num {
+      font-size: 0.88rem; font-weight: 700; color: #190E2A; line-height: 1;
+      margin-bottom: 3px;
+    }
+    .cal-day.selected .day-num,
+    .cal-day.selected .day-price { color: #fff; }
+    .day-price {
+      font-size: 0.62rem; font-weight: 700; color: #16a34a; line-height: 1;
+    }
+    .cal-day.past .day-num { color: #aaa; }
+    .cal-day.past .day-price { color: #ccc; }
+
+    /* ── Price legend ── */
+    .price-legend {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 16px; font-size: 0.75rem;
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; color: #5c4a7a; font-weight: 500; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* ── Time select ── */
+    .time-select { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .time-btn {
+      padding: 14px 10px; border-radius: 10px;
+      border: 2px solid #ede6ff; background: #fff;
+      cursor: pointer; font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 0.95rem; color: #190E2A;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .time-btn:hover { border-color: #8B5BC7; background: #F4F0FF; }
+    .time-btn.active { background: #190E2A; color: #fff; border-color: #190E2A; }
+    .time-desc { font-size: 0.7rem; font-weight: 500; color: #8B5BC7; margin-top: 4px; line-height: 1.4; }
+    .time-btn.active .time-desc { color: rgba(236,235,238,0.7); }
+
+    /* ── Selected summary ── */
+    .selected-label { text-align: center; font-size: 0.82rem; color: #5c4a7a; margin-top: 10px; min-height: 20px; }
+
+    /* ── Buttons ── */
+    .btn-continue {
+      width: 100%; padding: 16px; margin-top: 20px;
+      background: #16a34a; color: #fff;
+      border: none; border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+    }
+    .btn-continue:hover { background: #15803d; }
+    .btn-continue:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
+    .btn-back {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      color: #8B5BC7; font-weight: 600; margin-top: 12px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .btn-back:hover { color: #4A237A; }
+
     @media (max-width: 780px) {
       .layout { grid-template-columns: 1fr; }
       .right-panel { display: none; }
-      .left-panel { padding: 32px 20px; }
+      .left-panel { padding: 28px 16px; }
+      .crew-grid { gap: 12px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top bar -->
-  <div class="topbar">
-    <a href="/" onclick="history.back();return false;" class="topbar-back">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </a>
-    <a href="/" class="topbar-logo">
-      <svg class="topbar-logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="12" fill="#210D46"/>
-        <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
-        <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
-      </svg>
-      <span class="topbar-logo-text">Validate Your Vision</span>
-    </a>
-    <a href="sms:+15403001414" class="topbar-sms">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      (540) 300-1414
-    </a>
-  </div>
-  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="topbar">
+  <button class="topbar-back" onclick="history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <a href="/" class="topbar-logo">
+    <svg style="width:36px;height:36px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="12" fill="#210D46"/>
+      <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+    </svg>
+    <span class="topbar-logo-text">Validate Your Vision</span>
+  </a>
+  <a href="sms:+15403001414" class="topbar-sms">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    (540) 300-1414
+  </a>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
 
-  <!-- Layout -->
-  <div class="layout">
+<div class="layout">
+  <div class="left-panel">
+    <div class="left-inner">
 
-    <!-- LEFT: calendar -->
-    <div class="left-panel">
-      <div class="left-inner">
-        <div class="step-label">Step 1 of 3</div>
+      <!-- ══ STEP 1: Crew Selector ══ -->
+      <div class="step active" id="step1">
+        <div class="step-label">Step 1 of 3 &mdash; Crew Size</div>
+        <h1>How many movers do you need?</h1>
+        <p class="subtitle">Most customers save money with 3 movers. Here's why:</p>
+
+        <div class="why-3">
+          <strong>3 movers finish significantly faster than 2.</strong> When you factor in the reduced hours, the total bill is often <em>lower</em> with 3 movers despite the higher hourly rate. We recommend 3 movers for any 2-bedroom home or larger.
+        </div>
+
+        <div class="crew-grid">
+          <!-- 2 Movers -->
+          <div class="crew-card" id="card2" onclick="selectCrew(2)">
+            <div class="crew-icon">👥</div>
+            <div class="crew-title">2 Movers</div>
+            <div class="crew-rate">Starting at $165/hr</div>
+            <ul class="crew-pros">
+              <li>Best for studios &amp; 1-bed</li>
+              <li>Lower hourly rate</li>
+              <li>Lighter load moves</li>
+            </ul>
+          </div>
+          <!-- 3 Movers -->
+          <div class="crew-card" id="card3" onclick="selectCrew(3)">
+            <div class="badge">Most Popular</div>
+            <div class="crew-icon">👥👤</div>
+            <div class="crew-title">3 Movers</div>
+            <div class="crew-rate">Starting at $199/hr</div>
+            <ul class="crew-pros">
+              <li>2-bed homes &amp; larger</li>
+              <li>Finishes up to 40% faster</li>
+              <li>Often cheaper total bill</li>
+              <li>Less physical wear on items</li>
+            </ul>
+          </div>
+        </div>
+
+        <button class="btn-continue" id="crewContinueBtn" disabled onclick="goToCalendar()">CONTINUE</button>
+      </div>
+
+      <!-- ══ STEP 2: Calendar ══ -->
+      <div class="step" id="step2">
+        <div class="step-label">Step 2 of 3 &mdash; Move Date</div>
         <h1>What date would you like to move?</h1>
-        <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can change this at any time.</p>
+        <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
+
+        <!-- Price legend -->
+        <div class="price-legend" id="priceLegend"></div>
 
         <div class="cal-wrap">
-          <!-- Calendar header -->
           <div class="cal-header">
             <button class="cal-nav" id="prevBtn" onclick="changeMonth(-1)">&#8249;</button>
             <div class="cal-month" id="calMonth"></div>
             <button class="cal-nav" id="nextBtn" onclick="changeMonth(1)">&#8250;</button>
           </div>
-          <!-- Day-of-week labels -->
           <div class="cal-grid" id="calGrid">
             <div class="cal-dow">S</div>
             <div class="cal-dow">M</div>
@@ -232,138 +292,195 @@
             <div class="cal-dow">S</div>
           </div>
 
-          <!-- AM / PM -->
           <div class="time-select" id="timeSelect" style="display:none;">
             <button class="time-btn" id="amBtn" onclick="selectTime('AM')">
               Select AM
-              <div class="time-desc">Your move will start at 7 AM sharp. Great for early birds!</div>
+              <div class="time-desc">Crew arrives at 7 AM sharp. Great for early birds!</div>
             </button>
             <button class="time-btn" id="pmBtn" onclick="selectTime('PM')">
               Select PM
-              <div class="time-desc">PM moves start after our crew finishes their AM move.</div>
+              <div class="time-desc">PM moves start after our AM crew wraps up.</div>
             </button>
           </div>
         </div>
 
-        <div class="selected-date-label" id="selectedLabel"></div>
-
-        <div class="continue-wrap">
-          <button class="btn-continue" id="continueBtn" disabled onclick="goNext()">CONTINUE</button>
-        </div>
+        <div class="selected-label" id="selectedLabel"></div>
+        <button class="btn-continue" id="dateContinueBtn" disabled onclick="goToConfirm()">CONTINUE</button>
+        <button class="btn-back" onclick="goBack()">&#8592; Change crew size</button>
       </div>
-    </div>
 
-    <!-- RIGHT: map -->
-    <div class="right-panel">
-      <div class="map-badge">Serving Fredericksburg &amp; Northern VA</div>
-      <iframe
-        title="VYV Service Area Map"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99496.88!2d-77.5506!3d38.3032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b6c1cf1bfde319%3A0x81f19c4c2a1d3acd!2sFredericksburg%2C%20VA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus">
-      </iframe>
     </div>
-
   </div>
 
-  <script>
-    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    let viewYear = today.getFullYear();
-    let viewMonth = today.getMonth();
-    let selectedDate = null;
-    let selectedTime = null;
+  <!-- Map -->
+  <div class="right-panel">
+    <div class="map-badge">Serving Fredericksburg &amp; Northern VA</div>
+    <iframe
+      title="VYV Service Area"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99496.88!2d-77.5506!3d38.3032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b6c1cf1bfde319%3A0x81f19c4c2a1d3acd!2sFredericksburg%2C%20VA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus">
+    </iframe>
+  </div>
+</div>
 
-    function changeMonth(delta) {
-      viewMonth += delta;
-      if (viewMonth > 11) { viewMonth = 0; viewYear++; }
-      if (viewMonth < 0)  { viewMonth = 11; viewYear--; }
-      renderCal();
-    }
+<script>
+  // ── Rates by day-of-week (0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat)
+  const RATES = {
+    2: { 0:180, 1:170, 2:165, 3:170, 4:170, 5:180, 6:180 },
+    3: { 0:214, 1:204, 2:199, 3:204, 4:204, 5:214, 6:214 }
+  };
 
-    function renderCal() {
-      document.getElementById('calMonth').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
-      const grid = document.getElementById('calGrid');
-      // Remove old day cells (keep the 7 DOW headers)
-      while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+  const MONTH_NAMES = ['January','February','March','April','May','June',
+    'July','August','September','October','November','December'];
+  const today = new Date(); today.setHours(0,0,0,0);
 
-      // Disable prev button if we're in current month
-      const nowY = today.getFullYear(), nowM = today.getMonth();
-      document.getElementById('prevBtn').disabled = (viewYear === nowY && viewMonth === nowM);
+  let crewSize = null;
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selectedDate = null;
+  let selectedTime = null;
 
-      const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  function selectCrew(n) {
+    crewSize = n;
+    document.getElementById('card2').classList.toggle('selected', n === 2);
+    document.getElementById('card3').classList.toggle('selected', n === 3);
+    document.getElementById('crewContinueBtn').disabled = false;
+  }
 
-      // Empty cells before first day
-      for (let i = 0; i < firstDay; i++) {
-        const el = document.createElement('div');
-        el.className = 'cal-day empty';
-        grid.appendChild(el);
-      }
-
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(viewYear, viewMonth, d);
-        const el = document.createElement('div');
-        el.className = 'cal-day';
-        el.textContent = d;
-
-        if (date.getDay() === 0) el.classList.add('sunday');
-        if (date < today) {
-          el.classList.add('past');
-        } else {
-          if (date.getTime() === today.getTime()) el.classList.add('today');
-          if (selectedDate && date.getTime() === selectedDate.getTime()) el.classList.add('selected');
-          el.addEventListener('click', () => selectDay(date));
-        }
-        grid.appendChild(el);
-      }
-    }
-
-    function selectDay(date) {
-      selectedDate = date;
-      selectedTime = null;
-      document.getElementById('amBtn').classList.remove('active');
-      document.getElementById('pmBtn').classList.remove('active');
-      document.getElementById('timeSelect').style.display = 'grid';
-      document.getElementById('continueBtn').disabled = true;
-      updateLabel();
-      renderCal();
-    }
-
-    function selectTime(t) {
-      selectedTime = t;
-      document.getElementById('amBtn').classList.toggle('active', t === 'AM');
-      document.getElementById('pmBtn').classList.toggle('active', t === 'PM');
-      document.getElementById('continueBtn').disabled = false;
-      document.getElementById('progress').style.width = '50%';
-      updateLabel();
-    }
-
-    function updateLabel() {
-      const lbl = document.getElementById('selectedLabel');
-      if (selectedDate && selectedTime) {
-        const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
-        lbl.textContent = selectedDate.toLocaleDateString('en-US', opts) + ' · ' + selectedTime + ' Start';
-      } else if (selectedDate) {
-        lbl.textContent = 'Great! Now choose your start time below.';
-      } else {
-        lbl.textContent = '';
-      }
-    }
-
-    function goNext() {
-      if (!selectedDate || !selectedTime) return;
-      const iso = selectedDate.toISOString().split('T')[0];
-      // Carry existing URL params forward
-      const params = new URLSearchParams(window.location.search);
-      params.set('date', iso);
-      params.set('time', selectedTime);
-      window.location.href = '/booking-confirmed.html?' + params.toString();
-    }
-
+  function goToCalendar() {
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '50%';
+    buildLegend();
     renderCal();
-  </script>
+  }
+
+  function goBack() {
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '25%';
+  }
+
+  function buildLegend() {
+    const rates = RATES[crewSize];
+    const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
+    const colors = ['#16a34a','#8B5BC7','#190E2A'];
+    const dayLabels = {
+      165:'Tue', 170:'Mon/Wed/Thu', 175:'', 180:'Fri/Sat/Sun',
+      199:'Tue', 204:'Mon/Wed/Thu', 214:'Fri/Sat/Sun'
+    };
+    const lg = document.getElementById('priceLegend');
+    lg.innerHTML = '';
+    unique.forEach((r,i) => {
+      lg.innerHTML += `<div class="legend-item">
+        <div class="legend-dot" style="background:${colors[i]||'#aaa'}"></div>
+        $${r}/hr
+      </div>`;
+    });
+  }
+
+  function rateColor(rate) {
+    const rates = Object.values(RATES[crewSize]);
+    const min = Math.min(...rates);
+    const max = Math.max(...rates);
+    if (rate === min) return '#16a34a';
+    if (rate === max) return '#190E2A';
+    return '#8B5BC7';
+  }
+
+  function changeMonth(delta) {
+    viewMonth += delta;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    if (viewMonth < 0)  { viewMonth = 11; viewYear--; }
+    renderCal();
+  }
+
+  function renderCal() {
+    document.getElementById('calMonth').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+    const grid = document.getElementById('calGrid');
+    while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+    const nowY = today.getFullYear(), nowM = today.getMonth();
+    document.getElementById('prevBtn').disabled = (viewYear === nowY && viewMonth === nowM);
+
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty'; grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(viewYear, viewMonth, d);
+      const dow = date.getDay();
+      const rate = RATES[crewSize][dow];
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+
+      if (date < today) {
+        el.classList.add('past');
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:#ccc;">$${rate}</div>`;
+      } else {
+        if (date.getTime() === today.getTime()) el.classList.add('today');
+        if (selectedDate && date.getTime() === selectedDate.getTime()) el.classList.add('selected');
+        const color = rateColor(rate);
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" style="color:${el.classList.contains('selected')?'#fff':color};">$${rate}</div>`;
+        el.addEventListener('click', () => selectDay(date));
+      }
+      grid.appendChild(el);
+    }
+  }
+
+  function selectDay(date) {
+    selectedDate = date;
+    selectedTime = null;
+    document.getElementById('amBtn').classList.remove('active');
+    document.getElementById('pmBtn').classList.remove('active');
+    document.getElementById('timeSelect').style.display = 'grid';
+    document.getElementById('dateContinueBtn').disabled = true;
+    updateLabel();
+    renderCal();
+  }
+
+  function selectTime(t) {
+    selectedTime = t;
+    document.getElementById('amBtn').classList.toggle('active', t === 'AM');
+    document.getElementById('pmBtn').classList.toggle('active', t === 'PM');
+    document.getElementById('dateContinueBtn').disabled = false;
+    document.getElementById('progressFill').style.width = '75%';
+    updateLabel();
+    // Fix selected day price color after re-render
+    renderCal();
+  }
+
+  function updateLabel() {
+    const lbl = document.getElementById('selectedLabel');
+    if (selectedDate && selectedTime) {
+      const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+      const rate = RATES[crewSize][selectedDate.getDay()];
+      lbl.textContent = selectedDate.toLocaleDateString('en-US', opts) +
+        ' · ' + selectedTime + ' Start · $' + rate + '/hr · ' + crewSize + ' Movers';
+    } else if (selectedDate) {
+      lbl.textContent = 'Now choose AM or PM start time.';
+    } else {
+      lbl.textContent = '';
+    }
+  }
+
+  function goToConfirm() {
+    if (!selectedDate || !selectedTime) return;
+    const iso = selectedDate.toISOString().split('T')[0];
+    const rate = RATES[crewSize][selectedDate.getDay()];
+    const params = new URLSearchParams(window.location.search);
+    params.set('date', iso);
+    params.set('time', selectedTime);
+    params.set('crew', crewSize);
+    params.set('rate', rate);
+    window.location.href = '/booking-confirmed.html?' + params.toString();
+  }
+</script>
 </body>
 </html>
