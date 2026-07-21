@@ -1606,9 +1606,10 @@
 
     // Mount Stripe card (skip in test mode)
     if (TEST_MODE) {
+      var billingSection = document.querySelector('.billing-section-wrap');
       var cardSection = document.getElementById('stripe-card-section');
       if (cardSection) {
-        cardSection.innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;color:#92400e;font-size:0.82rem;font-weight:600;">TEST MODE -- card fields hidden. Click the pay button to simulate a completed booking.</div>';
+        cardSection.closest('div[style*="background:#fff"]').innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;color:#92400e;font-size:0.88rem;font-weight:600;">TEST MODE -- No payment required. Just fill in your contact info above and click the button.</div>';
       }
     } else {
       initStripeCard();
@@ -1700,13 +1701,15 @@
       alert('Please fill in your first name, email, and phone number.');
       return;
     }
-    if (!billingName) {
-      alert('Please enter the name on your card.');
-      return;
-    }
-    if (!billingLine1 || !billingCity || !billingZip) {
-      alert('Please complete your billing address (street, city, and ZIP).');
-      return;
+    if (!TEST_MODE) {
+      if (!billingName) {
+        alert('Please enter the name on your card.');
+        return;
+      }
+      if (!billingLine1 || !billingCity || !billingZip) {
+        alert('Please complete your billing address (street, city, and ZIP).');
+        return;
+      }
     }
     const btn = document.getElementById('finalSubmitBtn');
     btn.disabled = true;
