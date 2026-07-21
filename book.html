@@ -1812,6 +1812,28 @@
       document.getElementById('progressFill').style.width = '0%';
     }
   })();
+
+  // Crew card tap -- attach both touchstart and click for max iOS compatibility
+  (function() {
+    function bindCard(id, n) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var fired = false;
+      el.addEventListener('touchstart', function(e) {
+        fired = true;
+        selectCrew(n);
+      }, { passive: true });
+      el.addEventListener('click', function(e) {
+        if (!fired) selectCrew(n);
+        fired = false;
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() { bindCard('card2', 2); bindCard('card3', 3); });
+    } else {
+      bindCard('card2', 2); bindCard('card3', 3);
+    }
+  })();
 </script>
 </body>
 </html>
