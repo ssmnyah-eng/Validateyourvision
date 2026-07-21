@@ -503,6 +503,11 @@
         <h1>What date would you like to move?</h1>
         <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
 
+        <!-- Mobile route map (hidden on desktop where right panel shows it) -->
+        <div id="mobileMapWrap" style="display:none;border-radius:14px;overflow:hidden;height:180px;margin-bottom:18px;box-shadow:0 2px 12px rgba(74,35,122,0.10);">
+          <iframe id="mobileMapFrame" title="Your Move Route" style="width:100%;height:100%;border:none;display:block;" loading="lazy"></iframe>
+        </div>
+
         <!-- Price legend -->
         <div class="price-legend" id="priceLegend"></div>
 
@@ -927,6 +932,17 @@
     document.getElementById('progressFill').style.width = '50%';
     buildLegend();
     renderCal();
+    // Show route map inside step 2 on mobile (right panel is hidden there)
+    if (window.innerWidth <= 780) {
+      var from = (document.getElementById('s0-from')||{}).value||'';
+      var to   = (document.getElementById('s0-to')||{}).value||'';
+      var wrap = document.getElementById('mobileMapWrap');
+      var mf   = document.getElementById('mobileMapFrame');
+      if (from && to) {
+        mf.src = 'https://www.google.com/maps?saddr='+encodeURIComponent(from)+'&daddr='+encodeURIComponent(to)+'&output=embed';
+        wrap.style.display = 'block';
+      }
+    }
   }
 
   function goBack() {
