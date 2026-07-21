@@ -494,7 +494,7 @@
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" disabled onclick="goToCalendar()">CONTINUE</button>
+        <button class="btn-continue" id="crewContinueBtn" onclick="goToCalendar()" style="background:#ccc;box-shadow:none;cursor:default;">CONTINUE</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
@@ -921,12 +921,17 @@
     document.getElementById('card2').classList.toggle('selected', n === 2);
     document.getElementById('card3').classList.toggle('selected', n === 3);
     var btn = document.getElementById('crewContinueBtn');
-    btn.disabled = false;
     btn.style.background = '#2563eb';
     btn.style.boxShadow = '0 4px 16px rgba(37,99,235,0.4)';
+    btn.style.cursor = 'pointer';
   }
 
   function goToCalendar() {
+    if (!crewSize) {
+      document.getElementById('card2').style.borderColor = '#ef4444';
+      document.getElementById('card3').style.borderColor = '#ef4444';
+      return;
+    }
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
     document.getElementById('progressFill').style.width = '50%';
