@@ -812,7 +812,7 @@
             </div>
 
             <!-- RIGHT: Stripe card elements -->
-            <div>
+            <div id="stripe-card-section">
               <!-- Card number -->
               <div style="position:relative;margin-bottom:14px;">
                 <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:600;color:#6b7280;letter-spacing:0.04em;z-index:1;">Card number</label>
@@ -1513,6 +1513,7 @@
   // ── Stripe setup ──
   const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
   const SHEET_SCRIPT_URL = ''; // paste your Google Apps Script URL here
+  const TEST_MODE = true; // set to false when ready to take real payments
 
   // Fire as soon as contact info is known -- even if they never pay
   let leadSent = false;
@@ -1604,8 +1605,15 @@
     if (toAddr)   document.getElementById('sb-to').textContent   = toAddr;
     document.getElementById('sb-crew-text').textContent = crewSize ? `${crewSize} Movers` : '-- Movers';
 
-    // Mount Stripe card
-    initStripeCard();
+    // Mount Stripe card (skip in test mode)
+    if (TEST_MODE) {
+      var cardSection = document.getElementById('stripe-card-section');
+      if (cardSection) {
+        cardSection.innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;color:#92400e;font-size:0.82rem;font-weight:600;">TEST MODE -- card fields hidden. Click the pay button to simulate a completed booking.</div>';
+      }
+    } else {
+      initStripeCard();
+    }
   }
 
   function goBackToPacking() {
@@ -1701,40 +1709,43 @@
       alert('Please complete your billing address (street, city, and ZIP).');
       return;
     }
-    if (!stripeInstance || !stripeCardNumber) {
-      alert('Payment fields are not ready. Please refresh the page and try again.');
-      return;
-    }
-
     const btn = document.getElementById('finalSubmitBtn');
     btn.disabled = true;
     btn.textContent = 'Processing...';
     document.getElementById('stripe-card-error').textContent = '';
 
-    // Create Stripe PaymentMethod from card
-    const { paymentMethod, error } = await stripeInstance.createPaymentMethod({
-      type: 'card',
-      card: stripeCardNumber,
-      billing_details: {
-        name: billingName,
-        email,
-        phone,
-        address: {
-          line1: billingLine1,
-          line2: billingLine2 || null,
-          city: billingCity,
-          state: billingState,
-          postal_code: billingZip,
-          country: 'US'
-        }
-      }
-    });
+    let paymentMethod = { id: 'TEST_MODE' };
 
-    if (error) {
-      document.getElementById('stripe-card-error').textContent = error.message;
-      btn.disabled = false;
-      btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-      return;
+    if (!TEST_MODE) {
+      if (!stripeInstance || !stripeCardNumber) {
+        alert('Payment fields are not ready. Please refresh the page and try again.');
+        btn.disabled = false;
+        return;
+      }
+      const result = await stripeInstance.createPaymentMethod({
+        type: 'card',
+        card: stripeCardNumber,
+        billing_details: {
+          name: billingName,
+          email,
+          phone,
+          address: {
+            line1: billingLine1,
+            line2: billingLine2 || null,
+            city: billingCity,
+            state: billingState,
+            postal_code: billingZip,
+            country: 'US'
+          }
+        }
+      });
+      if (result.error) {
+        document.getElementById('stripe-card-error').textContent = result.error.message;
+        btn.disabled = false;
+        btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
+        return;
+      }
+      paymentMethod = result.paymentMethod;
     }
 
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';

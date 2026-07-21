@@ -1580,6 +1580,7 @@
       .form-card { padding: 22px 16px !important; }
     }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initHomePlaces" async defer></script>
 </head>
 <body>
 
@@ -2631,6 +2632,15 @@
         }
       });
     });
+
+    // ===== HOME FORM ADDRESS AUTOCOMPLETE =====
+    function initHomePlaces() {
+      var opts = { componentRestrictions: { country: 'us' } };
+      var acFrom = new google.maps.places.Autocomplete(document.getElementById('lf-from'), opts);
+      var acTo   = new google.maps.places.Autocomplete(document.getElementById('lf-to'),   opts);
+      acFrom.setFields(['formatted_address']);
+      acTo.setFields(['formatted_address']);
+    }
 
     // ===== LEAD CAPTURE FORM =====
     async function handleLeadFormSubmit(e) {
