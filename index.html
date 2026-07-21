@@ -654,6 +654,8 @@
       transition: color 0.25s;
     }
     .mobile-drawer a:hover { color: var(--lv); }
+    .vyv-svc-dd:hover .vyv-dd-menu { display: block !important; }
+    .vyv-svc-dd.open .vyv-dd-menu { display: block !important; }
 
     /* ===== HERO ===== */
     #hero {
@@ -1610,7 +1612,19 @@
       <!-- Nav links center -->
       <div class="nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
         <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Move Calculator</a>
-        <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services</a>
+        <div class="vyv-svc-dd" style="position:relative;">
+          <button class="vyv-dd-btn" onclick="var m=this.closest('.vyv-svc-dd');m.classList.toggle('open')" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:4px;font-family:'Poppins',sans-serif;white-space:nowrap;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="vyv-dd-menu" style="position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(25,14,42,0.18);min-width:210px;padding:8px 0;z-index:9999;display:none;">
+            <a href="/same-day-movers.html" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Same Day Movers</a>
+            <a href="#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Packing Services</a>
+            <a href="#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Apartment Movers</a>
+            <a href="#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Residential Movers</a>
+            <a href="#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Commercial Movers</a>
+            <a href="#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Labor Only Movers</a>
+            <div style="height:1px;background:#ede6ff;margin:4px 0;"></div>
+            <a href="#services" style="display:block;padding:10px 20px;color:#8B5BC7;font-size:0.85rem;font-weight:700;text-decoration:none;white-space:nowrap;">All Moving Services</a>
+          </div>
+        </div>
         <a href="#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Reviews</a>
         <a href="#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">FAQ</a>
         <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Blog</a>
@@ -1636,7 +1650,18 @@
   <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
     <a href="/book.html" onclick="toggleNav()">Move Calculator</a>
-    <a href="#services" onclick="toggleNav()">Services</a>
+    <div style="border-bottom:1px solid rgba(139,91,199,0.1);">
+      <button onclick="var d=document.getElementById('home-svc-sub');d.style.display=d.style.display==='block'?'none':'block'" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;display:flex;align-items:center;justify-content:space-between;width:100%;font-family:'Poppins',sans-serif;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div id="home-svc-sub" style="display:none;padding-left:16px;padding-bottom:8px;">
+        <a href="/same-day-movers.html" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Same Day Movers</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Packing Services</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Apartment Movers</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Residential Movers</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Commercial Movers</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Labor Only Movers</a>
+        <a href="#services" onclick="toggleNav()" style="display:block;color:#8B5BC7;font-size:0.88rem;font-weight:700;text-decoration:none;padding:7px 0;">All Moving Services</a>
+      </div>
+    </div>
     <a href="#reviews" onclick="toggleNav()">Reviews</a>
     <a href="#faq-inner" onclick="toggleNav()">FAQ</a>
     <a href="/blog/" onclick="toggleNav()">Blog</a>
@@ -2622,6 +2647,12 @@
       ham.setAttribute('aria-expanded', open);
       document.body.style.overflow = open ? 'hidden' : '';
     }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.vyv-svc-dd')) {
+        document.querySelectorAll('.vyv-svc-dd').forEach(function(d) { d.classList.remove('open'); });
+      }
+    });
 
     // ===== SCROLL REVEAL =====
     const obs = new IntersectionObserver((entries) => {
