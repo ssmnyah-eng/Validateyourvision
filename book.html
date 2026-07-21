@@ -494,7 +494,7 @@
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" style="display:none" onclick="goToCalendar()">CONTINUE</button>
+        <button class="btn-continue" id="crewContinueBtn" disabled onclick="goToCalendar()">CONTINUE</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
@@ -915,7 +915,10 @@
     crewSize = n;
     document.getElementById('card2').classList.toggle('selected', n === 2);
     document.getElementById('card3').classList.toggle('selected', n === 3);
-    setTimeout(goToCalendar, 150);
+    var btn = document.getElementById('crewContinueBtn');
+    btn.disabled = false;
+    btn.style.background = '#2563eb';
+    btn.style.boxShadow = '0 4px 16px rgba(37,99,235,0.4)';
   }
 
   function goToCalendar() {
