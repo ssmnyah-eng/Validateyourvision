@@ -706,9 +706,44 @@
                 <span style="font-size:0.78rem;font-weight:700;color:#15803d;">Guaranteed Safe &amp; Secure Checkout &mdash; Powered by Stripe</span>
               </div>
 
+              <!-- Billing name row -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">First name</label>
+                  <input type="text" id="billing-first" placeholder="First name" autocomplete="given-name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+                </div>
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Last name</label>
+                  <input type="text" id="billing-last" placeholder="Last name" autocomplete="family-name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+                </div>
+              </div>
+
+              <!-- Address line 1 -->
               <div style="position:relative;margin-bottom:12px;">
-                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Name on card</label>
-                <input type="text" id="billing-name" placeholder="Full name on card" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Billing address</label>
+                <input type="text" id="billing-line1" placeholder="Street address" autocomplete="billing address-line1" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+              </div>
+
+              <!-- Address line 2 -->
+              <div style="position:relative;margin-bottom:12px;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Apt / Suite <span style="font-weight:400;text-transform:none;">(optional)</span></label>
+                <input type="text" id="billing-line2" placeholder="Apartment, suite, unit, etc." autocomplete="billing address-line2" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+              </div>
+
+              <!-- City / State / ZIP row -->
+              <div style="display:grid;grid-template-columns:1fr 80px 100px;gap:10px;margin-bottom:12px;">
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">City</label>
+                  <input type="text" id="billing-city" placeholder="City" autocomplete="billing address-level2" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+                </div>
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">State</label>
+                  <input type="text" id="billing-state" placeholder="VA" maxlength="2" autocomplete="billing address-level1" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;text-transform:uppercase;" />
+                </div>
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">ZIP code</label>
+                  <input type="text" id="billing-zip" placeholder="22401" maxlength="10" autocomplete="billing postal-code" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;box-sizing:border-box;" />
+                </div>
               </div>
 
               <!-- Stripe card element -->
@@ -1511,13 +1546,24 @@
     const last  = document.getElementById('cf-last').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const phone = document.getElementById('cf-phone').value.trim();
-    const billingName = document.getElementById('billing-name').value.trim();
+    const billingFirst = document.getElementById('billing-first').value.trim();
+    const billingLast  = document.getElementById('billing-last').value.trim();
+    const billingLine1 = document.getElementById('billing-line1').value.trim();
+    const billingCity  = document.getElementById('billing-city').value.trim();
+    const billingState = document.getElementById('billing-state').value.trim().toUpperCase();
+    const billingZip   = document.getElementById('billing-zip').value.trim();
+    const billingLine2 = document.getElementById('billing-line2').value.trim();
+    const billingName  = `${billingFirst} ${billingLast}`.trim();
     if (!first || !email || !phone) {
       alert('Please fill in your first name, email, and phone number.');
       return;
     }
-    if (!billingName) {
-      alert('Please enter the name on your card.');
+    if (!billingFirst || !billingLast) {
+      alert('Please enter the first and last name on your card.');
+      return;
+    }
+    if (!billingLine1 || !billingCity || !billingState || !billingZip) {
+      alert('Please complete your billing address (street, city, state, and ZIP).');
       return;
     }
     if (!stripeInstance || !stripeCardElement) {
@@ -1534,7 +1580,19 @@
     const { paymentMethod, error } = await stripeInstance.createPaymentMethod({
       type: 'card',
       card: stripeCardElement,
-      billing_details: { name: billingName, email, phone }
+      billing_details: {
+        name: billingName,
+        email,
+        phone,
+        address: {
+          line1: billingLine1,
+          line2: billingLine2 || null,
+          city: billingCity,
+          state: billingState,
+          postal_code: billingZip,
+          country: 'US'
+        }
+      }
     });
 
     if (error) {
