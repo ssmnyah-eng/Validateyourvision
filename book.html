@@ -343,7 +343,7 @@
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 40px;max-width:640px;">
     <p style="color:#8B5BC7;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Flat-Rate Moving</p>
     <h1 style="color:#fff;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.25;margin-bottom:10px;">Book Your Move Online<br>in Minutes</h1>
-    <p style="color:rgba(236,235,238,0.85);font-size:0.9rem;line-height:1.6;">No hidden fees. No hourly surprises. Secure your date with a 20% deposit and we handle the rest.</p>
+    <p style="color:rgba(236,235,238,0.85);font-size:0.9rem;line-height:1.6;">No hidden fees. No hourly surprises. Secure your date with a flat deposit and pay the rest when the job is done.</p>
   </div>
 </div>
 
@@ -366,7 +366,7 @@
       <!-- Step 2 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
         <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">2</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your flat-rate estimate</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your booking details</p>
       </div>
       <!-- Step 3 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
@@ -712,19 +712,14 @@
               <span>Hourly rate</span>
               <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
             </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
-              <span>Estimated time <span style="font-size:0.75rem;color:#6b7280;">(based on your home)</span></span>
-              <span style="font-weight:700;color:#190E2A;" id="summary-est-hours">--</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
-              <span>Estimated labor</span>
-              <span style="font-weight:700;color:#190E2A;" id="summary-est-labor">--</span>
-            </div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:#374151;margin-bottom:2px;">
               <span>Truck fee <span style="font-size:0.75rem;color:#6b7280;">(based on distance)</span></span>
               <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
             </div>
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
+            <span id="summary-est-hours" style="display:none;"></span>
+            <span id="summary-est-labor" style="display:none;"></span>
+            <span id="summary-est-total" style="display:none;"></span>
 
             <div id="packingPriceLine" style="display:none;">
               <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:6px;">Packing / Unpacking</div>
@@ -741,7 +736,7 @@
               <span style="font-size:1rem;font-weight:700;color:#190E2A;">Deposit due today:</span>
               <span style="font-weight:800;color:#190E2A;font-size:1.2rem;" id="summary-deposit-amount">--</span>
             </div>
-            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note"></div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note">Secures your moving date. Applied to your final balance on move day.</div>
 
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
@@ -836,7 +831,7 @@
 
         <!-- PAY BUTTON -->
         <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);">
-          PAY <span id="btn-deposit-amount">20% DEPOSIT</span> AND RESERVE
+          PAY <span id="btn-deposit-amount">$250 DEPOSIT</span> AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">
           Your deposit secures your moving date and is fully applied toward your final balance. The remaining balance is due on move day.
@@ -1417,26 +1412,15 @@
     return `${wh} hr ${mn} min`;
   }
 
-  let depositAmount = 0; // set in goToFinalStep, used in submitFinalReservation
+  let depositAmount = 250; // flat deposit -- $250 within 50 miles of Fredericksburg, $300 beyond
 
-  function calcAndShowEstimate() {
-    const estHrs = estimateHours();
-    const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : RATES[crewSize][1];
-    const laborCost = Math.round(rate * estHrs);
-    const truck = truckFee || 99;
-    const estTotal = laborCost + truck;
-    depositAmount = Math.ceil(estTotal * 0.20);
-
-    document.getElementById('summary-est-hours').textContent = fmtHours(estHrs);
-    document.getElementById('summary-est-labor').textContent = `$${laborCost.toLocaleString()}`;
-    document.getElementById('summary-est-total').textContent = `$${estTotal.toLocaleString()}`;
-    document.getElementById('summary-deposit-amount').textContent = `$${depositAmount.toLocaleString()}`;
-    document.getElementById('summary-deposit-note').textContent =
-      `20% of $${estTotal.toLocaleString()} estimated total`;
+  function setDepositFromMiles(miles) {
+    depositAmount = miles > 50 ? 300 : 250;
+    document.getElementById('summary-deposit-amount').textContent = `$${depositAmount}`;
     const btnSpan = document.getElementById('btn-deposit-amount');
-    if (btnSpan) btnSpan.textContent = `$${depositAmount.toLocaleString()} DEPOSIT`;
+    if (btnSpan) btnSpan.textContent = `$${depositAmount} DEPOSIT`;
     const sbDep = document.getElementById('sb-deposit-amount');
-    if (sbDep) sbDep.textContent = `$${depositAmount.toLocaleString()} (20% deposit)`;
+    if (sbDep) sbDep.textContent = `$${depositAmount}`;
   }
 
   // ── Stripe setup ──
@@ -1494,10 +1478,9 @@
     // Pricing
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
-    // Truck fee callback triggers full estimate calculation once mileage is known
-    autoCalcTruckFee(() => calcAndShowEstimate());
-    // Also show a preliminary estimate immediately (truck fee = 99 default)
-    calcAndShowEstimate();
+    // Show initial deposit immediately, refine once distance is known
+    setDepositFromMiles(0);
+    autoCalcTruckFee(null);
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
       document.getElementById('packRateDisplay').textContent = `$${PACK_RATES[packSelectedDate.getDay()]}/hr`;
@@ -1538,8 +1521,9 @@
     const display  = document.getElementById('summary-truck-display');
     const note     = document.getElementById('truck-distance-note');
 
-    if (!fromAddr || !toAddr || typeof google === 'undefined') {
+    if (!fromAddr || typeof google === 'undefined') {
       truckFee = 99; display.textContent = '$99'; note.textContent = '';
+      setDepositFromMiles(0);
       if (onDone) onDone();
       return;
     }
@@ -1547,25 +1531,45 @@
     display.textContent = 'Calculating...';
     note.textContent = '';
 
+    // Measure from Fredericksburg, VA (our base) to the pickup address for deposit tier
+    const FREDERICKSBURG = 'Fredericksburg, VA 22401';
     const svc = new google.maps.DistanceMatrixService();
     svc.getDistanceMatrix({
-      origins: [fromAddr],
-      destinations: [toAddr],
+      origins: [FREDERICKSBURG],
+      destinations: [fromAddr],
       travelMode: google.maps.TravelMode.DRIVING,
       unitSystem: google.maps.UnitSystem.IMPERIAL
     }, (res, status) => {
+      let milesFromBase = 0;
       if (status === 'OK' && res.rows[0].elements[0].status === 'OK') {
-        const meters = res.rows[0].elements[0].distance.value;
-        const miles  = Math.round(meters / 1609.34);
-        truckFee     = calcTruckFeeFromMiles(miles);
-        display.textContent = `$${truckFee}`;
-        note.textContent    = `${miles} miles between your locations`;
+        milesFromBase = Math.round(res.rows[0].elements[0].distance.value / 1609.34);
+      }
+      setDepositFromMiles(milesFromBase);
+
+      // Also get move distance for truck fee (from -> to if available)
+      if (toAddr) {
+        svc.getDistanceMatrix({
+          origins: [fromAddr],
+          destinations: [toAddr],
+          travelMode: google.maps.TravelMode.DRIVING,
+          unitSystem: google.maps.UnitSystem.IMPERIAL
+        }, (res2, status2) => {
+          if (status2 === 'OK' && res2.rows[0].elements[0].status === 'OK') {
+            const moveMiles = Math.round(res2.rows[0].elements[0].distance.value / 1609.34);
+            truckFee = calcTruckFeeFromMiles(moveMiles);
+            display.textContent = `$${truckFee}`;
+            note.textContent = `${moveMiles} mi between locations · ${milesFromBase} mi from Fredericksburg`;
+          } else {
+            truckFee = 99; display.textContent = '$99';
+            note.textContent = milesFromBase ? `${milesFromBase} mi from Fredericksburg` : '';
+          }
+          if (onDone) onDone();
+        });
       } else {
         truckFee = 99; display.textContent = '$99';
-        note.textContent = '';
+        note.textContent = milesFromBase ? `${milesFromBase} mi from Fredericksburg` : '';
+        if (onDone) onDone();
       }
-      if (onDone) onDone();
-    });
   }
 
   async function submitFinalReservation() {
@@ -1647,7 +1651,7 @@
     body.append('Specialty Items', specialtyItems.join(', ') || 'None');
     body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
     body.append('Notes', document.getElementById('cf-notes').value);
-    body.append('Deposit Amount', `$${depositAmount} (20% of estimated total)`);
+    body.append('Deposit Amount', `$${depositAmount}`);
     body.append('Stripe Payment Method', paymentMethod.id);
 
     try {
@@ -1676,6 +1680,7 @@
               packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
               notes: document.getElementById('cf-notes').value,
               deposit: `$${depositAmount}`,
+              depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
               paymentMethod: paymentMethod.id,
               status: 'Upcoming'
             }),
