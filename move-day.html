@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move Day | VYV Moving</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1C1B3A;
+      --purple: #5B4FBE;
+      --green: #4CAF50;
+      --green-light: #e8f5e9;
+      --red: #e53935;
+      --bg: #f4f4f8;
+      --card: #ffffff;
+      --text: #1C1B3A;
+      --muted: #888899;
+      --border: #e0e0ee;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--navy);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+    .header-sub  { color: #9999bb; font-size: 12px; margin-top: 2px; }
+
+    /* ── Loading ── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+      color: var(--muted);
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Main content ── */
+    .main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; }
+
+    /* ── Status bar ── */
+    .status-bar {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .status-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      height: 2px;
+      background: var(--green);
+      z-index: 1;
+      transition: width 0.5s ease;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+      flex: 1;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      transition: all 0.3s;
+    }
+    .step.done .step-dot   { background: var(--green); color: #fff; }
+    .step.active .step-dot { background: var(--purple); color: #fff; box-shadow: 0 0 0 4px rgba(91,79,190,0.15); }
+    .step-name { font-size: 10px; color: var(--muted); text-align: center; font-weight: 500; }
+    .step.done .step-name, .step.active .step-name { color: var(--text); font-weight: 600; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── Detail rows ── */
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-key   { font-size: 13px; color: var(--muted); flex-shrink: 0; }
+    .detail-value { font-size: 13px; font-weight: 600; text-align: right; }
+
+    /* ── Timer ── */
+    .timer-card {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(28,27,58,0.3);
+    }
+    .timer-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #9999bb; text-transform: uppercase; margin-bottom: 10px; }
+    .timer-display {
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .timer-sub { font-size: 12px; color: #9999bb; margin-top: 8px; }
+
+    /* ── Buttons ── */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary  { background: var(--green); color: #fff; }
+    .btn-primary:hover  { background: #43a047; }
+    .btn-locked   { background: var(--border); color: var(--muted); cursor: not-allowed; }
+    .btn-danger   { background: var(--red); color: #fff; }
+
+    /* ── Locked notice ── */
+    .locked-notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff8e1;
+      border-left: 3px solid #ffc107;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #7a5c00;
+      margin-bottom: 16px;
+    }
+
+    /* ── Complete card ── */
+    .complete-card {
+      background: var(--green-light);
+      border: 2px solid var(--green);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .complete-icon { font-size: 40px; margin-bottom: 10px; }
+    .complete-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .complete-sub { font-size: 14px; color: #555; line-height: 1.6; }
+
+    /* ── Error ── */
+    .error-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      padding: 24px;
+      gap: 12px;
+    }
+    .error-icon  { font-size: 48px; }
+    .error-title { font-size: 20px; font-weight: 700; }
+    .error-sub   { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .contact-link { color: var(--purple); font-weight: 600; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">VYV Moving</div>
+    <div class="header-sub">Fredericksburg, VA</div>
+  </div>
+  <div style="font-size:12px;color:#9999bb;" id="booking-id-display"></div>
+</div>
+
+<!-- Loading state -->
+<div class="loading" id="loading-state">
+  <div class="spinner"></div>
+  <div>Loading your move details...</div>
+</div>
+
+<!-- Error state -->
+<div class="error-page" id="error-state" style="display:none;">
+  <div class="error-icon">&#x1F6AB;</div>
+  <div class="error-title">Page not found</div>
+  <div class="error-sub">This link may have expired or is invalid.<br>Questions? <a class="contact-link" href="sms:+15403001414">Text us at (540) 300-1414</a></div>
+</div>
+
+<!-- Main content -->
+<div class="main" id="main-content" style="display:none;">
+
+  <!-- Progress bar -->
+  <div class="status-bar">
+    <div class="status-label">Move Status</div>
+    <div class="progress-steps" id="progress-steps">
+      <div class="progress-fill" id="progress-fill"></div>
+      <div class="step" id="step-booked">
+        <div class="step-dot">&#10003;</div>
+        <div class="step-name">Booked</div>
+      </div>
+      <div class="step" id="step-ontheway">
+        <div class="step-dot">&#x1F69A;</div>
+        <div class="step-name">On the Way</div>
+      </div>
+      <div class="step" id="step-arrived">
+        <div class="step-dot">&#x1F4CD;</div>
+        <div class="step-name">Arrived</div>
+      </div>
+      <div class="step" id="step-inprogress">
+        <div class="step-dot">&#x23F1;</div>
+        <div class="step-name">Moving</div>
+      </div>
+      <div class="step" id="step-complete">
+        <div class="step-dot">&#10003;</div>
+        <div class="step-name">Done</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer (shown once checked in) -->
+  <div class="timer-card" id="timer-card" style="display:none;">
+    <div class="timer-label">Time Elapsed</div>
+    <div class="timer-display" id="timer-display">0:00:00</div>
+    <div class="timer-sub">Clock started when you checked in your crew</div>
+  </div>
+
+  <!-- Locked notice (shown when crew not yet arrived) -->
+  <div class="locked-notice" id="locked-notice" style="display:none;">
+    &#x1F512; Your check-in button will unlock once your crew marks they're on the way.
+  </div>
+
+  <!-- Check-in button -->
+  <div id="checkin-section">
+    <button class="btn btn-locked" id="checkin-btn" disabled onclick="checkinCrew()">
+      Waiting for Your Crew...
+    </button>
+  </div>
+
+  <!-- Complete card -->
+  <div class="complete-card" id="complete-card" style="display:none;">
+    <div class="complete-icon">&#x1F389;</div>
+    <div class="complete-title">Move Complete!</div>
+    <div class="complete-sub">Your crew has finished. Thank you for choosing VYV Moving.<br>Your final balance will be collected by your crew.</div>
+  </div>
+
+  <!-- Move details -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Your Move Details</div>
+    <div class="detail-row"><span class="detail-key">Move Date</span><span class="detail-value" id="d-movedate">--</span></div>
+    <div class="detail-row"><span class="detail-key">Crew</span><span class="detail-value" id="d-crew">--</span></div>
+    <div class="detail-row"><span class="detail-key">Rate</span><span class="detail-value" id="d-rate">--</span></div>
+    <div class="detail-row"><span class="detail-key">Pickup</span><span class="detail-value" id="d-from">--</span></div>
+    <div class="detail-row"><span class="detail-key">Drop-off</span><span class="detail-value" id="d-to">--</span></div>
+    <div class="detail-row"><span class="detail-key">Deposit Paid</span><span class="detail-value" id="d-deposit" style="color:var(--green);">--</span></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="card">
+    <div class="card-title">Need Help?</div>
+    <div style="font-size:14px;line-height:2.2;color:#555;">
+      Text us: <a class="contact-link" href="sms:+15403001414">(540) 300-1414</a><br>
+      Email: <a class="contact-link" href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const GAS_URL    = 'https://script.google.com/macros/s/AKfycbz5XAHZZTlJqsWvCtWchANgaqVakLjV5IK8AHu0gTNRNjW2x7ghkt0jbr4fT9VX1NQm/exec';
+  const params     = new URLSearchParams(window.location.search);
+  const MOVE_TOKEN = params.get('token') || '';
+
+  let booking      = null;
+  let timerInterval = null;
+  let checkinTime  = null;
+  let pollInterval = null;
+
+  // ── Boot ─────────────────────────────────────────────────────
+  async function boot() {
+    if (!MOVE_TOKEN) { showError(); return; }
+    await loadBooking();
+    // Poll for status updates every 30s
+    pollInterval = setInterval(loadBooking, 30000);
+  }
+
+  async function loadBooking() {
+    try {
+      const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'get_move', moveToken: MOVE_TOKEN }), keepalive: true });
+      const data = await res.json();
+      if (!data.ok || !data.booking) { showError(); return; }
+      booking = data.booking;
+      render();
+    } catch(e) {
+      if (!booking) showError();
+    }
+  }
+
+  // ── Render ───────────────────────────────────────────────────
+  function render() {
+    document.getElementById('loading-state').style.display  = 'none';
+    document.getElementById('error-state').style.display    = 'none';
+    document.getElementById('main-content').style.display   = 'block';
+
+    const status = (booking['Status'] || booking.status || 'Upcoming').toLowerCase().replace(/\s/g,'');
+
+    // Booking ID display
+    document.getElementById('booking-id-display').textContent = booking['Booking ID'] || '';
+
+    // Fill details
+    document.getElementById('d-movedate').textContent = booking['Move Date'] || '--';
+    document.getElementById('d-crew').textContent     = booking['Crew'] || '--';
+    document.getElementById('d-rate').textContent     = booking['Rate'] || '--';
+    document.getElementById('d-from').textContent     = booking['From'] || '--';
+    document.getElementById('d-to').textContent       = booking['To'] || '--';
+    document.getElementById('d-deposit').textContent  = booking['Deposit'] ? '$' + booking['Deposit'] + ' applied' : '--';
+
+    // Progress bar
+    updateProgress(status);
+
+    // Button & timer states
+    const checkinSection = document.getElementById('checkin-section');
+    const lockedNotice   = document.getElementById('locked-notice');
+    const timerCard      = document.getElementById('timer-card');
+    const completeCard   = document.getElementById('complete-card');
+    const btn            = document.getElementById('checkin-btn');
+
+    if (status === 'complete') {
+      checkinSection.style.display = 'none';
+      lockedNotice.style.display   = 'none';
+      timerCard.style.display      = 'block';
+      completeCard.style.display   = 'block';
+      stopTimer();
+      // Show final elapsed if checkin time exists
+      const ct = booking['Checkin At'] || booking.checkinAt;
+      if (ct) startTimerFrom(new Date(ct), true);
+
+    } else if (status === 'inprogress') {
+      lockedNotice.style.display   = 'none';
+      completeCard.style.display   = 'none';
+      timerCard.style.display      = 'block';
+      checkinSection.style.display = 'none';
+      // Restore timer from saved checkin time
+      const ct = booking['Checkin At'] || booking.checkinAt;
+      if (ct && !timerInterval) startTimerFrom(new Date(ct), false);
+
+    } else if (status === 'arrived') {
+      lockedNotice.style.display   = 'none';
+      timerCard.style.display      = 'none';
+      completeCard.style.display   = 'none';
+      checkinSection.style.display = 'block';
+      btn.className   = 'btn btn-primary';
+      btn.disabled    = false;
+      btn.textContent = 'Check In Your Crew';
+
+    } else {
+      // Upcoming / on the way
+      lockedNotice.style.display   = 'block';
+      timerCard.style.display      = 'none';
+      completeCard.style.display   = 'none';
+      checkinSection.style.display = 'block';
+      btn.className   = 'btn btn-locked';
+      btn.disabled    = true;
+      btn.textContent = status === 'ontheway' ? 'Your Crew is On the Way...' : 'Waiting for Your Crew...';
+    }
+  }
+
+  // ── Progress bar ─────────────────────────────────────────────
+  function updateProgress(status) {
+    const steps = ['booked','ontheway','arrived','inprogress','complete'];
+    const idx   = steps.indexOf(status);
+    const current = idx < 0 ? 0 : idx;
+
+    steps.forEach((s, i) => {
+      const el = document.getElementById('step-' + s);
+      if (!el) return;
+      el.className = 'step' + (i < current ? ' done' : i === current ? ' active' : '');
+    });
+
+    // Fill line
+    const pct = current === 0 ? 0 : (current / (steps.length - 1)) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  // ── Check in crew ─────────────────────────────────────────────
+  async function checkinCrew() {
+    const btn = document.getElementById('checkin-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Checking in...';
+    try {
+      const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'customer_checkin', moveToken: MOVE_TOKEN }), keepalive: true });
+      const data = await res.json();
+      if (data.ok) {
+        checkinTime = new Date(data.checkinAt);
+        await loadBooking();
+      } else {
+        btn.disabled    = false;
+        btn.textContent = 'Check In Your Crew';
+      }
+    } catch(e) {
+      btn.disabled    = false;
+      btn.textContent = 'Check In Your Crew';
+    }
+  }
+
+  // ── Timer ─────────────────────────────────────────────────────
+  function startTimerFrom(start, frozen) {
+    checkinTime = start;
+    if (timerInterval) clearInterval(timerInterval);
+    const display = document.getElementById('timer-display');
+    function tick() {
+      const elapsed = Date.now() - start.getTime();
+      const h = Math.floor(elapsed / 3600000);
+      const m = Math.floor((elapsed % 3600000) / 60000);
+      const s = Math.floor((elapsed % 60000) / 1000);
+      display.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+    tick();
+    if (!frozen) timerInterval = setInterval(tick, 1000);
+  }
+
+  function stopTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  function showError() {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('error-state').style.display   = 'flex';
+  }
+
+  boot();
+</script>
+</body>
+</html>
