@@ -1056,9 +1056,10 @@
   }
 
   // ── Stops ──────────────────────────────────────────────
-  const PROP_TYPES = ['Home/Townhouse','Apartment','Highrise','Office','Storage'];
-  const SQ_FT = ['0-1000','1000-1500','1500-2000','2000-3000','3000+'];
-  const GARAGE = ['None','1 Car','2 Car','3+ Car'];
+  const PROP_TYPES    = ['Home/Townhouse','Apartment','Highrise','Office','Storage'];
+  const SQ_FT         = ['0-1000','1000-1500','1500-2000','2000-3000','3000+'];
+  const GARAGE        = ['None','1 Car','2 Car','3+ Car'];
+  const STORAGE_SIZES = ['5x5','5x10','5x15','10x10','10x15','10x20','10x25','10x30'];
 
   let stops = [];
 
@@ -1066,8 +1067,8 @@
     const fromAddr = s0Data.from || new URLSearchParams(window.location.search).get('from') || '';
     const toAddr   = s0Data.to   || new URLSearchParams(window.location.search).get('to')   || '';
     stops = [
-      { label: 'Moving from', address: fromAddr, propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null },
-      { label: 'Moving to',   address: toAddr,   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null }
+      { label: 'Moving from', address: fromAddr, propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null, floorLevel:'', elevator:null, unitSize:null },
+      { label: 'Moving to',   address: toAddr,   propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null, floorLevel:'', elevator:null, unitSize:null }
     ];
     renderStops();
   }
@@ -1076,7 +1077,7 @@
     // Insert in the middle (before the last stop)
     const midIndex = Math.max(1, stops.length - 1);
     stops.splice(midIndex, 0, {
-      label: 'Stop', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null
+      label: 'Stop', propType:'Home/Townhouse', beds:null, sqft:null, garage:'None', stories:null, floorLevel:'', elevator:null, unitSize:null
     });
     renderStops();
     // Scroll to new stop
@@ -1153,32 +1154,79 @@
         <!-- Property Type -->
         <div class="chip-group-label">Property Type</div>
         <div class="chip-group">
-          ${PROP_TYPES.map(pt => `<button class="chip${stop.propType===pt?' active':''}" onclick="selectChip(${i},'propType','${pt}',this)">${pt}</button>`).join('')}
+          ${PROP_TYPES.map(pt => `<button class="chip${stop.propType===pt?' active':''}" onclick="selectPropType(${i},'${pt}')">${pt}</button>`).join('')}
         </div>
 
-        <!-- Bedrooms -->
-        <div class="chip-group-label">Bedrooms</div>
-        <div class="chip-group">
-          ${[1,2,3,4,'5+'].map(b => `<button class="chip-circle${stop.beds==b?' active':''}" onclick="selectChip(${i},'beds','${b}',this)">${b}</button>`).join('')}
-        </div>
+        ${(function() {
+          const pt = stop.propType;
+          const isHome     = pt === 'Home/Townhouse';
+          const isApt      = pt === 'Apartment';
+          const isHigh     = pt === 'Highrise';
+          const isOffice   = pt === 'Office';
+          const isStorage  = pt === 'Storage';
+          const hasFloor   = isApt || isHigh || isOffice || isStorage;
+          const hasBeds    = isHome || isApt || isHigh;
+          const hasSqft    = !isStorage;
+          const hasGarage  = isHome;
+          const hasStories = isHome;
+          let html = '';
 
-        <!-- Square Footage -->
-        <div class="chip-group-label">Square Footage</div>
-        <div class="chip-group">
-          ${SQ_FT.map(sf => `<button class="chip${stop.sqft===sf?' active':''}" onclick="selectChip(${i},'sqft','${sf}',this)">${sf}</button>`).join('')}
-        </div>
+          if (hasBeds) {
+            html += `<div class="chip-group-label">Bedrooms</div>
+            <div class="chip-group">
+              ${[1,2,3,4,'5+'].map(b => `<button class="chip-circle${stop.beds==b?' active':''}" onclick="selectChip(${i},'beds','${b}',this)">${b}</button>`).join('')}
+            </div>`;
+          }
 
-        <!-- Garage -->
-        <div class="chip-group-label">Garage</div>
-        <div class="chip-group">
-          ${GARAGE.map(g => `<button class="chip${stop.garage===g?' active':''}" onclick="selectChip(${i},'garage','${g}',this)">${g}</button>`).join('')}
-        </div>
+          if (hasSqft) {
+            html += `<div class="chip-group-label">Square Footage</div>
+            <div class="chip-group">
+              ${SQ_FT.map(sf => `<button class="chip${stop.sqft===sf?' active':''}" onclick="selectChip(${i},'sqft','${sf}',this)">${sf}</button>`).join('')}
+            </div>`;
+          }
 
-        <!-- Stories -->
-        <div class="chip-group-label">Stories</div>
-        <div class="chip-group">
-          ${[1,2,3,'4+'].map(s => `<button class="chip-circle${stop.stories==s?' active':''}" onclick="selectChip(${i},'stories','${s}',this)">${s}</button>`).join('')}
-        </div>
+          if (isStorage) {
+            html += `<div class="chip-group-label">Unit Size</div>
+            <div class="chip-group">
+              ${STORAGE_SIZES.map(sz => `<button class="chip${stop.unitSize===sz?' active':''}" onclick="selectChip(${i},'unitSize','${sz}',this)">${sz}</button>`).join('')}
+            </div>`;
+          }
+
+          if (hasGarage) {
+            html += `<div class="chip-group-label">Garage</div>
+            <div class="chip-group">
+              ${GARAGE.map(g => `<button class="chip${stop.garage===g?' active':''}" onclick="selectChip(${i},'garage','${g}',this)">${g}</button>`).join('')}
+            </div>`;
+          }
+
+          if (hasStories) {
+            html += `<div class="chip-group-label">Stories</div>
+            <div class="chip-group">
+              ${[1,2,3,'4+'].map(s => `<button class="chip-circle${stop.stories==s?' active':''}" onclick="selectChip(${i},'stories','${s}',this)">${s}</button>`).join('')}
+            </div>`;
+          }
+
+          if (hasFloor) {
+            html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;">
+              <div>
+                <div class="chip-group-label">Floor Level</div>
+                <input type="number" min="1" placeholder="Floor number" value="${stop.floorLevel||''}"
+                  oninput="stops[${i}].floorLevel=this.value"
+                  style="width:100%;padding:10px 12px;border:1.5px solid #d4c9e8;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.9rem;color:#190E2A;outline:none;"
+                  onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d4c9e8'" />
+              </div>
+              <div>
+                <div class="chip-group-label">Elevator</div>
+                <div class="chip-group" style="margin-top:0;">
+                  <button class="chip${stop.elevator==='yes'?' active':''}" onclick="selectChip(${i},'elevator','yes',this)">Yes</button>
+                  <button class="chip${stop.elevator==='no'?' active':''}" onclick="selectChip(${i},'elevator','no',this)">No</button>
+                </div>
+              </div>
+            </div>`;
+          }
+
+          return html;
+        })()}
       `;
       list.appendChild(card);
     });
@@ -1186,9 +1234,21 @@
     attachPlacesToStops();
   }
 
+  function selectPropType(stopIndex, value) {
+    stops[stopIndex].propType = value;
+    // Reset type-specific fields so stale answers don't carry over
+    stops[stopIndex].beds      = null;
+    stops[stopIndex].sqft      = null;
+    stops[stopIndex].garage    = 'None';
+    stops[stopIndex].stories   = null;
+    stops[stopIndex].floorLevel= '';
+    stops[stopIndex].elevator  = null;
+    stops[stopIndex].unitSize  = null;
+    renderStops();
+  }
+
   function selectChip(stopIndex, field, value, el) {
     stops[stopIndex][field] = value;
-    // Toggle active within the chip group
     const group = el.parentElement;
     group.querySelectorAll('.chip,.chip-circle').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
@@ -1668,6 +1728,18 @@
     body.append('Number of Stops', stops.length);
     body.append('Belongings Volume', moveVolume);
     body.append('Specialty Items', specialtyItems.join(', ') || 'None');
+    stops.forEach((s, idx) => {
+      const label = idx === 0 ? 'Pickup' : idx === stops.length-1 ? 'Dropoff' : `Stop ${idx+1}`;
+      let details = `${s.propType}`;
+      if (s.beds)       details += `, ${s.beds} bed`;
+      if (s.sqft)       details += `, ${s.sqft} sqft`;
+      if (s.unitSize)   details += `, Unit ${s.unitSize}`;
+      if (s.garage && s.garage !== 'None') details += `, ${s.garage} garage`;
+      if (s.stories)    details += `, ${s.stories} stories`;
+      if (s.floorLevel) details += `, Floor ${s.floorLevel}`;
+      if (s.elevator)   details += `, elevator: ${s.elevator}`;
+      body.append(`${label} Details`, details);
+    });
     body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
     body.append('Notes', document.getElementById('cf-notes').value);
     body.append('Deposit Amount', `$${depositAmount}`);
