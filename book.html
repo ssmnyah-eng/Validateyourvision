@@ -1606,10 +1606,9 @@
 
     // Mount Stripe card (skip in test mode)
     if (TEST_MODE) {
-      var billingSection = document.querySelector('.billing-section-wrap');
       var cardSection = document.getElementById('stripe-card-section');
       if (cardSection) {
-        cardSection.closest('div[style*="background:#fff"]').innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;color:#92400e;font-size:0.88rem;font-weight:600;">TEST MODE -- No payment required. Just fill in your contact info above and click the button.</div>';
+        cardSection.innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;color:#92400e;font-size:0.88rem;font-weight:600;">TEST MODE -- No payment required. Just fill in your contact info above and click the button.</div>';
       }
     } else {
       initStripeCard();
@@ -1714,7 +1713,7 @@
     const btn = document.getElementById('finalSubmitBtn');
     btn.disabled = true;
     btn.textContent = 'Processing...';
-    document.getElementById('stripe-card-error').textContent = '';
+    var errEl = document.getElementById('stripe-card-error'); if (errEl) errEl.textContent = '';
 
     let paymentMethod = { id: 'TEST_MODE' };
 
