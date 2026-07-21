@@ -1805,12 +1805,9 @@
       status: 'Upcoming'
     });
 
-    // Use no-cors to avoid preflight (GAS doesn't handle OPTIONS).
-    // We can't read the response in no-cors mode, so we just fire and redirect.
-    fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload }).catch(() => {});
+    // keepalive keeps the request alive even after the page navigates away
+    fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload, keepalive: true }).catch(() => {});
 
-    // Give GAS 2 seconds to receive the request before navigating away
-    await new Promise(r => setTimeout(r, 2000));
     window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
   }
 
