@@ -647,31 +647,56 @@
             <!-- Pricing Information -->
             <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
               <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Pricing Information</div>
-              <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:8px;">Move Reservation</div>
+
+              <!-- Estimate breakdown -->
+              <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:8px;">Move Estimate</div>
               <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
-                <span>Hourly rate (2 hr minimum)</span>
+                <span>Hourly rate</span>
                 <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
               </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
+                <span>Estimated time <span style="font-size:0.72rem;">(based on your home)</span></span>
+                <span style="font-weight:700;color:#190E2A;" id="summary-est-hours">--</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
+                <span>Estimated labor</span>
+                <span style="font-weight:700;color:#190E2A;" id="summary-est-labor">--</span>
+              </div>
               <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:#5c4a7a;margin-bottom:2px;">
-                <span>Truck fee <span style="font-size:0.72rem;">(based on move distance)</span></span>
+                <span>Truck fee <span style="font-size:0.72rem;">(based on distance)</span></span>
                 <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
               </div>
-              <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:12px;"></div>
+              <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
+
               <div id="packingPriceLine" style="display:none;">
-                <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:6px;">Packing / Unpacking</div>
-                <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:12px;">
+                <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:4px;">Packing / Unpacking</div>
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
                   <span>Hourly rate (3 packers, 2 hr min)</span>
                   <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
                 </div>
               </div>
-              <hr style="border:none;border-top:1px solid #ede6ff;margin-bottom:12px;" />
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                <span style="font-weight:800;color:#190E2A;font-size:0.95rem;">Priority reservation due today:</span>
-                <span style="font-weight:800;color:#16a34a;font-size:1.1rem;">$50</span>
+
+              <!-- Estimated total -->
+              <div style="background:#f9f8ff;border:1px solid #ede6ff;border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                  <span style="font-size:0.82rem;color:#5c4a7a;font-weight:600;">Estimated total</span>
+                  <span style="font-weight:800;color:#190E2A;font-size:0.95rem;" id="summary-est-total">--</span>
+                </div>
+                <div style="font-size:0.72rem;color:#8B5BC7;">Actual total billed after your move at 15-min increments</div>
               </div>
-              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> Free cancellation</div>
-              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> $50 applied to your final balance</div>
-              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;"><span>&#10003;</span> Locks in your virtual walkthrough slot</div>
+
+              <hr style="border:none;border-top:1px solid #ede6ff;margin-bottom:12px;" />
+
+              <!-- 20% deposit -->
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-weight:800;color:#190E2A;font-size:0.95rem;">20% deposit due today:</span>
+                <span style="font-weight:800;color:#16a34a;font-size:1.2rem;" id="summary-deposit-amount">--</span>
+              </div>
+              <div style="font-size:0.72rem;color:#8B5BC7;margin-bottom:12px;" id="summary-deposit-note"></div>
+
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> 100% refundable &mdash; no questions asked</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> Deposit applied toward your final balance</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;"><span>&#10003;</span> Date changes are always free</div>
             </div>
 
             <!-- Billing Information -->
@@ -696,10 +721,10 @@
 
             <!-- Pay button -->
             <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);">
-              PAY $50 AND RESERVE MY SPOT
+              PAY <span id="btn-deposit-amount">20% DEPOSIT</span> AND RESERVE
             </button>
             <p style="text-align:center;font-size:0.72rem;color:#8B5BC7;margin-top:10px;line-height:1.6;">
-              Your $50 priority reservation books your virtual walkthrough slot and is applied toward your final balance. The remaining balance is due after your walkthrough.
+              Your deposit secures your virtual walkthrough slot and is fully applied toward your final balance. The remaining balance is due after your walkthrough.
             </p>
           </div>
 
@@ -751,8 +776,8 @@
 
             <!-- Deposit note -->
             <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 14px;">
-              <div style="font-size:0.78rem;font-weight:700;color:#15803d;margin-bottom:4px;">Due Today: $50</div>
-              <div style="font-size:0.72rem;color:#16a34a;font-weight:500;">Applied toward your final balance</div>
+              <div style="font-size:0.78rem;font-weight:700;color:#15803d;margin-bottom:4px;">Due Today: <span id="sb-deposit-amount">20% deposit</span></div>
+              <div style="font-size:0.72rem;color:#16a34a;font-weight:500;">100% refundable &mdash; applied to your final balance</div>
             </div>
           </div>
 
@@ -1295,6 +1320,65 @@
   // ── Step 6: Final reservation ───────────────────────────
   let truckFee = null;
 
+  // ── Move Time Estimator ──────────────────────────────────────
+  // Base hours for 2 movers at full load by square footage
+  const BASE_HOURS = { '0-1000': 2.5, '1000-1500': 3.5, '1500-2000': 5.0, '2000-3000': 7.0, '3000+': 9.5 };
+  // Volume load factor
+  const VOL_FACTOR = { everything: 1.0, most: 0.85, half: 0.65, few: 0.45 };
+  // Specialty item add-ons in minutes
+  const SPEC_MINS = { gun_safe: 30, piano: 45, pool_table: 60, hot_tub: 45, large_tv: 10, antiques: 20, artwork: 10 };
+
+  function estimateHours() {
+    const s = stops[0] || {};
+    let hrs = BASE_HOURS[s.sqft] || 4.5;           // base by sq ft
+    const cf = crewSize === 3 ? 0.70 : 1.0;         // 3 movers = 30% faster
+    hrs = hrs * cf * (VOL_FACTOR[moveVolume] || 1.0);
+    // Garage
+    const garageAdd = { 'None': 0, '1 Car': 0.5, '2 Car': 1.0, '3+ Car': 1.5 };
+    hrs += (garageAdd[s.garage] || 0) * cf;
+    // Stories
+    const storiesAdd = { 1: 0, '1': 0, 2: 0.25, '2': 0.25, 3: 0.5, '3': 0.5 };
+    hrs += storiesAdd[s.stories] || (String(s.stories) === '4+' ? 0.75 : 0);
+    // Specialty items
+    let specMins = 0;
+    specialtyItems.forEach(item => { specMins += (SPEC_MINS[item] || 0); });
+    hrs += specMins / 60;
+    // Extra stops
+    if (stops.length > 1) hrs += (stops.length - 1) * 0.5;
+    // 2-hour minimum, round to nearest 15 min
+    hrs = Math.max(2, Math.round(hrs * 4) / 4);
+    return hrs;
+  }
+
+  function fmtHours(h) {
+    const wh = Math.floor(h);
+    const mn = Math.round((h - wh) * 60);
+    if (mn === 0) return `${wh} hrs`;
+    return `${wh} hr ${mn} min`;
+  }
+
+  let depositAmount = 0; // set in goToFinalStep, used in submitFinalReservation
+
+  function calcAndShowEstimate() {
+    const estHrs = estimateHours();
+    const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : RATES[crewSize][1];
+    const laborCost = Math.round(rate * estHrs);
+    const truck = truckFee || 99;
+    const estTotal = laborCost + truck;
+    depositAmount = Math.ceil(estTotal * 0.20);
+
+    document.getElementById('summary-est-hours').textContent = fmtHours(estHrs);
+    document.getElementById('summary-est-labor').textContent = `$${laborCost.toLocaleString()}`;
+    document.getElementById('summary-est-total').textContent = `$${estTotal.toLocaleString()}`;
+    document.getElementById('summary-deposit-amount').textContent = `$${depositAmount.toLocaleString()}`;
+    document.getElementById('summary-deposit-note').textContent =
+      `20% of $${estTotal.toLocaleString()} estimated total`;
+    const btnSpan = document.getElementById('btn-deposit-amount');
+    if (btnSpan) btnSpan.textContent = `$${depositAmount.toLocaleString()} DEPOSIT`;
+    const sbDep = document.getElementById('sb-deposit-amount');
+    if (sbDep) sbDep.textContent = `$${depositAmount.toLocaleString()} (20% deposit)`;
+  }
+
   // ── Stripe setup ──
   const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
   let stripeInstance = null;
@@ -1348,7 +1432,10 @@
     // Pricing
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
-    autoCalcTruckFee();
+    // Truck fee callback triggers full estimate calculation once mileage is known
+    autoCalcTruckFee(() => calcAndShowEstimate());
+    // Also show a preliminary estimate immediately (truck fee = 99 default)
+    calcAndShowEstimate();
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
       document.getElementById('packRateDisplay').textContent = `$${PACK_RATES[packSelectedDate.getDay()]}/hr`;
@@ -1383,8 +1470,7 @@
     return 125;
   }
 
-  function autoCalcTruckFee() {
-    // Prefer the refined stop addresses from Step 3 (Google Places formatted); fall back to Step 0 / URL params
+  function autoCalcTruckFee(onDone) {
     const fromAddr = (stops[0] && stops[0].address) || s0Data.from || new URLSearchParams(window.location.search).get('from') || '';
     const toAddr   = (stops.length > 1 && stops[stops.length-1].address) || s0Data.to || new URLSearchParams(window.location.search).get('to') || '';
     const display  = document.getElementById('summary-truck-display');
@@ -1392,6 +1478,7 @@
 
     if (!fromAddr || !toAddr || typeof google === 'undefined') {
       truckFee = 99; display.textContent = '$99'; note.textContent = '';
+      if (onDone) onDone();
       return;
     }
 
@@ -1415,6 +1502,7 @@
         truckFee = 99; display.textContent = '$99';
         note.textContent = '';
       }
+      if (onDone) onDone();
     });
   }
 
@@ -1452,7 +1540,7 @@
     if (error) {
       document.getElementById('stripe-card-error').textContent = error.message;
       btn.disabled = false;
-      btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
+      btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
       return;
     }
 
@@ -1476,7 +1564,7 @@
     body.append('Specialty Items', specialtyItems.join(', ') || 'None');
     body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
     body.append('Notes', document.getElementById('cf-notes').value);
-    body.append('Deposit', '$50 priority reservation');
+    body.append('Deposit Amount', `$${depositAmount} (20% of estimated total)`);
     body.append('Stripe Payment Method', paymentMethod.id);
 
     try {
@@ -1486,11 +1574,11 @@
       if (res.ok) {
         window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
       } else {
-        btn.disabled = false; btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
+        btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
         alert('Something went wrong. Please text us at (540) 300-1414.');
       }
     } catch {
-      btn.disabled = false; btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
+      btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
       alert('Something went wrong. Please text us at (540) 300-1414.');
     }
   }
