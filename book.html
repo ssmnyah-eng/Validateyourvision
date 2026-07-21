@@ -49,7 +49,6 @@
     .left-panel {
       padding: 48px 40px;
       display: flex; flex-direction: column; align-items: center;
-      overflow-y: auto;
     }
     .left-inner { width: 100%; max-width: 460px; }
     .right-panel { position: relative; background: #e8e4f0; }
@@ -304,11 +303,12 @@
       .left-panel { padding: 28px 16px; }
       .crew-grid { gap: 12px; }
     }
-    /* Step 6: hide map panel, show inline sidebar instead */
+    /* Step 6: hide map panel, expand checkout full-width */
     body.step6-active .right-panel { display: none !important; }
     body.step6-active .layout { grid-template-columns: 1fr; }
-    body.step6-active .left-panel { max-width: 900px; margin: 0 auto; }
-    @media (max-width: 700px) {
+    body.step6-active .left-panel { align-items: stretch; padding: 32px 24px; }
+    body.step6-active .left-inner { max-width: 860px; width: 100%; margin: 0 auto; }
+    @media (max-width: 720px) {
       #s6-layout { grid-template-columns: 1fr !important; }
       #s6-sidebar { position: static !important; }
     }
