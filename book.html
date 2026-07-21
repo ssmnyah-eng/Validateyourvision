@@ -376,7 +376,7 @@
       <!-- Step 4 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
         <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">4</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Virtual walkthrough to lock your flat rate</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Crew arrives on move day, fully prepared</p>
       </div>
       <!-- Step 5 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
@@ -839,7 +839,7 @@
           PAY <span id="btn-deposit-amount">20% DEPOSIT</span> AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">
-          Your deposit secures your virtual walkthrough slot and is fully applied toward your final balance. The remaining balance is due after your walkthrough.
+          Your deposit secures your moving date and is fully applied toward your final balance. The remaining balance is due on move day.
         </p>
 
       </div>
@@ -1638,7 +1638,7 @@
     body.append('Move Date', `${dateStr} ${selectedTime||''}`);
     body.append('Crew Size', `${crewSize} Movers`);
     body.append('Rate', `$${rate}/hr`);
-    body.append('Truck Fee', truckFee ? `$${truckFee}` : 'TBD at walkthrough');
+    body.append('Truck Fee', truckFee ? `$${truckFee}` : 'TBD on move day');
     body.append('Moving From', stops[0]?.address || '');
     body.append('Moving To', stops[stops.length-1]?.address || '');
     body.append('Number of Stops', stops.length);
