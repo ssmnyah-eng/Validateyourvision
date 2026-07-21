@@ -78,6 +78,8 @@
       background: #fff; padding: 22px 18px;
       cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
       text-align: center; position: relative;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      user-select: none; -webkit-user-select: none;
     }
     .crew-card:hover { border-color: #8B5BC7; box-shadow: 0 4px 20px rgba(139,91,199,0.12); }
     .crew-card.selected { border-color: #16a34a; box-shadow: 0 4px 20px rgba(22,163,74,0.18); }
@@ -466,7 +468,7 @@
 
         <div class="crew-grid">
           <!-- 2 Movers -->
-          <div class="crew-card" id="card2" onclick="selectCrew(2)">
+          <div class="crew-card" id="card2" onclick="selectCrew(2)" ontouchend="selectCrew(2);event.preventDefault()">
             <div class="crew-icon">👥</div>
             <div class="crew-title">2 Movers</div>
             <div class="crew-rate">Starting at $165/hr</div>
@@ -478,8 +480,8 @@
             </ul>
           </div>
           <!-- 3 Movers -->
-          <div class="crew-card" id="card3" onclick="selectCrew(3)">
-            <div class="badge" onclick="selectCrew(3)">For Full Moves</div>
+          <div class="crew-card" id="card3" onclick="selectCrew(3)" ontouchend="selectCrew(3);event.preventDefault()">
+            <div class="badge">For Full Moves</div>
             <div class="crew-icon">👥👤</div>
             <div class="crew-title">3 Movers</div>
             <div class="crew-rate">Starting at $199/hr</div>
@@ -492,7 +494,7 @@
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" disabled onclick="goToCalendar()">CONTINUE</button>
+        <button class="btn-continue" id="crewContinueBtn" disabled onclick="goToCalendar()" ontouchend="if(!this.disabled){goToCalendar();event.preventDefault()}" style="touch-action:manipulation">CONTINUE</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
