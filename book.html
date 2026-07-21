@@ -86,7 +86,7 @@
       background: #16a34a; color: #fff;
       font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
-      white-space: nowrap;
+      white-space: nowrap; pointer-events: none;
     }
     .crew-icon { font-size: 2rem; margin-bottom: 10px; }
     .crew-title { font-weight: 800; font-size: 1rem; color: #190E2A; margin-bottom: 4px; }
@@ -479,7 +479,7 @@
           </div>
           <!-- 3 Movers -->
           <div class="crew-card" id="card3" onclick="selectCrew(3)">
-            <div class="badge">For Full Moves</div>
+            <div class="badge" onclick="selectCrew(3)">For Full Moves</div>
             <div class="crew-icon">👥👤</div>
             <div class="crew-title">3 Movers</div>
             <div class="crew-rate">Starting at $199/hr</div>
