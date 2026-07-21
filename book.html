@@ -691,7 +691,7 @@
             </div>
             <div style="position:relative;margin-bottom:14px;">
               <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:600;color:#6b7280;letter-spacing:0.04em;">Your email</label>
-              <input type="email" id="cf-email" placeholder="your@email.com" style="width:100%;padding:13px 12px;border:1px solid #d1d5db;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.9rem;color:#190E2A;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d1d5db'" />
+              <input type="email" id="cf-email" placeholder="your@email.com" style="width:100%;padding:13px 12px;border:1px solid #d1d5db;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.9rem;color:#190E2A;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#8B5BC7'" onblur="this.style.borderColor='#d1d5db';(function(){const n=document.getElementById('cf-first').value.trim()+' '+document.getElementById('cf-last').value.trim();const e=this.value.trim();const p=document.getElementById('cf-phone').value.trim();if(e)sendLead(n,e,p,s0Data.from||'',s0Data.to||'');}).call(this)" />
             </div>
             <div style="position:relative;margin-bottom:14px;">
               <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:600;color:#6b7280;letter-spacing:0.04em;">Your phone number</label>
@@ -902,6 +902,7 @@
     if (errs.length) { document.getElementById(errs[0]).focus(); return; }
 
     s0Data = { name: first + ' ' + last, email, phone, from, to };
+    sendLead(s0Data.name, email, phone, from, to);
     initStops();
     document.getElementById('step0').classList.remove('active');
     document.getElementById('step1').classList.add('active');
@@ -1426,6 +1427,24 @@
   // ── Stripe setup ──
   const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
   const SHEET_SCRIPT_URL = ''; // paste your Google Apps Script URL here
+
+  // Fire as soon as contact info is known -- even if they never pay
+  let leadSent = false;
+  function sendLead(name, email, phone, from, to) {
+    if (!SHEET_SCRIPT_URL || leadSent || !email) return;
+    leadSent = true;
+    fetch(SHEET_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: 'vyv2026admin',
+        action: 'save_lead',
+        capturedAt: new Date().toISOString(),
+        name, email, phone, from, to,
+        source: 'Booking Form'
+      })
+    }).catch(() => {});
+  }
   let stripeInstance = null;
   let stripeCardNumber = null;
   let stripeCardExpiry = null;

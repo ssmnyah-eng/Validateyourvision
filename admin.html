@@ -294,6 +294,31 @@
     .setup-note { margin: 8px 10px 0; background: rgba(234,179,8,0.07); border: 1px solid rgba(234,179,8,0.22); border-radius: 8px; padding: 10px 12px; font-size: 0.72rem; color: #fbbf24; line-height: 1.5; }
     .setup-note strong { display: block; margin-bottom: 2px; font-size: 0.74rem; }
 
+    /* MINI CALENDAR */
+    .cal-section { border-bottom: 1px solid rgba(139,91,199,0.12); flex-shrink: 0; }
+    .cal-toggle { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; cursor: pointer; user-select: none; }
+    .cal-toggle-label { font-size: 0.62rem; font-weight: 700; color: rgba(139,91,199,0.7); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cal-toggle-month { font-size: 0.72rem; font-weight: 700; color: rgba(236,235,238,0.6); }
+    .cal-body { display: none; padding: 0 10px 10px; }
+    .cal-body.open { display: block; }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .cal-nav button { background: none; border: none; color: rgba(236,235,238,0.5); cursor: pointer; font-size: 1rem; padding: 2px 8px; border-radius: 6px; }
+    .cal-nav button:hover { color: #ECEBEE; background: rgba(139,91,199,0.15); }
+    .cal-nav span { font-size: 0.72rem; font-weight: 700; color: #ECEBEE; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+    .cal-day-hdr { font-size: 0.55rem; font-weight: 700; color: rgba(236,235,238,0.3); text-align: center; padding: 3px 0; text-transform: uppercase; }
+    .cal-day { height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 600; cursor: pointer; position: relative; color: rgba(236,235,238,0.4); transition: all 0.12s; }
+    .cal-day:hover { background: rgba(139,91,199,0.15); color: #ECEBEE; }
+    .cal-day.empty { cursor: default; }
+    .cal-day.empty:hover { background: none; }
+    .cal-day.has-move { color: #c4b5fd; background: rgba(74,35,122,0.3); }
+    .cal-day.has-move:hover { background: rgba(74,35,122,0.5); }
+    .cal-day.today { color: #ECEBEE; background: rgba(139,91,199,0.4); font-weight: 800; }
+    .cal-day.urgent-day { color: #fbbf24; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); }
+    .cal-day.selected-day { outline: 2px solid #8B5BC7; }
+    .cal-dot { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #8B5BC7; }
+    .cal-day.urgent-day .cal-dot { background: #fbbf24; }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .scoreboard { grid-template-columns: 1fr 1fr; }
@@ -418,6 +443,22 @@
         <div id="setup-note" style="display:none;" class="setup-note">
           <strong>Setup needed for live data</strong>
           Add your Google Apps Script URL to SCRIPT_URL in this file to see real bookings. Demo data shown below.
+        </div>
+      </div>
+
+      <!-- Mini Calendar -->
+      <div class="cal-section">
+        <div class="cal-toggle" onclick="toggleCal()">
+          <span class="cal-toggle-label">Calendar</span>
+          <span class="cal-toggle-month" id="cal-toggle-month"></span>
+        </div>
+        <div class="cal-body" id="cal-body">
+          <div class="cal-nav">
+            <button onclick="calNav(-1)">&#8249;</button>
+            <span id="cal-month-label"></span>
+            <button onclick="calNav(1)">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
         </div>
       </div>
 
@@ -764,6 +805,7 @@ function setFilter(f) {
 function renderAll() {
   updateScoreboard();
   renderList();
+  if (document.getElementById('cal-body').classList.contains('open')) renderCal();
 }
 
 function renderList() {
@@ -961,6 +1003,132 @@ async function updateStatus(newStatus) {
 // ─────────────────────────────────────────────────────
 function toggleMonthly() {
   document.getElementById('monthly-list').classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────
+//  MINI CALENDAR
+// ─────────────────────────────────────────────────────
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+let calFilterDay = null;
+
+function toggleCal() {
+  const body = document.getElementById('cal-body');
+  body.classList.toggle('open');
+  if (body.classList.contains('open')) renderCal();
+}
+
+function calNav(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  renderCal();
+}
+
+function renderCal() {
+  const now        = new Date();
+  const monthName  = new Date(calYear, calMonth, 1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  document.getElementById('cal-month-label').textContent   = monthName;
+  document.getElementById('cal-toggle-month').textContent  = new Date(calYear, calMonth, 1).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+
+  // Build a map of day -> bookings for this month
+  const dayMap = {};
+  allBookings.forEach(b => {
+    const d = parseDate(b.moveDate || b.move_date || '');
+    if (!d || d.getFullYear() !== calYear || d.getMonth() !== calMonth) return;
+    if (getStatus(b).toLowerCase() === 'cancelled') return;
+    const day = d.getDate();
+    if (!dayMap[day]) dayMap[day] = [];
+    dayMap[day].push(b);
+  });
+
+  const firstDow = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const DAYS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+  let html = DAYS.map(d => `<div class="cal-day-hdr">${d}</div>`).join('');
+  for (let i = 0; i < firstDow; i++) html += '<div class="cal-day empty"></div>';
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const isToday   = now.getFullYear() === calYear && now.getMonth() === calMonth && now.getDate() === day;
+    const moves     = dayMap[day] || [];
+    const hasMove   = moves.length > 0;
+    const hrs       = hasMove ? hoursUntil(moves[0]) : Infinity;
+    const isUrgent  = hasMove && hrs >= 0 && hrs <= 48;
+    const isSel     = calFilterDay === day && calYear === new Date().getFullYear() && calMonth === new Date().getMonth();
+    const cls       = ['cal-day', isToday?'today':'', hasMove?(isUrgent?'urgent-day':'has-move'):'', isSel?'selected-day':''].filter(Boolean).join(' ');
+    const dot       = hasMove ? '<div class="cal-dot"></div>' : '';
+    html += `<div class="${cls}" onclick="calDayClick(${day})" title="${hasMove ? moves.map(b=>b.name).join(', ') : ''}">${day}${dot}</div>`;
+  }
+
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function calDayClick(day) {
+  if (calFilterDay === day) {
+    calFilterDay = null;
+    currentFilter = 'all';
+    document.getElementById('f-all').classList.add('active');
+    ['upcoming','today','done'].forEach(id => document.getElementById(`f-${id}`).classList.remove('active'));
+  } else {
+    calFilterDay = day;
+    // Filter list to this specific date
+    currentFilter = 'all';
+  }
+  renderCal();
+  renderListForDay(calFilterDay ? new Date(calYear, calMonth, calFilterDay) : null);
+}
+
+function renderListForDay(targetDate) {
+  if (!targetDate) { renderList(); return; }
+  const q = document.getElementById('search-input').value.toLowerCase();
+  let rows = allBookings.filter(b => {
+    const d = parseDate(b.moveDate || '');
+    return d && d.toDateString() === targetDate.toDateString();
+  });
+  if (q) rows = rows.filter(b => [b.name,b.phone,b.email,b.from,b.to].join(' ').toLowerCase().includes(q));
+
+  document.getElementById('upcoming-head').textContent = targetDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+
+  const dateCounts = {};
+  rows.forEach(b => { const d = parseDate(b.moveDate||''); if (d) { const k=d.toDateString(); dateCounts[k]=(dateCounts[k]||0)+1; } });
+
+  const list = document.getElementById('booking-list');
+  if (!rows.length) {
+    list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:rgba(236,235,238,0.2);font-size:0.78rem;">No moves on this date.</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map(b => {
+    const origIdx  = allBookings.indexOf(b);
+    const name     = b.name||'--';
+    const moveDate = b.moveDate||b.move_date||'';
+    const hrs      = hoursUntil(b);
+    const isUrgent = hrs>=0&&hrs<=48&&getStatus(b).toLowerCase()!=='complete';
+    const isTomorrow=hrs>0&&hrs<=36&&!isToday(b);
+    const fromCity = cityOnly(b.from||b.From||'');
+    const toCity   = cityOnly(b.to||b.To||'');
+    const color    = avatarColor(name);
+    const ini      = initials(name);
+    const repeat   = isRepeat(b);
+    const d        = parseDate(moveDate);
+    const dateKey  = d?d.toDateString():'';
+    const isDouble = dateKey&&dateCounts[dateKey]>1;
+    const countdownTxt=hrs<=2?`${Math.max(1,Math.round(hrs*60))} MIN`:`${Math.round(hrs)} HRS`;
+    const selected = selectedIdx===origIdx;
+    return `<div class="bk-card ${isUrgent?'urgent':''} ${isTomorrow?'tomorrow':''} ${selected?'selected':''}" onclick="selectBooking(${origIdx})">
+      <div class="bk-avatar" style="background:${color};">${ini}${repeat?'<div class="repeat-star">★</div>':''}</div>
+      <div class="bk-body">
+        <div class="bk-top"><div class="bk-name">${name}</div>${isDouble?'<div class="bk-double">DOUBLE BOOKED</div>':''}</div>
+        <div class="bk-route">${fromCity}<span class="arrow">→</span>${toCity}</div>
+        <div class="bk-chips">${serviceChips(b)}</div>
+      </div>
+      <div class="bk-right">
+        ${isUrgent?`<div class="countdown-badge">${countdownTxt}</div>`:isTomorrow?'<div class="tomorrow-badge">TOMORROW</div>':''}
+        <div class="expand-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="#ECEBEE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+    </div>`;
+  }).join('');
 }
 </script>
 </body>
