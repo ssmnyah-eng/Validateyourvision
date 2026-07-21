@@ -2177,13 +2177,18 @@
         </div>
         <!-- rows -->
         <style>
-          .cmp-row{display:grid;grid-template-columns:1fr 120px 120px;padding:14px 24px;border-top:1px solid #ede6ff;align-items:center;}
+          .cmp-row{display:grid;grid-template-columns:1fr 90px 90px;padding:10px 20px;border-top:1px solid #ede6ff;align-items:center;}
           .cmp-row:nth-child(even){background:#faf8ff;}
-          .cmp-label{font-size:0.88rem;font-weight:600;color:#190E2A;}
+          .cmp-label{font-size:0.85rem;font-weight:600;color:#190E2A;padding-right:8px;}
           .cmp-yes{text-align:center;} .cmp-no{text-align:center;}
-          .cmp-icon-yes{width:28px;height:28px;background:#ff1f78;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
-          .cmp-icon-no{width:28px;height:28px;background:#dc2626;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
-          .cmp-icon-maybe{width:28px;height:28px;background:#f59e0b;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+          .cmp-icon-yes{width:24px;height:24px;background:#2563eb;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+          .cmp-icon-no{width:24px;height:24px;background:#dc2626;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+          .cmp-icon-maybe{width:24px;height:24px;background:#f59e0b;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+          @media(max-width:480px){
+            .cmp-row{grid-template-columns:1fr 56px 56px;padding:8px 12px;}
+            .cmp-label{font-size:0.75rem;}
+            .cmp-icon-yes,.cmp-icon-no,.cmp-icon-maybe{width:20px;height:20px;}
+          }
         </style>
         <div class="cmp-row"><div class="cmp-label">Clean Background Checks</div><div class="cmp-yes"><div class="cmp-icon-yes"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2 7 5.5 10.5 12 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="cmp-no"><div class="cmp-icon-maybe" style="margin:auto;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><text x="4" y="10" fill="#fff" font-size="11" font-weight="700">?</text></svg></div></div></div>
         <div class="cmp-row"><div class="cmp-label">100% Online Booking</div><div class="cmp-yes"><div class="cmp-icon-yes"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2 7 5.5 10.5 12 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="cmp-no"><div class="cmp-icon-maybe" style="margin:auto;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><text x="4" y="10" fill="#fff" font-size="11" font-weight="700">?</text></svg></div></div></div>
@@ -2263,7 +2268,7 @@
   <!-- WHY VYV COMPARISON TABLE -->
   <div style="max-width:600px;margin:0 auto;padding:0 20px;"><hr style="border:none;border-top:2px solid #ede6ff;margin:0;"></div>
   <section style="background:#ffffff;padding:32px 20px;" aria-label="Why choose VYV over other movers">
-    <div style="max-width:600px;margin:0 auto;">
+    <div id="cmp2" style="max-width:600px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:20px;">
         <div style="display:inline-block;background:#f3eeff;border:1.5px solid #ddd6f7;border-radius:30px;padding:6px 18px;font-size:0.72rem;font-weight:700;color:#8B5BC7;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Transparent Pricing &mdash; No Hidden Fees</div>
         <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;color:#190E2A;margin-bottom:0;">Why We're the <span style="color:#8B5BC7;">Best Moving Company</span></h2>
@@ -2290,16 +2295,20 @@
 
       <!-- Rows -->
       <style>
-        .cmp-row { display:grid; grid-template-columns:1fr 90px 90px; gap:0; border-radius:6px; margin-bottom:2px; background:#f9f8ff; border:1px solid #ede6ff; }
-        .cmp-row:nth-child(even) { background:#ffffff; }
-        .cmp-label { padding:7px 12px; font-size:0.78rem; font-weight:600; color:#190E2A; display:flex; align-items:center; }
-        .cmp-cell { display:flex; align-items:center; justify-content:center; padding:7px 6px; }
-        .cmp-yes { width:24px;height:24px;background:#2563eb;border-radius:50%;display:flex;align-items:center;justify-content:center; }
-        .cmp-yes svg { color:#fff; }
-        .cmp-no { width:24px;height:24px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center; }
-        .cmp-no svg { color:#dc2626; }
-        .cmp-maybe { width:24px;height:24px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center; }
-        .cmp-maybe svg { color:#d97706; }
+        #cmp2 .cmp-row { display:grid; grid-template-columns:1fr 90px 90px; gap:0; border-radius:6px; margin-bottom:2px; background:#f9f8ff; border:1px solid #ede6ff; }
+        #cmp2 .cmp-row:nth-child(even) { background:#ffffff; }
+        #cmp2 .cmp-label { padding:7px 12px; font-size:0.78rem; font-weight:600; color:#190E2A; display:flex; align-items:center; }
+        #cmp2 .cmp-cell { display:flex; align-items:center; justify-content:center; padding:7px 6px; }
+        #cmp2 .cmp-yes { width:24px;height:24px;background:#2563eb;border-radius:50%;display:flex;align-items:center;justify-content:center; }
+        #cmp2 .cmp-yes svg { color:#fff; }
+        #cmp2 .cmp-no { width:24px;height:24px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center; }
+        #cmp2 .cmp-no svg { color:#dc2626; }
+        #cmp2 .cmp-maybe { width:24px;height:24px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center; }
+        #cmp2 .cmp-maybe svg { color:#d97706; }
+        @media(max-width:480px) {
+          #cmp2 .cmp-row { grid-template-columns:1fr 56px 56px; }
+          #cmp2 .cmp-label { font-size:0.72rem; padding:6px 8px; }
+        }
       </style>
 
       <div class="cmp-row">
