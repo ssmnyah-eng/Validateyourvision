@@ -1,318 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Move Day -- VYV Moving</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Poppins',sans-serif;background:#f0ecf8;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 40px;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move Day | VYV Moving</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .logo-bar{text-align:center;margin-bottom:24px;}
-  .logo-name{font-size:1rem;font-weight:800;color:#190E2A;letter-spacing:0.02em;}
-  .logo-sub{font-size:0.65rem;color:#8B5BC7;margin-top:2px;}
+    :root {
+      --navy: #1C1B3A;
+      --purple: #5B4FBE;
+      --green: #4CAF50;
+      --green-light: #e8f5e9;
+      --red: #e53935;
+      --bg: #f4f4f8;
+      --card: #ffffff;
+      --text: #1C1B3A;
+      --muted: #888899;
+      --border: #e0e0ee;
+    }
 
-  .card{background:#fff;border-radius:20px;box-shadow:0 4px 28px rgba(25,14,42,0.10);width:100%;max-width:420px;overflow:hidden;}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-  /* status states */
-  .card-header{padding:24px 24px 20px;text-align:center;border-bottom:1px solid #f0ecf8;}
-  .status-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:50px;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;}
-  .badge-arrived{background:#fef3c7;border:1px solid #f59e0b;color:#92400e;}
-  .badge-progress{background:#d4eddf;border:1px solid #9dd0b4;color:#166534;}
-  .badge-done{background:#e0e7ff;border:1px solid #a5b4fc;color:#3730a3;}
+    /* ── Header ── */
+    .header {
+      background: var(--navy);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+    .header-sub  { color: #9999bb; font-size: 12px; margin-top: 2px; }
 
-  .card-title{font-size:1.3rem;font-weight:800;color:#190E2A;line-height:1.2;margin-bottom:6px;}
-  .card-title span{color:#4A237A;}
-  .card-sub{font-size:0.78rem;color:#6b5b8a;line-height:1.5;}
+    /* ── Loading ── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+      color: var(--muted);
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* booking info strip */
-  .info-strip{display:flex;justify-content:space-around;padding:14px 20px;background:#faf8ff;border-bottom:1px solid #e6dff5;gap:8px;}
-  .info-item{text-align:center;flex:1;}
-  .info-label{font-size:0.55rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;}
-  .info-val{font-size:0.75rem;font-weight:700;color:#190E2A;}
+    /* ── Main content ── */
+    .main { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; }
 
-  /* timer */
-  .timer-block{padding:28px 24px;text-align:center;}
-  .timer-label{font-size:0.62rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
-  .timer-display{font-size:3.2rem;font-weight:800;color:#190E2A;letter-spacing:0.04em;font-variant-numeric:tabular-nums;line-height:1;}
-  .timer-note{font-size:0.68rem;color:#a892cc;margin-top:8px;}
+    /* ── Status bar ── */
+    .status-bar {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .status-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      height: 2px;
+      background: var(--green);
+      z-index: 1;
+      transition: width 0.5s ease;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+      flex: 1;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      transition: all 0.3s;
+    }
+    .step.done .step-dot   { background: var(--green); color: #fff; }
+    .step.active .step-dot { background: var(--purple); color: #fff; box-shadow: 0 0 0 4px rgba(91,79,190,0.15); }
+    .step-name { font-size: 10px; color: var(--muted); text-align: center; font-weight: 500; }
+    .step.done .step-name, .step.active .step-name { color: var(--text); font-weight: 600; }
 
-  /* sign-in section */
-  .signin-section{padding:28px 24px;text-align:center;}
-  .truck-emoji{font-size:3.5rem;margin-bottom:12px;display:block;}
-  .signin-title{font-size:1.1rem;font-weight:800;color:#190E2A;margin-bottom:8px;}
-  .signin-sub{font-size:0.78rem;color:#6b5b8a;line-height:1.55;margin-bottom:20px;}
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
 
-  .btn-signin{display:block;width:100%;background:#16a34a;color:#fff;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:800;padding:16px;border:none;border-radius:12px;cursor:pointer;letter-spacing:0.04em;box-shadow:0 4px 16px rgba(22,163,74,0.30);transition:opacity 0.15s;}
-  .btn-signin:hover{opacity:0.9;}
-  .btn-signin:disabled{background:#ccc;box-shadow:none;cursor:default;}
-  .btn-signin.loading{background:#0f7a35;}
+    /* ── Detail rows ── */
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-key   { font-size: 13px; color: var(--muted); flex-shrink: 0; }
+    .detail-value { font-size: 13px; font-weight: 600; text-align: right; }
 
-  .warning-note{font-size:0.68rem;color:#ef4444;margin-top:10px;font-weight:600;}
+    /* ── Timer ── */
+    .timer-card {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(28,27,58,0.3);
+    }
+    .timer-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #9999bb; text-transform: uppercase; margin-bottom: 10px; }
+    .timer-display {
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .timer-sub { font-size: 12px; color: #9999bb; margin-top: 8px; }
 
-  /* done state */
-  .done-section{padding:28px 24px;text-align:center;}
-  .done-icon{font-size:3rem;margin-bottom:12px;display:block;}
-  .done-title{font-size:1.2rem;font-weight:800;color:#190E2A;margin-bottom:6px;}
-  .done-sub{font-size:0.78rem;color:#6b5b8a;line-height:1.55;}
+    /* ── Buttons ── */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary  { background: var(--green); color: #fff; }
+    .btn-primary:hover  { background: #43a047; }
+    .btn-locked   { background: var(--border); color: var(--muted); cursor: not-allowed; }
+    .btn-danger   { background: var(--red); color: #fff; }
 
-  /* receipt row */
-  .receipt-strip{border-top:1px solid #e6dff5;padding:16px 24px;}
-  .receipt-row{display:flex;justify-content:space-between;font-size:0.75rem;padding:5px 0;border-bottom:1px solid #f5f3ff;}
-  .receipt-row:last-child{border-bottom:none;}
-  .r-label{color:#6b5b8a;}
-  .r-val{font-weight:700;color:#190E2A;}
-  .r-total .r-label{color:#4A237A;font-weight:700;}
-  .r-total .r-val{color:#4A237A;font-size:0.88rem;}
-  .r-charged{background:#d4eddf;margin:0 -24px;padding:8px 24px;border-radius:0 0 8px 8px;}
-  .r-charged .r-label,.r-charged .r-val{color:#166534;font-weight:700;}
+    /* ── Locked notice ── */
+    .locked-notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff8e1;
+      border-left: 3px solid #ffc107;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #7a5c00;
+      margin-bottom: 16px;
+    }
 
-  .footer-contact{padding:16px 24px 0;text-align:center;font-size:0.7rem;color:#a892cc;border-top:1px solid #e6dff5;}
-  .footer-contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}
+    /* ── Complete card ── */
+    .complete-card {
+      background: var(--green-light);
+      border: 2px solid var(--green);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .complete-icon { font-size: 40px; margin-bottom: 10px; }
+    .complete-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .complete-sub { font-size: 14px; color: #555; line-height: 1.6; }
 
-  /* loading / error */
-  .loading-wrap{text-align:center;padding:48px 24px;color:#8B5BC7;font-size:0.85rem;}
-  .error-wrap{text-align:center;padding:48px 24px;color:#ef4444;font-size:0.85rem;}
-  .spinner{width:32px;height:32px;border:3px solid #e6dff5;border-top-color:#8B5BC7;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-</style>
+    /* ── Error ── */
+    .error-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      padding: 24px;
+      gap: 12px;
+    }
+    .error-icon  { font-size: 48px; }
+    .error-title { font-size: 20px; font-weight: 700; }
+    .error-sub   { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .contact-link { color: var(--purple); font-weight: 600; text-decoration: none; }
+  </style>
 </head>
 <body>
 
-<div class="logo-bar">
-  <div class="logo-name">Validate Your Vision Moving</div>
-  <div class="logo-sub">Fredericksburg, VA &middot; Licensed &amp; Insured</div>
+<div class="header">
+  <div>
+    <div class="header-logo">VYV Moving</div>
+    <div class="header-sub">Fredericksburg, VA</div>
+  </div>
+  <div style="font-size:12px;color:#9999bb;" id="booking-id-display"></div>
 </div>
 
-<div class="card" id="main-card">
-  <div class="loading-wrap">
-    <div class="spinner"></div>
-    Loading your move details...
+<!-- Loading state -->
+<div class="loading" id="loading-state">
+  <div class="spinner"></div>
+  <div>Loading your move details...</div>
+</div>
+
+<!-- Error state -->
+<div class="error-page" id="error-state" style="display:none;">
+  <div class="error-icon">&#x1F6AB;</div>
+  <div class="error-title">Page not found</div>
+  <div class="error-sub">This link may have expired or is invalid.<br>Questions? <a class="contact-link" href="sms:+15403001414">Text us at (540) 300-1414</a></div>
+</div>
+
+<!-- Main content -->
+<div class="main" id="main-content" style="display:none;">
+
+  <!-- Progress bar -->
+  <div class="status-bar">
+    <div class="status-label">Move Status</div>
+    <div class="progress-steps" id="progress-steps">
+      <div class="progress-fill" id="progress-fill"></div>
+      <div class="step" id="step-booked">
+        <div class="step-dot">&#10003;</div>
+        <div class="step-name">Booked</div>
+      </div>
+      <div class="step" id="step-ontheway">
+        <div class="step-dot">&#x1F69A;</div>
+        <div class="step-name">On the Way</div>
+      </div>
+      <div class="step" id="step-arrived">
+        <div class="step-dot">&#x1F4CD;</div>
+        <div class="step-name">Arrived</div>
+      </div>
+      <div class="step" id="step-inprogress">
+        <div class="step-dot">&#x23F1;</div>
+        <div class="step-name">Moving</div>
+      </div>
+      <div class="step" id="step-complete">
+        <div class="step-dot">&#10003;</div>
+        <div class="step-name">Done</div>
+      </div>
+    </div>
   </div>
+
+  <!-- Timer (shown once checked in) -->
+  <div class="timer-card" id="timer-card" style="display:none;">
+    <div class="timer-label">Time Elapsed</div>
+    <div class="timer-display" id="timer-display">0:00:00</div>
+    <div class="timer-sub">Clock started when you checked in your crew</div>
+  </div>
+
+  <!-- Locked notice (shown when crew not yet arrived) -->
+  <div class="locked-notice" id="locked-notice" style="display:none;">
+    &#x1F512; Your check-in button will unlock once your crew marks they're on the way.
+  </div>
+
+  <!-- Check-in button -->
+  <div id="checkin-section">
+    <button class="btn btn-locked" id="checkin-btn" disabled onclick="checkinCrew()">
+      Waiting for Your Crew...
+    </button>
+  </div>
+
+  <!-- Complete card -->
+  <div class="complete-card" id="complete-card" style="display:none;">
+    <div class="complete-icon">&#x1F389;</div>
+    <div class="complete-title">Move Complete!</div>
+    <div class="complete-sub">Your crew has finished. Thank you for choosing VYV Moving.<br>Your final balance will be collected by your crew.</div>
+  </div>
+
+  <!-- Move details -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Your Move Details</div>
+    <div class="detail-row"><span class="detail-key">Move Date</span><span class="detail-value" id="d-movedate">--</span></div>
+    <div class="detail-row"><span class="detail-key">Crew</span><span class="detail-value" id="d-crew">--</span></div>
+    <div class="detail-row"><span class="detail-key">Rate</span><span class="detail-value" id="d-rate">--</span></div>
+    <div class="detail-row"><span class="detail-key">Pickup</span><span class="detail-value" id="d-from">--</span></div>
+    <div class="detail-row"><span class="detail-key">Drop-off</span><span class="detail-value" id="d-to">--</span></div>
+    <div class="detail-row"><span class="detail-key">Deposit Paid</span><span class="detail-value" id="d-deposit" style="color:var(--green);">--</span></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="card">
+    <div class="card-title">Need Help?</div>
+    <div style="font-size:14px;line-height:2.2;color:#555;">
+      Text us: <a class="contact-link" href="sms:+15403001414">(540) 300-1414</a><br>
+      Email: <a class="contact-link" href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
+    </div>
+  </div>
+
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIfSX5ZR-3jrzwYZsJEzbDagQgTQN9CTuzQHyVhRKn2lYoD8zgmbGYpsijjPxT3hLo/exec';
+  const GAS_URL    = 'https://script.google.com/macros/s/AKfycbz5XAHZZTlJqsWvCtWchANgaqVakLjV5IK8AHu0gTNRNjW2x7ghkt0jbr4fT9VX1NQm/exec';
+  const params     = new URLSearchParams(window.location.search);
+  const MOVE_TOKEN = params.get('token') || '';
 
-const params    = new URLSearchParams(window.location.search);
-const bookingId = params.get('id')       || '';
-const moveToken = params.get('moveToken') || '';
+  let booking      = null;
+  let timerInterval = null;
+  let checkinTime  = null;
+  let pollInterval = null;
 
-let timerInterval = null;
-let pollInterval  = null;
-let currentBooking = null;
-
-async function fetchMove() {
-  if (!bookingId || !moveToken) {
-    showError('Invalid link. Please use the link from your text or email.');
-    return;
+  // ── Boot ─────────────────────────────────────────────────────
+  async function boot() {
+    if (!MOVE_TOKEN) { showError(); return; }
+    await loadBooking();
+    // Poll for status updates every 30s
+    pollInterval = setInterval(loadBooking, 30000);
   }
-  try {
-    const r = await fetch(`${SCRIPT_URL}?action=get_move&id=${encodeURIComponent(bookingId)}&moveToken=${encodeURIComponent(moveToken)}`);
-    const d = await r.json();
-    if (!d.ok) { showError('This link is invalid or has expired. Text us at (540) 300-1414.'); return; }
-    currentBooking = d.booking;
-    render(d.booking);
-  } catch {
-    showError('Unable to load. Check your connection and refresh.');
-  }
-}
 
-function render(b) {
-  const status = (b.status || '').toLowerCase();
-
-  // Build info strip
-  const crew      = b.crew || '--';
-  const moveDate  = (b.moveDate || '--').split(' ').slice(0,4).join(' ');
-  const from      = cityOnly(b.from);
-  const to        = cityOnly(b.to);
-  const firstName = (b.name || '').split(' ')[0];
-
-  const infoStrip = `
-    <div class="info-strip">
-      <div class="info-item"><div class="info-label">Date</div><div class="info-val">${moveDate}</div></div>
-      <div class="info-item"><div class="info-label">Crew</div><div class="info-val">${crew}</div></div>
-      <div class="info-item"><div class="info-label">Route</div><div class="info-val">${from} &rarr; ${to}</div></div>
-    </div>`;
-
-  if (status === 'in progress' && b.timerStart) {
-    renderInProgress(b, firstName, infoStrip);
-  } else if (status === 'complete' && b.timerEnd) {
-    renderComplete(b, firstName, infoStrip);
-  } else {
-    renderArrived(b, firstName, infoStrip);
-  }
-}
-
-function renderArrived(b, firstName, infoStrip) {
-  stopTimers();
-  document.getElementById('main-card').innerHTML = `
-    <div class="card-header">
-      <div class="status-badge badge-arrived">&#128666; Crew Arrived</div>
-      <div class="card-title">Your movers are here,<br><span>${firstName}!</span></div>
-      <div class="card-sub">Tap the button below to officially sign in your crew and start the clock.</div>
-    </div>
-    ${infoStrip}
-    <div class="signin-section">
-      <span class="truck-emoji">&#128666;</span>
-      <div class="signin-title">Ready to start your move?</div>
-      <div class="signin-sub">Once you tap this button, your move clock starts for both you and your crew. Your rate of ${b.rate} begins at that moment.</div>
-      <button class="btn-signin" id="signin-btn" onclick="signInMovers()">Sign In My Movers -- Start the Clock</button>
-      <div class="warning-note" id="signin-warn" style="display:none;"></div>
-    </div>
-    <div class="footer-contact">Questions? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div>`;
-}
-
-function renderInProgress(b, firstName, infoStrip) {
-  document.getElementById('main-card').innerHTML = `
-    <div class="card-header">
-      <div class="status-badge badge-progress">&#9679; Move In Progress</div>
-      <div class="card-title">Your move is<br><span>underway!</span></div>
-      <div class="card-sub">Your crew is hard at work. The clock is running.</div>
-    </div>
-    ${infoStrip}
-    <div class="timer-block">
-      <div class="timer-label">Time on the job</div>
-      <div class="timer-display" id="timer-display">0:00:00</div>
-      <div class="timer-note">Running since your crew was signed in &middot; 15-min prorate</div>
-    </div>
-    <div class="footer-contact" style="margin-bottom:20px;">Questions? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div>`;
-
-  startTimerDisplay(b.timerStart);
-}
-
-function renderComplete(b, firstName, infoStrip) {
-  stopTimers();
-
-  const elapsedMs   = new Date(b.timerEnd) - new Date(b.timerStart);
-  const duration    = formatDuration(elapsedMs);
-  const crewNum     = parseInt((b.crew || '2').replace(/\D/g,'')) || 2;
-  const rateMap     = { 2: 165, 3: 199 };
-  const ratePerHour = rateMap[crewNum] || 165;
-  const blocks      = Math.ceil(elapsedMs / (15 * 60 * 1000));
-  const hours       = blocks / 4;
-  const total       = Math.round(hours * ratePerHour * 100) / 100;
-  const deposit     = parseFloat((b.deposit || '').replace(/[^0-9.]/g,'')) || 250;
-  const charged     = Math.max(0, Math.round((total - deposit) * 100) / 100);
-
-  document.getElementById('main-card').innerHTML = `
-    <div class="card-header">
-      <div class="status-badge badge-done">&#10003; Move Complete</div>
-      <div class="card-title">All done,<br><span>${firstName}!</span></div>
-      <div class="card-sub">Your crew finished in ${duration}. Your card has been charged and a receipt was emailed to you.</div>
-    </div>
-    ${infoStrip}
-    <div class="done-section">
-      <span class="done-icon">&#127968;</span>
-      <div class="done-title">Welcome to your new home.</div>
-      <div class="done-sub">Thank you for choosing VYV Moving. We hope the move was smooth!</div>
-    </div>
-    <div class="receipt-strip">
-      <div class="receipt-row"><span class="r-label">Time on the job</span><span class="r-val">${duration}</span></div>
-      <div class="receipt-row"><span class="r-label">Rate</span><span class="r-val">$${ratePerHour}/hr</span></div>
-      <div class="receipt-row r-total"><span class="r-label">Total</span><span class="r-val">$${total.toFixed(2)}</span></div>
-      <div class="receipt-row"><span class="r-label">Deposit paid</span><span class="r-val">-$${deposit.toFixed(2)}</span></div>
-    </div>
-    <div class="r-charged receipt-strip" style="background:#d4eddf;border-top:none;">
-      <div class="receipt-row r-charged" style="border:none;"><span class="r-label">&#10003; Charged to card</span><span class="r-val">$${charged.toFixed(2)}</span></div>
-    </div>
-    <div class="footer-contact" style="margin-bottom:20px;">Questions? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div>`;
-}
-
-async function signInMovers() {
-  const btn  = document.getElementById('signin-btn');
-  const warn = document.getElementById('signin-warn');
-  btn.disabled = true;
-  btn.classList.add('loading');
-  btn.textContent = 'Starting your move...';
-  warn.style.display = 'none';
-
-  try {
-    const r = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'start_timer', id: bookingId, moveToken })
-    });
-    const d = await r.json();
-    if (d.ok) {
-      currentBooking.timerStart = d.timerStart;
-      currentBooking.status = 'In Progress';
-      render(currentBooking);
-    } else {
-      btn.disabled = false;
-      btn.classList.remove('loading');
-      btn.textContent = 'Sign In My Movers -- Start the Clock';
-      warn.textContent = d.error || 'Something went wrong. Please refresh and try again.';
-      warn.style.display = 'block';
-    }
-  } catch {
-    btn.disabled = false;
-    btn.classList.remove('loading');
-    btn.textContent = 'Sign In My Movers -- Start the Clock';
-    warn.textContent = 'No connection. Check your signal and try again.';
-    warn.style.display = 'block';
-  }
-}
-
-function startTimerDisplay(timerStart) {
-  const start = new Date(timerStart);
-  if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    const elapsed = Date.now() - start.getTime();
-    const el = document.getElementById('timer-display');
-    if (el) el.textContent = formatElapsed(elapsed);
-  }, 1000);
-
-  // Poll for status change (move complete)
-  if (pollInterval) clearInterval(pollInterval);
-  pollInterval = setInterval(async () => {
+  async function loadBooking() {
     try {
-      const r = await fetch(`${SCRIPT_URL}?action=get_move&id=${encodeURIComponent(bookingId)}&moveToken=${encodeURIComponent(moveToken)}`);
-      const d = await r.json();
-      if (d.ok && d.booking.status.toLowerCase() === 'complete') {
-        currentBooking = d.booking;
-        render(d.booking);
+      const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'get_move', moveToken: MOVE_TOKEN }), keepalive: true });
+      const data = await res.json();
+      if (!data.ok || !data.booking) { showError(); return; }
+      booking = data.booking;
+      render();
+    } catch(e) {
+      if (!booking) showError();
+    }
+  }
+
+  // ── Render ───────────────────────────────────────────────────
+  function render() {
+    document.getElementById('loading-state').style.display  = 'none';
+    document.getElementById('error-state').style.display    = 'none';
+    document.getElementById('main-content').style.display   = 'block';
+
+    const status = (booking['Status'] || booking.status || 'Upcoming').toLowerCase().replace(/\s/g,'');
+
+    // Booking ID display
+    document.getElementById('booking-id-display').textContent = booking['Booking ID'] || '';
+
+    // Fill details
+    document.getElementById('d-movedate').textContent = booking['Move Date'] || '--';
+    document.getElementById('d-crew').textContent     = booking['Crew'] || '--';
+    document.getElementById('d-rate').textContent     = booking['Rate'] || '--';
+    document.getElementById('d-from').textContent     = booking['From'] || '--';
+    document.getElementById('d-to').textContent       = booking['To'] || '--';
+    document.getElementById('d-deposit').textContent  = booking['Deposit'] ? '$' + booking['Deposit'] + ' applied' : '--';
+
+    // Progress bar
+    updateProgress(status);
+
+    // Button & timer states
+    const checkinSection = document.getElementById('checkin-section');
+    const lockedNotice   = document.getElementById('locked-notice');
+    const timerCard      = document.getElementById('timer-card');
+    const completeCard   = document.getElementById('complete-card');
+    const btn            = document.getElementById('checkin-btn');
+
+    if (status === 'complete') {
+      checkinSection.style.display = 'none';
+      lockedNotice.style.display   = 'none';
+      timerCard.style.display      = 'block';
+      completeCard.style.display   = 'block';
+      stopTimer();
+      // Show final elapsed if checkin time exists
+      const ct = booking['Checkin At'] || booking.checkinAt;
+      if (ct) startTimerFrom(new Date(ct), true);
+
+    } else if (status === 'inprogress') {
+      lockedNotice.style.display   = 'none';
+      completeCard.style.display   = 'none';
+      timerCard.style.display      = 'block';
+      checkinSection.style.display = 'none';
+      // Restore timer from saved checkin time
+      const ct = booking['Checkin At'] || booking.checkinAt;
+      if (ct && !timerInterval) startTimerFrom(new Date(ct), false);
+
+    } else if (status === 'arrived') {
+      lockedNotice.style.display   = 'none';
+      timerCard.style.display      = 'none';
+      completeCard.style.display   = 'none';
+      checkinSection.style.display = 'block';
+      btn.className   = 'btn btn-primary';
+      btn.disabled    = false;
+      btn.textContent = 'Check In Your Crew';
+
+    } else {
+      // Upcoming / on the way
+      lockedNotice.style.display   = 'block';
+      timerCard.style.display      = 'none';
+      completeCard.style.display   = 'none';
+      checkinSection.style.display = 'block';
+      btn.className   = 'btn btn-locked';
+      btn.disabled    = true;
+      btn.textContent = status === 'ontheway' ? 'Your Crew is On the Way...' : 'Waiting for Your Crew...';
+    }
+  }
+
+  // ── Progress bar ─────────────────────────────────────────────
+  function updateProgress(status) {
+    const steps = ['booked','ontheway','arrived','inprogress','complete'];
+    const idx   = steps.indexOf(status);
+    const current = idx < 0 ? 0 : idx;
+
+    steps.forEach((s, i) => {
+      const el = document.getElementById('step-' + s);
+      if (!el) return;
+      el.className = 'step' + (i < current ? ' done' : i === current ? ' active' : '');
+    });
+
+    // Fill line
+    const pct = current === 0 ? 0 : (current / (steps.length - 1)) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  // ── Check in crew ─────────────────────────────────────────────
+  async function checkinCrew() {
+    const btn = document.getElementById('checkin-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Checking in...';
+    try {
+      const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'customer_checkin', moveToken: MOVE_TOKEN }), keepalive: true });
+      const data = await res.json();
+      if (data.ok) {
+        checkinTime = new Date(data.checkinAt);
+        await loadBooking();
+      } else {
+        btn.disabled    = false;
+        btn.textContent = 'Check In Your Crew';
       }
-    } catch {}
-  }, 10000);
-}
+    } catch(e) {
+      btn.disabled    = false;
+      btn.textContent = 'Check In Your Crew';
+    }
+  }
 
-function stopTimers() {
-  if (timerInterval) clearInterval(timerInterval);
-  if (pollInterval)  clearInterval(pollInterval);
-}
+  // ── Timer ─────────────────────────────────────────────────────
+  function startTimerFrom(start, frozen) {
+    checkinTime = start;
+    if (timerInterval) clearInterval(timerInterval);
+    const display = document.getElementById('timer-display');
+    function tick() {
+      const elapsed = Date.now() - start.getTime();
+      const h = Math.floor(elapsed / 3600000);
+      const m = Math.floor((elapsed % 3600000) / 60000);
+      const s = Math.floor((elapsed % 60000) / 1000);
+      display.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+    tick();
+    if (!frozen) timerInterval = setInterval(tick, 1000);
+  }
 
-function formatElapsed(ms) {
-  const s  = Math.floor(ms / 1000);
-  const h  = Math.floor(s / 3600);
-  const m  = Math.floor((s % 3600) / 60);
-  const sc = s % 60;
-  return `${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
-}
+  function stopTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  }
 
-function formatDuration(ms) {
-  const totalMin = Math.floor(ms / 60000);
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
-  return h > 0 ? `${h} hr ${m} min` : `${m} min`;
-}
+  function showError() {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('error-state').style.display   = 'flex';
+  }
 
-function cityOnly(addr) {
-  if (!addr) return '?';
-  const parts = addr.split(',');
-  return (parts[1] || parts[0]).trim().split(' ').slice(0,2).join(' ');
-}
-
-function showError(msg) {
-  document.getElementById('main-card').innerHTML = `
-    <div class="error-wrap">
-      <div style="font-size:2rem;margin-bottom:10px;">&#128683;</div>
-      <div>${msg}</div>
-    </div>`;
-}
-
-fetchMove();
+  boot();
 </script>
 </body>
 </html>
