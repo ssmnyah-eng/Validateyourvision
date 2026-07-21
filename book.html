@@ -1522,7 +1522,6 @@
     leadSent = true;
     fetch(SHEET_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         token: 'vyv2026admin',
         action: 'save_lead',
@@ -1783,44 +1782,36 @@
     body.append('Deposit Amount', `$${depositAmount}`);
     body.append('Stripe Payment Method', paymentMethod.id);
 
-    try {
-      const gasRes = await fetch(SHEET_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-          token: 'vyv2026admin',
-          action: 'save',
-          bookedAt: new Date().toISOString(),
-          name: `${first} ${last}`,
-          email, phone,
-          moveDate: `${dateStr} ${selectedTime||''}`,
-          crew: `${crewSize} Movers`,
-          rate: `$${rate}/hr`,
-          truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
-          from: stops[0]?.address || '',
-          to: stops[stops.length-1]?.address || '',
-          stops: stops.length,
-          volume: moveVolume,
-          specialty: specialtyItems.join(', ') || 'None',
-          packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
-          notes: document.getElementById('cf-notes').value,
-          deposit: `$${depositAmount}`,
-          depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
-          paymentMethod: paymentMethod.id,
-          status: 'Upcoming'
-        }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const gasData = await gasRes.json().catch(() => ({}));
-      if (gasData.ok) {
-        window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
-      } else {
-        btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-        alert('Something went wrong. Please text us at (540) 300-1414 or try again.');
-      }
-    } catch {
-      btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-      alert('Something went wrong. Please text us at (540) 300-1414 or try again.');
-    }
+    const payload = JSON.stringify({
+      token: 'vyv2026admin',
+      action: 'save',
+      bookedAt: new Date().toISOString(),
+      name: `${first} ${last}`,
+      email, phone,
+      moveDate: `${dateStr} ${selectedTime||''}`,
+      crew: `${crewSize} Movers`,
+      rate: `$${rate}/hr`,
+      truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
+      from: stops[0]?.address || '',
+      to: stops[stops.length-1]?.address || '',
+      stops: stops.length,
+      volume: moveVolume,
+      specialty: specialtyItems.join(', ') || 'None',
+      packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
+      notes: document.getElementById('cf-notes').value,
+      deposit: `$${depositAmount}`,
+      depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
+      paymentMethod: paymentMethod.id,
+      status: 'Upcoming'
+    });
+
+    // Use no-cors to avoid preflight (GAS doesn't handle OPTIONS).
+    // We can't read the response in no-cors mode, so we just fire and redirect.
+    fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload }).catch(() => {});
+
+    // Give GAS 2 seconds to receive the request before navigating away
+    await new Promise(r => setTimeout(r, 2000));
+    window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
   }
 
   // ── Page load: skip Step 0 if URL params already have the info ──
