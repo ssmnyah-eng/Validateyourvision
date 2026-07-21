@@ -162,7 +162,13 @@
     .vyv-svc-dd.open .vyv-dd-menu { display:block !important; }
   </style>
   <script>document.addEventListener('click',function(e){if(!e.target.closest('.vyv-svc-dd'))document.querySelectorAll('.vyv-svc-dd').forEach(function(d){d.classList.remove('open')})});</script>
-<div class="confirm-hero">
+  <!-- BANNER PHOTO -->
+  <div style="width:100%;height:260px;overflow:hidden;position:relative;">
+    <img src="/Team-moving.jpeg" alt="VYV Moving crew at work" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,14,42,0.35) 0%,rgba(25,14,42,0.15) 100%);"></div>
+  </div>
+
+<div class="confirm-hero" style="padding-top:48px;">
     <div class="checkmark-circle">&#10003;</div>
     <p class="eyebrow">Move Reserved</p>
     <h1>You're <span>Booked.</span></h1>
@@ -172,9 +178,15 @@
   <div class="container">
     <div class="confirm-body">
 
+      <!-- Packing reminder (shown only if they did NOT add packing) -->
+      <div id="packing-reminder" style="display:none;background:#fff8ed;border:1px solid #f59e0b;border-radius:12px;padding:20px 24px;">
+        <strong style="display:block;font-family:'Raleway',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#92400e;margin-bottom:6px;">Heads up -- start packing early</strong>
+        <p style="font-size:0.9rem;color:#78350f;line-height:1.7;margin:0;">You did not add packing service, so your crew will only be moving boxes and furniture -- not packing them. Start boxing up non-essentials now. Label every box with the room name. The more ready you are, the faster and cheaper your move will be.</p>
+      </div>
+
       <div class="callout-green">
         <strong>Your deposit is applied to your final balance</strong>
-        <p>Your 20% deposit is not an extra charge. It is subtracted from your total moving cost on the day of your move. Nothing added on top.</p>
+        <p>Your deposit is not an extra charge. It comes straight off your total on move day. Nothing added on top.</p>
       </div>
 
       <div class="card">
@@ -344,6 +356,14 @@
   </footer>
 
   <script>
+    // Show packing reminder if customer didn't add packing service
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      if (!params.get('packing')) {
+        document.getElementById('packing-reminder').style.display = 'block';
+      }
+    })();
+
     const stars = document.querySelectorAll('.star');
     const msg = document.getElementById('rating-msg');
     const thanks = document.getElementById('rating-thanks');
