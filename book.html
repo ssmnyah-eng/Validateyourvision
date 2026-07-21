@@ -770,7 +770,7 @@
         </div><!-- end top row -->
 
         <!-- BILLING SECTION (full width) -->
-        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+        <div id="billing-section" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
 
           <!-- Billing header -->
           <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
@@ -1604,12 +1604,10 @@
     if (toAddr)   document.getElementById('sb-to').textContent   = toAddr;
     document.getElementById('sb-crew-text').textContent = crewSize ? `${crewSize} Movers` : '-- Movers';
 
-    // Mount Stripe card (skip in test mode)
+    // Hide entire billing section in TEST MODE
     if (TEST_MODE) {
-      var cardSection = document.getElementById('stripe-card-section');
-      if (cardSection) {
-        cardSection.innerHTML = '<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;color:#92400e;font-size:0.88rem;font-weight:600;">TEST MODE -- No payment required. Just fill in your contact info above and click the button.</div>';
-      }
+      var billingDiv = document.getElementById('billing-section');
+      if (billingDiv) billingDiv.style.display = 'none';
     } else {
       initStripeCard();
     }
@@ -1690,99 +1688,19 @@
     const last  = document.getElementById('cf-last').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const phone = document.getElementById('cf-phone').value.trim();
-    const billingName  = document.getElementById('billing-first').value.trim();
-    const billingLine1 = document.getElementById('billing-line1').value.trim();
-    const billingCity  = document.getElementById('billing-city').value.trim();
-    const billingZip   = document.getElementById('billing-zip').value.trim();
-    const billingLine2 = '';
-    const billingState = 'VA';
+
     if (!first || !email || !phone) {
       alert('Please fill in your first name, email, and phone number.');
       return;
     }
-    if (!TEST_MODE) {
-      if (!billingName) {
-        alert('Please enter the name on your card.');
-        return;
-      }
-      if (!billingLine1 || !billingCity || !billingZip) {
-        alert('Please complete your billing address (street, city, and ZIP).');
-        return;
-      }
-    }
+
     const btn = document.getElementById('finalSubmitBtn');
     btn.disabled = true;
-    btn.textContent = 'Processing...';
-    var errEl = document.getElementById('stripe-card-error'); if (errEl) errEl.textContent = '';
+    btn.textContent = 'Sending...';
 
-    let paymentMethod = { id: 'TEST_MODE' };
-
-    if (!TEST_MODE) {
-      if (!stripeInstance || !stripeCardNumber) {
-        alert('Payment fields are not ready. Please refresh the page and try again.');
-        btn.disabled = false;
-        return;
-      }
-      const result = await stripeInstance.createPaymentMethod({
-        type: 'card',
-        card: stripeCardNumber,
-        billing_details: {
-          name: billingName,
-          email,
-          phone,
-          address: {
-            line1: billingLine1,
-            line2: billingLine2 || null,
-            city: billingCity,
-            state: billingState,
-            postal_code: billingZip,
-            country: 'US'
-          }
-        }
-      });
-      if (result.error) {
-        document.getElementById('stripe-card-error').textContent = result.error.message;
-        btn.disabled = false;
-        btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-        return;
-      }
-      paymentMethod = result.paymentMethod;
-    }
-
-    const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
+    const rate    = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
     const packDateStr = packSelectedDate ? packSelectedDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
-
-    const body = new FormData();
-    body.append('_subject', `VYV Priority Reservation - ${first} ${last} - ${dateStr}`);
-    body.append('Name', `${first} ${last}`);
-    body.append('Email', email);
-    body.append('Phone', phone);
-    body.append('Move Date', `${dateStr} ${selectedTime||''}`);
-    body.append('Crew Size', `${crewSize} Movers`);
-    body.append('Rate', `$${rate}/hr`);
-    body.append('Truck Fee', truckFee ? `$${truckFee}` : 'TBD on move day');
-    body.append('Moving From', stops[0]?.address || '');
-    body.append('Moving To', stops[stops.length-1]?.address || '');
-    body.append('Number of Stops', stops.length);
-    body.append('Belongings Volume', moveVolume);
-    body.append('Specialty Items', specialtyItems.join(', ') || 'None');
-    stops.forEach((s, idx) => {
-      const label = idx === 0 ? 'Pickup' : idx === stops.length-1 ? 'Dropoff' : `Stop ${idx+1}`;
-      let details = `${s.propType}`;
-      if (s.beds)       details += `, ${s.beds} bed`;
-      if (s.sqft)       details += `, ${s.sqft} sqft`;
-      if (s.unitSize)   details += `, Unit ${s.unitSize}`;
-      if (s.garage && s.garage !== 'None') details += `, ${s.garage} garage`;
-      if (s.stories)    details += `, ${s.stories} stories`;
-      if (s.floorLevel) details += `, Floor ${s.floorLevel}`;
-      if (s.elevator)   details += `, elevator: ${s.elevator}`;
-      body.append(`${label} Details`, details);
-    });
-    body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
-    body.append('Notes', document.getElementById('cf-notes').value);
-    body.append('Deposit Amount', `$${depositAmount}`);
-    body.append('Stripe Payment Method', paymentMethod.id);
 
     const payload = JSON.stringify({
       token: 'vyv2026admin',
@@ -1797,20 +1715,18 @@
       from: stops[0]?.address || '',
       to: stops[stops.length-1]?.address || '',
       stops: stops.length,
-      volume: moveVolume,
-      specialty: specialtyItems.join(', ') || 'None',
+      volume: moveVolume || '',
+      specialty: (specialtyItems||[]).join(', ') || 'None',
       packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
       notes: document.getElementById('cf-notes').value,
       deposit: `$${depositAmount}`,
-      depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
-      paymentMethod: paymentMethod.id,
+      paymentMethod: 'TEST_MODE',
       status: 'Upcoming'
     });
 
-    // keepalive keeps the request alive even after the page navigates away
     fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload, keepalive: true }).catch(() => {});
 
-    window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
+    window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
   }
 
   // ── Page load: skip Step 0 if URL params already have the info ──
