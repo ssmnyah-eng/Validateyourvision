@@ -8,6 +8,7 @@
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initGooglePlaces" async defer></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <style>.pac-container{z-index:99999!important;font-family:'Poppins',sans-serif;}</style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -303,6 +304,14 @@
       .left-panel { padding: 28px 16px; }
       .crew-grid { gap: 12px; }
     }
+    /* Step 6: hide map panel, show inline sidebar instead */
+    body.step6-active .right-panel { display: none !important; }
+    body.step6-active .layout { grid-template-columns: 1fr; }
+    body.step6-active .left-panel { max-width: 900px; margin: 0 auto; }
+    @media (max-width: 700px) {
+      #s6-layout { grid-template-columns: 1fr !important; }
+      #s6-sidebar { position: static !important; }
+    }
   </style>
 </head>
 <body>
@@ -594,95 +603,160 @@
       </div>
 
       <!-- ══ STEP 6: Final Reservation ══ -->
-      <div class="step" id="step6">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToPacking()">
+      <div class="step" id="step6" style="max-width:100%;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;cursor:pointer;" onclick="goBackToPacking()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
         </div>
 
-        <h1 style="font-size:1.25rem;">Complete and reserve your spot.</h1>
-        <div style="font-size:0.82rem;color:#16a34a;font-weight:600;margin-bottom:20px;">&#10003; Priority reservation is fully refundable</div>
+        <h1 style="font-size:1.2rem;margin-bottom:4px;">Complete &amp; Reserve Your Spot</h1>
+        <p style="font-size:0.82rem;color:#16a34a;font-weight:600;margin-bottom:18px;">&#10003; Priority reservation is fully refundable</p>
 
-        <!-- Urgency banner -->
-        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:0.82rem;color:#15803d;font-weight:600;text-align:center;">
-          Lock in your spot now &mdash; popular dates fill up fast in the Fredericksburg area.
-        </div>
+        <!-- Two-column layout on desktop -->
+        <div id="s6-layout" style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;">
 
-        <!-- Contact info -->
-        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
-          <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Contact Information</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-            <div style="position:relative;">
-              <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">First name</label>
-              <input type="text" id="cf-first" placeholder="First name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+          <!-- LEFT COLUMN -->
+          <div>
+            <!-- Contact Information -->
+            <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+              <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Contact Information</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">First name</label>
+                  <input type="text" id="cf-first" placeholder="First name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+                </div>
+                <div style="position:relative;">
+                  <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Last name</label>
+                  <input type="text" id="cf-last" placeholder="Last name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+                </div>
+              </div>
+              <div style="position:relative;margin-bottom:12px;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Your email</label>
+                <input type="email" id="cf-email" placeholder="your@email.com" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+              </div>
+              <div style="position:relative;margin-bottom:12px;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Phone number</label>
+                <input type="tel" id="cf-phone" placeholder="(555) 000-0000" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+              </div>
+              <div style="position:relative;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Notes for your crew (optional)</label>
+                <textarea id="cf-notes" placeholder="Gate code, elevator info, fragile items, etc." rows="3" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;resize:vertical;"></textarea>
+              </div>
             </div>
-            <div style="position:relative;">
-              <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Last name</label>
-              <input type="text" id="cf-last" placeholder="Last name" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+
+            <!-- Pricing Information -->
+            <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+              <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Pricing Information</div>
+              <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:8px;">Move Reservation</div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
+                <span>Hourly rate (2 hr minimum)</span>
+                <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:#5c4a7a;margin-bottom:2px;">
+                <span>Truck fee <span style="font-size:0.72rem;">(based on move distance)</span></span>
+                <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
+              </div>
+              <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:12px;"></div>
+              <div id="packingPriceLine" style="display:none;">
+                <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:6px;">Packing / Unpacking</div>
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:12px;">
+                  <span>Hourly rate (3 packers, 2 hr min)</span>
+                  <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
+                </div>
+              </div>
+              <hr style="border:none;border-top:1px solid #ede6ff;margin-bottom:12px;" />
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-weight:800;color:#190E2A;font-size:0.95rem;">Priority reservation due today:</span>
+                <span style="font-weight:800;color:#16a34a;font-size:1.1rem;">$50</span>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> Free cancellation</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:5px;"><span>&#10003;</span> $50 applied to your final balance</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;"><span>&#10003;</span> Locks in your virtual walkthrough slot</div>
+            </div>
+
+            <!-- Billing Information -->
+            <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span style="font-size:0.78rem;font-weight:700;color:#15803d;">Guaranteed Safe &amp; Secure Checkout &mdash; Powered by Stripe</span>
+              </div>
+
+              <div style="position:relative;margin-bottom:12px;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Name on card</label>
+                <input type="text" id="billing-name" placeholder="Full name on card" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
+              </div>
+
+              <!-- Stripe card element -->
+              <div style="position:relative;margin-bottom:12px;">
+                <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;z-index:1;">Card details</label>
+                <div id="stripe-card-element" style="padding:13px 12px;border:1.5px solid #ddd6f7;border-radius:9px;background:#fff;min-height:44px;"></div>
+              </div>
+              <div id="stripe-card-error" style="color:#dc2626;font-size:0.78rem;margin-top:4px;"></div>
+            </div>
+
+            <!-- Pay button -->
+            <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);">
+              PAY $50 AND RESERVE MY SPOT
+            </button>
+            <p style="text-align:center;font-size:0.72rem;color:#8B5BC7;margin-top:10px;line-height:1.6;">
+              Your $50 priority reservation books your virtual walkthrough slot and is applied toward your final balance. The remaining balance is due after your walkthrough.
+            </p>
+          </div>
+
+          <!-- RIGHT SIDEBAR: Booking Summary -->
+          <div id="s6-sidebar" style="background:#fff;border:1px solid #ede6ff;border-radius:16px;padding:22px;box-shadow:0 4px 24px rgba(74,35,122,0.09);position:sticky;top:80px;">
+            <!-- Logo / brand -->
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #ede6ff;">
+              <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#4A237A,#8B5BC7);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:800;font-size:0.88rem;color:#190E2A;">Moving Reservation</div>
+                <div style="font-size:0.72rem;color:#8B5BC7;font-weight:600;">Validate Your Vision</div>
+              </div>
+            </div>
+
+            <!-- Move date -->
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.65rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Move Date</div>
+              <div id="sb-date" style="font-size:0.88rem;font-weight:700;color:#190E2A;">Not selected</div>
+              <div id="sb-time" style="font-size:0.78rem;color:#5c4a7a;font-weight:500;margin-top:2px;"></div>
+            </div>
+
+            <!-- Addresses -->
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.65rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Route</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding-top:3px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#4A237A"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  <div style="width:1.5px;height:28px;background:repeating-linear-gradient(to bottom,#8B5BC7 0,#8B5BC7 4px,transparent 4px,transparent 8px);margin:2px 0;"></div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <div id="sb-from" style="font-size:0.8rem;font-weight:600;color:#190E2A;margin-bottom:4px;word-break:break-word;">Moving from</div>
+                  <div style="font-size:0.72rem;color:#8B5BC7;margin-bottom:6px;">&#10230;</div>
+                  <div id="sb-to" style="font-size:0.8rem;font-weight:600;color:#190E2A;word-break:break-word;">Moving to</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Crew badge -->
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.65rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Your Crew</div>
+              <div id="sb-crew" style="display:inline-flex;align-items:center;gap:7px;background:#f3eeff;border:1.5px solid #ddd6f7;border-radius:30px;padding:7px 14px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4A237A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span id="sb-crew-text" style="font-size:0.8rem;font-weight:700;color:#4A237A;">-- Movers</span>
+              </div>
+            </div>
+
+            <!-- Deposit note -->
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 14px;">
+              <div style="font-size:0.78rem;font-weight:700;color:#15803d;margin-bottom:4px;">Due Today: $50</div>
+              <div style="font-size:0.72rem;color:#16a34a;font-weight:500;">Applied toward your final balance</div>
             </div>
           </div>
-          <div style="position:relative;margin-bottom:12px;">
-            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Your email</label>
-            <input type="email" id="cf-email" placeholder="your@email.com" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
-          </div>
-          <div style="position:relative;margin-bottom:12px;">
-            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Phone number</label>
-            <input type="tel" id="cf-phone" placeholder="(555) 000-0000" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;" />
-          </div>
-          <div style="position:relative;">
-            <label style="position:absolute;top:-8px;left:10px;background:#fff;padding:0 4px;font-size:0.65rem;font-weight:700;color:#8B5BC7;letter-spacing:0.06em;text-transform:uppercase;">Notes for your crew (optional)</label>
-            <textarea id="cf-notes" placeholder="Gate code, elevator info, fragile items, etc." rows="3" style="width:100%;padding:12px;border:1.5px solid #ddd6f7;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:#190E2A;outline:none;resize:vertical;"></textarea>
-          </div>
-        </div>
 
-        <!-- Pricing breakdown -->
-        <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
-          <div style="font-weight:800;font-size:1rem;color:#190E2A;margin-bottom:16px;">Pricing Information</div>
-
-          <!-- Move reservation -->
-          <div style="font-weight:700;color:#4A237A;font-size:0.85rem;margin-bottom:8px;">Move Reservation</div>
-          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:4px;">
-            <span>Hourly rate (2 hr minimum)</span>
-            <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:#5c4a7a;margin-bottom:6px;">
-            <span>Truck fee <span style="font-size:0.72rem;">(based on move distance)</span></span>
-            <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
-          </div>
-          <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:14px;"></div>
-
-          <!-- Packing line (shown if added) -->
-          <div id="packingPriceLine" style="display:none;">
-            <div style="font-weight:700;color:#4A237A;font-size:0.85rem;margin-bottom:8px;">Packing / Unpacking Service</div>
-            <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:#5c4a7a;margin-bottom:14px;">
-              <span>Hourly rate (3 packers, 2 hr minimum)</span>
-              <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
-            </div>
-          </div>
-
-          <hr style="border:none;border-top:1px solid #ede6ff;margin-bottom:14px;" />
-
-          <!-- Deposit -->
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <span style="font-weight:800;color:#190E2A;font-size:0.95rem;">Priority reservation due today:</span>
-            <span style="font-weight:800;color:#16a34a;font-size:1.1rem;">$50</span>
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:6px;">
-            <span>&#10003;</span> Free cancellation
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;margin-bottom:6px;">
-            <span>&#10003;</span> $50 applied to your final balance
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;font-size:0.78rem;color:#16a34a;font-weight:600;">
-            <span>&#10003;</span> Locks in your virtual walkthrough slot
-          </div>
-        </div>
-
-        <!-- Submit -->
-        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn">RESERVE MY SPOT &mdash; $50 TODAY</button>
-        <p style="text-align:center;font-size:0.73rem;color:#8B5BC7;margin-top:10px;line-height:1.6;">
-          After submitting, our team will reach out within 24 hours to confirm your walkthrough and process your $50 priority reservation. The remaining balance is due after your virtual walkthrough.
-        </p>
+        </div><!-- end s6-layout -->
       </div>
 
     </div>
@@ -1221,11 +1295,44 @@
   // ── Step 6: Final reservation ───────────────────────────
   let truckFee = null;
 
+  // ── Stripe setup ──
+  const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
+  let stripeInstance = null;
+  let stripeCardElement = null;
+
+  function initStripeCard() {
+    if (stripeCardElement) return; // already mounted
+    if (typeof Stripe === 'undefined') return;
+    stripeInstance = Stripe(STRIPE_PK);
+    const elements = stripeInstance.elements({
+      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' }]
+    });
+    stripeCardElement = elements.create('card', {
+      style: {
+        base: {
+          fontFamily: "'Poppins', sans-serif",
+          fontSize: '14px',
+          color: '#190E2A',
+          '::placeholder': { color: '#b0a8c8' }
+        },
+        invalid: { color: '#dc2626' }
+      },
+      hidePostalCode: false
+    });
+    stripeCardElement.mount('#stripe-card-element');
+    stripeCardElement.on('change', e => {
+      document.getElementById('stripe-card-error').textContent = e.error ? e.error.message : '';
+    });
+  }
+
   function goToFinalStep() {
     document.getElementById('step5').classList.remove('active');
     document.getElementById('step6').classList.add('active');
     document.getElementById('progressFill').style.width = '100%';
-    // Pre-fill from step 0 or URL params (URL params used when coming from homepage form)
+    // Hide map panel, expand left panel for checkout layout
+    document.body.classList.add('step6-active');
+
+    // Pre-fill contact from step 0 or URL params
     const params = new URLSearchParams(window.location.search);
     const fullName = s0Data.name || params.get('name') || '';
     const prefEmail = s0Data.email || params.get('email') || '';
@@ -1237,23 +1344,38 @@
     }
     if (prefEmail) document.getElementById('cf-email').value = prefEmail;
     if (prefPhone) document.getElementById('cf-phone').value = prefPhone;
-    // Show rate
+
+    // Pricing
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
-    // Auto-calculate truck fee from addresses
     autoCalcTruckFee();
-    // Show packing line
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
-      const packRate = PACK_RATES[packSelectedDate.getDay()];
-      document.getElementById('packRateDisplay').textContent = `$${packRate}/hr`;
+      document.getElementById('packRateDisplay').textContent = `$${PACK_RATES[packSelectedDate.getDay()]}/hr`;
     }
+
+    // Populate sidebar
+    if (selectedDate) {
+      document.getElementById('sb-date').textContent = selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    }
+    if (selectedTime) {
+      document.getElementById('sb-time').textContent = selectedTime;
+    }
+    const fromAddr = (stops[0] && stops[0].address) || s0Data.from || params.get('from') || '';
+    const toAddr   = (stops.length > 1 && stops[stops.length-1].address) || s0Data.to || params.get('to') || '';
+    if (fromAddr) document.getElementById('sb-from').textContent = fromAddr;
+    if (toAddr)   document.getElementById('sb-to').textContent   = toAddr;
+    document.getElementById('sb-crew-text').textContent = crewSize ? `${crewSize} Movers` : '-- Movers';
+
+    // Mount Stripe card
+    initStripeCard();
   }
 
   function goBackToPacking() {
     document.getElementById('step6').classList.remove('active');
     document.getElementById('step5').classList.add('active');
     document.getElementById('progressFill').style.width = '93%';
+    document.body.classList.remove('step6-active');
   }
 
   function calcTruckFeeFromMiles(miles) {
@@ -1301,12 +1423,38 @@
     const last  = document.getElementById('cf-last').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const phone = document.getElementById('cf-phone').value.trim();
+    const billingName = document.getElementById('billing-name').value.trim();
     if (!first || !email || !phone) {
       alert('Please fill in your first name, email, and phone number.');
       return;
     }
+    if (!billingName) {
+      alert('Please enter the name on your card.');
+      return;
+    }
+    if (!stripeInstance || !stripeCardElement) {
+      alert('Payment fields are not ready. Please refresh the page and try again.');
+      return;
+    }
+
     const btn = document.getElementById('finalSubmitBtn');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    document.getElementById('stripe-card-error').textContent = '';
+
+    // Create Stripe PaymentMethod from card
+    const { paymentMethod, error } = await stripeInstance.createPaymentMethod({
+      type: 'card',
+      card: stripeCardElement,
+      billing_details: { name: billingName, email, phone }
+    });
+
+    if (error) {
+      document.getElementById('stripe-card-error').textContent = error.message;
+      btn.disabled = false;
+      btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
+      return;
+    }
 
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
@@ -1329,6 +1477,7 @@
     body.append('Packing Service', addPackingService ? `Yes - ${packDateStr} ${packSelectedTime||''}` : 'No');
     body.append('Notes', document.getElementById('cf-notes').value);
     body.append('Deposit', '$50 priority reservation');
+    body.append('Stripe Payment Method', paymentMethod.id);
 
     try {
       const res = await fetch('https://formspree.io/f/mwvdowqr', {
@@ -1337,11 +1486,11 @@
       if (res.ok) {
         window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
       } else {
-        btn.disabled = false; btn.textContent = 'RESERVE MY SPOT - $50 TODAY';
+        btn.disabled = false; btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
         alert('Something went wrong. Please text us at (540) 300-1414.');
       }
     } catch {
-      btn.disabled = false; btn.textContent = 'RESERVE MY SPOT - $50 TODAY';
+      btn.disabled = false; btn.textContent = 'PAY $50 AND RESERVE MY SPOT';
       alert('Something went wrong. Please text us at (540) 300-1414.');
     }
   }
