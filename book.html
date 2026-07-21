@@ -1512,7 +1512,7 @@
 
   // ── Stripe setup ──
   const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
-  const SHEET_SCRIPT_URL = ''; // paste your Google Apps Script URL here
+  const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIfSX5ZR-3jrzwYZsJEzbDagQgTQN9CTuzQHyVhRKn2lYoD8zgmbGYpsijjPxT3hLo/exec'; // paste your Google Apps Script URL here
   const TEST_MODE = true; // set to false when ready to take real payments
 
   // Fire as soon as contact info is known -- even if they never pay
@@ -1522,7 +1522,6 @@
     leadSent = true;
     fetch(SHEET_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         token: 'vyv2026admin',
         action: 'save_lead',
@@ -1783,48 +1782,33 @@
     body.append('Deposit Amount', `$${depositAmount}`);
     body.append('Stripe Payment Method', paymentMethod.id);
 
-    try {
-      const res = await fetch('https://formspree.io/f/mwvdowqr', {
-        method:'POST', body, headers:{'Accept':'application/json'}
-      });
-      if (res.ok) {
-        if (SHEET_SCRIPT_URL) {
-          fetch(SHEET_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({
-              token: 'vyv2026admin',
-              action: 'save',
-              bookedAt: new Date().toISOString(),
-              name: `${first} ${last}`,
-              email, phone,
-              moveDate: `${dateStr} ${selectedTime||''}`,
-              crew: `${crewSize} Movers`,
-              rate: `$${rate}/hr`,
-              truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
-              from: stops[0]?.address || '',
-              to: stops[stops.length-1]?.address || '',
-              stops: stops.length,
-              volume: moveVolume,
-              specialty: specialtyItems.join(', ') || 'None',
-              packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
-              notes: document.getElementById('cf-notes').value,
-              deposit: `$${depositAmount}`,
-              depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
-              paymentMethod: paymentMethod.id,
-              status: 'Upcoming'
-            }),
-            headers: { 'Content-Type': 'application/json' }
-          }).catch(() => {});
-        }
-        window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
-      } else {
-        btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-        alert('Something went wrong. Please text us at (540) 300-1414.');
-      }
-    } catch {
-      btn.disabled = false; btn.innerHTML = 'PAY <span id="btn-deposit-amount">$' + depositAmount + ' DEPOSIT</span> AND RESERVE';
-      alert('Something went wrong. Please text us at (540) 300-1414.');
-    }
+    const payload = JSON.stringify({
+      token: 'vyv2026admin',
+      action: 'save',
+      bookedAt: new Date().toISOString(),
+      name: `${first} ${last}`,
+      email, phone,
+      moveDate: `${dateStr} ${selectedTime||''}`,
+      crew: `${crewSize} Movers`,
+      rate: `$${rate}/hr`,
+      truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
+      from: stops[0]?.address || '',
+      to: stops[stops.length-1]?.address || '',
+      stops: stops.length,
+      volume: moveVolume,
+      specialty: specialtyItems.join(', ') || 'None',
+      packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
+      notes: document.getElementById('cf-notes').value,
+      deposit: `$${depositAmount}`,
+      depositNote: depositAmount === 300 ? 'Over 50 miles' : 'Within 50 miles',
+      paymentMethod: paymentMethod.id,
+      status: 'Upcoming'
+    });
+
+    // keepalive keeps the request alive even after the page navigates away
+    fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload, keepalive: true }).catch(() => {});
+
+    window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first) + (addPackingService ? '&packing=1' : '');
   }
 
   // ── Page load: skip Step 0 if URL params already have the info ──
