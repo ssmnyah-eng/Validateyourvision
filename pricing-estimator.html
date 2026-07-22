@@ -622,8 +622,8 @@ input,select,textarea{font-size:16px !important}
     <!-- Packing Only Tier Card -->
     <div style="margin-top:32px;background:#ffffff;border-radius:16px;border:2px solid #e2d9f3;padding:28px 24px;max-width:460px;">
       <p style="font-family:'Raleway',sans-serif;font-weight:800;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#8B5BC7;margin-bottom:8px;">Just Need Packers?</p>
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:#210D46;margin-bottom:8px;line-height:1.3;">Packing Only — Hourly</h2>
-      <p style="font-size:0.88rem;color:#5c5470;line-height:1.65;margin-bottom:16px;">Don't need us to move — just pack? We send a crew to your home and pack by the hour. You handle the truck or we coordinate just the packing side. Perfect for DIY movers who still want professional packing.</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:#210D46;margin-bottom:8px;line-height:1.3;">Packing Only -- Hourly</h2>
+      <p style="font-size:0.88rem;color:#5c5470;line-height:1.65;margin-bottom:16px;">Don't need us to move -- just pack? We send a crew to your home and pack by the hour. You handle the truck or we coordinate just the packing side. Perfect for DIY movers who still want professional packing.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
         <div style="background:#F4F0FF;border-radius:10px;padding:12px 16px;flex:1;min-width:110px;text-align:center;">
           <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#210D46;">$45<span style="font-size:0.8rem;color:#5c5470;">/hr</span></div>
@@ -1025,17 +1025,17 @@ input,select,textarea{font-size:16px !important}
         <div class="dep-box">
           <div class="dep-lbl">Priority Reservation</div>
           <div class="dep-amt" id="res-dep">-</div>
-          <div class="dep-note">This $50 priority reservation secures your virtual walkthrough slot. After the call, a $450 move deposit locks in your moving date. Both amounts are applied toward your final balance — everything is included in your price. No hidden charges.</div>
+          <div class="dep-note">This $50 priority reservation secures your virtual walkthrough slot. After the call, a $450 move deposit locks in your moving date. Both amounts are applied toward your final balance -- everything is included in your price. No hidden charges.</div>
         </div>
 
-        <p class="disclaimer">This estimate is your baseline blueprint — a starting point built from the information you provided. Your final flat rate is legally locked in only after your virtual walkthrough, where we see every room and every item. Any spaces, rooms, or items not visually inspected during that video call are explicitly excluded from the final price.</p>
+        <p class="disclaimer">This estimate is your baseline blueprint -- a starting point built from the information you provided. Your final flat rate is legally locked in only after your virtual walkthrough, where we see every room and every item. Any spaces, rooms, or items not visually inspected during that video call are explicitly excluded from the final price.</p>
       </div>
     </div>
 
     <!-- Mid-page confirm CTA (first touch) -->
     <div class="mid-confirm" id="mid-confirm">
       <div class="mid-confirm-head">Ready to move forward?</div>
-      <div class="mid-confirm-sub">This estimate is your baseline blueprint. The next step is a $50 priority reservation to book your virtual walkthrough — a 10–30 minute video call where we confirm every detail and finalize your flat rate. After the call, a $450 move deposit locks in your date. Both are applied toward your final balance.</div>
+      <div class="mid-confirm-sub">This estimate is your baseline blueprint. The next step is a $50 priority reservation to book your virtual walkthrough -- a 10–30 minute video call where we confirm every detail and finalize your flat rate. After the call, a $450 move deposit locks in your date. Both are applied toward your final balance.</div>
       <button class="btn-confirm-mid" onclick="confirmMove('mid')">Yes, Book My Virtual Walkthrough</button>
       <button class="btn-pdf-mid" onclick="downloadPlan()">&#8595; Not yet, save my plan as a PDF first</button>
     </div>
@@ -2112,7 +2112,7 @@ async function submitLead(name, email, phone) {
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method:  'POST',
-      headers: {'Content-Type':'application/json'},
+      
       body: JSON.stringify({
         /* Customer */
         customer_name:    name,
@@ -2183,10 +2183,10 @@ function tryAutoCapture() {
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      
       body: JSON.stringify({
         type:             'auto_capture',
-        lead_action:      'Info Entered — No Action Taken',
+        lead_action:      'Info Entered -- No Action Taken',
         customer_name:    n,
         email:            e,
         phone:            document.getElementById('lead-phone').value.trim(),
@@ -2241,7 +2241,7 @@ document.getElementById('btn-consult-submit').addEventListener('click', ()=>{
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method:  'POST',
-      headers: {'Content-Type':'application/json'},
+      
       body: JSON.stringify({
         type:                  'consultation_request',
         customer_name:         name,
@@ -2365,7 +2365,7 @@ function confirmMove(source) {
   if (INTEGRATIONS.ZAPIER_WEBHOOK) {
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      
       body: JSON.stringify({
         type:           'move_confirmation',
         lead_action:    'Move Confirmed',
@@ -2425,7 +2425,7 @@ async function downloadPlan() {
     const _r = calc();
     fetch(INTEGRATIONS.ZAPIER_WEBHOOK, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      
       body: JSON.stringify({
         type:          'pdf_download',
         lead_action:   'PDF Downloaded',
@@ -2593,7 +2593,7 @@ async function downloadPlan() {
   });
 
   gap(3);
-  infoBox('The $50 priority reservation and your $450 move deposit are both applied toward your final balance — everything is included in your price. No hidden charges.', greenlt, green);
+  infoBox('The $50 priority reservation and your $450 move deposit are both applied toward your final balance -- everything is included in your price. No hidden charges.', greenlt, green);
   gap(2);
   doc.setFontSize(7.5); doc.setFont('helvetica','italic'); doc.setTextColor(...muted);
   const disc = doc.splitTextToSize('This estimate is your baseline blueprint. Your final flat rate is locked in only after your virtual walkthrough, where we visually confirm every room and item. Any spaces, rooms, or items not shown during that call are explicitly excluded from the final price.', cw);
