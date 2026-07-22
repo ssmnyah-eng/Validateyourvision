@@ -894,6 +894,36 @@
   // ── Step 0 helpers ──
   let s0Data = {}; // populated either from URL params or Step 0 form
 
+  // If homepage form pre-filled all fields via URL params, skip step 0
+  (function prefillFromURL() {
+    const p = new URLSearchParams(window.location.search);
+    const name  = p.get('name')  || '';
+    const email = p.get('email') || '';
+    const phone = p.get('phone') || '';
+    const from  = p.get('from')  || '';
+    const to    = p.get('to')    || '';
+    if (name && email && phone && from && to) {
+      s0Data = { name, email, phone, from, to };
+      // Pre-fill step 0 fields in case user navigates back
+      const parts = name.split(' ');
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      setVal('s0-first', parts[0] || '');
+      setVal('s0-last',  parts.slice(1).join(' ') || '');
+      setVal('s0-email', email);
+      setVal('s0-phone', phone);
+      setVal('s0-from',  from);
+      setVal('s0-to',    to);
+      // Skip to step 1
+      document.addEventListener('DOMContentLoaded', function() {
+        sendLead(name, email, phone, from, to);
+        initStops();
+        document.getElementById('step0').classList.remove('active');
+        document.getElementById('step1').classList.add('active');
+        updateProgress(1);
+      });
+    }
+  })();
+
   function goFromStep0() {
     const first = document.getElementById('s0-first').value.trim();
     const last  = document.getElementById('s0-last').value.trim();
