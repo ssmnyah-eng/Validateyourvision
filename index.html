@@ -1979,7 +1979,7 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
       <!-- Left: photo -->
       <div style="overflow:hidden;">
-        <img src="/images/crew-action.webp" alt="VYV Moving crew carrying boxes into a home" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+        <img src="/images/crew-photo.webp" alt="VYV Moving crew carrying boxes into a home" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
       </div>
       <!-- Right: copy -->
       <div style="padding:64px 56px;display:flex;flex-direction:column;justify-content:center;">
@@ -2306,7 +2306,7 @@
             <p style="margin-top:12px;font-weight:600;color:#190E2A;">Cost Comparison Example</p>
             <p><strong>2 Movers:</strong><br>Estimated hours: 6.0 hrs &nbsp;&middot;&nbsp; Rate: $165/hr &nbsp;&middot;&nbsp; <strong>Total: $990</strong></p>
             <p style="margin-top:8px;"><strong>3 Movers:</strong><br>Estimated hours: 3.6 hrs &nbsp;&middot;&nbsp; Rate: $199/hr &nbsp;&middot;&nbsp; <strong>Total: $716</strong></p>
-            <p style="margin-top:10px;color:#4A237A;font-weight:700;">Savings: ~$274 &mdash; 3 movers costs about 28% less for a typical 3BR move.</p>
+            <p style="margin-top:10px;color:#4A237A;font-weight:700;">Savings: ~$274 -- 3 movers costs about 28% less for a typical 3BR move.</p>
           </div>
         </details>
         <details style="background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #ede6ff;">
@@ -2602,7 +2602,7 @@
       btn.disabled = true; btn.textContent = 'Going…';
       const fd = new FormData(e.target);
 
-      // Build redirect URL immediately — don't wait on Formspree
+      // Build redirect URL immediately -- don't wait on Formspree
       const params = new URLSearchParams();
       params.set('name', fd.get('name') || '');
       params.set('email', fd.get('email') || '');
