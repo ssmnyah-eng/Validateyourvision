@@ -1209,6 +1209,8 @@
 
   function renderStops() {
     const list = document.getElementById('stops-list');
+    // Clear cached autocomplete instances for stop inputs so they re-attach to new DOM nodes
+    stops.forEach((_, i) => { delete _acInstances[`addr-${i}`]; });
     list.innerHTML = '';
     const labels = stops.map((s, i) => {
       if (i === 0) return 'Moving from';
