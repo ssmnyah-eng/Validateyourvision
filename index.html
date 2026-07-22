@@ -1554,6 +1554,7 @@
       .form-card { padding: 22px 16px !important; }
     }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initLeadFormPlaces" async defer></script>
 </head>
 <body>
 
@@ -2499,7 +2500,7 @@
 
   <!-- Floating CTA -->
   <div class="float-cta">
-    <a href="/pricing-estimator.html" aria-label="Get your moving estimate">
+    <a href="#lead-form" aria-label="Book your move">
       📅 <span>Reserve Your Moving Date</span>
     </a>
   </div>
@@ -2582,6 +2583,19 @@
     });
 
     // ===== LEAD CAPTURE FORM =====
+    // Google Places autocomplete on address fields
+    function initLeadFormPlaces() {
+      const opts = { componentRestrictions: { country: 'us' }, fields: ['formatted_address'] };
+      new google.maps.places.Autocomplete(document.getElementById('lf-from'), opts);
+      new google.maps.places.Autocomplete(document.getElementById('lf-to'), opts);
+    }
+
+    // Reset submit button when user navigates back
+    window.addEventListener('pageshow', function(e) {
+      const btn = document.getElementById('lf-submit');
+      if (btn) { btn.disabled = false; btn.textContent = 'Book My Move'; }
+    });
+
     async function handleLeadFormSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('lf-submit');
