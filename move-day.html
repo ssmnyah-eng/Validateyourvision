@@ -9,16 +9,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black:  #0a0a0a;
-      --green:  #1b4332;
-      --green2: #2d6a4f;
-      --mint:   #52b788;
-      --bg:     #f5f5f3;
+      --navy:   #1C1B3A;
+      --purple: #5B4FBE;
+      --bg:     #f4f4f8;
       --card:   #ffffff;
-      --text:   #0a0a0a;
-      --sub:    #5a5a58;
-      --muted:  #9a9a98;
-      --border: #e8e8e4;
+      --text:   #1C1B3A;
+      --sub:    #888899;
+      --muted:  #888899;
+      --border: #e0e0ee;
       --red:    #c0392b;
     }
 
@@ -32,7 +30,7 @@
 
     /* ── Header ── */
     .header {
-      background: var(--black);
+      background: var(--navy);
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -56,7 +54,7 @@
     .spinner {
       width: 36px; height: 36px;
       border: 2px solid var(--border);
-      border-top-color: var(--green);
+      border-top-color: var(--purple);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
     }
@@ -87,7 +85,7 @@
     }
     .progress-fill {
       position: absolute; top: 13px; left: 18px;
-      height: 1.5px; background: var(--green); z-index: 1; transition: width 0.5s ease;
+      height: 1.5px; background: var(--purple); z-index: 1; transition: width 0.5s ease;
     }
     .step { display: flex; flex-direction: column; align-items: center; gap: 7px; z-index: 2; flex: 1; }
     .step-dot {
@@ -97,10 +95,10 @@
       font-size: 11px; font-weight: 700; color: var(--muted);
       transition: all 0.3s;
     }
-    .step.done .step-dot   { background: var(--green); border-color: var(--green); color: #fff; }
+    .step.done .step-dot   { background: var(--purple); border-color: var(--purple); color: #fff; }
     .step.active .step-dot {
-      background: var(--black); border-color: var(--black); color: #fff;
-      box-shadow: 0 0 0 3px rgba(10,10,10,0.1);
+      background: var(--navy); border-color: var(--navy); color: #fff;
+      box-shadow: 0 0 0 3px rgba(91,79,190,0.2);
     }
     .step-name {
       font-size: 9.5px; color: var(--muted); text-align: center;
@@ -110,7 +108,7 @@
 
     /* ── Timer ── */
     .timer-card {
-      background: var(--black);
+      background: var(--navy);
       border-radius: 14px;
       padding: 32px 20px;
       text-align: center;
@@ -145,7 +143,7 @@
     .detail-row:last-child { border-bottom: none; }
     .detail-key   { font-size: 13px; color: var(--sub); flex-shrink: 0; }
     .detail-value { font-size: 13px; font-weight: 600; text-align: right; color: var(--text); }
-    .detail-value.green { color: var(--green2); }
+    .detail-value.green { color: var(--purple); }
 
     /* ── Buttons ── */
     .btn {
@@ -155,10 +153,10 @@
       font-family: inherit; -webkit-font-smoothing: antialiased;
     }
     .btn-primary {
-      background: var(--green); color: #fff;
-      box-shadow: 0 4px 16px rgba(27,67,50,0.3);
+      background: var(--purple); color: #fff;
+      box-shadow: 0 4px 16px rgba(91,79,190,0.35);
     }
-    .btn-primary:hover  { background: var(--green2); }
+    .btn-primary:hover  { background: #4a3fb0; }
     .btn-primary:active { transform: scale(0.98); }
     .btn-locked { background: var(--border); color: var(--muted); cursor: not-allowed; }
 
@@ -177,7 +175,7 @@
 
     /* ── Complete card ── */
     .complete-card {
-      background: #f0faf4; border: 1.5px solid var(--green);
+      background: #f0eeff; border: 1.5px solid var(--purple);
       border-radius: 14px; padding: 28px 20px; text-align: center; margin-bottom: 14px;
     }
     .complete-icon  { font-size: 36px; margin-bottom: 10px; }
@@ -193,7 +191,7 @@
     .error-icon  { font-size: 44px; }
     .error-title { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
     .error-sub   { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 280px; }
-    .contact-link { color: var(--green2); font-weight: 600; text-decoration: none; }
+    .contact-link { color: var(--purple); font-weight: 600; text-decoration: none; }
   </style>
 </head>
 <body>
