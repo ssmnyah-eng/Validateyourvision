@@ -271,20 +271,7 @@
   <div class="complete-card" id="complete-card" style="display:none;">
     <div class="complete-icon">&#10003;</div>
     <div class="complete-title">Move Complete</div>
-    <div class="complete-sub">Thank you for choosing VYV Moving! A receipt has been sent to your email.</div>
-  </div>
-
-  <!-- Final Bill (shown after charge) -->
-  <div class="card" id="final-bill-card" style="display:none;">
-    <div class="card-title">Final Bill</div>
-    <div class="detail-row"><span class="detail-key">Time worked</span><span class="detail-value" id="fb-hours">--</span></div>
-    <div class="detail-row"><span class="detail-key">Labor</span><span class="detail-value" id="fb-labor">--</span></div>
-    <div class="detail-row"><span class="detail-key">Truck fee</span><span class="detail-value" id="fb-truck">--</span></div>
-    <div class="detail-row"><span class="detail-key">Deposit applied</span><span class="detail-value green" id="fb-deposit">--</span></div>
-    <div class="detail-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:10px;">
-      <span class="detail-key" style="font-weight:700;color:var(--text);">Balance charged</span>
-      <span class="detail-value" style="font-size:16px;" id="fb-balance">--</span>
-    </div>
+    <div class="complete-sub">Your crew has finished -- thank you for choosing VYV Moving!<br><br>You will receive a confirmation email with your final invoice shortly. Questions? Text us at <a href="sms:+15403001414" style="color:var(--purple);font-weight:600;">(540) 300-1414</a>.</div>
   </div>
 
   <!-- Move details -->
@@ -359,8 +346,6 @@
     const checkinSec    = document.getElementById('checkin-section');
     const btn           = document.getElementById('checkin-btn');
 
-    const finalBillCard = document.getElementById('final-bill-card');
-
     if (status === 'completed') {
       checkinSec.style.display   = 'none';
       waitNotice.style.display   = 'none';
@@ -369,28 +354,9 @@
       stopTimer();
       if (booking.checkinAt) startTimerFrom(new Date(booking.checkinAt), true);
 
-      // Populate final bill if data available
-      if (booking.finalCharge != null) {
-        const hours      = booking.hoursWorked || 0;
-        const labor      = booking.laborAmount  || 0;
-        const truck      = parseFloat(booking.truckFee) || 0;
-        const deposit    = parseFloat(booking.depositAmount) || 0;
-        const balance    = parseFloat(booking.finalCharge) || 0;
-        const rateStr    = booking.rate || '--';
-        document.getElementById('fb-hours').textContent   = hours.toFixed(2) + ' hrs';
-        document.getElementById('fb-labor').textContent   = '$' + labor.toFixed(2) + ' (' + rateStr + ')';
-        document.getElementById('fb-truck').textContent   = truck > 0 ? '$' + truck.toFixed(2) : 'Included';
-        document.getElementById('fb-deposit').textContent = '-$' + deposit.toFixed(2);
-        document.getElementById('fb-balance').textContent = '$' + balance.toFixed(2);
-        finalBillCard.style.display = 'block';
-      } else {
-        finalBillCard.style.display = 'none';
-      }
-
     } else if (status === 'moving') {
       waitNotice.style.display   = 'none';
       completeCard.style.display = 'none';
-      finalBillCard.style.display = 'none';
       timerCard.style.display    = 'block';
       checkinSec.style.display   = 'none';
       if (booking.checkinAt && !timerInterval) startTimerFrom(new Date(booking.checkinAt), false);
@@ -399,7 +365,6 @@
       waitNotice.style.display   = 'none';
       timerCard.style.display    = 'none';
       completeCard.style.display = 'none';
-      finalBillCard.style.display = 'none';
       checkinSec.style.display   = 'block';
       btn.className   = 'btn btn-primary';
       btn.disabled    = false;
@@ -409,7 +374,6 @@
       waitNotice.style.display   = 'block';
       timerCard.style.display    = 'none';
       completeCard.style.display = 'none';
-      finalBillCard.style.display = 'none';
       checkinSec.style.display   = 'block';
       btn.className   = 'btn btn-locked';
       btn.disabled    = true;
