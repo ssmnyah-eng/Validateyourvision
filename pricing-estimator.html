@@ -136,18 +136,23 @@ body{
 /* ── APP SHELL ── */
 #app{min-height:100vh;display:flex;flex-direction:column}
 
-@media(min-width:900px){
-  #app{
-    display:grid;
-    grid-template-rows:auto 1fr;
-    grid-template-columns:1fr 340px;
-    grid-template-areas:"hdr hdr" "main edu";
-    min-height:100vh;
-  }
-  #prog-hdr{grid-area:hdr}
-  #main{grid-area:main}
-  #edu-panel{grid-area:edu}
-}
+	@media(min-width:900px){
+	  #app{
+	    display:grid;
+	    grid-template-rows:auto 1fr;
+	    grid-template-columns:1fr 340px;
+	    grid-template-areas:"hdr hdr" "main edu";
+	    min-height:100vh;
+	  }
+	  #prog-hdr{grid-area:hdr}
+	  #main{grid-area:main}
+	  #edu-panel{grid-area:edu}
+	}
+	@media(max-width:899px){
+	  #app { display: flex; flex-direction: column; }
+	  #edu-panel { display: none; }
+	  #main { padding: 20px 16px 100px; }
+	}
 
 /* ── PROGRESS HEADER ── */
 #prog-hdr{

@@ -1490,20 +1490,22 @@
       /* Trust badges: 2-column grid instead of horizontal scroll */
       .trust-row {
         display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        justify-content: unset;
-        overflow-x: unset;
-        flex-wrap: unset;
-        padding: 0;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0 !important;
+        justify-content: unset !important;
+        overflow-x: unset !important;
+        flex-wrap: wrap !important;
+        padding: 0 !important;
       }
       .trust-badge {
-        border-right: none !important;
-        border-bottom: 1px solid rgba(236,235,238,0.1);
-        padding: 12px 14px;
-        font-size: 0.82rem;
-        justify-content: flex-start;
+        border-right: 1px solid rgba(236,235,238,0.1) !important;
+        border-bottom: 1px solid rgba(236,235,238,0.1) !important;
+        padding: 12px 14px !important;
+        font-size: 0.82rem !important;
+        justify-content: center !important;
+        width: 100% !important;
       }
+      .trust-badge:nth-child(even) { border-right: none !important; }
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
       .float-cta a span { display: none; }
       .float-cta a { padding: 14px 16px; border-radius: 50%; }
@@ -1801,13 +1803,32 @@
   <style>
     /* Hero floating card hidden on small screens */
     @media(max-width:680px){
-      #hero-float-card { display: none !important; }
+      #hero-float-card { 
+        position: relative !important; 
+        top: 0 !important; 
+        right: 0 !important; 
+        transform: none !important; 
+        margin: 20px auto !important; 
+        width: 90% !important; 
+        display: block !important;
+      }
+      #hero { padding-top: 64px; }
+      #hero > div:first-child { height: auto !important; min-height: 400px; display: flex; flex-direction: column; }
+      #hero video { position: absolute; height: 100% !important; }
+      #hero h1 { position: relative; margin-top: 40px; max-width: 100% !important; padding: 20px !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+      
       #lf-fields-row { flex-direction: column !important; }
       #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; }
       #lf-fields-row button { width: 100% !important; }
     }
     @media(max-width:900px){
       #hero-float-card { width: 240px !important; right: 16px !important; padding: 16px 14px !important; }
+    }
+    @media(max-width:768px){
+      #footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; text-align: center; }
+      #footer-grid > div { display: flex; flex-direction: column; align-items: center; }
+      #footer-grid a { justify-content: center; }
+      #pricing-promo-grid div:last-child > div:first-of-type { grid-template-columns: 1fr !important; }
     }
   </style>
 
@@ -1903,8 +1924,8 @@
   </section>
 
   <!-- ===== PRICING PROMO ===== -->
-  <section style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+  <section id="pricing-promo" style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
+    <div id="pricing-promo-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
 
       <!-- LEFT: perks -->
       <div>
@@ -2334,7 +2355,7 @@
   <!-- ===== FOOTER ===== -->
   <footer style="background:#0f0820;color:#ECEBEE;padding:56px 24px 0;">
     <!-- Main footer grid -->
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <div id="footer-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
 
       <!-- Left: logo + tagline + socials + service area -->
       <div>
