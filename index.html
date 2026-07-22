@@ -1689,71 +1689,6 @@
     </div>
   </section>
 
-  <!-- ===== QUICK CONTACT FORM (top) ===== -->
-  <section style="background:var(--lbg2);padding:48px 0;border-bottom:1px solid rgba(74,35,122,0.08);">
-    <div class="container">
-      <div style="max-width:680px;margin:0 auto;">
-        <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--mp);font-weight:700;margin-bottom:4px;text-align:center;">Have a question? Send us a quick message.</p>
-        <p style="text-align:center;font-size:0.85rem;color:var(--lmuted);margin-bottom:24px;">Text us: <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">540-300-1414</a>, most replies within an hour</p>
-        <form id="top-contact-form" onsubmit="handleTopContactSubmit(event)" novalidate>
-          <div id="top-form-body" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:flex-end;">
-            <div>
-              <label for="tcf-name" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Name *</label>
-              <input id="tcf-name" name="name" type="text" placeholder="Jane Smith" required autocomplete="name"
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <div>
-              <label for="tcf-phone" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Phone *</label>
-              <input id="tcf-phone" name="phone" type="tel" placeholder="(540) 000-0000" required autocomplete="tel"
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <div>
-              <label for="tcf-msg" style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mp);margin-bottom:5px;">Message *</label>
-              <input id="tcf-msg" name="message" type="text" placeholder="What do you need help with?" required
-                style="width:100%;padding:11px 14px;border:2px solid #e2d9f3;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;color:var(--ltxt);background:var(--lbg);outline:none;transition:border-color .2s;"
-                onfocus="this.style.borderColor='var(--lv)'" onblur="this.style.borderColor='#e2d9f3'" />
-            </div>
-            <button type="submit" id="tcf-submit" class="btn btn-primary" style="white-space:nowrap;padding:12px 22px;font-size:0.88rem;">Send →</button>
-          </div>
-          <p id="top-form-success" style="display:none;text-align:center;color:var(--ap);font-weight:600;padding:12px 0;">Got it! We'll text you back soon.</p>
-        </form>
-        <style>
-          @media (max-width: 768px) {
-            #top-form-body { grid-template-columns: 1fr !important; }
-          }
-        </style>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MINI REVIEWS (moved up after contact form) ===== -->
-  <div style="background:var(--mp);padding:48px 0;" aria-label="Customer reviews">
-    <div class="container">
-      <p style="text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:28px;">What Our Customers Say</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:960px;margin:0 auto;">
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
-          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
-          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Vicki J.</div>
-          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Fredericksburg, VA &middot; Google Review</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
-          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Super fast and great service... came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
-          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Jessica P.</div>
-          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Stafford, VA &middot; Google Review</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
-          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"They moved everything with care and finished faster than I expected. Communication was great from start to finish. Will definitely use again!"</p>
-          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Marcus T.</div>
-          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Woodbridge, VA &middot; Google Review</div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ===== TICKER ===== -->
   <div class="ticker-wrap" aria-hidden="true">
@@ -1807,14 +1742,6 @@
     </div>
   </section>
 
-  <!-- ===== TRUST BADGES ===== -->
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> Licensed &amp; Insured</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> Detailed Moving Estimates</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> No Surprise Add-Ons</div>
-        <div class="trust-badge"><div class="trust-badge-check">✓</div> We Show Up When We Say We Will</div>
-      </div>
-    </div>
-  </div>
 
   <!-- ===== SKIP STATEMENT ===== -->
   <div style="background:var(--dp);padding:40px 0;border-bottom:1px solid rgba(139,91,199,0.15);" aria-label="What makes us different">
@@ -1828,49 +1755,33 @@
     </div>
   </div>
 
-  <!-- ===== WHY OUR QUOTES ARE DIFFERENT ===== -->
-  <section style="background:var(--lbg);padding:96px 0;" aria-labelledby="quotes-heading">
+  <!-- ===== MINI REVIEWS (near top) ===== -->
+  <div style="background:var(--mp);padding:48px 0;" aria-label="Customer reviews">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="quotes-grid">
-        <div class="reveal-left quotes-img" style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);">
-          <img
-            src="assets/clipboard-checklist.png"
-            alt="VYV Home Inventory Checklist, room-by-room moving plan on a branded clipboard"
-            style="width:100%;height:100%;object-fit:cover;display:block;min-height:320px;"
-            loading="lazy"
-          />
+      <p style="text-align:center;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(139,91,199,0.8);margin-bottom:28px;">What Our Customers Say</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:960px;margin:0 auto;">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
+          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">★★★★★</div>
+          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Absolutely one of the most professional, accommodating, and hard workers that I have come across!"</p>
+          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Vicki J.</div>
+          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Fredericksburg, VA · Google Review</div>
         </div>
-        <div class="reveal-right">
-          <p class="section-eyebrow">Our Process</p>
-          <h2 id="quotes-heading" class="section-title">Why Our Quotes<br /><span>Are Different</span></h2>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            Most moving companies give you a number based on a phone call and a guess. You don't find out what it actually costs until the truck is in your driveway.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:16px;">
-            We do it differently. You build your blueprint online in 60 seconds, then we do a quick virtual walkthrough to see every room, every item, and every detail before we lock in your price. No guessing. No surprises.
-          </p>
-          <p style="font-size:1rem;color:var(--lmuted);line-height:1.8;margin-bottom:32px;">
-            The result is a guaranteed flat rate you can count on, locked in before moving day, from your phone.
-          </p>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">Instant price range online in 60 seconds</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">Virtual walkthrough to confirm every detail</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:28px;height:28px;background:var(--lbg2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid rgba(74,35,122,0.12);">✓</div>
-              <span style="font-size:0.92rem;color:var(--ltxt2);font-weight:600;">Guaranteed flat rate locked before moving day</span>
-            </div>
-          </div>
-          <a href="/pricing-estimator.html" class="btn btn-primary">Build My Blueprint</a>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
+          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">★★★★★</div>
+          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"Super fast and great service… came when they said, took care of everything, were friendly and professional. Prices very reasonable!"</p>
+          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Jessica P.</div>
+          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Stafford, VA &middot; Google Review</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(236,235,238,0.08);border-radius:var(--radius);padding:24px 22px;">
+          <div style="color:#f59e0b;font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p style="font-size:0.93rem;color:rgba(236,235,238,0.82);line-height:1.7;font-style:italic;margin-bottom:14px;">"They moved everything with care and finished faster than I expected. Communication was great from start to finish. Will definitely use again!"</p>
+          <div style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.85rem;color:var(--lv);">Marcus T.</div>
+          <div style="font-size:0.7rem;color:rgba(236,235,238,0.3);margin-top:2px;">Woodbridge, VA &middot; Google Review</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
 
   <!-- ===== WHO THIS IS FOR ===== -->
   <section style="background:var(--lbg2);padding:80px 0;" aria-labelledby="for-heading">
@@ -1925,83 +1836,6 @@
     </div>
   </div>
 
-  <!-- ===== PROCESS ===== -->
-  <section id="process" aria-labelledby="process-heading">
-    <div class="container">
-      <div class="process-header">
-        <p class="section-eyebrow reveal">How It Works</p>
-        <h2 id="process-heading" class="section-title reveal">Book Your Move Online.<br /><span>No Phone Calls Required.</span></h2>
-        <p class="section-sub reveal">
-          Calculate, plan, and book 100% online, without talking to a salesperson. Here's how it works.
-        </p>
-      </div>
-      <div class="process-steps">
-
-        <div class="ps">
-          <div class="ps-left">
-            <div class="ps-card">
-              <h3>Build Your Moving Blueprint</h3>
-              <p>Map your stairs, walking distance, and items in our Moving Blueprint Builder. Our system calculates your exact price range in 60 seconds. Completely online, no phone call required.</p>
-              <div style="margin-top:14px;">
-                <a href="/pricing-estimator.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--lv);font-weight:700;font-size:0.88rem;">🔧 Launch The Moving Blueprint Builder →</a>
-              </div>
-            </div>
-          </div>
-          <div class="ps-center">
-            <div class="ps-node">1</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right"></div>
-        </div>
-
-        <div class="ps even">
-          <div class="ps-left"></div>
-          <div class="ps-center">
-            <div class="ps-node">2</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right">
-            <div class="ps-card">
-              <h3>Reserve Your Walkthrough. Lock In Your Rate.</h3>
-              <p>Your blueprint generates a guaranteed flat-rate price range. A $50 priority reservation secures your virtual walkthrough slot from your phone, in minutes. After the call, a $450 move deposit locks in your date. Both are applied toward your final balance. No hidden charges.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="ps">
-          <div class="ps-left">
-            <div class="ps-card" style="border:2px solid rgba(139,91,199,0.5);background:rgba(74,35,122,0.2);">
-              <h3>Your Price Protection Walkthrough</h3>
-              <p>Your truck is already locked in. Now we do a quick 10–15 minute virtual walkthrough to finalize your blueprint and see if we can drop your price even lower.</p>
-              <div style="margin-top:14px;background:rgba(139,91,199,0.2);border-radius:8px;padding:10px 14px;font-size:0.82rem;color:var(--lv);font-weight:600;">
-                ✓ This is where your flat rate gets locked in for good. No surprises on moving day.
-              </div>
-            </div>
-          </div>
-          <div class="ps-center">
-            <div class="ps-node">3</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right"></div>
-        </div>
-
-        <div class="ps even">
-          <div class="ps-left"></div>
-          <div class="ps-center">
-            <div class="ps-node">4</div>
-            <div class="ps-num">STEP</div>
-          </div>
-          <div class="ps-right">
-            <div class="ps-card">
-              <h3>Moving Day. Already Handled.</h3>
-              <p>Your crew shows up with your blueprint in hand. They already know what's being moved, where it goes, and how long it takes. Your price doesn't change.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
 
   <!-- ===== PAIN POINTS / ABOUT ===== -->
   <section id="about" aria-labelledby="pain-heading">
@@ -2302,14 +2136,10 @@
     </div>
   </section>
 
-  <!-- ===== WHY CHOOSE US ===== -->
-
   <!-- ===== PRICING PROMO ===== -->
   <section style="background:#fff;padding:64px 0;border-top:1px solid rgba(74,35,122,0.08);border-bottom:1px solid rgba(74,35,122,0.08);" aria-labelledby="pricing-promo-heading">
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;max-width:960px;margin:0 auto;" class="pricing-promo-grid">
-
-        <!-- Left: headline + perks + CTA -->
         <div>
           <p style="font-size:0.68rem;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--lv);margin-bottom:12px;">Simple, Transparent Pricing</p>
           <h2 id="pricing-promo-heading" style="font-size:clamp(2.8rem,6vw,4rem);font-weight:900;color:var(--dp);line-height:1;letter-spacing:-0.03em;margin-bottom:6px;">$199<span style="color:var(--ap);">/hr</span></h2>
@@ -2335,8 +2165,6 @@
           <a href="/book.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--ap);color:#fff;padding:15px 28px;border-radius:10px;font-size:0.95rem;font-weight:800;letter-spacing:0.03em;text-decoration:none;box-shadow:0 4px 20px rgba(74,35,122,0.25);">Book Your Move Now &rarr;</a>
           <p style="font-size:0.72rem;color:#9c93a8;margin-top:12px;">Spots fill fast on weekends -- secure your date with a deposit today.</p>
         </div>
-
-        <!-- Right: math comparison + photo -->
         <div>
           <p style="font-size:0.62rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--lv);margin-bottom:14px;">See the math -- same move, different crew size</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -2370,14 +2198,9 @@
             <img src="images/crew-photo.webp" alt="VYV Moving crew carrying boxes into a home" style="width:100%;display:block;object-fit:cover;max-height:220px;" loading="lazy">
           </div>
         </div>
-
       </div>
     </div>
-    <style>
-      @media (max-width: 768px) {
-        .pricing-promo-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-      }
-    </style>
+    <style>@media(max-width:768px){.pricing-promo-grid{grid-template-columns:1fr!important;gap:36px!important;}}</style>
   </section>
 
   <!-- ===== CREW PHOTO + ABOUT ===== -->
@@ -2393,73 +2216,28 @@
         <a href="/book.html" style="display:inline-flex;align-items:center;gap:7px;color:var(--lv);font-size:0.88rem;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(139,91,199,0.3);padding-bottom:2px;width:fit-content;">Book your move &rarr;</a>
       </div>
     </div>
-    <style>
-      @media (max-width: 768px) {
-        .crew-about-grid { grid-template-columns: 1fr !important; }
-        .crew-about-grid > div:last-child { padding: 36px 24px !important; }
-      }
-    </style>
+    <style>@media(max-width:768px){.crew-about-grid{grid-template-columns:1fr!important;}.crew-about-grid>div:last-child{padding:36px 24px!important;}}</style>
   </section>
 
+  <!-- ===== WHY CHOOSE US ===== -->
   <section id="why" aria-labelledby="why-heading">
     <div class="container">
       <div class="why-inner">
         <p class="section-eyebrow reveal">Why VYV Moving</p>
         <h2 id="why-heading" class="section-title reveal">9 Reasons You Should <span>Move With Us</span></h2>
-        <p class="section-sub reveal">
-          We're new -- and that means we work harder for every single job.
-        </p>
+        <p class="section-sub reveal">We're new -- and that means we work harder for every single job.</p>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;" class="nine-reasons-grid">
-          <div class="reveal" data-d="1" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">01</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">We Actually Show Up</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Confirmed crew. Confirmed time. No ghosting, no last-minute excuses.</div>
-          </div>
-          <div class="reveal" data-d="2" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">02</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Your Price Is Your Price</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Hourly rate plus truck fee. No stair charges, no fuel fees, nothing added at the end.</div>
-          </div>
-          <div class="reveal" data-d="3" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">03</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Book 100% Online</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">No phone tag. No sales calls. Pick your date, pay your deposit, and you're confirmed.</div>
-          </div>
-          <div class="reveal" data-d="4" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">04</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">You Watch the Clock</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Sign your crew in from your phone when they arrive. Billing starts the moment you check them in -- you can see it happen in real time.</div>
-          </div>
-          <div class="reveal" data-d="5" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">05</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">We Handle Your Stuff Like It's Ours</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Wrapped, carried carefully, placed where you want it. We don't rush to cut corners.</div>
-          </div>
-          <div class="reveal" data-d="6" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">06</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Licensed &amp; Insured</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Fully covered so you can relax. Your belongings are protected on every move.</div>
-          </div>
-          <div class="reveal" data-d="7" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">07</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Locally Owned</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">We live here. We serve our neighbors, and our reputation in this community matters to us.</div>
-          </div>
-          <div class="reveal" data-d="8" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">08</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">3-Man Crews Available</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">More manpower often means a faster move -- and a lower final bill. The math works in your favor.</div>
-          </div>
-          <div class="reveal" data-d="9" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">09</div>
-            <div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">5-Star Service, Every Time</div>
-            <div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">We're building our name one move at a time. That means you get the best we have -- always.</div>
-          </div>
+          <div class="reveal" data-d="1" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">01</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">We Actually Show Up</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Confirmed crew. Confirmed time. No ghosting, no last-minute excuses.</div></div>
+          <div class="reveal" data-d="2" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">02</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Your Price Is Your Price</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Hourly rate plus truck fee. No stair charges, no fuel fees, nothing added at the end.</div></div>
+          <div class="reveal" data-d="3" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">03</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Book 100% Online</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">No phone tag. No sales calls. Pick your date, pay your deposit, and you're confirmed.</div></div>
+          <div class="reveal" data-d="4" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">04</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">You Watch the Clock</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Sign your crew in from your phone when they arrive. Billing starts the moment you check them in -- you can see it happen in real time.</div></div>
+          <div class="reveal" data-d="5" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">05</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">We Handle Your Stuff Like It's Ours</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Wrapped, carried carefully, placed where you want it. We don't rush to cut corners.</div></div>
+          <div class="reveal" data-d="6" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">06</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Licensed &amp; Insured</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">Fully covered so you can relax. Your belongings are protected on every move.</div></div>
+          <div class="reveal" data-d="7" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">07</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">Locally Owned</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">We live here. We serve our neighbors, and our reputation in this community matters to us.</div></div>
+          <div class="reveal" data-d="8" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">08</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">3-Man Crews Available</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">More manpower often means a faster move -- and a lower final bill. The math works in your favor.</div></div>
+          <div class="reveal" data-d="9" style="background:var(--lbg);border:1px solid rgba(74,35,122,0.1);border-radius:var(--radius);padding:20px;"><div style="font-size:1.6rem;font-weight:900;color:rgba(74,35,122,0.1);line-height:1;margin-bottom:6px;">09</div><div style="font-size:0.88rem;font-weight:700;color:var(--dp);margin-bottom:4px;">5-Star Service, Every Time</div><div style="font-size:0.78rem;color:var(--lmuted);line-height:1.55;">We're building our name one move at a time. That means you get the best we have -- always.</div></div>
         </div>
-        <style>
-          @media (max-width: 768px) { .nine-reasons-grid { grid-template-columns: 1fr !important; } }
-          @media (min-width: 769px) and (max-width: 1024px) { .nine-reasons-grid { grid-template-columns: repeat(2,1fr) !important; } }
-        </style>
+        <style>@media(max-width:768px){.nine-reasons-grid{grid-template-columns:1fr!important;}}@media(min-width:769px) and (max-width:1024px){.nine-reasons-grid{grid-template-columns:repeat(2,1fr)!important;}}</style>
         <div class="reveal" style="margin-top:56px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);max-height:480px;">
           <video muted loop playsinline preload="none" data-lazy-video
             aria-label="Happy family settled and relaxing in their new home after a smooth move"
