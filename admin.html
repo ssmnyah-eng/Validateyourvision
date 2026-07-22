@@ -569,6 +569,23 @@
           </div>
         </div><!-- /detail-scroll -->
 
+        <!-- Move Day Actions (context-aware) -->
+        <div id="moveday-actions" style="display:none;padding:12px 16px;border-top:1px solid rgba(139,91,199,0.15);background:rgba(25,14,42,0.3);">
+          <div style="font-size:0.6rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Move Day</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="btn-on-the-way" onclick="moveDayAction('on_the_way')" style="display:none;flex:1;min-width:120px;background:#b45309;color:#fff;border:none;border-radius:8px;padding:9px 12px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;letter-spacing:0.03em;">&#128666; On The Way</button>
+            <button id="btn-arrived"    onclick="moveDayAction('arrived')"    style="display:none;flex:1;min-width:120px;background:#0f766e;color:#fff;border:none;border-radius:8px;padding:9px 12px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;letter-spacing:0.03em;">&#10003; Arrived -- Send Link</button>
+            <button id="btn-start-timer" onclick="moveDayStartTimer()"       style="display:none;flex:1;min-width:120px;background:#4A237A;color:#fff;border:none;border-radius:8px;padding:9px 12px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;letter-spacing:0.03em;">&#9201; Start Timer (manual)</button>
+            <button id="btn-complete"   onclick="moveDayComplete()"           style="display:none;flex:1;min-width:120px;background:#16a34a;color:#fff;border:none;border-radius:8px;padding:9px 12px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;letter-spacing:0.03em;">&#9989; Move Complete</button>
+          </div>
+          <!-- Live timer (shows when In Progress) -->
+          <div id="admin-timer-wrap" style="display:none;margin-top:10px;background:rgba(139,91,199,0.12);border-radius:8px;padding:10px 14px;text-align:center;">
+            <div style="font-size:0.6rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Time on the job</div>
+            <div id="admin-timer-display" style="font-size:1.8rem;font-weight:800;color:#ECEBEE;font-variant-numeric:tabular-nums;letter-spacing:0.04em;">0:00:00</div>
+          </div>
+          <div id="moveday-msg" style="font-size:0.68rem;color:#a892cc;margin-top:6px;display:none;"></div>
+        </div>
+
         <!-- Action bar -->
         <div class="action-bar">
           <button class="a-btn a-complete" onclick="updateStatus('Complete')">Mark Complete</button>
@@ -589,7 +606,7 @@
 // ─────────────────────────────────────────────────────
 //  CONFIG -- edit these values
 // ─────────────────────────────────────────────────────
-const SCRIPT_URL     = '';          // Google Apps Script URL
+const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbzIfSX5ZR-3jrzwYZsJEzbDagQgTQN9CTuzQHyVhRKn2lYoD8zgmbGYpsijjPxT3hLo/exec';          // Google Apps Script URL
 const ADMIN_TOKEN    = 'vyv2026admin';
 const ADMIN_PASSWORD = 'VYV2026!';
 const DAILY_GOAL     = 4;           // max moves per day your crew can handle
@@ -969,6 +986,9 @@ function selectBooking(idx) {
   document.getElementById('a-sms').href = rawPhone ? `sms:${rawPhone}` : '#';
   setText('a-sms-lbl', `Text ${name.split(' ')[0]}`);
 
+  // Move day actions
+  renderMoveDayActions(b);
+
   // Show detail
   document.getElementById('detail-empty').style.display = 'none';
   document.getElementById('detail-view').classList.add('visible');
@@ -977,6 +997,185 @@ function selectBooking(idx) {
 
 function closeMobile() {
   document.getElementById('right-col').classList.remove('open');
+}
+
+// ─────────────────────────────────────────────────────
+//  MOVE DAY ACTIONS
+// ─────────────────────────────────────────────────────
+let adminTimerInterval = null;
+
+function renderMoveDayActions(b) {
+  const status = (b.status || b.Status || '').toLowerCase();
+  const wrap   = document.getElementById('moveday-actions');
+  const show   = ['upcoming','on the way','arrived','in progress'].includes(status);
+  wrap.style.display = show ? 'block' : 'none';
+  if (!show) { stopAdminTimer(); return; }
+
+  // Hide all buttons first
+  ['btn-on-the-way','btn-arrived','btn-start-timer','btn-complete'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('admin-timer-wrap').style.display = 'none';
+  document.getElementById('moveday-msg').style.display = 'none';
+  stopAdminTimer();
+
+  if (status === 'upcoming') {
+    document.getElementById('btn-on-the-way').style.display = 'flex';
+  } else if (status === 'on the way') {
+    document.getElementById('btn-arrived').style.display = 'flex';
+  } else if (status === 'arrived') {
+    document.getElementById('btn-arrived').style.display = 'flex';
+    document.getElementById('btn-start-timer').style.display = 'flex';
+  } else if (status === 'in progress') {
+    document.getElementById('btn-complete').style.display = 'flex';
+    const timerStart = b.TimerStart || b.timerStart || '';
+    if (timerStart) {
+      document.getElementById('admin-timer-wrap').style.display = 'block';
+      startAdminTimer(timerStart);
+    }
+  }
+}
+
+function startAdminTimer(timerStart) {
+  const start = new Date(timerStart);
+  stopAdminTimer();
+  adminTimerInterval = setInterval(() => {
+    const el = document.getElementById('admin-timer-display');
+    if (!el) { stopAdminTimer(); return; }
+    const elapsed = Date.now() - start.getTime();
+    const s  = Math.floor(elapsed / 1000);
+    const h  = Math.floor(s / 3600);
+    const m  = Math.floor((s % 3600) / 60);
+    const sc = s % 60;
+    el.textContent = `${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+  }, 1000);
+}
+
+function stopAdminTimer() {
+  if (adminTimerInterval) clearInterval(adminTimerInterval);
+}
+
+async function moveDayAction(action) {
+  if (selectedIdx === null) return;
+  const b   = allBookings[selectedIdx];
+  const id  = b.ID || b.id || '';
+  if (!id || !SCRIPT_URL) {
+    showMoveDayMsg('No booking ID found. This booking may need to be re-submitted.');
+    return;
+  }
+
+  const btnId = action === 'on_the_way' ? 'btn-on-the-way' : 'btn-arrived';
+  const btn   = document.getElementById(btnId);
+  const orig  = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: ADMIN_TOKEN, action, id })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      const newStatus = action === 'on_the_way' ? 'On The Way' : 'Arrived';
+      allBookings[selectedIdx].status = newStatus;
+      allBookings[selectedIdx].Status = newStatus;
+      renderAll();
+      renderMoveDayActions(allBookings[selectedIdx]);
+      const label = action === 'on_the_way' ? 'Email + text sent: customer knows you\'re on the way.' : 'Email + text sent: customer received sign-in link.';
+      showMoveDayMsg(label);
+    } else {
+      btn.disabled = false;
+      btn.textContent = orig;
+      showMoveDayMsg('Error: ' + (d.error || 'Try again.'));
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = orig;
+    showMoveDayMsg('Network error. Check connection and try again.');
+  }
+}
+
+async function moveDayStartTimer() {
+  if (selectedIdx === null) return;
+  const b  = allBookings[selectedIdx];
+  const id = b.ID || b.id || '';
+  if (!id || !SCRIPT_URL) { showMoveDayMsg('No booking ID found.'); return; }
+
+  if (!confirm('Start the move timer manually? This will also notify the system that the move is In Progress.')) return;
+
+  const btn = document.getElementById('btn-start-timer');
+  btn.disabled = true;
+  btn.textContent = 'Starting...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', id, status: 'In Progress' })
+    });
+    // Also set timer start via a direct field update
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'start_timer_admin', id })
+    });
+    allBookings[selectedIdx].status = 'In Progress';
+    allBookings[selectedIdx].Status = 'In Progress';
+    allBookings[selectedIdx].TimerStart = new Date().toISOString();
+    renderAll();
+    renderMoveDayActions(allBookings[selectedIdx]);
+    showMoveDayMsg('Timer started. Move is In Progress.');
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Start Timer (manual)';
+    showMoveDayMsg('Error starting timer. Try again.');
+  }
+}
+
+async function moveDayComplete() {
+  if (selectedIdx === null) return;
+  const b  = allBookings[selectedIdx];
+  const id = b.ID || b.id || '';
+  if (!id || !SCRIPT_URL) { showMoveDayMsg('No booking ID found.'); return; }
+
+  if (!confirm('Mark move as COMPLETE? This will stop the timer, calculate the final bill, and charge the customer\'s card on file. This cannot be undone.')) return;
+
+  const btn = document.getElementById('btn-complete');
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'complete_move', id })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      allBookings[selectedIdx].status = 'Complete';
+      allBookings[selectedIdx].Status = 'Complete';
+      renderAll();
+      renderMoveDayActions(allBookings[selectedIdx]);
+      const msg = `Done! ${d.hours?.toFixed(2)} hrs. Total: $${d.totalAmount?.toFixed(2)}, deposit: $${d.depositPaid?.toFixed(2)}, charged: $${d.finalCharge?.toFixed(2)}. Receipt sent.`;
+      showMoveDayMsg(msg);
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Move Complete';
+      showMoveDayMsg('Error: ' + (d.error || 'Try again.'));
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Move Complete';
+    showMoveDayMsg('Network error. Try again.');
+  }
+}
+
+function showMoveDayMsg(msg) {
+  const el = document.getElementById('moveday-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
 }
 
 // ─────────────────────────────────────────────────────
@@ -989,7 +1188,7 @@ async function updateStatus(newStatus) {
     fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', index: selectedIdx, status: newStatus })
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', id: allBookings[selectedIdx].ID || allBookings[selectedIdx].id || '', status: newStatus })
     }).catch(() => {});
   }
   renderAll();
