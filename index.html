@@ -1586,19 +1586,32 @@
 
       <!-- Nav links center -->
       <div class="nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
-        <a href="/book.html#reservation" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Book Your Move</a>
-        <div class="nav-dropdown">
-          <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services <span class="nav-dropdown-arrow">▾</span></a>
-          <div class="nav-dropdown-menu">
-            <a href="/same-day-movers.html">Same Day Moves</a>
-            <a href="/#services">Local Moving</a>
-            <a href="/#services">Packing Services</a>
-            <a href="/#services">Senior Moving</a>
-          </div>
+      <div class="nav-dd">
+        <a href="/#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Services <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/calculator.html">Moving Calculator</a>
+          <a href="/locations/">Service Areas</a>
         </div>
-        <a href="#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Reviews</a>
-        <a href="/faq.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">FAQ</a>
-        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Blog</a>
+      </div>
+      <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Reviews</a>
+      <div class="nav-dd">
+        <a href="#" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Company <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/contact.html">Contact</a>
+          <a href="/our-history.html">Our History</a>
+          <a href="/our-values.html">Our Values</a>
+          <a href="/our-team.html">Our Team</a>
+          <a href="/our-awards.html">Our Awards</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Resources <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/blog/">Blog</a>
+          <a href="/faq.html">FAQ</a>
+        </div>
+      </div>
+      <a href="/careers.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Careers</a>
       </div>
 
       <!-- Right side -->
@@ -1607,7 +1620,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           (540) 300-1414
         </a>
-        <a href="/book.html#reservation" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
+                <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
         <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
           style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
@@ -1618,14 +1631,19 @@
     </div>
   </nav>
 
-  <!-- Mobile Drawer -->
+    <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
-    <a href="/book.html#reservation" onclick="toggleNav()">Book Your Move</a>
-    <a href="#services" onclick="toggleNav()">Services</a>
-    <a href="/same-day-movers.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Same Day Moves</a>
-    <a href="#reviews" onclick="toggleNav()">Reviews</a>
-    <a href="/faq.html" onclick="toggleNav()">FAQ</a>
-    <a href="/blog/" onclick="toggleNav()">Blog</a>
+    <a href="/" onclick="toggleNav()">Home</a>
+    <a href="/#services" onclick="toggleNav()">Services</a>
+    <a href="/calculator.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Moving Calculator</a>
+    <a href="/locations/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Service Areas</a>
+    <a href="/#reviews" onclick="toggleNav()">Reviews</a>
+    <a href="/contact.html" onclick="toggleNav()">Contact</a>
+    <a href="/blog/" onclick="toggleNav()">Resources</a>
+    <a href="/blog/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Blog</a>
+    <a href="/faq.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">FAQ</a>
+    <a href="/careers.html" onclick="toggleNav()">Careers</a>
+    <a href="sms:+15403001414" onclick="toggleNav()">(540) 300-1414 — Text</a>
     <a href="/book.html#reservation" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
   </div>
 
@@ -1643,6 +1661,17 @@
     }
     .nav-tick.active { opacity: 1; transform: translateY(0); }
     .nav-tick.exit { opacity: 0; transform: translateY(-10px); }
+
+    /* ── UPDATED NAV DROPDOWNS ── */
+    .nav-dd { position: relative; display: flex; align-items: center; }
+    .nav-dd > a { display: flex !important; align-items: center; gap: 4px; }
+    .nav-dd-menu { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #210D46; border: 1px solid rgba(139,91,199,0.25); border-radius: 12px; padding: 8px 0; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; z-index: 10; }
+    .nav-dd:hover .nav-dd-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dd-menu a { display: block !important; padding: 10px 20px; font-size: 0.82rem; color: rgba(236,235,238,0.75); text-decoration: none; white-space: nowrap; transition: color 0.12s, background 0.12s; }
+    .nav-dd-menu a::after { display: none !important; }
+    .nav-dd-menu a:hover { color: #ECEBEE; background: rgba(139,91,199,0.15); }
+    @media(max-width:960px){ .nav-links,.nav-phone { display:none!important; } }
+    .nav-bookbtn { background: #8B5BC7; color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
     @media(max-width:600px){
       .nav-ticker { display: none; }
       .nav-phone { display: none; }

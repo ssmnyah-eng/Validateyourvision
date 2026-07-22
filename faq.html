@@ -123,48 +123,100 @@
     .footer-bottom p { color: rgba(236,235,238,0.35); font-size: 0.73rem; }
     @media(max-width:700px){ .footer-grid { grid-template-columns:1fr; gap:28px; } .cat-grid { grid-template-columns:1fr; } }
   </style>
+  <style>
+    /* ── GLOBAL NAV ── */
+    #nav { background: #190E2A; position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+    .nav-links > a, .nav-dd > a { color: rgba(236,235,238,0.88); font-size: 0.8rem; font-weight: 600; padding: 6px 10px; border-radius: 6px; white-space: nowrap; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    .nav-links > a:hover, .nav-dd > a:hover { color: #fff; }
+    .nav-links > a.active, .nav-dd > a.active { color: #fff; }
+    .nav-dd { position: relative; display: flex; align-items: center; }
+    .nav-dd-menu { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #210D46; border: 1px solid rgba(139,91,199,0.25); border-radius: 12px; padding: 8px 0; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; z-index: 10; }
+    .nav-dd:hover .nav-dd-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dd-menu a { display: block; padding: 10px 20px; font-size: 0.82rem; color: rgba(236,235,238,0.75); text-decoration: none; white-space: nowrap; transition: color 0.12s, background 0.12s; border-bottom: none; }
+    .nav-dd-menu a:hover { color: #ECEBEE; background: rgba(139,91,199,0.15); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-phone { display: flex; align-items: center; gap: 6px; color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 700; text-decoration: none; }
+    .nav-bookbtn { background: #8B5BC7; color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    #ham { background: none; border: none; cursor: pointer; display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    #ham span { display: block; width: 22px; height: 2px; background: #ECEBEE; border-radius: 2px; }
+    @media(max-width:960px){ .nav-links,.nav-phone { display:none!important; } #ham { display:flex!important; } }
+    .mobile-drawer { display:none; flex-direction:column; background:#210D46; position:fixed; inset:0; z-index:1000; padding:72px 32px 32px; overflow-y:auto; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer > a { color:#ECEBEE; font-weight:700; font-size:1rem; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.07); text-decoration:none; }
+    .mobile-drawer > a.m-sub { padding-left:20px; font-size:0.88rem; font-weight:600; opacity:0.7; }
+    .drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:#ECEBEE; font-size:1.6rem; cursor:pointer; }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="VYV Moving home">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;display:block;">
         <rect width="120" height="120" rx="18" fill="#190E2A"/>
         <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
         <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
       </svg>
     </a>
     <div class="nav-links">
-      <a href="/book.html#reservation">Book Your Move</a>
-      <a href="/#services">Services</a>
+      <div class="nav-dd">
+        <a href="/#services">Services <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/calculator.html">Moving Calculator</a>
+          <a href="/locations/">Service Areas</a>
+        </div>
+      </div>
       <a href="/#reviews">Reviews</a>
-      <a href="/faq.html" class="active">FAQ</a>
-      <a href="/blog/">Blog</a>
+      <div class="nav-dd">
+        <a href="#">Company <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/contact.html">Contact</a>
+          <a href="/our-history.html">Our History</a>
+          <a href="/our-values.html">Our Values</a>
+          <a href="/our-team.html">Our Team</a>
+          <a href="/our-awards.html">Our Awards</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <a href="/blog/">Resources <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/blog/">Blog</a>
+          <a href="/faq.html">FAQ</a>
+        </div>
+      </div>
+      <a href="/careers.html">Careers</a>
     </div>
     <div class="nav-right">
       <a href="sms:+15403001414" class="nav-phone">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (540) 300-1414
       </a>
-      <a href="/book.html#reservation" class="btn-book">Book Now</a>
+      <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
       <button id="ham" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
-
 <div class="mobile-drawer" id="drawer">
   <button class="drawer-close" onclick="document.getElementById('drawer').classList.remove('open')">&times;</button>
-  <a href="/book.html#reservation">Book Your Move</a>
+  <a href="/">Home</a>
   <a href="/#services">Services</a>
+  <a href="/calculator.html" class="m-sub">Moving Calculator</a>
+  <a href="/locations/" class="m-sub">Service Areas</a>
   <a href="/#reviews">Reviews</a>
-  <a href="/faq.html">FAQ</a>
-  <a href="/blog/">Blog</a>
-  <a href="/book.html#reservation" class="btn-book" style="margin-top:16px;text-align:center;border-radius:50px;padding:14px;">Book Now</a>
+  <a href="/contact.html">Contact</a>
+  <a href="/blog/">Resources</a>
+  <a href="/blog/" class="m-sub">Blog</a>
+  <a href="/faq.html" class="m-sub">FAQ</a>
+  <a href="/careers.html">Careers</a>
+  <a href="sms:+15403001414">(540) 300-1414 — Text</a>
+  <a href="/book.html#reservation" style="background:#8B5BC7;color:#fff;text-align:center;border-radius:8px;margin-top:16px;padding:14px 0;">Book Now</a>
 </div>
+
 
 <!-- HERO -->
 <section class="hero">

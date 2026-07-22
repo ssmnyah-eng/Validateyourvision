@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers | Join the VYV Moving Team – Fredericksburg, VA</title>
+  <meta name="description" content="Join the VYV Moving crew in Fredericksburg, VA. We're hiring movers who take pride in their work, show up on time, and treat every customer right." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dp: #190E2A; --mp: #210D46; --lv: #8B5BC7;
+      --tw: #ECEBEE; --bg: #f7f5ff; --white: #ffffff;
+      --txt: #190E2A; --muted: #5c4a7a; --green: #16a34a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    #nav { background: var(--dp); position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; }
+    .nav-links a { color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 600; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-phone { display: flex; align-items: center; gap: 6px; color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 700; }
+    .btn-book { background: var(--lv); color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; }
+    #ham { background: none; border: none; cursor: pointer; display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    #ham span { display: block; width: 22px; height: 2px; background: var(--tw); border-radius: 2px; }
+    @media(max-width:780px){ .nav-links,.nav-phone { display:none!important; } #ham { display:flex!important; } }
+    .mobile-drawer { display:none; flex-direction:column; background:var(--mp); position:fixed; inset:0; z-index:1000; padding:80px 32px 32px; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer a { color:var(--tw); font-weight:700; font-size:1.05rem; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.6rem; cursor:pointer; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dp);
+      padding: 72px 24px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(139,91,199,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 700; color: var(--lv);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--tw);
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: var(--lv); }
+    .hero p {
+      color: rgba(236,235,238,0.78);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--green); color: #fff;
+      padding: 16px 32px; border-radius: 10px;
+      font-weight: 800; font-size: 1rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      box-shadow: 0 6px 24px rgba(22,163,74,0.35);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: #15803d; transform: translateY(-2px); }
+    .hero-img-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+    }
+    @media(max-width:780px){
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-img-wrap { order: -1; }
+    }
+
+    /* ── PERKS ── */
+    .perks { background: var(--white); padding: 72px 24px; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; color: var(--lv);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      text-align: center; margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900; color: var(--txt);
+      text-align: center; line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      text-align: center; color: var(--muted); font-size: 0.95rem;
+      max-width: 520px; margin: 0 auto 52px;
+    }
+    .perks-grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+    }
+    .perk-card {
+      background: var(--bg);
+      border: 1px solid #e8e1f5;
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .perk-icon { font-size: 2.2rem; margin-bottom: 14px; }
+    .perk-title { font-weight: 800; font-size: 0.98rem; color: var(--txt); margin-bottom: 8px; }
+    .perk-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+    @media(max-width:640px){ .perks-grid { grid-template-columns: 1fr; } }
+
+    /* ── POSITIONS ── */
+    .positions { padding: 72px 24px; }
+    .positions-inner { max-width: 780px; margin: 0 auto; }
+    .position-card {
+      background: var(--white);
+      border: 1.5px solid #e8e1f5;
+      border-radius: 16px;
+      padding: 28px 28px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .position-card:hover { border-color: var(--lv); box-shadow: 0 8px 28px rgba(139,91,199,0.12); }
+    .pos-badge {
+      display: inline-block;
+      background: rgba(139,91,199,0.1); color: var(--lv);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .pos-title { font-weight: 800; font-size: 1.05rem; color: var(--txt); margin-bottom: 4px; }
+    .pos-meta { font-size: 0.8rem; color: var(--muted); }
+    .pos-apply {
+      background: var(--lv); color: #fff;
+      padding: 12px 24px; border-radius: 8px;
+      font-weight: 700; font-size: 0.85rem;
+      white-space: nowrap; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .pos-apply:hover { background: #6d3fb5; }
+    @media(max-width:600px){
+      .position-card { flex-direction: column; align-items: flex-start; }
+      .pos-apply { width: 100%; text-align: center; }
+    }
+
+    /* ── APPLICATION FORM ── */
+    .apply { background: var(--white); padding: 72px 24px; }
+    .apply-inner { max-width: 640px; margin: 0 auto; }
+    .apply-inner h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; color: var(--txt); margin-bottom: 8px; }
+    .apply-inner .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 36px; line-height: 1.7; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-field label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 13px 14px;
+      border: 1.5px solid #d4c9e8; border-radius: 10px;
+      font-family: 'Poppins', sans-serif; font-size: 0.92rem; color: var(--txt);
+      outline: none; background: #fff;
+      transition: border-color 0.15s;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--lv); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .submit-btn {
+      width: 100%; padding: 17px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(22,163,74,0.3);
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #15803d; }
+    #form-success {
+      display: none;
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      border-radius: 12px; padding: 24px;
+      text-align: center; color: #166534; font-weight: 600;
+      margin-top: 20px;
+    }
+    @media(max-width:520px){ .form-row { grid-template-columns: 1fr; } }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dp); color: var(--tw); padding: 48px 24px 24px; }
+    .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 32px; margin-bottom: 36px; }
+    .footer-brand p { font-size: 0.82rem; color: rgba(236,235,238,0.6); margin-top: 14px; line-height: 1.7; }
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(236,235,238,0.45); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 0.85rem; color: rgba(236,235,238,0.7); margin-bottom: 8px; }
+    .footer-col a:hover { color: var(--tw); }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; display: flex; justify-content: space-between; font-size: 0.75rem; color: rgba(236,235,238,0.35); flex-wrap: wrap; gap: 8px; }
+    @media(max-width:640px){ .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+  <style>
+    /* ── GLOBAL NAV ── */
+    #nav { background: #190E2A; position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+    .nav-links > a, .nav-dd > a { color: rgba(236,235,238,0.88); font-size: 0.8rem; font-weight: 600; padding: 6px 10px; border-radius: 6px; white-space: nowrap; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    .nav-links > a:hover, .nav-dd > a:hover { color: #fff; }
+    .nav-links > a.active, .nav-dd > a.active { color: #fff; }
+    .nav-dd { position: relative; display: flex; align-items: center; }
+    .nav-dd-menu { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #210D46; border: 1px solid rgba(139,91,199,0.25); border-radius: 12px; padding: 8px 0; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; z-index: 10; }
+    .nav-dd:hover .nav-dd-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dd-menu a { display: block; padding: 10px 20px; font-size: 0.82rem; color: rgba(236,235,238,0.75); text-decoration: none; white-space: nowrap; transition: color 0.12s, background 0.12s; border-bottom: none; }
+    .nav-dd-menu a:hover { color: #ECEBEE; background: rgba(139,91,199,0.15); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-phone { display: flex; align-items: center; gap: 6px; color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 700; text-decoration: none; }
+    .nav-bookbtn { background: #8B5BC7; color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    #ham { background: none; border: none; cursor: pointer; display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    #ham span { display: block; width: 22px; height: 2px; background: #ECEBEE; border-radius: 2px; }
+    @media(max-width:960px){ .nav-links,.nav-phone { display:none!important; } #ham { display:flex!important; } }
+    .mobile-drawer { display:none; flex-direction:column; background:#210D46; position:fixed; inset:0; z-index:1000; padding:72px 32px 32px; overflow-y:auto; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer > a { color:#ECEBEE; font-weight:700; font-size:1rem; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.07); text-decoration:none; }
+    .mobile-drawer > a.m-sub { padding-left:20px; font-size:0.88rem; font-weight:600; opacity:0.7; }
+    .drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:#ECEBEE; font-size:1.6rem; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;display:block;">
+        <rect width="120" height="120" rx="18" fill="#190E2A"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
+        <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
+      </svg>
+    </a>
+    <div class="nav-links">
+      <div class="nav-dd">
+        <a href="/#services">Services <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/calculator.html">Moving Calculator</a>
+          <a href="/locations/">Service Areas</a>
+        </div>
+      </div>
+      <a href="/#reviews">Reviews</a>
+      <div class="nav-dd">
+        <a href="#">Company <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/contact.html">Contact</a>
+          <a href="/our-history.html">Our History</a>
+          <a href="/our-values.html">Our Values</a>
+          <a href="/our-team.html">Our Team</a>
+          <a href="/our-awards.html">Our Awards</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <a href="/blog/">Resources <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
+        <div class="nav-dd-menu">
+          <a href="/blog/">Blog</a>
+          <a href="/faq.html">FAQ</a>
+        </div>
+      </div>
+      <a href="/careers.html">Careers</a>
+    </div>
+    <div class="nav-right">
+      <a href="sms:+15403001414" class="nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (540) 300-1414
+      </a>
+      <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
+      <button id="ham" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-drawer" id="drawer">
+  <button class="drawer-close" onclick="document.getElementById('drawer').classList.remove('open')">&times;</button>
+  <a href="/">Home</a>
+  <a href="/#services">Services</a>
+  <a href="/calculator.html" class="m-sub">Moving Calculator</a>
+  <a href="/locations/" class="m-sub">Service Areas</a>
+  <a href="/#reviews">Reviews</a>
+  <a href="/contact.html">Contact</a>
+  <a href="/blog/">Resources</a>
+  <a href="/blog/" class="m-sub">Blog</a>
+  <a href="/faq.html" class="m-sub">FAQ</a>
+  <a href="/careers.html">Careers</a>
+  <a href="sms:+15403001414">(540) 300-1414 — Text</a>
+  <a href="/book.html#reservation" style="background:#8B5BC7;color:#fff;text-align:center;border-radius:8px;margin-top:16px;padding:14px 0;">Book Now</a>
+</div>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">Now Hiring · Fredericksburg, VA</p>
+      <h1>Want to Work with an <span>Amazing Team?</span></h1>
+      <p>We're a locally owned moving crew that takes pride in showing up, working hard, and treating every customer right. If that sounds like you, we'd love to have you.</p>
+      <a href="#apply" class="hero-cta">Apply Now &rarr;</a>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="/images/pexels-shvets-production-7203848.jpg" alt="VYV Moving crew at work" />
+    </div>
+  </div>
+</section>
+
+<!-- PERKS -->
+<section class="perks">
+  <p class="section-label">Why VYV</p>
+  <h2 class="section-title">More Than Just a Moving Job</h2>
+  <p class="section-sub">We built VYV on the idea that if we treat our team right, they'll treat our customers right. Here's what that looks like.</p>
+
+  <div class="perks-grid">
+    <div class="perk-card">
+      <div class="perk-icon">💰</div>
+      <div class="perk-title">Competitive Pay</div>
+      <div class="perk-desc">Hourly pay with tips on top. Customers appreciate great work and show it — the more you bring, the more you earn.</div>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">📅</div>
+      <div class="perk-title">Flexible Schedule</div>
+      <div class="perk-desc">Full-time and part-time positions available. We work with your schedule, not against it.</div>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">🤝</div>
+      <div class="perk-title">Real Team Culture</div>
+      <div class="perk-desc">Small crew, tight culture. You'll know everyone by name and you'll actually want to come to work.</div>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">📈</div>
+      <div class="perk-title">Room to Grow</div>
+      <div class="perk-desc">We promote from within. Crew members who show leadership ability move up fast as the company grows.</div>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">🏋️</div>
+      <div class="perk-title">Stay Active</div>
+      <div class="perk-desc">Skip the gym membership. This job keeps you moving every day — physically demanding and genuinely satisfying.</div>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">⭐</div>
+      <div class="perk-title">Be the Difference</div>
+      <div class="perk-desc">Moving is stressful. Our crew gets to be the reason move day goes smoothly — customers remember that.</div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN POSITIONS -->
+<section class="positions">
+  <div class="positions-inner">
+    <p class="section-label" style="text-align:left;">Open Positions</p>
+    <h2 class="section-title" style="text-align:left;margin-bottom:8px;">We're Hiring</h2>
+    <p class="section-sub" style="text-align:left;margin-left:0;margin-bottom:36px;">Based in Fredericksburg, VA. Serving the surrounding area.</p>
+
+    <div class="position-card">
+      <div>
+        <div class="pos-badge">Full Time / Part Time</div>
+        <div class="pos-title">Professional Mover</div>
+        <div class="pos-meta">Fredericksburg, VA &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Immediate Start</div>
+      </div>
+      <a href="#apply" class="pos-apply">Apply Now</a>
+    </div>
+
+    <div class="position-card">
+      <div>
+        <div class="pos-badge">Part Time</div>
+        <div class="pos-title">Packing Specialist</div>
+        <div class="pos-meta">Fredericksburg, VA &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Flexible Hours</div>
+      </div>
+      <a href="#apply" class="pos-apply">Apply Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="apply" id="apply">
+  <div class="apply-inner">
+    <h2>Apply in 2 Minutes</h2>
+    <p class="sub">No résumé required to get started. Just fill this out and we'll be in touch within 1–2 business days.</p>
+
+    <form id="career-form" onsubmit="submitApp(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" name="first" placeholder="First name" required />
+        </div>
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" name="last" placeholder="Last name" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="(540) 555-0100" required />
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="your@email.com" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Position You're Interested In</label>
+        <select name="position" required>
+          <option value="" disabled selected>Select a position</option>
+          <option value="mover-fulltime">Professional Mover — Full Time</option>
+          <option value="mover-parttime">Professional Mover — Part Time</option>
+          <option value="packing">Packing Specialist</option>
+          <option value="both">Open to Both</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Do you have a valid driver's license?</label>
+        <select name="license" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Tell us a little about yourself (optional)</label>
+        <textarea name="message" placeholder="Any experience moving or in physical labor? Why do you want to join VYV? Keep it short — we just want to know who you are."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Submit Application &rarr;</button>
+    </form>
+
+    <div id="form-success">
+      <div style="font-size:1.8rem;margin-bottom:10px;">✅</div>
+      <div style="font-size:1.1rem;font-weight:800;margin-bottom:6px;">Application received!</div>
+      <div style="font-weight:400;">We'll review it and reach out within 1–2 business days. Keep an eye on your phone.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg width="46" height="46" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="18" fill="#210D46"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
+        <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
+      </svg>
+      <p>Locally owned moving company serving Fredericksburg, Northern Virginia, and Richmond. No hidden fees. No surprises.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/book.html#reservation">Book Your Move</a>
+      <a href="/#services">Services</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/blog/">Blog</a>
+      <a href="/careers.html">Careers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="sms:+15403001414">(540) 300-1414 — Text Only</a>
+      <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
+      <a href="/book.html#reservation" style="margin-top:10px;display:inline-block;background:var(--lv);color:#fff;padding:10px 20px;border-radius:8px;font-weight:700;font-size:0.81rem;">Book Now</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Validate Your Vision LLC · Fredericksburg, VA · All rights reserved.</p>
+    <p><a href="/faq.html" style="color:rgba(139,91,199,0.6);">FAQ</a> · <a href="/blog/" style="color:rgba(139,91,199,0.6);">Blog</a> · <a href="/careers.html" style="color:rgba(139,91,199,0.6);">Careers</a></p>
+  </div>
+</footer>
+
+<script>
+function submitApp(e) {
+  e.preventDefault();
+  document.getElementById('career-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+  document.getElementById('form-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>
