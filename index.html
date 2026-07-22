@@ -1553,6 +1553,29 @@
       /* Contact form full padding shrink */
       .form-card { padding: 22px 16px !important; }
     }
+    /* ===== MOBILE FORM OPTIMIZATION ===== */
+    @media (max-width: 768px) {
+      /* Stack form fields 2x2 */
+      #lf-fields-row { 
+        grid-template-columns: 1fr 1fr !important; 
+        gap: 12px !important; 
+      }
+      #lf-fields-row > div { 
+        flex: 1 1 auto !important; 
+        min-width: 0 !important; 
+      }
+      #lf-fields-row button { 
+        grid-column: 1 / -1 !important; 
+        width: 100% !important; 
+      }
+      /* Who We Are: image above, text below */
+      section[aria-labelledby="about-heading"] > div { 
+        grid-template-columns: 1fr !important; 
+      }
+      section[aria-labelledby="about-heading"] img { 
+        max-height: 280px !important; 
+      }
+    }
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initLeadFormPlaces" async defer></script>
 </head>
