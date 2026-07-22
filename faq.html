@@ -207,8 +207,8 @@
     <div class="cat-card" onclick="openCategory('moveday')">
       <img class="cat-img" src="/images/pexels-shvets-production-7203848.jpg" alt="Moving crew at work" loading="lazy" />
       <div class="cat-body">
-        <h3>Move Day</h3>
-        <p>What to expect when the crew arrives, how billing starts, and how to prepare.</p>
+        <h3>What to Expect on My Move Day</h3>
+        <p>From crew arrival and billing to packing tips, pets, rain, and what to keep with you.</p>
       </div>
     </div>
 
@@ -362,29 +362,89 @@ const CATEGORIES = {
     ]
   },
   moveday: {
-    title: 'Move Day',
+    title: 'What to Expect on My Move Day',
     img: '/images/pexels-shvets-production-7203848.jpg',
     imgAlt: 'Professional movers carrying furniture out of a home',
     faqs: [
       {
-        q: 'What happens when the crew arrives?',
-        a: `<p>Your crew will introduce themselves, do a quick walkthrough of what's moving, and wait for you to check them in on your phone. The clock starts when you sign them in — not before. They'll wrap furniture, load efficiently, and keep you in the loop throughout.</p>`
+        q: 'What is a PM move?',
+        a: `<p>A PM move is our second move of the day — it starts when the crew finishes their morning job. Before heading to you, your crew leader will call with their ETA. If you haven't heard from them by 3 PM, feel free to text us at <a href="sms:+15403001414">(540) 300-1414</a> for an update. If having an exact arrival time matters to you, we recommend booking the first slot of the day.</p>`
       },
       {
-        q: 'How should I prepare for moving day?',
-        a: `<p>A few things that help your crew work faster — and keep your bill lower:</p><ul><li>Have boxes packed, sealed, and labeled before the crew arrives</li><li>Disassemble bed frames and large furniture in advance if you can</li><li>Clear a path to the door and reserve a parking spot for the truck</li><li>Set aside anything that's NOT moving so there's no confusion</li><li>Have your phone charged — you'll use it to check in your crew</li></ul>`
+        q: 'What can I do to reduce damages?',
+        a: `<p>Make sure all loose items are packed in sealed boxes before your move date. Our job is to protect your furniture using moving blankets — your job is to make sure smaller items are properly boxed up. This also helps the crew move significantly faster, which keeps your total lower.</p><p style="margin-top:10px;">If you need help packing, we offer a full packing service. <a href="/blog/how-to-pack-a-kitchen-for-a-move.html">Check out our packing guide</a> or add packing to your booking.</p>`
       },
       {
-        q: 'Do the movers disassemble and reassemble furniture?',
-        a: `<p>Yes. Basic disassembly and reassembly (bed frames, desks, dining tables) is included. If you have complex or specialty furniture, mention it when you book so we can plan ahead.</p>`
+        q: 'How can I trust that the movers won\'t waste time?',
+        a: `<p>A few things work in your favor here:</p><ul><li>You'll receive an "on my way" text when the crew leaves our office so you know exactly when they're coming</li><li>Billing doesn't start until <strong>you check in your crew</strong> on your phone — you control when the clock starts</li><li>We don't keep movers on our team that customers complain about — our reviews speak for themselves</li></ul><p style="margin-top:10px;">We built the whole system around keeping you in control.</p>`
       },
       {
-        q: 'How can I trust the movers won\'t waste time?',
-        a: `<p>You control the clock — billing only starts when you check in the crew on your phone. Beyond that, our crew's reputation depends on every job they do. We don't keep people on the team that customers complain about. Read our reviews and you'll see efficiency comes up again and again.</p>`
+        q: 'How long should I expect my move to take?',
+        a: `<p>If everything is packed and ready, loading a 24-foot truck typically takes 4–6 hours, with unloading being a bit quicker. But every move is different. Things that can add time include:</p><ul><li>Loose items not in boxes</li><li>Long walks from the home to the truck</li><li>Elevator availability in high-rises</li><li>Access to loading docks</li><li>Traffic between locations</li><li>Furniture rearrangement at the destination</li></ul><p style="margin-top:10px;">Our crew can give you a rough estimate when they arrive and see the job in person.</p>`
       },
       {
-        q: 'How does payment work at the end of the move?',
-        a: `<p>When the job is complete, your crew lead confirms the total hours. Your $50 deposit is deducted and you pay the remaining balance. We accept all major credit cards, debit, and Zelle.</p>`
+        q: 'Does someone need to be present during the move?',
+        a: `<p>Yes — we require an adult present throughout the service who has the authority to make decisions about where items go. This can be you, a partner, friend, or trusted family member.</p><p style="margin-top:10px;">Please note: the card on file at booking is what we use to process your final balance at the end of the move. Make sure the right card is on file before your move date.</p>`
+      },
+      {
+        q: 'What happens if everything doesn\'t fit in the truck?',
+        a: `<p>Our standard truck is 24 feet and typically holds the contents of an average home. If things don't fit in one load, the crew can make additional trips while they're still checked in. Customers with larger homes sometimes book two trucks and two crews to finish faster.</p><p style="margin-top:10px;">If you're worried about truck size, mention it when you book and we'll help you figure out the right setup.</p>`
+      },
+      {
+        q: 'What should I do with my pets on moving day?',
+        a: `<p>Moving day can be stressful for pets — lots of strangers, open doors, and activity. If possible, have a friend or family member watch them for the day. If that's not an option, keep them in a crate in a quiet room away from the action. Just avoid locking them in a bathroom or closet — you don't want them pulling a Houdini on move day.</p>`
+      },
+      {
+        q: 'What if it rains on my move day?',
+        a: `<p>We move in the rain — our crew is trained for Virginia weather. Your items are wrapped and covered before they ever leave the house, so light rain isn't a problem.</p><p style="margin-top:10px;">If conditions turn unsafe mid-move, we stop the clock and the crew stays on site. From there we'll work with you to either wait it out (we check again after an hour) or reschedule completely for free.</p><p style="margin-top:10px;">For major storms, we'll reach out before your move date so we can make a plan together. We're available by text 24/7, whatever the weather.</p>`
+      },
+      {
+        q: 'Can you get items down from the attic?',
+        a: `<p>We can help with attic items if the attic has a proper floor (typically plywood). If it doesn't have a stable floor, we won't be able to safely access it — your safety and ours is the priority.</p>`
+      },
+      {
+        q: 'How can I make sure my stuff ends up in the right place?',
+        a: `<p>Label your boxes with the destination room clearly on the outside. At your new place, the crew lead will do a quick walkthrough with you before unloading so everyone knows where things are going. The more clearly things are labeled, the faster and smoother the unload goes.</p>`
+      },
+      {
+        q: 'Can my movers assemble or disassemble furniture?',
+        a: `<p>Absolutely. Our crew comes with the tools needed to handle most standard furniture disassembly and reassembly — bed frames, dining tables, desks, and similar pieces. If you have specialty or complex furniture, give us a heads up when you book.</p>`
+      },
+      {
+        q: 'What should I keep with me on moving day?',
+        a: `<p>Keep these things with you and off the truck:</p><ul><li>Cash, jewelry, and valuables</li><li>Medications</li><li>Important documents (IDs, passports, insurance cards)</li><li>Pets and kids</li><li>Firearms and ammunition</li><li>Anything you'll need access to right away</li></ul><p style="margin-top:10px;">These items are too important to risk getting mixed in with everything else.</p>`
+      },
+      {
+        q: 'How should I label my moving boxes?',
+        a: `<p>A good label tells the crew where the box goes and what's inside. For example: <strong>Kitchen – dishes – FRAGILE</strong> or <strong>Kids Room 1 – toys</strong>. Mark fragile boxes on multiple sides in case they get stacked. The clearer your labels, the faster your crew can place everything at the destination without stopping to ask.</p>`
+      },
+      {
+        q: 'How do I measure the square footage of my home?',
+        a: `<p>Two easy ways:</p><ul><li><strong>Zillow:</strong> Search your address — listing details usually show square footage broken down by room</li><li><strong>Tape measure:</strong> Measure each room at its longest and widest points, multiply the two numbers, and add up the rooms</li></ul><p style="margin-top:10px;">An approximate number is fine — it helps us recommend the right crew size and truck for your move.</p>`
+      },
+      {
+        q: 'Can you hang TVs or frames on the walls?',
+        a: `<p>We don't mount TVs or hang frames. Our crew doesn't carry the equipment needed for wall mounting (studfinders, drills, anchors, etc.). We focus on the move itself — loading, transporting, and placing your items exactly where you want them.</p>`
+      },
+      {
+        q: 'Can you leave items wrapped in moving pads?',
+        a: `<p>Sure can. If you purchase moving blankets from us or bring your own, we're happy to wrap items and leave them protected in the padding at your destination. Just let us know before move day.</p>`
+      },
+      {
+        q: 'What\'s the most efficient way to pack a house?',
+        a: `<p>Pack room by room and keep a separate "essentials" box with things you'll need right away — phone charger, toiletries, a change of clothes. Label every box with its destination room and a quick note of what's inside. If you have space, stage your boxes near the front door so the crew can load faster.</p><p style="margin-top:10px;">Or hit the easy button — <a href="/blog/how-to-pack-a-kitchen-for-a-move.html">read our packing guide</a> or add packing service to your booking and we'll handle it all.</p>`
+      },
+      {
+        q: 'Will the movers contact me before arriving?',
+        a: `<p>Yes — two touchpoints before we show up:</p><ul><li>The day before your move, your crew leader will call to confirm the details</li><li>On move day, you'll receive an "on my way" text when the driver leaves our office</li></ul><p style="margin-top:10px;">You'll always know where your crew is and when to expect them.</p>`
+      },
+      {
+        q: 'What is the best box size for moving?',
+        a: `<p>Using standard small, medium, and large moving boxes (available at Home Depot and most retailers) makes a big difference — they're designed to stack evenly in a truck without wasted space.</p><p style="margin-top:10px;">One rule of thumb: <strong>heavy items go in small boxes</strong>. Books, tools, canned goods — a small heavy box is much easier to carry than a large one. Save the big boxes for light, bulky things like pillows and linens.</p>`
+      },
+      {
+        q: 'How many moving boxes will I need?',
+        a: `<p>A general starting point is <strong>10 small, 8 medium, and 5 large boxes per room</strong>. That said, it depends on how much you have in each room — a packed office needs more than an empty guest room. When in doubt, grab a few extra. Unused boxes can always be returned or broken down.</p>`
       }
     ]
   },
