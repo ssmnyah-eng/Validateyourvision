@@ -545,9 +545,6 @@
           <iframe id="mobileMapFrame" title="Your Move Route" style="width:100%;height:100%;border:none;display:block;" loading="lazy"></iframe>
         </div>
 
-        <!-- Price legend -->
-        <div class="price-legend" id="priceLegend"></div>
-
         <div class="cal-wrap">
           <div class="cal-header">
             <button class="cal-nav" id="prevBtn" onclick="changeMonth(-1)">&#8249;</button>
@@ -816,6 +813,17 @@
         <!-- BILLING SECTION (full width) -->
         <div id="billing-section" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
 
+          <!-- Card-on-file notice -->
+          <div style="background:#F4F0FF;border:1.5px solid #c4b5fd;border-radius:12px;padding:16px 18px;margin-bottom:20px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <div>
+                <div style="font-weight:700;font-size:0.9rem;color:#190E2A;margin-bottom:4px;">This card will be held on file as your final payment method.</div>
+                <div style="font-size:0.78rem;color:#4A237A;line-height:1.6;">Your card is charged the deposit today. The remaining balance is collected when your move is complete. If you'd like to pay the final balance with a different card, call or text us after booking: <a href="sms:+15403001414" style="color:#8B5BC7;font-weight:700;text-decoration:none;">(540) 300-1414</a>.</div>
+              </div>
+            </div>
+          </div>
+
           <!-- Billing header -->
           <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
             <span style="font-weight:800;font-size:1rem;color:#190E2A;">Billing Information</span>
@@ -1042,22 +1050,7 @@
     document.getElementById('progressFill').style.width = '25%';
   }
 
-  function buildLegend() {
-    const rates = RATES[crewSize];
-    const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
-    const colors = ['#16a34a','#8B5BC7','#c2410c'];
-    const dayDesc = crewSize === 2
-      ? ['Tue/Wed','Mon/Thu','Fri/Sat/Sun']
-      : ['Tue/Wed','Mon/Thu','Fri/Sat/Sun'];
-    const lg = document.getElementById('priceLegend');
-    lg.innerHTML = '';
-    unique.forEach((r,i) => {
-      lg.innerHTML += `<div class="legend-item">
-        <div class="legend-dot" style="background:${colors[i]||'#aaa'}"></div>
-        <span><strong>$${r}/hr</strong> -- ${dayDesc[i]}</span>
-      </div>`;
-    });
-  }
+  function buildLegend() { /* legend removed */ }
 
   function rateColor(rate) {
     const rates = Object.values(RATES[crewSize]);
