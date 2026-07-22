@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moving FAQ | VYV Moving – Fredericksburg, VA</title>
+  <meta name="description" content="Get answers to the most common moving questions — pricing, scheduling, what to expect on move day, packing, and more. VYV Moving serves Fredericksburg, Stafford, Northern VA, and Richmond." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://validateyourvision.com/faq.html" />
+  <meta property="og:title" content="Moving FAQ | VYV Moving" />
+  <meta property="og:description" content="Answers to your most common moving questions. Pricing, scheduling, packing, what to expect on move day, and more." />
+  <meta property="og:url" content="https://validateyourvision.com/faq.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"How much do movers cost in Fredericksburg, VA?","acceptedAnswer":{"@type":"Answer","text":"VYV charges $165/hr for 2 movers and $199/hr for 3 movers on weekdays (Tue–Thu). Friday rates start at $180/hr. Weekend rates are $199/hr for 2 movers and $235/hr for 3 movers. All rates include a 2-hour minimum. A flat truck fee is added based on drive time."}},
+      {"@type":"Question","name":"Do I need 2 or 3 movers?","acceptedAnswer":{"@type":"Answer","text":"For any move 2 bedrooms or larger, 3 movers is almost always the better value. Three movers finish roughly 40% faster than two, which means the lower total hours often offset the higher hourly rate — and you pay less overall."}},
+      {"@type":"Question","name":"How far in advance should I book?","acceptedAnswer":{"@type":"Answer","text":"We recommend booking at least 2 weeks in advance, especially for weekends. Summer and end-of-month dates fill quickly. You can reserve your spot with a $50 priority deposit."}},
+      {"@type":"Question","name":"Can you do same-day or next-day moves?","acceptedAnswer":{"@type":"Answer","text":"Yes, when crew availability allows. Text us at (540) 300-1414 and we'll let you know what's open. Last-minute moves are subject to availability."}},
+      {"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"VYV Moving serves Fredericksburg, Stafford, Spotsylvania, Woodbridge, Northern Virginia, and the Richmond metro area."}},
+      {"@type":"Question","name":"How does billing work?","acceptedAnswer":{"@type":"Answer","text":"You pay the hourly rate for the time the crew is actively working, plus a flat truck fee. The clock starts when your crew checks in on your phone — not when they leave the warehouse. Your deposit is applied toward your final balance."}},
+      {"@type":"Question","name":"Are there any hidden fees?","acceptedAnswer":{"@type":"Answer","text":"No. You pay your hourly rate and a flat $99 truck fee for moves within 50 miles. No fuel surcharges, no stair fees, no surprise add-ons at the end."}},
+      {"@type":"Question","name":"Do you provide boxes and packing supplies?","acceptedAnswer":{"@type":"Answer","text":"We bring standard moving blankets and straps for all furniture. Packing boxes and tape can be arranged — mention it when you book and we'll include them in your plan."}},
+      {"@type":"Question","name":"How do I reschedule or cancel?","acceptedAnswer":{"@type":"Answer","text":"Text us at (540) 300-1414 before your crew is dispatched and we'll find a new date. Rescheduling is free. Cancellations made at least 48 hours before your move date can receive a deposit refund."}}
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --dp: #190E2A; --mp: #210D46; --ap: #4A237A; --lv: #8B5BC7;
+      --tw: #ECEBEE; --lbg: #ffffff; --lbg2: #F4F0FF;
+      --ltxt: #1a1625; --muted: #5c4a7a;
+      --radius: 14px; --shadow: 0 4px 20px rgba(74,35,122,0.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--lbg); color: var(--ltxt); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    #nav { background: var(--dp); position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(139,91,199,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo svg { width: 38px; height: 38px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; }
+    .nav-links a { color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 600; padding: 6px 10px; border-radius: 6px; white-space: nowrap; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-phone { display: flex; align-items: center; gap: 6px; color: rgba(236,235,238,0.88); font-size: 0.82rem; font-weight: 700; }
+    .btn-book { background: var(--lv); color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; }
+    #ham { background: none; border: none; cursor: pointer; display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    #ham span { display: block; width: 22px; height: 2px; background: var(--tw); border-radius: 2px; }
+    @media(max-width:780px){ .nav-links,.nav-phone { display:none!important; } #ham { display:flex!important; } }
+    .mobile-drawer { display:none; flex-direction:column; background:var(--mp); position:fixed; inset:0; z-index:1000; padding:80px 32px 32px; gap:0; }
+    .mobile-drawer.open { display:flex; }
+    .mobile-drawer a { color:var(--tw); font-weight:700; font-size:1.05rem; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.6rem; cursor:pointer; }
+
+    /* ── HERO ── */
+    .hero { background: var(--dp); padding: 64px 24px 56px; text-align: center; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lv); margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+    .hero h1 span { color: #c4a0f0; }
+    .hero-sub { font-size: 1rem; color: rgba(236,235,238,0.72); max-width: 540px; margin: 0 auto 36px; }
+    .search-wrap { max-width: 520px; margin: 0 auto; position: relative; }
+    .search-wrap input { width:100%; padding:14px 20px 14px 48px; border:none; border-radius:50px; font-size:0.95rem; color:var(--ltxt); outline:none; box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+    .search-wrap input::placeholder { color: var(--muted); }
+    .search-wrap svg { position:absolute; left:18px; top:50%; transform:translateY(-50%); width:18px; height:18px; stroke:var(--muted); fill:none; }
+
+    /* ── CATEGORY CARDS ── */
+    .categories { max-width: 1100px; margin: 0 auto; padding: 64px 24px; }
+    .categories h2 { font-size: clamp(1.3rem,2.5vw,1.7rem); font-weight: 800; color: var(--ltxt); margin-bottom: 32px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+    .cat-card { border: 1px solid #ede6ff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .18s, box-shadow .18s; cursor: pointer; background: #fff; }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(74,35,122,0.14); }
+    .cat-img { width:100%; height:180px; object-fit:cover; display:block; background: linear-gradient(135deg, var(--mp), var(--ap)); }
+    .cat-body { padding: 20px 22px; }
+    .cat-body h3 { font-size: 1rem; font-weight: 700; color: var(--ltxt); margin-bottom: 6px; }
+    .cat-body p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FAQ ACCORDION SECTIONS ── */
+    .faq-sections { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+    .faq-section { margin-bottom: 56px; scroll-margin-top: 88px; }
+    .faq-section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .faq-section-icon { width: 44px; height: 44px; background: var(--lbg2); border: 1px solid rgba(139,91,199,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .faq-section-icon svg { width: 22px; height: 22px; stroke: var(--lv); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .faq-section h2 { font-size: 1.2rem; font-weight: 800; color: var(--ltxt); }
+    .faq-item { border: 1px solid #ede6ff; border-radius: 10px; background: #fff; margin-bottom: 8px; overflow: hidden; }
+    .faq-item summary { padding: 18px 20px; font-weight: 600; font-size: 0.93rem; color: var(--ltxt); cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; gap: 12px; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-chevron { flex-shrink:0; width:20px; height:20px; stroke:var(--lv); fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; transition:transform .2s; }
+    .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+    .faq-item .faq-body { padding: 0 20px 18px; color: var(--muted); font-size: 0.88rem; line-height: 1.75; }
+    .faq-item .faq-body a { color: var(--lv); font-weight: 600; }
+    .no-results { display:none; text-align:center; padding:48px 24px; color:var(--muted); }
+    .no-results strong { display:block; font-size:1.3rem; font-weight:800; color:var(--ltxt); margin-bottom:6px; }
+
+    /* ── CTA BAND ── */
+    .cta-band { background: var(--dp); padding: 56px 24px; text-align: center; }
+    .cta-band h2 { font-size: clamp(1.4rem,3vw,2rem); font-weight: 900; color: #fff; margin-bottom: 10px; }
+    .cta-band p { color: rgba(236,235,238,0.72); font-size: 0.95rem; margin-bottom: 28px; }
+    .cta-band a { display: inline-block; background: var(--lv); color: #fff; font-weight: 800; font-size: 1rem; padding: 16px 40px; border-radius: 50px; letter-spacing: 0.02em; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dp); border-top: 1px solid rgba(139,91,199,0.15); padding: 56px 24px 32px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(139,91,199,0.15); }
+    .footer-brand p { color: rgba(236,235,238,0.6); font-size: 0.82rem; line-height: 1.8; margin-top: 12px; }
+    .footer-col h4 { color: var(--tw); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(236,235,238,0.6); font-size: 0.82rem; line-height: 2; }
+    .footer-col a:hover { color: var(--tw); }
+    .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: rgba(236,235,238,0.4); font-size: 0.75rem; }
+    @media(max-width:768px){ .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; text-align:center; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="VYV Moving home">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="18" fill="#190E2A"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
+        <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
+      </svg>
+    </a>
+    <div class="nav-links">
+      <a href="/book.html#reservation">Book Your Move</a>
+      <a href="/#services">Services</a>
+      <a href="/#reviews">Reviews</a>
+      <a href="/faq.html" class="active">FAQ</a>
+      <a href="/blog/">Blog</a>
+    </div>
+    <div class="nav-right">
+      <a href="sms:+15403001414" class="nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (540) 300-1414
+      </a>
+      <a href="/book.html#reservation" class="btn-book">Book Now</a>
+      <button id="ham" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="drawer">
+  <button class="drawer-close" onclick="document.getElementById('drawer').classList.remove('open')" aria-label="Close">&times;</button>
+  <a href="/book.html#reservation" onclick="document.getElementById('drawer').classList.remove('open')">Book Your Move</a>
+  <a href="/#services" onclick="document.getElementById('drawer').classList.remove('open')">Services</a>
+  <a href="/#reviews" onclick="document.getElementById('drawer').classList.remove('open')">Reviews</a>
+  <a href="/faq.html" onclick="document.getElementById('drawer').classList.remove('open')">FAQ</a>
+  <a href="/blog/" onclick="document.getElementById('drawer').classList.remove('open')">Blog</a>
+  <a href="/book.html#reservation" class="btn-book" style="margin-top:16px;text-align:center;border-radius:50px;padding:14px;" onclick="document.getElementById('drawer').classList.remove('open')">Book Now</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <p class="hero-eyebrow">VYV Moving &mdash; Fredericksburg, VA</p>
+  <h1>Your Moving Questions, <span>Answered</span></h1>
+  <p class="hero-sub">Everything you need to know about pricing, scheduling, packing, and what to expect on move day.</p>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="faq-search" placeholder="Search questions..." aria-label="Search FAQ" oninput="filterFAQ(this.value)" />
+  </div>
+</section>
+
+<!-- ── CATEGORY CARDS ── -->
+<section class="categories">
+  <h2>Browse by Topic</h2>
+  <div class="cat-grid">
+    <div class="cat-card" onclick="scrollTo('sec-pricing')">
+      <img class="cat-img" src="/images/pexels-royal-moving-storage-1098629817-20706509.jpg" alt="Moving crew loading furniture — VYV pricing questions" loading="lazy" />
+      <div class="cat-body">
+        <h3>Pricing &amp; Fees</h3>
+        <p>Hourly rates, truck fees, deposits, and how your total is calculated.</p>
+      </div>
+    </div>
+    <div class="cat-card" onclick="scrollTo('sec-booking')">
+      <img class="cat-img" src="/images/pexels-tima-miroshnichenko-6169055.jpg" alt="Moving boxes labeled and ready — booking questions" loading="lazy" />
+      <div class="cat-body">
+        <h3>Booking &amp; Scheduling</h3>
+        <p>How far in advance to book, same-day moves, rescheduling, and cancellations.</p>
+      </div>
+    </div>
+    <div class="cat-card" onclick="scrollTo('sec-moveday')">
+      <img class="cat-img" src="/images/pexels-shvets-production-7203848.jpg" alt="Moving crew at work on move day" loading="lazy" />
+      <div class="cat-body">
+        <h3>Move Day</h3>
+        <p>What to expect when the crew arrives, how billing starts, and how to prepare.</p>
+      </div>
+    </div>
+    <div class="cat-card" onclick="scrollTo('sec-packing')">
+      <img class="cat-img" src="/images/pexels-curtis-adams-1694007-4221389.jpg" alt="Kitchen items packed for a move" loading="lazy" />
+      <div class="cat-body">
+        <h3>Packing &amp; Supplies</h3>
+        <p>What we provide, what you should pack ahead, and tips for fragile items.</p>
+      </div>
+    </div>
+    <div class="cat-card" onclick="scrollTo('sec-service-area')">
+      <img class="cat-img" src="/images/pexels-nuraynuna-19820287.jpg" alt="Fredericksburg Virginia home" loading="lazy" />
+      <div class="cat-body">
+        <h3>Service Area</h3>
+        <p>Where we move — Fredericksburg, Northern VA, Richmond, and surrounding areas.</p>
+      </div>
+    </div>
+    <div class="cat-card" onclick="scrollTo('sec-crew')">
+      <img class="cat-img" src="/images/crew-photo.webp" alt="VYV Moving crew" loading="lazy" />
+      <div class="cat-body">
+        <h3>About Our Crew</h3>
+        <p>Who we are, how we vet our movers, and what makes VYV different.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ACCORDION SECTIONS ── -->
+<div class="faq-sections" id="faq-all">
+
+  <p class="no-results" id="no-results"><strong>No results found.</strong> Try a different search, or <a href="sms:+15403001414" style="color:var(--lv);font-weight:600;">text us directly</a>.</p>
+
+  <!-- PRICING -->
+  <section class="faq-section" id="sec-pricing">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h2>Pricing &amp; Fees</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>How much do movers cost in Fredericksburg, VA? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">
+        <p>VYV charges <strong>$165/hr for 2 movers</strong> and <strong>$199/hr for 3 movers</strong> on weekdays (Tuesday–Thursday). Friday rates start at $180/hr. Weekend rates are $199/hr for 2 movers and $235/hr for 3 movers. All rates include a 2-hour minimum.</p>
+        <p style="margin-top:10px;">A flat truck fee (based on drive time to your location) is added separately. For most moves within 50 miles, the truck fee is <strong>$99</strong>.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are there any hidden fees? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">No. You pay your hourly rate for time worked, plus the flat truck fee. No fuel surcharges. No stair fees. No heavy-item fees. No add-ons at the end of the job that you didn't agree to upfront.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is 3 movers actually cheaper than 2? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">
+        <p>Usually, yes — especially for 2-bedroom homes or larger. Three movers work about 40% faster than two, which means fewer billable hours. Here's a real comparison:</p>
+        <p style="margin-top:12px;font-weight:700;color:var(--ltxt);">Same 3-Hour Move Example</p>
+        <p style="margin-top:6px;"><strong>2 Movers</strong> — 3.5 hrs × $165 + $99 truck = <strong>$677</strong></p>
+        <p style="margin-top:4px;"><strong>3 Movers</strong> — 2 hrs × $199 + $99 truck = <strong>$497</strong></p>
+        <p style="margin-top:10px;color:#16a34a;font-weight:700;">3 movers saves you ~$180 on a typical 2BR move.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does the deposit work? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">A $50 priority deposit reserves your date and walkthrough slot. It's applied directly to your balance on move day — it's not an extra charge. You pay the remaining balance after the move is complete.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>When does billing start? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Billing starts when you check in your crew using your phone — not when they leave the warehouse. You control the clock. If your crew shows up and you're not ready, the meter doesn't run until you sign them in.</div>
+    </details>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="faq-section" id="sec-booking">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <h2>Booking &amp; Scheduling</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>How far in advance should I book? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">We recommend booking at least <strong>2 weeks in advance</strong>, especially for weekend and end-of-month dates. Summer months book out fast. A $50 deposit locks in your date — you can always adjust later if your plans change.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can you do same-day or next-day moves? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Yes, when crew availability allows. <a href="sms:+15403001414">Text us at (540) 300-1414</a> and we'll check what's open. Last-minute moves are subject to crew availability — the sooner you reach out, the better.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I reschedule my move? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Just <a href="sms:+15403001414">text us at (540) 300-1414</a> before your crew is dispatched. Rescheduling is free and we'll find a new date that works. We don't penalize you for life happening.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is your cancellation policy? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Cancellations made at least <strong>48 hours before your move</strong> are eligible for a deposit refund. Cancellations inside 48 hours forfeit the deposit. If something comes up, always text us first — we'd rather work with you than lose the booking.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I book my move? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Book entirely online at <a href="/book.html#reservation">validateyourvision.com/book</a> — pick your crew size, choose a date, and pay your $50 deposit to lock it in. No phone calls, no sales process. The whole thing takes under 2 minutes.</div>
+    </details>
+  </section>
+
+  <!-- MOVE DAY -->
+  <section class="faq-section" id="sec-moveday">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <h2>Move Day</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>What happens when the crew arrives? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Your crew will introduce themselves, do a quick walkthrough of what's moving, and then wait for you to check them in on your phone. The clock starts when you sign them in — not before. They'll wrap furniture, load the truck efficiently, and keep you updated throughout the job.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How should I prepare for moving day? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">
+        <p>A few things that help your crew work faster (and keep your bill lower):</p>
+        <ul style="margin-top:10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+          <li>Have boxes packed, sealed, and labeled before the crew arrives</li>
+          <li>Disassemble bed frames and large furniture in advance if you can</li>
+          <li>Clear a path to the door and reserve a parking spot for the truck</li>
+          <li>Set aside anything that's NOT moving so there's no confusion</li>
+          <li>Have your phone charged — you'll need it to check in your crew</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do the movers disassemble and reassemble furniture? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Yes. Basic disassembly and reassembly (bed frames, desks, dining tables) is included. If you have complex or specialty furniture, mention it when you book so we can plan appropriately.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does payment work at the end of the move? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">When the job is complete, your crew lead will confirm the total hours worked. Your $50 deposit is deducted and you pay the remaining balance. We accept all major credit cards, debit cards, and Zelle. No cash required.</div>
+    </details>
+  </section>
+
+  <!-- PACKING -->
+  <section class="faq-section" id="sec-packing">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <h2>Packing &amp; Supplies</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>Do you provide boxes and packing materials? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">We bring moving blankets, straps, and shrink wrap for all furniture protection. Boxes and packing tape can be arranged — just mention it when you book and we'll include them in your plan.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Should I pack before the movers arrive? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Yes, whenever possible. Arriving to find packed and sealed boxes lets the crew load immediately — which saves time and reduces your bill. If you need help packing, we offer full packing services. Just add it to your booking.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do you handle fragile or high-value items? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">All furniture is wrapped in moving blankets before loading. For fragile items like TVs, mirrors, and artwork, we use specialty wrap and pad them carefully. If you have particularly high-value items, let us know in advance so we can bring the right materials.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What items can't movers transport? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">We can't transport hazardous materials (propane tanks, paint cans, chemicals), perishable food, live plants, or pets. For everything else, ask us — most specialty items just need a heads up so we can prepare.</div>
+    </details>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="faq-section" id="sec-service-area">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h2>Service Area</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>What areas do you serve? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">VYV Moving serves <strong>Fredericksburg, Stafford, Spotsylvania, King George, Woodbridge, Manassas, Northern Virginia</strong>, and the <strong>Richmond metro</strong> area. If you're not sure whether we cover your location, text us at <a href="sms:+15403001414">(540) 300-1414</a>.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you do long-distance moves? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">We currently focus on local moves within Virginia. If your move takes you outside of our service area, text us and we'll be honest about whether we can help or refer you to someone we trust.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is the truck fee calculated? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">The truck fee is a flat rate based on drive time from our base to your pickup location. For most moves within 50 miles, it's <strong>$99</strong>. Moves in the outer edges of our service area (Richmond, outer NoVA) may have a slightly higher truck fee — you'll see the exact amount when you book.</div>
+    </details>
+  </section>
+
+  <!-- CREW -->
+  <section class="faq-section" id="sec-crew">
+    <div class="faq-section-header">
+      <div class="faq-section-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h2>About Our Crew</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary>Who will be moving my stuff? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">VYV is a small, owner-operated crew based in Fredericksburg. We don't subcontract or send day laborers. Every person on your job is part of our regular team — people we've worked with and trust.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are your movers insured? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">Yes. VYV Moving is fully licensed and insured in the state of Virginia. If you have a question about coverage, just ask before your move and we'll walk you through it.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What makes VYV different from other moving companies? <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="faq-body">
+        <p>A few things we hear most often from customers who've used other companies:</p>
+        <ul style="margin-top:10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+          <li>The clock doesn't start until you check in your crew — you control it</li>
+          <li>No surprise fees at the end of the job</li>
+          <li>You book entirely online — no sales calls, no phone tag</li>
+          <li>You talk directly to the people doing the work, not a call center</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+</div>
+
+<!-- ── CTA BAND ── -->
+<section class="cta-band">
+  <h2>Still have a question?</h2>
+  <p>Text us directly — we respond fast and we're always straight with you.</p>
+  <a href="sms:+15403001414" style="background:var(--lv);margin-right:16px;">Text (540) 300-1414</a>
+  <a href="/book.html#reservation" style="background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;display:inline-block;padding:14px 36px;border-radius:50px;font-weight:800;font-size:1rem;">Book Your Move &rarr;</a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg width="48" height="48" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="18" fill="#210D46"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
+        <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
+      </svg>
+      <p style="margin-top:14px;">Locally owned moving company serving Fredericksburg, Northern Virginia, and Richmond. No hidden fees. No surprises.</p>
+      <p style="margin-top:8px;font-size:0.72rem;color:rgba(139,91,199,0.8);">Fredericksburg &middot; Stafford &middot; Spotsylvania<br>Woodbridge &middot; Northern VA &middot; Richmond</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/book.html#reservation">Book Your Move</a>
+      <a href="/#services">Services</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/blog/">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="sms:+15403001414">(540) 300-1414 — Text Only</a>
+      <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
+      <a href="/book.html#reservation" style="margin-top:8px;display:inline-block;background:var(--lv);color:#fff;padding:10px 20px;border-radius:8px;font-weight:700;font-size:0.82rem;">Book Now</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Validate Your Vision LLC &middot; Fredericksburg, VA &middot; All rights reserved.</p>
+    <p><a href="/faq.html" style="color:rgba(139,91,199,0.7);">FAQ</a> &middot; <a href="/blog/" style="color:rgba(139,91,199,0.7);">Blog</a> &middot; <a href="/book.html#reservation" style="color:rgba(139,91,199,0.7);">Book Your Move</a></p>
+  </div>
+</footer>
+
+<script>
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function filterFAQ(q) {
+  q = q.toLowerCase().trim();
+  const items = document.querySelectorAll('.faq-item');
+  const sections = document.querySelectorAll('.faq-section');
+  const noResults = document.getElementById('no-results');
+  let anyVisible = false;
+
+  sections.forEach(sec => {
+    let secVisible = false;
+    sec.querySelectorAll('.faq-item').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      item.style.display = match ? '' : 'none';
+      if (match) { secVisible = true; anyVisible = true; }
+    });
+    sec.style.display = secVisible ? '' : 'none';
+  });
+
+  noResults.style.display = anyVisible || !q ? 'none' : 'block';
+}
+</script>
+</body>
+</html>
