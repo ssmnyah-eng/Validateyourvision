@@ -314,28 +314,66 @@
       #s6-layout { grid-template-columns: 1fr !important; }
       #s6-billing-cols { grid-template-columns: 1fr !important; }
     }
+
+    /* ── Full nav ── */
+    :root { --dp:#190E2A; --mp:#210D46; --lv:#8B5BC7; --tw:#ECEBEE; }
+    #main-nav { background:var(--dp); position:sticky; top:0; z-index:999; border-bottom:1px solid rgba(139,91,199,0.2); }
+    .mnav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .mnav-links { display:flex; align-items:center; gap:4px; flex:1; justify-content:center; }
+    .mnav-links a { color:rgba(236,235,238,0.88); font-size:0.82rem; font-weight:600; padding:6px 10px; border-radius:6px; white-space:nowrap; text-decoration:none; }
+    .mnav-links a:hover { color:#fff; }
+    .mnav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .mnav-phone { display:flex; align-items:center; gap:6px; color:rgba(236,235,238,0.88); font-size:0.82rem; font-weight:700; text-decoration:none; }
+    .mnav-bookbtn { background:var(--lv); color:#fff; padding:9px 20px; border-radius:50px; font-size:0.82rem; font-weight:700; text-decoration:none; }
+    #mnav-ham { background:none; border:none; cursor:pointer; display:none; flex-direction:column; gap:5px; padding:4px; }
+    #mnav-ham span { display:block; width:22px; height:2px; background:var(--tw); border-radius:2px; }
+    @media(max-width:780px){ .mnav-links,.mnav-phone { display:none!important; } #mnav-ham { display:flex!important; } }
+    .mnav-drawer { display:none; flex-direction:column; background:var(--mp); position:fixed; inset:0; z-index:1000; padding:80px 32px 32px; }
+    .mnav-drawer.open { display:flex; }
+    .mnav-drawer a { color:var(--tw); font-weight:700; font-size:1.05rem; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); text-decoration:none; }
+    .mnav-drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.6rem; cursor:pointer; }
   </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="topbar-back" onclick="history.back()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    Back
-  </button>
-  <a href="/" class="topbar-logo">
-    <svg style="width:36px;height:36px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="12" fill="#210D46"/>
-      <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
-      <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
-    </svg>
-    <span class="topbar-logo-text">Validate Your Vision</span>
-  </a>
-  <a href="sms:+15403001414" class="topbar-sms">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    (540) 300-1414
-  </a>
+<nav id="main-nav">
+  <div class="mnav-inner">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+      <svg style="width:36px;height:36px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="12" fill="#210D46"/>
+        <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+      </svg>
+      <span style="font-family:'Poppins',sans-serif;font-size:0.92rem;font-weight:700;color:#ECEBEE;">Validate Your Vision</span>
+    </a>
+    <div class="mnav-links">
+      <a href="/">Home</a>
+      <a href="/#services">Services</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/blog/">Blog</a>
+    </div>
+    <div class="mnav-right">
+      <a href="sms:+15403001414" class="mnav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        (540) 300-1414
+      </a>
+      <a href="/book.html#reservation" class="mnav-bookbtn">Book Now</a>
+      <button id="mnav-ham" onclick="document.getElementById('mnav-drawer').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mnav-drawer" id="mnav-drawer">
+  <button class="mnav-drawer-close" onclick="document.getElementById('mnav-drawer').classList.remove('open')">✕</button>
+  <a href="/" onclick="document.getElementById('mnav-drawer').classList.remove('open')">Home</a>
+  <a href="/#services" onclick="document.getElementById('mnav-drawer').classList.remove('open')">Services</a>
+  <a href="/faq.html" onclick="document.getElementById('mnav-drawer').classList.remove('open')">FAQ</a>
+  <a href="/blog/" onclick="document.getElementById('mnav-drawer').classList.remove('open')">Blog</a>
+  <a href="sms:+15403001414" onclick="document.getElementById('mnav-drawer').classList.remove('open')">(540) 300-1414</a>
+  <a href="/book.html#reservation" style="background:#8B5BC7;color:#fff;text-align:center;border-radius:8px;margin-top:12px;" onclick="document.getElementById('mnav-drawer').classList.remove('open')">Book Now</a>
 </div>
+
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
 
 <!-- ── HERO BANNER ── -->
@@ -367,7 +405,7 @@
       </div>
       <!-- Step 2 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">2</div>
+        <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">2</div>
         <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your booking details</p>
       </div>
       <!-- Step 3 -->
@@ -382,7 +420,7 @@
       </div>
       <!-- Step 5 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">5</div>
+        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">5</div>
         <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day: we show up, you relax</p>
       </div>
     </div>
@@ -526,6 +564,7 @@
           </div>
         </div>
 
+        <p style="font-size:0.75rem;color:#6b7280;margin-top:14px;text-align:center;">2-hour minimum applies. Starting price = 2 hrs × hourly rate + travel fee.</p>
         <div class="selected-label" id="selectedLabel"></div>
         <button class="btn-continue" id="dateContinueBtn" disabled onclick="goToDetails()">CONTINUE</button>
         <button class="btn-back" onclick="goBack()">&#8592; Change crew size</button>
@@ -640,6 +679,8 @@
               </div>
             </div>
 
+            <p style="font-size:0.75rem;color:#6b7280;margin-top:10px;margin-bottom:4px;">2-hour minimum applies. Starting price = 2 hrs × hourly rate + travel fee.</p>
+
             <div style="margin-top:14px;">
               <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
                 <span>&#10003;</span> Each room organized exactly how you want it.
@@ -707,7 +748,7 @@
               <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:#374151;margin-bottom:2px;">
-              <span>Truck fee <span style="font-size:0.75rem;color:#6b7280;">(based on distance)</span></span>
+              <span>Travel fee <span style="font-size:0.75rem;color:#6b7280;">(based on distance)</span></span>
               <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
             </div>
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
@@ -734,15 +775,19 @@
 
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">Free cancellation</span>
+              <span style="font-size:0.85rem;color:#374151;">Free cancellation within 24 hours</span>
             </div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
               <span style="font-size:0.85rem;color:#374151;">Deposit applied to total bill</span>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
               <span style="font-size:0.85rem;color:#374151;">Date changes are always free</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
+              <span style="font-size:0.85rem;color:#374151;">2-hour minimum applies</span>
             </div>
 
             <!-- hidden IDs kept for JS compatibility -->
@@ -828,7 +873,7 @@
           <input type="checkbox" id="terms-checkbox" onchange="const b=document.getElementById('finalSubmitBtn');b.disabled=!this.checked;b.style.opacity=this.checked?'1':'0.5';b.style.cursor=this.checked?'pointer':'not-allowed';"
             style="width:18px;height:18px;accent-color:#6d28d9;margin-top:2px;flex-shrink:0;cursor:pointer;">
           <span style="font-size:0.78rem;color:#3b0764;line-height:1.6;">
-            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations or reschedules made less than 12 hours before my move are non-refundable, no-shows forfeit the deposit, and my deposit amount is shown above before payment.
+            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations made less than 24 hours before my move date will incur a no-show fee equal to 50% of my deposit. Rescheduling is always free at any time. No-shows forfeit the deposit in full. My deposit amount is shown above before payment.
           </span>
         </label>
 
