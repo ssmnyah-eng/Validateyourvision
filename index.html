@@ -1582,6 +1582,23 @@
       section[aria-labelledby="about-heading"] img { 
         max-height: 280px !important; 
       }
+      /* Pricing Section: Vertical Reordering */
+      #pricing-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+      #pricing-left, #pricing-right {
+        display: contents !important;
+      }
+      #pricing-promo-heading { order: 1; }
+      #pricing-left > p:first-child { order: 0; }
+      #pricing-left > p:nth-child(3) { order: 2; }
+      #pricing-left > ul { order: 3; margin-bottom: 0 !important; }
+      #math-title { order: 4; margin-top: 20px !important; }
+      #math-cards { order: 5; grid-template-columns: 1fr !important; gap: 12px !important; }
+      #math-example { order: 6; }
+      #math-book-btn { order: 7; }
+      #math-note { order: 8; }
     }
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initLeadFormPlaces" async defer></script>
@@ -1962,11 +1979,11 @@
   </section>
 
   <!-- ===== PRICING PROMO ===== -->
-  <section style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+  <section id="pricing-promo" style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
+    <div id="pricing-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
 
       <!-- LEFT: perks -->
-      <div>
+      <div id="pricing-left">
         <p style="font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8B5BC7;margin:0 0 10px;">Simple, Transparent Pricing</p>
         <h2 id="pricing-promo-heading" style="font-size:clamp(2.8rem,6vw,4.2rem);font-weight:900;color:#190E2A;line-height:1;margin:0 0 8px;">$199<span style="color:#8B5BC7;">/hr</span></h2>
         <p style="color:#5c4a7a;font-size:0.95rem;margin:0 0 32px;">3-man crew &middot; Northern Virginia &amp; Richmond</p>
@@ -1991,9 +2008,9 @@
       </div>
 
       <!-- RIGHT: math cards + crew photo -->
-      <div>
-        <p style="font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8B5BC7;margin:0 0 16px;">See The Math: Same 3-Hour Move</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+      <div id="pricing-right">
+        <p id="math-title" style="font-size:0.75rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8B5BC7;margin:0 0 16px;">See The Math: Same 3-Hour Move</p>
+        <div id="math-cards" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
           <!-- 2 Men -->
           <div style="background:#F8F6FF;border:1px solid rgba(139,91,199,0.15);border-radius:12px;padding:22px 18px;">
             <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8B5BC7;margin:0 0 6px;">2 Movers</p>
@@ -2024,9 +2041,9 @@
             </div>
           </div>
         </div>
-        <p style="font-size:0.75rem;color:#8B5BC7;font-style:italic;margin:0 0 28px;line-height:1.5;">Example based on a 2-bedroom apartment move. Actual time varies by job size and distance. 3-man crew often finishes faster, keeping your total lower despite the higher hourly rate.</p>
-        <a href="/book.html#reservation" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#190E2A;color:#fff;padding:20px 36px;border-radius:12px;font-size:1.1rem;font-weight:900;letter-spacing:0.03em;text-decoration:none;box-shadow:0 6px 24px rgba(25,14,42,0.22);transition:background 0.2s;" onmouseover="this.style.background='#4A237A'" onmouseout="this.style.background='#190E2A'">Book Your Move Now &rarr;</a>
-        <p style="margin:14px 0 0;font-size:0.78rem;color:#5c4a7a;text-align:center;line-height:1.5;">No phone tag. No sales calls. Pick your date, secure it with a deposit, and your crew is confirmed — all in under 2 minutes.</p>
+        <p id="math-example" style="font-size:0.75rem;color:#8B5BC7;font-style:italic;margin:0 0 28px;line-height:1.5;">Example based on a 2-bedroom apartment move. Actual time varies by job size and distance. 3-man crew often finishes faster, keeping your total lower despite the higher hourly rate.</p>
+        <a id="math-book-btn" href="/book.html#reservation" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#190E2A;color:#fff;padding:20px 36px;border-radius:12px;font-size:1.1rem;font-weight:900;letter-spacing:0.03em;text-decoration:none;box-shadow:0 6px 24px rgba(25,14,42,0.22);transition:background 0.2s;" onmouseover="this.style.background='#4A237A'" onmouseout="this.style.background='#190E2A'">Book Your Move Now &rarr;</a>
+        <p id="math-note" style="margin:14px 0 0;font-size:0.78rem;color:#5c4a7a;text-align:center;line-height:1.5;">No phone tag. No sales calls. Pick your date, secure it with a deposit, and your crew is confirmed — all in under 2 minutes.</p>
       </div>
     </div>
 
