@@ -1181,8 +1181,8 @@ function showReceiptReview(d, moveToken) {
 
       <div style="${rowStyle}">
         <span style="color:#a892cc;flex:1;">Hours worked</span>
-        <input id="rb-hours" type="number" step="0.25" min="0" value="${(d.hours||0).toFixed(2)}" oninput="recalcReceipt()" style="${iStyle}">
-        <span style="color:#a892cc;font-size:0.68rem;">hrs</span>
+        <span style="color:#ECEBEE;font-weight:600;" id="rb-hours-display">${(d.hours||0).toFixed(2)} hrs</span>
+        <input type="hidden" id="rb-hours" value="${(d.hours||0).toFixed(4)}">
       </div>
 
       <div style="${rowStyle}">
