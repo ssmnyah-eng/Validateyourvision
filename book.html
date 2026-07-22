@@ -836,8 +836,17 @@
           <div id="stripe-card-error" style="color:#dc2626;font-size:0.82rem;margin-top:12px;"></div>
         </div><!-- end billing section -->
 
+        <!-- TERMS CHECKBOX -->
+        <label style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;cursor:pointer;padding:14px;background:#f0eeff;border:1.5px solid #c4b5fd;border-radius:10px;">
+          <input type="checkbox" id="terms-checkbox" onchange="const b=document.getElementById('finalSubmitBtn');b.disabled=!this.checked;b.style.opacity=this.checked?'1':'0.5';b.style.cursor=this.checked?'pointer':'not-allowed';"
+            style="width:18px;height:18px;accent-color:#6d28d9;margin-top:2px;flex-shrink:0;cursor:pointer;">
+          <span style="font-size:0.78rem;color:#3b0764;line-height:1.6;">
+            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>, including the cancellation and rescheduling policy. I understand that cancellations or reschedules made less than 12 hours before my move are non-refundable, and that no-shows result in forfeiture of the deposit.
+          </span>
+        </label>
+
         <!-- PAY BUTTON -->
-        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);">
+        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" disabled style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);opacity:0.5;cursor:not-allowed;transition:opacity 0.2s;">
           PAY <span id="btn-deposit-amount">$250 DEPOSIT</span> AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">

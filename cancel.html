@@ -184,11 +184,12 @@
     <div id="refund-eligible" class="refund-box">
       <strong>Deposit refund included</strong>
       Your deposit will be refunded to your original payment method within 5 to 10 business days. Need to reschedule instead? <a href="#" id="reschedule-link" style="color:var(--accent);">Change your date</a>.
+      <br><br>Cancellations made less than 12 hours before your move are non-refundable.
     </div>
 
     <div id="refund-ineligible" class="warning-box" style="display:none;">
       <strong>No refund applies</strong>
-      Your move is within 48 hours. Deposits are non-refundable for cancellations made less than 48 hours before the scheduled move. Questions? Text us at <a href="sms:+15403001414" style="color:var(--danger);">540-300-1414</a>.
+      Your move is within 12 hours. Per our cancellation policy, deposits are non-refundable for cancellations made less than 12 hours before the scheduled move. Questions? Text us at <a href="sms:+15403001414" style="color:var(--danger);">540-300-1414</a>.
     </div>
 
     <!-- Step 1: initial -->
@@ -279,7 +280,7 @@ async function loadBooking() {
 
     // Check refund eligibility (48 hr rule)
     const hours = hoursUntil(b.moveDate, b.startTime);
-    if (hours < 48) {
+    if (hours < 12) {
       document.getElementById('refund-eligible').style.display   = 'none';
       document.getElementById('refund-ineligible').style.display = '';
     }
