@@ -405,7 +405,7 @@
 
       <!-- ══ STEP 0: Contact / Address Capture ══ -->
       <div class="step" id="step0">
-        <div class="step-label">Step 1 of 7 &mdash; Your Info</div>
+        <div class="step-label">Step 1 of 7 -- Your Info</div>
         <h1>Let's start your reservation</h1>
         <p class="subtitle">Tell us a little about your move and how to reach you.</p>
 
@@ -458,7 +458,7 @@
 
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step active" id="step1">
-        <div class="step-label">Step 1 of 3 &mdash; Crew Size</div>
+        <div class="step-label">Step 1 of 3 -- Crew Size</div>
         <h1>How many movers do you need?</h1>
         <p class="subtitle">2 movers are for smaller jobs. If you're doing a full move, you want 3.</p>
 
@@ -499,7 +499,7 @@
 
       <!-- ══ STEP 2: Calendar ══ -->
       <div class="step" id="step2">
-        <div class="step-label">Step 2 of 3 &mdash; Move Date</div>
+        <div class="step-label">Step 2 of 3 -- Move Date</div>
         <h1>What date would you like to move?</h1>
         <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
 
@@ -546,7 +546,7 @@
 
       <!-- ══ STEP 3: Move Details / Stops ══ -->
       <div class="step" id="step3">
-        <div class="step-label">Step 3 of 3 &mdash; Move Details</div>
+        <div class="step-label">Step 3 of 3 -- Move Details</div>
         <h1>Where are you moving?</h1>
         <p class="subtitle">Tell us about each location so we can plan your move accurately.</p>
 
@@ -658,7 +658,7 @@
                 <span>&#10003;</span> Each room organized exactly how you want it.
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
-                <span>&#10003;</span> Kick your feet up and relax &mdash; we handle the boxes.
+                <span>&#10003;</span> Kick your feet up and relax -- we handle the boxes.
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;font-size:0.82rem;color:#16a34a;font-weight:600;">
                 <span>&#10003;</span> Want your closet color coordinated? No problem.
@@ -836,8 +836,17 @@
           <div id="stripe-card-error" style="color:#dc2626;font-size:0.82rem;margin-top:12px;"></div>
         </div><!-- end billing section -->
 
+        <!-- TERMS CHECKBOX -->
+        <label style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;cursor:pointer;padding:14px;background:#f0eeff;border:1.5px solid #c4b5fd;border-radius:10px;">
+          <input type="checkbox" id="terms-checkbox" onchange="const b=document.getElementById('finalSubmitBtn');b.disabled=!this.checked;b.style.opacity=this.checked?'1':'0.5';b.style.cursor=this.checked?'pointer':'not-allowed';"
+            style="width:18px;height:18px;accent-color:#6d28d9;margin-top:2px;flex-shrink:0;cursor:pointer;">
+          <span style="font-size:0.78rem;color:#3b0764;line-height:1.6;">
+            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations or reschedules made less than 12 hours before my move are non-refundable, no-shows forfeit the deposit, and my deposit amount is shown above before payment.
+          </span>
+        </label>
+
         <!-- PAY BUTTON -->
-        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);">
+        <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" disabled style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);opacity:0.5;cursor:not-allowed;transition:opacity 0.2s;">
           PAY <span id="btn-deposit-amount">$250 DEPOSIT</span> AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">
@@ -968,7 +977,7 @@
     unique.forEach((r,i) => {
       lg.innerHTML += `<div class="legend-item">
         <div class="legend-dot" style="background:${colors[i]||'#aaa'}"></div>
-        <span><strong>$${r}/hr</strong> &mdash; ${dayDesc[i]}</span>
+        <span><strong>$${r}/hr</strong> -- ${dayDesc[i]}</span>
       </div>`;
     });
   }
@@ -1146,7 +1155,7 @@
       card.className = 'stop-card';
       card.innerHTML = `
         <div class="stop-header">
-          <div class="stop-title">Stop ${i + 1} &mdash; <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
+          <div class="stop-title">Stop ${i + 1} -- <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
           <div class="stop-controls">
             <button class="stop-ctrl-btn" title="Move up" onclick="moveStop(${i},-1)" ${!canUp?'disabled style="opacity:0.3;cursor:default;"':''}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>

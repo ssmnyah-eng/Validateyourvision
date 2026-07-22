@@ -271,7 +271,7 @@
   <div class="complete-card" id="complete-card" style="display:none;">
     <div class="complete-icon">&#10003;</div>
     <div class="complete-title">Move Complete</div>
-    <div class="complete-sub">Your crew has finished. Thank you for choosing VYV Moving.<br>Your final balance will be collected by your crew.</div>
+    <div class="complete-sub">Your crew has finished -- thank you for choosing VYV Moving!<br><br>You will receive a confirmation email with your final invoice shortly. Questions? Text us at <a href="sms:+15403001414" style="color:var(--purple);font-weight:600;">(540) 300-1414</a>.</div>
   </div>
 
   <!-- Move details -->
@@ -347,9 +347,9 @@
     const btn           = document.getElementById('checkin-btn');
 
     if (status === 'completed') {
-      checkinSec.style.display  = 'none';
-      waitNotice.style.display  = 'none';
-      timerCard.style.display   = 'block';
+      checkinSec.style.display   = 'none';
+      waitNotice.style.display   = 'none';
+      timerCard.style.display    = 'block';
       completeCard.style.display = 'block';
       stopTimer();
       if (booking.checkinAt) startTimerFrom(new Date(booking.checkinAt), true);

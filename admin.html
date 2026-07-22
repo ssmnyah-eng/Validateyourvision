@@ -606,7 +606,7 @@
 // ─────────────────────────────────────────────────────
 //  CONFIG -- edit these values
 // ─────────────────────────────────────────────────────
-const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbzIfSX5ZR-3jrzwYZsJEzbDagQgTQN9CTuzQHyVhRKn2lYoD8zgmbGYpsijjPxT3hLo/exec';          // Google Apps Script URL
+const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbz5XAHZZTlJqsWvCtWchANgaqVakLjV5IK8AHu0gTNRNjW2x7ghkt0jbr4fT9VX1NQm/exec';
 const ADMIN_TOKEN    = 'vyv2026admin';
 const ADMIN_PASSWORD = 'VYV2026!';
 const DAILY_GOAL     = 4;           // max moves per day your crew can handle
@@ -659,7 +659,10 @@ async function loadBookings() {
     return;
   }
   try {
-    const r = await fetch(`${SCRIPT_URL}?token=${ADMIN_TOKEN}&action=get`);
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'get_bookings' })
+    });
     const d = await r.json();
     allBookings = (d.bookings || []).reverse();
     renderAll();
@@ -1057,10 +1060,10 @@ function stopAdminTimer() {
 
 async function moveDayAction(action) {
   if (selectedIdx === null) return;
-  const b   = allBookings[selectedIdx];
-  const id  = b.ID || b.id || '';
-  if (!id || !SCRIPT_URL) {
-    showMoveDayMsg('No booking ID found. This booking may need to be re-submitted.');
+  const b         = allBookings[selectedIdx];
+  const moveToken = b.moveToken || b.MoveToken || '';
+  if (!moveToken || !SCRIPT_URL) {
+    showMoveDayMsg('No booking token found. This booking may need to be re-submitted.');
     return;
   }
 
@@ -1073,8 +1076,7 @@ async function moveDayAction(action) {
   try {
     const r = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action, id })
+      body: JSON.stringify({ token: ADMIN_TOKEN, action, moveToken })
     });
     const d = await r.json();
     if (d.ok) {
@@ -1099,9 +1101,9 @@ async function moveDayAction(action) {
 
 async function moveDayStartTimer() {
   if (selectedIdx === null) return;
-  const b  = allBookings[selectedIdx];
-  const id = b.ID || b.id || '';
-  if (!id || !SCRIPT_URL) { showMoveDayMsg('No booking ID found.'); return; }
+  const b         = allBookings[selectedIdx];
+  const moveToken = b.moveToken || b.MoveToken || '';
+  if (!moveToken || !SCRIPT_URL) { showMoveDayMsg('No booking token found.'); return; }
 
   if (!confirm('Start the move timer manually? This will also notify the system that the move is In Progress.')) return;
 
@@ -1110,20 +1112,13 @@ async function moveDayStartTimer() {
   btn.textContent = 'Starting...';
 
   try {
-    const r = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', id, status: 'In Progress' })
-    });
-    // Also set timer start via a direct field update
     await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'start_timer_admin', id })
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'start_timer_admin', moveToken })
     });
     allBookings[selectedIdx].status = 'In Progress';
     allBookings[selectedIdx].Status = 'In Progress';
-    allBookings[selectedIdx].TimerStart = new Date().toISOString();
+    allBookings[selectedIdx].checkinAt = new Date().toISOString();
     renderAll();
     renderMoveDayActions(allBookings[selectedIdx]);
     showMoveDayMsg('Timer started. Move is In Progress.');
@@ -1136,30 +1131,30 @@ async function moveDayStartTimer() {
 
 async function moveDayComplete() {
   if (selectedIdx === null) return;
-  const b  = allBookings[selectedIdx];
-  const id = b.ID || b.id || '';
-  if (!id || !SCRIPT_URL) { showMoveDayMsg('No booking ID found.'); return; }
+  const b         = allBookings[selectedIdx];
+  const moveToken = b.moveToken || b.MoveToken || '';
+  if (!moveToken || !SCRIPT_URL) { showMoveDayMsg('No booking token found.'); return; }
 
-  if (!confirm('Mark move as COMPLETE? This will stop the timer, calculate the final bill, and charge the customer\'s card on file. This cannot be undone.')) return;
+  if (!confirm('Mark move as COMPLETE? This will stop the timer and show you the final bill to review before charging.')) return;
 
   const btn = document.getElementById('btn-complete');
   btn.disabled = true;
-  btn.textContent = 'Processing...';
+  btn.textContent = 'Calculating...';
 
   try {
     const r = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'complete_move', id })
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'complete_move', moveToken })
     });
     const d = await r.json();
     if (d.ok) {
-      allBookings[selectedIdx].status = 'Complete';
-      allBookings[selectedIdx].Status = 'Complete';
+      allBookings[selectedIdx].status = 'Completed';
+      allBookings[selectedIdx].Status = 'Completed';
+      allBookings[selectedIdx].completedAt = d.completedAt;
       renderAll();
       renderMoveDayActions(allBookings[selectedIdx]);
-      const msg = `Done! ${d.hours?.toFixed(2)} hrs. Total: $${d.totalAmount?.toFixed(2)}, deposit: $${d.depositPaid?.toFixed(2)}, charged: $${d.finalCharge?.toFixed(2)}. Receipt sent.`;
-      showMoveDayMsg(msg);
+      // Show receipt review panel
+      showReceiptReview(d, moveToken);
     } else {
       btn.disabled = false;
       btn.textContent = 'Move Complete';
@@ -1169,6 +1164,122 @@ async function moveDayComplete() {
     btn.disabled = false;
     btn.textContent = 'Move Complete';
     showMoveDayMsg('Network error. Try again.');
+  }
+}
+
+function showReceiptReview(d, moveToken) {
+  const wrap = document.getElementById('moveday-msg');
+  // Store data for recalculation
+  wrap._receiptData = { moveToken, ...d };
+
+  const iStyle = 'width:72px;background:rgba(255,255,255,0.07);border:1px solid rgba(139,91,199,0.35);border-radius:6px;color:#ECEBEE;font-family:Poppins,sans-serif;font-size:0.72rem;font-weight:600;padding:4px 7px;text-align:right;outline:none;';
+  const rowStyle = 'display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:6px 0;border-bottom:1px solid rgba(139,91,199,0.15);gap:8px;';
+
+  wrap.innerHTML = `
+    <div id="receipt-panel" style="background:rgba(139,91,199,0.1);border:1px solid rgba(139,91,199,0.4);border-radius:10px;padding:14px 16px;margin-top:6px;">
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#8B5BC7;text-transform:uppercase;margin-bottom:12px;">Final Bill -- Edit &amp; Confirm</div>
+
+      <div style="${rowStyle}">
+        <span style="color:#a892cc;flex:1;">Hours worked</span>
+        <span style="color:#ECEBEE;font-weight:600;" id="rb-hours-display">${(d.hours||0).toFixed(2)} hrs</span>
+        <input type="hidden" id="rb-hours" value="${(d.hours||0).toFixed(4)}">
+      </div>
+
+      <div style="${rowStyle}">
+        <span style="color:#a892cc;flex:1;">Hourly rate</span>
+        <span style="color:#a892cc;font-size:0.68rem;">$</span>
+        <input id="rb-rate" type="number" step="1" min="0" value="${parseFloat((d.rate||'130').replace(/[^0-9.]/g,''))}" oninput="recalcReceipt()" style="${iStyle}">
+        <span style="color:#a892cc;font-size:0.68rem;">/hr</span>
+      </div>
+
+      <div style="${rowStyle}">
+        <span style="color:#a892cc;flex:1;">Labor subtotal</span>
+        <span id="rb-labor-display" style="color:#ECEBEE;font-weight:600;">$${(d.laborAmount||0).toFixed(2)}</span>
+      </div>
+
+      <div style="${rowStyle}">
+        <span style="color:#a892cc;flex:1;">Truck fee</span>
+        <span style="color:#a892cc;font-size:0.68rem;">$</span>
+        <input id="rb-truck" type="number" step="1" min="0" value="${(d.truckFee||99).toFixed(2)}" oninput="recalcReceipt()" style="${iStyle}">
+      </div>
+
+      <div style="${rowStyle}">
+        <span style="color:#a892cc;flex:1;">Deposit on file</span>
+        <span style="color:#a892cc;font-size:0.68rem;">$</span>
+        <input id="rb-deposit" type="number" step="1" min="0" value="${(d.depositPaid||250).toFixed(2)}" oninput="recalcReceipt()" style="${iStyle}">
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;padding:10px 0 4px;border-top:1px solid rgba(139,91,199,0.3);margin-top:4px;">
+        <span style="color:#ECEBEE;font-weight:700;">Balance to charge</span>
+        <span id="rb-balance" style="color:#ECEBEE;font-weight:800;font-size:1rem;">$${(d.finalCharge||0).toFixed(2)}</span>
+      </div>
+
+      <button id="charge-btn" onclick="chargeCard()"
+        style="width:100%;margin-top:12px;padding:12px;background:#16a34a;color:#fff;border:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;letter-spacing:0.03em;">
+        Charge $${(d.finalCharge||0).toFixed(2)} to Card on File
+      </button>
+      <div id="rb-charge-note" style="font-size:0.62rem;color:#a892cc;text-align:center;margin-top:6px;">Stripe will charge the card used for the deposit. Customer gets a confirmation email.</div>
+    </div>
+  `;
+  wrap.style.display = 'block';
+}
+
+function recalcReceipt() {
+  const hours   = parseFloat(document.getElementById('rb-hours').value)   || 0;
+  const rate    = parseFloat(document.getElementById('rb-rate').value)    || 0;
+  const truck   = parseFloat(document.getElementById('rb-truck').value)   || 0;
+  const deposit = parseFloat(document.getElementById('rb-deposit').value) || 0;
+  const labor   = hours * rate;
+  const balance = Math.max(0, labor + truck - deposit);
+  document.getElementById('rb-labor-display').textContent = '$' + labor.toFixed(2);
+  document.getElementById('rb-balance').textContent       = '$' + balance.toFixed(2);
+  document.getElementById('charge-btn').textContent       = 'Charge $' + balance.toFixed(2) + ' to Card on File';
+  document.getElementById('charge-btn')._balance = balance;
+}
+
+async function chargeCard() {
+  const wrap    = document.getElementById('moveday-msg');
+  const rd      = wrap._receiptData || {};
+  const moveToken = rd.moveToken || '';
+  const hours   = parseFloat(document.getElementById('rb-hours').value)   || 0;
+  const rate    = parseFloat(document.getElementById('rb-rate').value)    || 0;
+  const truck   = parseFloat(document.getElementById('rb-truck').value)   || 0;
+  const deposit = parseFloat(document.getElementById('rb-deposit').value) || 0;
+  const balance = Math.max(0, hours * rate + truck - deposit);
+
+  if (!confirm(`Charge $${balance.toFixed(2)} to the customer's card on file? A confirmation email will be sent. This cannot be undone.`)) return;
+
+  const btn = document.getElementById('charge-btn');
+  btn.disabled    = true;
+  btn.textContent = 'Charging...';
+  document.getElementById('rb-charge-note').textContent = 'Processing payment via Stripe...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        token: ADMIN_TOKEN, action: 'charge_balance', moveToken,
+        hours, rate, truckFee: truck, depositPaid: deposit, finalCharge: balance
+      })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      document.getElementById('receipt-panel').innerHTML = `
+        <div style="text-align:center;padding:8px 0;">
+          <div style="font-size:1.4rem;margin-bottom:6px;">&#10003;</div>
+          <div style="font-size:0.8rem;font-weight:700;color:#4ade80;margin-bottom:4px;">Card charged $${balance.toFixed(2)}</div>
+          <div style="font-size:0.68rem;color:#a892cc;">Confirmation email sent to customer.</div>
+        </div>
+      `;
+    } else {
+      btn.disabled    = false;
+      btn.textContent = 'Charge $' + balance.toFixed(2) + ' to Card on File';
+      document.getElementById('rb-charge-note').textContent = 'Error: ' + (d.error || 'Try again.');
+    }
+  } catch {
+    btn.disabled    = false;
+    btn.textContent = 'Charge $' + balance.toFixed(2) + ' to Card on File';
+    document.getElementById('rb-charge-note').textContent = 'Network error. Try again.';
   }
 }
 
@@ -1184,11 +1295,11 @@ function showMoveDayMsg(msg) {
 async function updateStatus(newStatus) {
   if (selectedIdx === null) return;
   allBookings[selectedIdx].status = newStatus;
-  if (SCRIPT_URL) {
+  const moveToken = allBookings[selectedIdx].moveToken || allBookings[selectedIdx].MoveToken || '';
+  if (SCRIPT_URL && moveToken) {
     fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', id: allBookings[selectedIdx].ID || allBookings[selectedIdx].id || '', status: newStatus })
+      body: JSON.stringify({ token: ADMIN_TOKEN, action: 'update_status', moveToken, status: newStatus })
     }).catch(() => {});
   }
   renderAll();
