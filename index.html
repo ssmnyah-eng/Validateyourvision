@@ -1607,7 +1607,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           (540) 300-1414
         </a>
-        <a href="#lead-form" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
+        <a href="/book.html" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
         <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
           style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
@@ -1626,7 +1626,7 @@
     <a href="#reviews" onclick="toggleNav()">Reviews</a>
     <a href="#faq-inner" onclick="toggleNav()">FAQ</a>
     <a href="/blog/" onclick="toggleNav()">Blog</a>
-    <a href="#lead-form" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
+    <a href="/book.html" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
   </div>
 
   <style>
@@ -2618,6 +2618,7 @@
       params.set('phone', fd.get('phone') || '');
       params.set('from', fd.get('moving_from') || '');
       params.set('to', fd.get('moving_to') || '');
+      params.set('skip', 'map');
       const dest = '/book.html?' + params.toString();
 
       // Fire Formspree in background, don't block redirect

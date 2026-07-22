@@ -458,43 +458,30 @@
 
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step active" id="step1">
-        <div class="step-label">Step 1 of 3 -- Crew Size</div>
-        <h1>How many movers do you need?</h1>
-        <p class="subtitle">2 movers are for smaller jobs. If you're doing a full move, you want 3.</p>
+        <div class="step-label">Step 1 of 3 -- Your Crew</div>
+        <h1>Your crew is ready.</h1>
+        <p class="subtitle">All moves are handled by our 3-mover crew -- the fastest way to get you moved and often the lowest total bill.</p>
 
-        <div class="why-3">
-          <strong>Doing a full move? Always go with 3 movers.</strong> They finish significantly faster, and when you factor in the reduced hours, the total bill is often <em>lower</em> than 2 movers. 2-mover crews are built for storage drop-offs, single-item deliveries, and small labor jobs.
+        <div class="why-3" style="max-width:480px;">
+          <strong>3 movers. $199/hr.</strong> More hands means a faster move. A faster move means a lower final bill. Your crew doesn't start until you sign them in on move day -- you control the clock.
         </div>
 
-        <div class="crew-grid">
-          <!-- 2 Movers -->
-          <div class="crew-card" id="card2" onclick="selectCrew(2)">
-            <div class="crew-icon">👥</div>
-            <div class="crew-title">2 Movers</div>
-            <div class="crew-rate">Starting at $165/hr</div>
-            <div class="crew-pros">
-              <div class="crew-pro">Storage drop-offs</div>
-              <div class="crew-pro">Single-item deliveries</div>
-              <div class="crew-pro">Small hauls &amp; labor jobs</div>
-              <div class="crew-pro">Lighter, smaller tasks</div>
-            </div>
-          </div>
-          <!-- 3 Movers -->
-          <div class="crew-card" id="card3" onclick="selectCrew(3)">
-            <div class="badge">For Full Moves</div>
+        <div class="crew-grid" style="max-width:320px;">
+          <div class="crew-card selected" id="card3" style="border-color:#8B5BC7;background:#f5f0ff;">
+            <div class="badge">Your Crew</div>
             <div class="crew-icon">👥👤</div>
             <div class="crew-title">3 Movers</div>
-            <div class="crew-rate">Starting at $199/hr</div>
+            <div class="crew-rate">$199/hr</div>
             <div class="crew-pros">
               <div class="crew-pro">Full home &amp; apartment moves</div>
               <div class="crew-pro">Finishes up to 40% faster</div>
               <div class="crew-pro">Often cheaper total bill</div>
-              <div class="crew-pro">Recommended for all moves</div>
+              <div class="crew-pro">You sign them in on arrival</div>
             </div>
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" onclick="goToCalendar()" style="background:#ccc;box-shadow:none;cursor:default;">CONTINUE</button>
+        <button class="btn-continue" id="crewContinueBtn" onclick="selectCrew(3)" style="margin-top:28px;">CONTINUE &rarr;</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
@@ -913,13 +900,22 @@
       setVal('s0-phone', phone);
       setVal('s0-from',  from);
       setVal('s0-to',    to);
-      // Skip to step 1
+
+      const skipToMap = p.get('skip') === 'map';
       document.addEventListener('DOMContentLoaded', function() {
         sendLead(name, email, phone, from, to);
         initStops();
         document.getElementById('step0').classList.remove('active');
-        document.getElementById('step1').classList.add('active');
-        updateProgress(1);
+        if (skipToMap) {
+          // Auto-select 3-man crew and go straight to map step
+          crewSize = 3;
+          document.getElementById('step1').classList.remove('active');
+          document.getElementById('step2').classList.add('active');
+          updateProgress(2);
+        } else {
+          document.getElementById('step1').classList.add('active');
+          updateProgress(1);
+        }
       });
     }
   })();
