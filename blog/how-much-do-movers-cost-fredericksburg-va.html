@@ -90,12 +90,7 @@
     body { font-family: 'Inter', sans-serif; background: var(--lbg); color: var(--ltxt); line-height: 1.6; }
     a { color: inherit; text-decoration: none; }
 
-    /* NAV */
-    .nav { background: var(--dp); padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 50; }
-    .nav-logo { font-family: 'Raleway',sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--tw); letter-spacing: -.01em; }
-    .nav-logo span { color: var(--lv); }
-    .nav-book { background: var(--lv); color: #fff; padding: 9px 18px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; transition: opacity .15s; }
-    .nav-book:hover { opacity: .85; }
+    /* NAV handled inline */
 
     /* ARTICLE */
     .hero-img { width: 100%; max-height: 420px; object-fit: cover; }
@@ -139,12 +134,67 @@
 </head>
 <body>
 
-<nav class="nav">
-  <a class="nav-logo" href="/">VYV <span>Moving</span></a>
-  <a class="nav-book" href="/book.html">Book a Move</a>
+<!-- ── NAV ── -->
+<nav id="nav" aria-label="Main navigation" style="background:#190E2A;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(139,91,199,0.2);">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;max-width:1200px;margin:0 auto;">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;" aria-label="Validate Your Vision home">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;display:block;flex-shrink:0;">
+        <rect width="100" height="100" rx="12" fill="#210D46"/>
+        <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+        <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+        <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+      <span style="font-family:'Raleway',sans-serif;font-size:0.9rem;font-weight:800;color:#ECEBEE;">Validate Your Vision</span>
+    </a>
+    <div id="vyv-nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
+      <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Move Calculator</a>
+      <div class="vyv-svc-dd" style="position:relative;">
+        <button class="vyv-dd-btn" onclick="var m=this.closest('.vyv-svc-dd');m.classList.toggle('open')" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:4px;font-family:'Raleway',sans-serif;white-space:nowrap;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="vyv-dd-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(25,14,42,0.18);min-width:210px;padding:8px 0;z-index:9999;display:none;margin-top:4px;">
+          <a href="/same-day-movers.html" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Same Day Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Packing Services</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Residential Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Commercial Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Labor Only Movers</a>
+          <div style="height:1px;background:#ede6ff;margin:4px 0;"></div>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#8B5BC7;font-size:0.85rem;font-weight:700;text-decoration:none;">All Moving Services</a>
+        </div>
+      </div>
+      <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Reviews</a>
+      <a href="/#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">FAQ</a>
+      <a href="/blog/" style="color:#c4a0f0;font-size:0.82rem;font-weight:700;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Blog</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <a href="sms:+15403001414" style="display:flex;align-items:center;gap:6px;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="vyv-nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (540) 300-1414
+      </a>
+      <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.82rem;padding:9px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;">Book Now</a>
+      <button id="vyv-ham" onclick="document.getElementById('vyv-drawer').classList.toggle('vyv-open')" aria-label="Toggle navigation" style="background:none;border:none;cursor:pointer;display:none;flex-direction:column;gap:5px;padding:4px;">
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+      </button>
+    </div>
+  </div>
 </nav>
+<div id="vyv-drawer" style="display:none;flex-direction:column;gap:4px;background:#190E2A;padding:16px 20px 24px;border-bottom:1px solid rgba(139,91,199,0.2);">
+  <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Move Calculator</a>
+  <a href="/#services" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Services</a>
+  <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Reviews</a>
+  <a href="/blog/" style="color:#c4a0f0;font-size:0.95rem;font-weight:700;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Blog</a>
+  <a href="sms:+15403001414" style="color:#8B5BC7;font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">(540) 300-1414</a>
+  <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.9rem;padding:12px 20px;border-radius:8px;text-decoration:none;text-align:center;margin-top:8px;">Book Now</a>
+</div>
+<style>
+  @media(max-width:780px){#vyv-nav-links{display:none!important}.vyv-nav-phone{display:none!important}#vyv-ham{display:flex!important}}
+  #vyv-drawer.vyv-open{display:flex!important}
+  .vyv-svc-dd:hover .vyv-dd-menu,.vyv-svc-dd.open .vyv-dd-menu{display:block!important}
+</style>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.vyv-svc-dd'))document.querySelectorAll('.vyv-svc-dd').forEach(function(d){d.classList.remove('open')})});</script>
 
-<img class="hero-img" src="https://images.pexels.com/photos/4685677/pexels-photo-4685677.jpeg" alt="How Much Do Movers Cost in Fredericksburg VA? (2026 Rates)" />
+<img class="hero-img" src="https://images.pexels.com/photos/4685677/pexels-photo-4685677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="How Much Do Movers Cost in Fredericksburg VA? (2026 Rates)" />
 
 <div class="article-wrap">
   <div class="breadcrumb"><a href="/">Home</a> › <a href="/blog/">Moving Guides</a> › How Much Do Movers Cost in Fredericksburg VA? (2026 Rates)</div>
@@ -354,9 +404,58 @@
   </div>
 </div>
 
-<footer class="footer">
-  <p>&copy; 2026 Validate Your Vision Moving. Serving Virginia families.</p>
-  <p style="margin-top:6px"><a href="/">Home</a> &nbsp;|&nbsp; <a href="/blog/">Blog</a> &nbsp;|&nbsp; <a href="/book.html">Book a Move</a> &nbsp;|&nbsp; <a href="/policy.html">Privacy Policy</a></p>
+<footer style="background:#190E2A;padding:52px 20px 0;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <div>
+      <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;flex-shrink:0;">
+          <rect width="100" height="100" rx="12" fill="#210D46"/>
+          <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+          <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+          <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+        </svg>
+        <div>
+          <div style="font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem;color:#ECEBEE;line-height:1.1;">Validate Your Vision</div>
+          <div style="font-size:0.72rem;color:#8B5BC7;font-weight:500;">Professional Movers</div>
+        </div>
+      </a>
+      <p style="font-size:0.88rem;color:rgba(236,235,238,0.7);line-height:1.7;margin-bottom:20px;">Professional movers who treat your belongings like our own. When you want something done right, hire a professional!</p>
+      <div style="font-size:0.75rem;color:rgba(139,91,199,0.8);line-height:1.8;">Richmond &middot; Fredericksburg &middot; Alexandria<br>Northern Virginia &middot; Stafford &middot; Spotsylvania</div>
+    </div>
+    <div>
+      <h4 style="font-family:'Raleway',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Contact Us</h4>
+      <a href="sms:+15403001414" style="display:inline-flex;align-items:center;gap:8px;border:2px solid #8B5BC7;border-radius:30px;padding:10px 22px;color:#ECEBEE;font-weight:600;font-size:0.9rem;text-decoration:none;margin-bottom:20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        (540) 300-1414
+      </a>
+      <div style="font-size:0.88rem;color:rgba(236,235,238,0.8);line-height:2.1;margin-bottom:12px;">
+        <div>Mon–Fri: 7 AM – 7 PM</div>
+        <div>Sat: 7 AM – 5 PM</div>
+        <div>Sun: 7 AM – 3:30 PM</div>
+      </div>
+      <a href="mailto:hello@validateyourvision.com" style="font-size:0.82rem;color:#8B5BC7;text-decoration:none;">hello@validateyourvision.com</a>
+    </div>
+    <div>
+      <h4 style="font-family:'Raleway',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Quick Links</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="/book.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Move Calculator</a>
+        <a href="/#services" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Services</a>
+        <a href="/locations/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Service Areas</a>
+        <a href="/blog/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Blog</a>
+        <a href="/policy.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Privacy &amp; Terms</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:18px 0 22px;">
+    <div style="display:flex;gap:20px;font-size:0.78rem;">
+      <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Privacy</a>
+      <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Terms</a>
+      <a href="sms:+15403001414" style="color:rgba(236,235,238,0.5);text-decoration:none;">Contact</a>
+    </div>
+    <p style="font-size:0.78rem;color:rgba(236,235,238,0.3);margin:0;">&copy; 2026 Validate Your Vision. All Rights Reserved.</p>
+  </div>
+  <style>@media(max-width:700px){footer>div:first-of-type{grid-template-columns:1fr!important}}</style>
 </footer>
 
 </body>
