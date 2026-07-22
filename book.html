@@ -1513,7 +1513,7 @@
   // ── Stripe setup ──
   const STRIPE_PK = 'pk_live_51TpvXGHHmtCFa4DO6ZSQTy1zUzgBqrwSHXBybK84URUMXUAeaThIqO0NmQGqGSc1hEunAGZ3w8n16HyPtpF1Dxnq00rHpADOtP';
   const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5XAHZZTlJqsWvCtWchANgaqVakLjV5IK8AHu0gTNRNjW2x7ghkt0jbr4fT9VX1NQm/exec';
-  const TEST_MODE = true; // set to false when ready to take real payments
+  const TEST_MODE = false;
 
   // Fire as soon as contact info is known -- even if they never pay
   let leadSent = false;
@@ -1694,39 +1694,84 @@
       return;
     }
 
-    const btn = document.getElementById('finalSubmitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
+    const btn     = document.getElementById('finalSubmitBtn');
+    const errDiv  = document.getElementById('stripe-card-error');
+    btn.disabled  = true;
+    btn.textContent = 'Processing payment...';
+    errDiv.textContent = '';
 
-    const rate    = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
-    const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
+    const rate       = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
+    const dateStr    = selectedDate ? selectedDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
     const packDateStr = packSelectedDate ? packSelectedDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
 
-    const payload = JSON.stringify({
-      token: 'vyv2026admin',
-      action: 'save',
-      bookedAt: new Date().toISOString(),
-      name: `${first} ${last}`,
-      email, phone,
-      moveDate: `${dateStr} ${selectedTime||''}`,
-      crew: `${crewSize} Movers`,
-      rate: `$${rate}/hr`,
-      truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
-      from: stops[0]?.address || '',
-      to: stops[stops.length-1]?.address || '',
-      stops: stops.length,
-      volume: moveVolume || '',
-      specialty: (specialtyItems||[]).join(', ') || 'None',
-      packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
-      notes: document.getElementById('cf-notes').value,
-      deposit: `$${depositAmount}`,
-      paymentMethod: 'TEST_MODE',
-      status: 'Upcoming'
-    });
+    try {
+      // Step 1: Ask GAS to create a PaymentIntent for the deposit amount
+      const piRes = await fetch(SHEET_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'create_payment_intent',
+          amountCents: depositAmount * 100,
+          email,
+          name: `${first} ${last}`,
+          description: `VYV Moving deposit - ${dateStr}`
+        })
+      });
+      const piData = await piRes.json();
+      if (!piData.ok || !piData.clientSecret) {
+        throw new Error(piData.error || 'Could not initialize payment. Please try again.');
+      }
 
-    fetch(SHEET_SCRIPT_URL, { method: 'POST', body: payload, keepalive: true }).catch(() => {});
+      // Step 2: Confirm the card payment (handles 3D Secure automatically)
+      btn.textContent = 'Confirming card...';
+      const { paymentIntent, error } = await stripeInstance.confirmCardPayment(piData.clientSecret, {
+        payment_method: {
+          card: stripeCardNumber,
+          billing_details: { name: `${first} ${last}`, email, phone }
+        }
+      });
 
-    window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (paymentIntent.status !== 'succeeded') {
+        throw new Error('Payment did not complete. Please try a different card.');
+      }
+
+      // Step 3: Save the booking with the confirmed payment intent ID
+      btn.textContent = 'Saving your booking...';
+      const bookingPayload = JSON.stringify({
+        token: 'vyv2026admin',
+        action: 'save',
+        bookedAt: new Date().toISOString(),
+        name: `${first} ${last}`,
+        email, phone,
+        moveDate: `${dateStr} ${selectedTime||''}`,
+        crew: `${crewSize} Movers`,
+        rate: `$${rate}/hr`,
+        truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
+        from: stops[0]?.address || '',
+        to: stops[stops.length-1]?.address || '',
+        stops: stops.length,
+        volume: moveVolume || '',
+        specialty: (specialtyItems||[]).join(', ') || 'None',
+        packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
+        notes: document.getElementById('cf-notes').value,
+        deposit: `$${depositAmount}`,
+        paymentIntentId: paymentIntent.id,
+        paymentMethod: paymentIntent.payment_method,
+        status: 'Upcoming'
+      });
+
+      fetch(SHEET_SCRIPT_URL, { method: 'POST', body: bookingPayload, keepalive: true }).catch(() => {});
+
+      window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
+
+    } catch (err) {
+      errDiv.textContent = err.message || 'Something went wrong. Please try again.';
+      btn.disabled = false;
+      btn.textContent = 'Pay Deposit & Reserve';
+    }
   }
 
   // ── Page load: skip Step 0 if URL params already have the info ──
