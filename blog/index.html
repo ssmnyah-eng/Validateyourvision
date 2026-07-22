@@ -3,35 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moving Tips & Resources | Validate Your Vision | Fredericksburg, VA</title>
-  <meta name="description" content="Moving tips, packing guides, and relocation advice from VYV — a locally owned moving company serving Fredericksburg, Northern Virginia, and Richmond, VA." />
+  <title>Virginia Moving Cost &amp; Planning Guides | VYV Moving</title>
+  <meta name="description" content="Moving tips, packing guides, and cost breakdowns from VYV Moving — a locally owned moving company serving Fredericksburg, Northern Virginia, and Richmond, VA." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://validateyourvision.com/blog/" />
+  <meta property="og:title" content="Virginia Moving Cost & Planning Guides | VYV Moving" />
+  <meta property="og:description" content="Real moving tips, honest cost breakdowns, and practical planning guides from VYV Moving in Fredericksburg, VA." />
   <meta property="og:image" content="https://validateyourvision.com/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://validateyourvision.com/assets/og-image.png" />
   <script type="application/ld+json">
   [
     {
       "@context": "https://schema.org",
       "@type": "Blog",
-      "name": "VYV Moving Tips & Resources",
+      "name": "Virginia Moving Cost & Planning Guides",
       "url": "https://validateyourvision.com/blog/",
-      "description": "Moving tips, packing guides, and relocation advice from Validate Your Vision — a locally owned moving company in Fredericksburg, VA.",
-      "publisher": {
-        "@type": "LocalBusiness",
-        "name": "Validate Your Vision",
-        "url": "https://validateyourvision.com",
-        "telephone": "+15403001414",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Fredericksburg",
-          "addressRegion": "VA",
-          "addressCountry": "US"
-        }
-      }
+      "description": "Moving tips, packing guides, and cost breakdowns from VYV Moving.",
+      "publisher": { "@type": "LocalBusiness", "name": "Validate Your Vision", "url": "https://validateyourvision.com", "telephone": "+15403001414" }
     },
     {
       "@context": "https://schema.org",
@@ -45,175 +35,481 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Raleway:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --dp: #190E2A; --mp: #210D46; --ap: #4A237A; --lv: #8B5BC7;
-      --tw: #ECEBEE; --lbg: #ffffff; --lbg2: #F4F0FF;
-      --ltxt: #1a1625; --lmuted: #5c5470;
-      --radius: 16px; --shadow: 0 4px 24px rgba(74,35,122,0.10);
+      --lv2: #b48ee0; --tw: #ECEBEE; --lbg: #fafaf8; --white: #ffffff;
+      --lbg2: #F4F0FF; --ltxt: #1a1625; --lmuted: #5c5470;
+      --border: rgba(74,35,122,0.1); --radius: 14px;
+      --shadow: 0 2px 16px rgba(74,35,122,0.08);
+      --shadow-hover: 0 8px 36px rgba(74,35,122,0.16);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--lbg); color: var(--ltxt); line-height: 1.6; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--lbg); color: var(--ltxt); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
-    /* NAV */
-    nav { background: var(--dp); padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; color: var(--tw); font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 1rem; }
-    .nav-logo svg { width: 36px; height: 36px; }
-    .nav-links { display: flex; align-items: center; gap: 28px; }
-    .nav-links a { color: rgba(236,235,238,0.8); font-size: 0.88rem; font-family: 'Raleway', sans-serif; font-weight: 600; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--tw); }
-    .btn-nav { background: var(--lv); color: var(--tw) !important; padding: 10px 20px; border-radius: 50px; }
-    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
-    .hamburger span { display:block; width:22px; height:2px; background:var(--tw); border-radius:2px; }
-    .mobile-drawer { display:none; flex-direction:column; gap:0; background:var(--mp); position:fixed; top:0; left:0; right:0; bottom:0; z-index:200; padding:80px 32px 32px; }
-    .mobile-drawer.open { display:flex; }
-    .mobile-drawer a { color:var(--tw); font-family:'Raleway',sans-serif; font-weight:700; font-size:1.1rem; padding:16px 0; border-bottom:1px solid rgba(236,235,238,0.08); }
-    .mobile-drawer .close-btn { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.5rem; cursor:pointer; }
-    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display:flex; } }
-
-    /* HERO */
-    .blog-hero { background: linear-gradient(135deg, var(--mp) 0%, var(--ap) 100%); padding: 80px 24px 56px; text-align: center; }
-    .blog-hero p { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(236,235,238,0.6); margin-bottom: 12px; }
-    .blog-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 3rem); color: var(--tw); line-height: 1.15; margin-bottom: 16px; }
-    .blog-hero span { color: #c4a0f0; }
-    .blog-hero .sub { font-size: 1rem; color: rgba(236,235,238,0.75); max-width: 520px; margin: 0 auto 32px; }
+    /* ── HERO ── */
+    .blog-hero {
+      background: var(--dp);
+      padding: 72px 24px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,91,199,0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .blog-hero-inner { position: relative; max-width: 680px; margin: 0 auto; }
+    .blog-eyebrow {
+      display: inline-block;
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--lv2); margin-bottom: 16px;
+      background: rgba(139,91,199,0.15); border: 1px solid rgba(139,91,199,0.3);
+      padding: 5px 14px; border-radius: 50px;
+    }
+    .blog-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5.5vw, 3.2rem);
+      color: var(--tw); line-height: 1.13;
+      margin-bottom: 16px; text-wrap: balance;
+    }
+    .blog-hero h1 em { font-style: italic; color: var(--lv2); }
+    .blog-hero-sub {
+      font-size: 1rem; color: rgba(236,235,238,0.65);
+      max-width: 480px; margin: 0 auto 36px; line-height: 1.65;
+    }
 
     /* SEARCH */
-    .search-wrap { max-width: 520px; margin: 0 auto; position: relative; }
+    .search-wrap { max-width: 480px; margin: 0 auto; position: relative; }
     .search-wrap input {
-      width: 100%; padding: 14px 20px 14px 48px;
+      width: 100%; padding: 14px 20px 14px 50px;
       border: none; border-radius: 50px;
-      font-family: 'Inter', sans-serif; font-size: 0.95rem;
+      font-family: 'Inter', sans-serif; font-size: 0.93rem;
       color: var(--ltxt); background: #fff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-      outline: none;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.22);
+      outline: none; transition: box-shadow .2s;
     }
-    .search-wrap input::placeholder { color: var(--lmuted); }
-    .search-wrap svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--lmuted); fill: none; }
-    .no-results { display: none; text-align: center; padding: 60px 24px; color: var(--lmuted); font-size: 1rem; }
-    .no-results strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--mp); margin-bottom: 8px; }
+    .search-wrap input:focus { box-shadow: 0 4px 24px rgba(139,91,199,0.4); }
+    .search-wrap input::placeholder { color: #999; }
+    .search-icon {
+      position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; stroke: #aaa; fill: none; pointer-events: none;
+    }
 
-    /* GRID */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; padding: 72px 0; }
-    .post-card { background: var(--lbg); border-radius: var(--radius); border: 1px solid rgba(74,35,122,0.1); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-    .post-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(74,35,122,0.15); }
+    /* ── LAYOUT ── */
+    .page-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Category filter pills */
+    .filter-bar {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: 32px 0 0;
+    }
+    .filter-pill {
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 50px; cursor: pointer;
+      border: 1.5px solid var(--border); background: var(--white);
+      color: var(--lmuted); transition: all .15s;
+    }
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--lv); border-color: var(--lv); color: #fff;
+    }
+
+    /* ── FEATURED POST ── */
+    .featured-section { padding: 40px 0 0; }
+    .featured-label {
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--lmuted); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .featured-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .featured-card {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+      background: var(--white); border-radius: 20px; border: 1px solid var(--border);
+      box-shadow: var(--shadow); overflow: hidden;
+      transition: box-shadow .2s; text-decoration: none; color: inherit;
+    }
+    .featured-card:hover { box-shadow: var(--shadow-hover); }
+    .featured-img {
+      width: 100%; height: 100%; min-height: 340px; object-fit: cover;
+      background: linear-gradient(135deg, var(--mp), var(--ap));
+    }
+    .featured-body {
+      padding: 44px 44px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .post-category {
+      display: inline-block;
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--lv); background: var(--lbg2);
+      padding: 5px 12px; border-radius: 50px; margin-bottom: 16px;
+    }
+    .featured-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      color: var(--mp); line-height: 1.25; margin-bottom: 14px;
+      text-wrap: balance;
+    }
+    .featured-body p {
+      font-size: 0.93rem; color: var(--lmuted); line-height: 1.7; margin-bottom: 24px;
+    }
+    .post-date { font-size: 0.74rem; color: var(--lmuted); margin-bottom: 20px; }
+    .read-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ap); color: #fff;
+      font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.83rem;
+      padding: 12px 24px; border-radius: 50px;
+      transition: background .15s, gap .15s; align-self: flex-start;
+    }
+    .read-btn:hover { background: var(--lv); gap: 12px; }
+
+    /* ── POST GRID ── */
+    .grid-section { padding: 48px 0 80px; }
+    .grid-label {
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--lmuted); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .grid-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 28px;
+    }
+    .post-card {
+      display: flex; flex-direction: column;
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--border); box-shadow: var(--shadow);
+      overflow: hidden; transition: transform .2s, box-shadow .2s;
+      text-decoration: none; color: inherit;
+    }
+    .post-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
     .post-card[hidden] { display: none; }
-    .post-card-img { width: 100%; height: 200px; object-fit: cover; background: linear-gradient(135deg, var(--mp), var(--ap)); display: block; }
-    .post-card-body { padding: 28px 24px; }
-    .post-tag { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lv); margin-bottom: 10px; }
-    .post-card-body h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--mp); line-height: 1.3; margin-bottom: 10px; }
-    .post-card-body p { font-size: 0.88rem; color: var(--lmuted); line-height: 1.7; margin-bottom: 18px; }
-    .post-meta { font-size: 0.75rem; color: var(--lmuted); display: flex; align-items: center; gap: 8px; }
-    .post-meta span { color: rgba(74,35,122,0.3); }
-    .read-more { display: inline-flex; align-items: center; gap: 6px; font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--lv); margin-top: 14px; }
-    .read-more:hover { gap: 10px; }
+    .card-img {
+      width: 100%; height: 196px; object-fit: cover; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--mp), var(--ap));
+    }
+    .card-body { padding: 22px 22px 26px; display: flex; flex-direction: column; flex: 1; }
+    .card-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--mp); line-height: 1.35;
+      margin-bottom: 10px; text-wrap: balance;
+    }
+    .card-body p { font-size: 0.85rem; color: var(--lmuted); line-height: 1.68; flex: 1; margin-bottom: 16px; }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .card-date { font-size: 0.72rem; color: var(--lmuted); }
+    .card-read {
+      font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 0.76rem; color: var(--lv);
+      display: flex; align-items: center; gap: 4px; transition: gap .15s;
+    }
+    .post-card:hover .card-read { gap: 8px; }
 
-    /* FOOTER */
-    footer { background: var(--dp); color: rgba(236,235,238,0.6); text-align: center; padding: 32px 24px; font-size: 0.82rem; }
-    footer a { color: rgba(236,235,238,0.6); }
-    footer strong { color: var(--tw); }
+    /* no results */
+    .no-results {
+      display: none; text-align: center; padding: 60px 24px;
+      color: var(--lmuted); grid-column: 1 / -1;
+    }
+    .no-results strong { display: block; font-size: 1.1rem; font-family: 'Raleway',sans-serif; color: var(--mp); margin-bottom: 8px; }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--dp) 0%, var(--ap) 100%);
+      padding: 64px 24px; text-align: center; margin-bottom: 0;
+    }
+    .cta-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      color: var(--tw); margin-bottom: 12px; line-height: 1.2;
+    }
+    .cta-band p { color: rgba(236,235,238,0.7); font-size: 0.95rem; margin-bottom: 28px; }
+    .cta-band a {
+      display: inline-block; background: var(--lv); color: #fff;
+      font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 15px 36px; border-radius: 50px;
+      transition: background .15s, transform .12s;
+    }
+    .cta-band a:hover { background: #a070e0; transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-img { min-height: 220px; }
+      .featured-body { padding: 28px 24px 32px; }
+      .posts-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .blog-hero { padding: 56px 20px 52px; }
+      .filter-bar { padding: 24px 0 0; }
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="/" class="nav-logo">
-      <img src="/assets/logo.png" alt="Validate Your Vision" style="height:40px;width:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <span style="display:none;align-items:center;gap:10px;"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,8 92,30 92,70 50,92 8,70 8,30" fill="none" stroke="#8B5BC7" stroke-width="6"/><polygon points="50,18 82,34 82,66 50,82 18,66 18,34" fill="#210D46"/><path d="M50 28 L68 38 L68 58 L50 68 L32 58 L32 38 Z" fill="#4A237A"/><path d="M50 38 L60 44 L60 56 L50 62 L40 56 L40 44 Z" fill="#8B5BC7"/><circle cx="50" cy="50" r="5" fill="#ECEBEE"/></svg>Validate Your Vision</span>
+<!-- ── NAV ── -->
+<nav id="nav" aria-label="Main navigation" style="background:#190E2A;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(139,91,199,0.2);">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;max-width:1200px;margin:0 auto;">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;" aria-label="Validate Your Vision home">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;display:block;flex-shrink:0;">
+        <rect width="100" height="100" rx="12" fill="#210D46"/>
+        <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+        <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+        <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+        <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
+        <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
+        <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
+        <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
+        <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+        <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+        <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+      <span style="font-family:'Raleway',sans-serif;font-size:0.9rem;font-weight:800;color:#ECEBEE;">Validate Your Vision</span>
     </a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/#services">Services</a>
-      <a href="/#areas">Areas</a>
-      <a href="/blog/" style="color:var(--tw);">Blog</a>
-      <a href="/pricing-estimator.html" class="btn-nav">Build My Blueprint</a>
+    <div id="vyv-nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
+      <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Move Calculator</a>
+      <div class="vyv-svc-dd" style="position:relative;">
+        <button class="vyv-dd-btn" onclick="var m=this.closest('.vyv-svc-dd');m.classList.toggle('open')" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:4px;font-family:'Raleway',sans-serif;white-space:nowrap;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="vyv-dd-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(25,14,42,0.18);min-width:210px;padding:8px 0;z-index:9999;display:none;margin-top:4px;">
+          <a href="/same-day-movers.html" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Same Day Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Packing Services</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Residential Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Commercial Movers</a>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;">Labor Only Movers</a>
+          <div style="height:1px;background:#ede6ff;margin:4px 0;"></div>
+          <a href="/#services" style="display:block;padding:10px 20px;color:#8B5BC7;font-size:0.85rem;font-weight:700;text-decoration:none;">All Moving Services</a>
+        </div>
+      </div>
+      <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Reviews</a>
+      <a href="/#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">FAQ</a>
+      <a href="/blog/" style="color:#c4a0f0;font-size:0.82rem;font-weight:700;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Blog</a>
     </div>
-    <button class="hamburger" onclick="document.getElementById('blog-drawer').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <div class="mobile-drawer" id="blog-drawer">
-    <button class="close-btn" onclick="document.getElementById('blog-drawer').classList.remove('open')" aria-label="Close">✕</button>
-    <a href="/" onclick="document.getElementById('blog-drawer').classList.remove('open')">Home</a>
-    <a href="/#services" onclick="document.getElementById('blog-drawer').classList.remove('open')">Services</a>
-    <a href="/#areas" onclick="document.getElementById('blog-drawer').classList.remove('open')">Areas</a>
-    <a href="/blog/" onclick="document.getElementById('blog-drawer').classList.remove('open')">Blog</a>
-    <a href="/pricing-estimator.html" class="btn-nav" style="margin-top:24px;text-align:center;" onclick="document.getElementById('blog-drawer').classList.remove('open')">Build My Blueprint</a>
+    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <a href="sms:+15403001414" style="display:flex;align-items:center;gap:6px;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="vyv-nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (540) 300-1414
+      </a>
+      <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.82rem;padding:9px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;">Book Now</a>
+      <button id="vyv-ham" onclick="document.getElementById('vyv-drawer').classList.toggle('vyv-open')" aria-label="Toggle navigation" style="background:none;border:none;cursor:pointer;display:none;flex-direction:column;gap:5px;padding:4px;">
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+        <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+      </button>
+    </div>
   </div>
+</nav>
+<div id="vyv-drawer" style="display:none;flex-direction:column;gap:4px;background:#190E2A;padding:16px 20px 24px;border-bottom:1px solid rgba(139,91,199,0.2);">
+  <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Move Calculator</a>
+  <a href="/#services" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Services</a>
+  <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Reviews</a>
+  <a href="/blog/" style="color:#c4a0f0;font-size:0.95rem;font-weight:700;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Blog</a>
+  <a href="sms:+15403001414" style="color:#8B5BC7;font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">(540) 300-1414</a>
+  <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.9rem;padding:12px 20px;border-radius:8px;text-decoration:none;text-align:center;margin-top:8px;">Book Now</a>
+</div>
+<style>
+  @media(max-width:780px){#vyv-nav-links{display:none!important}.vyv-nav-phone{display:none!important}#vyv-ham{display:flex!important}}
+  #vyv-drawer.vyv-open{display:flex!important}
+  .vyv-svc-dd:hover .vyv-dd-menu,.vyv-svc-dd.open .vyv-dd-menu{display:block!important}
+</style>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.vyv-svc-dd'))document.querySelectorAll('.vyv-svc-dd').forEach(function(d){d.classList.remove('open')})});</script>
 
-  <div class="blog-hero">
-    <p>From the VYV Team</p>
-    <h1>Moving Tips &amp; <span>Resources</span></h1>
-    <p class="sub">Practical advice on packing, planning, and making your next move as smooth as possible.</p>
+<!-- ── HERO ── -->
+<div class="blog-hero">
+  <div class="blog-hero-inner">
+    <span class="blog-eyebrow">Virginia Moving Guides</span>
+    <h1>Moving Tips &amp; <em>Cost Guides</em></h1>
+    <p class="blog-hero-sub">Real advice from a local Virginia moving company — honest pricing, packing guides, and everything you need to plan a smooth move.</p>
     <div class="search-wrap">
-      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="blog-search" placeholder="Search topics — packing, costs, military, kids…" aria-label="Search blog posts" />
+      <svg class="search-icon" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="blog-search" placeholder="Search: packing, costs, moving day…" aria-label="Search guides" />
     </div>
   </div>
+</div>
 
-  <div class="container">
+<!-- ── CONTENT ── -->
+<div class="page-wrap">
+
+  <!-- Category filters -->
+  <div class="filter-bar">
+    <button class="filter-pill active" data-filter="all">All Guides</button>
+    <button class="filter-pill" data-filter="moving costs">Moving Costs</button>
+    <button class="filter-pill" data-filter="packing tips">Packing Tips</button>
+    <button class="filter-pill" data-filter="moving tips">Moving Tips</button>
+  </div>
+
+  <!-- Featured post -->
+  <div class="featured-section" id="featured-section">
+    <div class="featured-label">Featured Guide</div>
+    <a href="/blog/how-much-do-movers-cost-fredericksburg-va.html" class="featured-card" data-category="moving costs" data-search="moving costs price how much movers fredericksburg va hourly rate quote estimate">
+      <img class="featured-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" alt="Moving boxes ready for professional movers in Fredericksburg VA" loading="eager" onerror="this.style.background='linear-gradient(135deg,#210D46,#4A237A)';this.style.minHeight='340px'" />
+      <div class="featured-body">
+        <span class="post-category">Moving Costs</span>
+        <h2>How Much Do Movers Cost in Fredericksburg, VA?</h2>
+        <p class="post-date">January 2026 &nbsp;·&nbsp; 9 min read</p>
+        <p>The real answer depends on more than most movers will tell you upfront. Here are the actual hourly rates, hidden fees to ask about, and what drives your final bill on moving day.</p>
+        <span class="read-btn">Read Guide &rarr;</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- All posts grid -->
+  <div class="grid-section">
+    <div class="grid-label">All Guides</div>
     <div class="posts-grid" id="posts-grid">
 
-      <!-- ====================================================
-           PASTE A NEW POST CARD HERE EACH TIME YOU PUBLISH
-           Copy one of the cards below and update the text
-           ==================================================== -->
-
-      <a href="/blog/how-much-do-movers-cost-fredericksburg-va.html" class="post-card" data-search="moving costs price how much movers fredericksburg va hourly rate quote estimate">
-        <img class="post-card-img" src="https://picsum.photos/seed/movingcost/600/300" alt="Moving cost estimate for Fredericksburg VA movers" loading="lazy" onerror="this.style.opacity='0'" />
-        <div class="post-card-body">
-          <p class="post-tag">Moving Costs</p>
-          <h2>How Much Do Movers Cost in Fredericksburg, VA?</h2>
-          <p>The short answer: it depends on more than most movers will tell you upfront. Here are the real numbers and what actually drives your final price.</p>
-          <div class="post-meta">VYV Team <span>·</span> June 2025</div>
-          <div class="read-more">Read more →</div>
-        </div>
-      </a>
-
-      <a href="/blog/how-to-prepare-for-moving-day-fredericksburg-va.html" class="post-card" data-search="prepare moving day checklist packing tips boxes labels fredericksburg va movers">
-        <img class="post-card-img" src="https://picsum.photos/seed/movingday/600/300" alt="Labeled moving boxes staged near the door ready for moving day in Fredericksburg VA" loading="lazy" onerror="this.style.opacity='0'" />
-        <div class="post-card-body">
-          <p class="post-tag">Moving Tips</p>
+<!-- POSTS_START -->
+      <a href="/blog/how-to-prepare-for-moving-day-fredericksburg-va.html" class="post-card" data-category="moving tips" data-search="prepare moving day checklist packing tips boxes labels fredericksburg va movers">
+        <img class="card-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Organized moving boxes ready for moving day" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#210D46,#4A237A)'" />
+        <div class="card-body">
+          <span class="post-category">Moving Tips</span>
           <h2>How to Prepare for Moving Day in Fredericksburg, VA</h2>
-          <p>Most moving day stress comes from things that could have been handled the week before. Here is the checklist that keeps that from happening to you.</p>
-          <div class="post-meta">VYV Team <span>·</span> June 2025</div>
-          <div class="read-more">Read more →</div>
+          <p>Most moving day stress comes from things that could have been handled the week before. Here is the complete checklist that keeps that from happening.</p>
+          <div class="card-footer">
+            <span class="card-date">March 2026</span>
+            <span class="card-read">Read Guide &rarr;</span>
+          </div>
         </div>
       </a>
 
-      <!-- ADD MORE CARDS ABOVE THIS LINE -->
+      <a href="/blog/how-to-pack-a-kitchen-for-a-move.html" class="post-card" data-category="packing tips" data-search="packing kitchen how to pack dishes appliances pantry move moving tips boxes fragile">
+        <img class="card-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=600&q=80" alt="Kitchen items being packed for a move" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#210D46,#4A237A)'" />
+        <div class="card-body">
+          <span class="post-category">Packing Tips</span>
+          <h2>How to Pack a Kitchen for a Move — Room by Room</h2>
+          <p>The kitchen slows down more moves than any other room. Here is the right order — from appliances to dishes to the cabinet you always forget about.</p>
+          <div class="card-footer">
+            <span class="card-date">July 2026</span>
+            <span class="card-read">Read Guide &rarr;</span>
+          </div>
+        </div>
+      </a>
+      <!-- POSTS_END -->
+
+      <div class="no-results" id="no-results">
+        <strong>No guides found.</strong>
+        Try a different search term — or <a href="/book.html" style="color:var(--lv);">get your moving plan</a> and ask us directly.
+      </div>
 
     </div>
-    <p class="no-results" id="no-results"><strong>No posts found.</strong> Try a different keyword — or <a href="/pricing-estimator.html" style="color:var(--lv);">get your moving plan</a> and ask us directly.</p>
   </div>
+</div>
 
-  <footer>
-    <strong>Validate Your Vision</strong> &nbsp;·&nbsp; Fredericksburg, VA &nbsp;·&nbsp;
-    <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
-    &nbsp;·&nbsp; <a href="/">Back to main site</a>
-  </footer>
+<!-- ── CTA BAND ── -->
+<div class="cta-band">
+  <h2>Ready to Plan Your Virginia Move?</h2>
+  <p>Get a real quote based on a walkthrough of your home — not a phone-call guess.</p>
+  <a href="/book.html">Get My Free Moving Plan &rarr;</a>
+</div>
 
-  <script>
-    const input = document.getElementById('blog-search');
-    const cards = document.querySelectorAll('.post-card');
-    const noResults = document.getElementById('no-results');
+<!-- ── FOOTER ── -->
+<footer style="background:#190E2A;padding:52px 20px 0;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <div>
+      <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;flex-shrink:0;">
+          <rect width="100" height="100" rx="12" fill="#210D46"/>
+          <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+          <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+          <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+        </svg>
+        <div>
+          <div style="font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem;color:#ECEBEE;line-height:1.1;">Validate Your Vision</div>
+          <div style="font-size:0.72rem;color:#8B5BC7;font-weight:500;">Professional Movers</div>
+        </div>
+      </a>
+      <p style="font-size:0.88rem;color:rgba(236,235,238,0.7);line-height:1.7;margin-bottom:20px;">Professional movers who treat your belongings like our own. When you want something done right, hire a professional!</p>
+      <div style="font-size:0.75rem;color:rgba(139,91,199,0.8);line-height:1.8;">Richmond &middot; Fredericksburg &middot; Alexandria<br>Northern Virginia &middot; Stafford &middot; Spotsylvania</div>
+    </div>
+    <div>
+      <h4 style="font-family:'Raleway',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Contact Us</h4>
+      <a href="sms:+15403001414" style="display:inline-flex;align-items:center;gap:8px;border:2px solid #8B5BC7;border-radius:30px;padding:10px 22px;color:#ECEBEE;font-weight:600;font-size:0.9rem;text-decoration:none;margin-bottom:20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        (540) 300-1414
+      </a>
+      <div style="font-size:0.88rem;color:rgba(236,235,238,0.8);line-height:2.1;margin-bottom:12px;">
+        <div>Mon–Fri: 7 AM – 7 PM</div>
+        <div>Sat: 7 AM – 5 PM</div>
+        <div>Sun: 7 AM – 3:30 PM</div>
+      </div>
+      <a href="mailto:hello@validateyourvision.com" style="font-size:0.82rem;color:#8B5BC7;text-decoration:none;">hello@validateyourvision.com</a>
+    </div>
+    <div>
+      <h4 style="font-family:'Raleway',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Quick Links</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="/book.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Move Calculator</a>
+        <a href="/#services" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Services</a>
+        <a href="/locations/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Service Areas</a>
+        <a href="/blog/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Blog</a>
+        <a href="/policy.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Privacy &amp; Terms</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:18px 0 22px;">
+    <div style="display:flex;gap:20px;font-size:0.78rem;">
+      <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Privacy</a>
+      <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Terms</a>
+      <a href="sms:+15403001414" style="color:rgba(236,235,238,0.5);text-decoration:none;">Contact</a>
+    </div>
+    <p style="font-size:0.78rem;color:rgba(236,235,238,0.3);margin:0;">&copy; 2026 Validate Your Vision. All Rights Reserved.</p>
+  </div>
+  <style>@media(max-width:700px){footer>div:first-of-type{grid-template-columns:1fr!important}}</style>
+</footer>
 
-    input.addEventListener('input', () => {
-      const q = input.value.trim().toLowerCase();
-      let visible = 0;
-      cards.forEach(card => {
-        const text = (card.dataset.search + ' ' + card.textContent).toLowerCase();
-        const match = !q || text.includes(q);
-        card.hidden = !match;
-        if (match) visible++;
-      });
-      noResults.style.display = visible === 0 ? 'block' : 'none';
+<script>
+  // Search
+  const searchInput = document.getElementById('blog-search');
+  const allCards = document.querySelectorAll('.post-card, .featured-card');
+  const featuredSection = document.getElementById('featured-section');
+  const noResults = document.getElementById('no-results');
+
+  function filterCards() {
+    const q = searchInput.value.trim().toLowerCase();
+    const activeFilter = document.querySelector('.filter-pill.active').dataset.filter;
+    let visible = 0;
+
+    allCards.forEach(card => {
+      const searchText = ((card.dataset.search || '') + ' ' + card.textContent).toLowerCase();
+      const category = (card.dataset.category || '').toLowerCase();
+      const matchSearch = !q || searchText.includes(q);
+      const matchFilter = activeFilter === 'all' || category === activeFilter;
+      const show = matchSearch && matchFilter;
+      card.hidden = !show;
+      if (show) visible++;
     });
-  </script>
+
+    featuredSection.style.display = (featuredSection.querySelector('.featured-card').hidden) ? 'none' : 'block';
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', filterCards);
+
+  // Category pills
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      filterCards();
+    });
+  });
+</script>
 
 </body>
 </html>
