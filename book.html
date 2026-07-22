@@ -466,22 +466,22 @@
           <strong>3 movers. $199/hr.</strong> More hands means a faster move. A faster move means a lower final bill. Your crew doesn't start until you sign them in on move day -- you control the clock.
         </div>
 
-        <div class="crew-grid" style="max-width:320px;">
-          <div class="crew-card selected" id="card3" style="border-color:#8B5BC7;background:#f5f0ff;">
-            <div class="badge">Your Crew</div>
-            <div class="crew-icon">👥👤</div>
-            <div class="crew-title">3 Movers</div>
-            <div class="crew-rate">$199/hr</div>
-            <div class="crew-pros">
-              <div class="crew-pro">Full home &amp; apartment moves</div>
-              <div class="crew-pro">Finishes up to 40% faster</div>
-              <div class="crew-pro">Often cheaper total bill</div>
-              <div class="crew-pro">You sign them in on arrival</div>
+        <div style="max-width:480px;margin-top:24px;">
+          <div id="card3" class="crew-card selected" style="border:2px solid #8B5BC7;background:#f5f0ff;border-radius:16px;padding:32px 28px;position:relative;">
+            <div class="badge" style="position:absolute;top:16px;right:16px;">Your Crew</div>
+            <div style="font-size:2.5rem;margin-bottom:12px;">👥👤</div>
+            <div style="font-size:1.6rem;font-weight:800;color:#190E2A;margin-bottom:4px;">3 Movers</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#8B5BC7;margin-bottom:20px;">$199/hr</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Full home &amp; apartment moves</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Finishes up to 40% faster</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Often a lower total bill vs 2 movers</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> You sign them in on arrival -- you control the clock</div>
             </div>
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" onclick="selectCrew(3)" style="margin-top:28px;">CONTINUE &rarr;</button>
+        <button class="btn-continue" id="crewContinueBtn" onclick="selectCrew(3)" style="margin-top:28px;max-width:480px;width:100%;">CONTINUE &rarr;</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
@@ -953,20 +953,14 @@
 
   function selectCrew(n) {
     crewSize = n;
-    document.getElementById('card2').classList.toggle('selected', n === 2);
-    document.getElementById('card3').classList.toggle('selected', n === 3);
-    var btn = document.getElementById('crewContinueBtn');
-    btn.style.background = '#2563eb';
-    btn.style.boxShadow = '0 4px 16px rgba(37,99,235,0.4)';
-    btn.style.cursor = 'pointer';
+    const c3 = document.getElementById('card3');
+    if (c3) c3.classList.add('selected');
+    goToCalendar();
   }
 
   function goToCalendar() {
-    if (!crewSize) {
-      document.getElementById('card2').style.borderColor = '#ef4444';
-      document.getElementById('card3').style.borderColor = '#ef4444';
-      return;
-    }
+    crewSize = crewSize || 3;
+    if (!crewSize) return;
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
     document.getElementById('progressFill').style.width = '50%';
