@@ -1587,7 +1587,15 @@
       <!-- Nav links center -->
       <div class="nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
         <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Book Your Move</a>
-        <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services</a>
+        <div class="nav-dropdown">
+          <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services <span class="nav-dropdown-arrow">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="/same-day-movers.html">Same Day Moves</a>
+            <a href="#services">Local Moving</a>
+            <a href="#services">Packing Services</a>
+            <a href="#services">Senior Moving</a>
+          </div>
+        </div>
         <a href="#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Reviews</a>
         <a href="#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">FAQ</a>
         <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Blog</a>
@@ -1614,6 +1622,7 @@
   <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
     <a href="/book.html" onclick="toggleNav()">Book Your Move</a>
     <a href="#services" onclick="toggleNav()">Services</a>
+    <a href="/same-day-movers.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">-- Same Day Moves</a>
     <a href="#reviews" onclick="toggleNav()">Reviews</a>
     <a href="#faq-inner" onclick="toggleNav()">FAQ</a>
     <a href="/blog/" onclick="toggleNav()">Blog</a>
