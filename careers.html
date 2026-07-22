@@ -77,14 +77,14 @@
     }
     .hero-cta {
       display: inline-flex; align-items: center; gap: 10px;
-      background: var(--green); color: #fff;
+      background: #1d4ed8; color: #fff;
       padding: 16px 32px; border-radius: 10px;
       font-weight: 800; font-size: 1rem;
       letter-spacing: 0.04em; text-transform: uppercase;
       box-shadow: 0 6px 24px rgba(22,163,74,0.35);
       transition: background 0.2s, transform 0.15s;
     }
-    .hero-cta:hover { background: #15803d; transform: translateY(-2px); }
+    .hero-cta:hover { background: #1e40af; transform: translateY(-2px); }
     .hero-img-wrap {
       border-radius: 20px;
       overflow: hidden;
@@ -155,13 +155,13 @@
     .pos-title { font-weight: 800; font-size: 1.05rem; color: var(--txt); margin-bottom: 4px; }
     .pos-meta { font-size: 0.8rem; color: var(--muted); }
     .pos-apply {
-      background: var(--lv); color: #fff;
+      background: #1d4ed8; color: #fff;
       padding: 12px 24px; border-radius: 8px;
       font-weight: 700; font-size: 0.85rem;
       white-space: nowrap; flex-shrink: 0;
       transition: background 0.15s;
     }
-    .pos-apply:hover { background: #6d3fb5; }
+    .pos-apply:hover { background: #1e40af; }
     @media(max-width:600px){
       .position-card { flex-direction: column; align-items: flex-start; }
       .pos-apply { width: 100%; text-align: center; }
@@ -313,7 +313,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-eyebrow">Now Hiring · Fredericksburg, VA</p>
+      <p class="hero-eyebrow">Now Hiring · Richmond · Fredericksburg · Northern Virginia</p>
       <h1>Want to Work with an <span>Amazing Team?</span></h1>
       <p>We're a locally owned moving crew that takes pride in showing up, working hard, and treating every customer right. If that sounds like you, we'd love to have you.</p>
       <a href="#apply" class="hero-cta">Apply Now &rarr;</a>
@@ -374,8 +374,35 @@
     <div class="position-card">
       <div>
         <div class="pos-badge">Full Time / Part Time</div>
-        <div class="pos-title">Professional Mover</div>
-        <div class="pos-meta">Fredericksburg, VA &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Immediate Start</div>
+        <div class="pos-title">Crew Lead</div>
+        <div class="pos-meta">Richmond · Fredericksburg · Northern Virginia &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Immediate Start</div>
+      </div>
+      <a href="#apply" class="pos-apply">Apply Now</a>
+    </div>
+
+    <div class="position-card">
+      <div>
+        <div class="pos-badge">Full Time / Part Time</div>
+        <div class="pos-title">Crew Member</div>
+        <div class="pos-meta">Richmond · Fredericksburg · Northern Virginia &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Immediate Start</div>
+      </div>
+      <a href="#apply" class="pos-apply">Apply Now</a>
+    </div>
+
+    <div class="position-card">
+      <div>
+        <div class="pos-badge">Full Time / Part Time</div>
+        <div class="pos-title">Packing Lead</div>
+        <div class="pos-meta">Richmond · Fredericksburg · Northern Virginia &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Flexible Hours</div>
+      </div>
+      <a href="#apply" class="pos-apply">Apply Now</a>
+    </div>
+
+    <div class="position-card">
+      <div>
+        <div class="pos-badge">Full Time / Part Time</div>
+        <div class="pos-title">Packing Member</div>
+        <div class="pos-meta">Richmond · Fredericksburg · Northern Virginia &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Flexible Hours</div>
       </div>
       <a href="#apply" class="pos-apply">Apply Now</a>
     </div>
@@ -383,8 +410,8 @@
     <div class="position-card">
       <div>
         <div class="pos-badge">Part Time</div>
-        <div class="pos-title">Packing Specialist</div>
-        <div class="pos-meta">Fredericksburg, VA &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Flexible Hours</div>
+        <div class="pos-title">Part-Time Assistant</div>
+        <div class="pos-meta">Richmond · Fredericksburg · Northern Virginia &nbsp;·&nbsp; In-Person &nbsp;·&nbsp; Flexible Hours</div>
       </div>
       <a href="#apply" class="pos-apply">Apply Now</a>
     </div>
@@ -422,9 +449,11 @@
         <label>Position You're Interested In</label>
         <select name="position" required>
           <option value="" disabled selected>Select a position</option>
-          <option value="mover-fulltime">Professional Mover — Full Time</option>
-          <option value="mover-parttime">Professional Mover — Part Time</option>
-          <option value="packing">Packing Specialist</option>
+          <option value="crew-lead">Crew Lead</option>
+          <option value="crew-member">Crew Member</option>
+          <option value="packing-lead">Packing Lead</option>
+          <option value="packing-member">Packing Member</option>
+          <option value="assistant-parttime">Part-Time Assistant</option>
           <option value="both">Open to Both</option>
         </select>
       </div>
