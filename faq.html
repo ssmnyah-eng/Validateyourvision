@@ -240,6 +240,14 @@
   <h2>Browse by Topic</h2>
   <div class="cat-grid">
 
+    <div class="cat-card" onclick="openCategory('pricing')">
+      <img class="cat-img" src="/images/pexels-royal-moving-storage-1098629817-20706509.jpg" alt="Understanding moving costs" loading="lazy" />
+      <div class="cat-body">
+        <h3>Pricing</h3>
+        <p>How to compare movers, what our rate includes, tips, DIY vs. professional costs, and how to save money on your move.</p>
+      </div>
+    </div>
+
     <div class="cat-card" onclick="openCategory('moveday')">
       <img class="cat-img" src="/images/pexels-shvets-production-7203848.jpg" alt="Moving crew at work" loading="lazy" />
       <div class="cat-body">
@@ -343,6 +351,127 @@
 
 <script>
 const CATEGORIES = {
+  pricing: {
+    title: 'Pricing',
+    img: '/images/pexels-royal-moving-storage-1098629817-20706509.jpg',
+    imgAlt: 'VYV Moving crew loading a truck in Fredericksburg VA',
+    faqs: [
+      {
+        q: 'How do I shop movers\' pricing to get the best value?',
+        a: `<p>When comparing professional movers, get at least 3 quotes from licensed companies. This helps you establish a realistic cost range and budget more accurately.</p>
+<p style="margin-top:12px;font-weight:700;color:#190E2A;">Important questions to ask every mover you contact:</p>
+<ul style="margin-top:10px;">
+  <li>How many movers do I get for the hourly rate? <strong>This one matters most.</strong> A lower rate sometimes just means fewer movers — and a much slower move.</li>
+  <li>What is the hourly minimum?</li>
+  <li>After the minimum is met, how do you bill — full hours, 30-minute increments, 15-minute?</li>
+  <li>Do you charge a travel fee? How is it calculated?</li>
+  <li>If there's no travel fee, when does the clock start on move day?</li>
+  <li>Are taxes and credit card fees included in the hourly rate?</li>
+  <li>Do you charge extra for stairs?</li>
+  <li>Do you charge extra for specialty items like pianos, safes, or fragile pieces?</li>
+  <li>Are there charges for packing supplies?</li>
+  <li>Are there fees for heavy items?</li>
+</ul>
+<p style="margin-top:12px;">If you have a small move, some companies offer fixed-price options depending on what you're moving and how far. <a href="/calculator.html" style="color:#8B5BC7;font-weight:600;">Try our moving cost calculator</a> to get a quick estimate for your specific situation.</p>`
+      },
+      {
+        q: 'Why is there a travel fee and what does it cover?',
+        a: `<p>The travel fee covers the time and mileage for our crew and truck to get from our office to your first stop — and then from your final destination back to our office at the end of the job.</p>
+<p style="margin-top:10px;">It covers:</p>
+<ul>
+  <li>Mileage</li>
+  <li>Crew time in transit</li>
+  <li>Truck, fuel, and equipment</li>
+</ul>
+<p style="margin-top:10px;">The travel fee is set upfront as part of your quote and is based on distance — it does not change. You're never paying us for sitting in traffic. For most moves within 50 miles of Fredericksburg, the travel fee is <strong>$99</strong>.</p>
+<p style="margin-top:10px;">To get an accurate estimate including the travel fee for your move, <a href="/calculator.html" style="color:#8B5BC7;font-weight:600;">use our moving cost calculator</a>.</p>`
+      },
+      {
+        q: 'What does the hourly rate include?',
+        a: `<p>Your VYV Moving hourly rate includes:</p>
+<ul>
+  <li><strong>3 movers. Every time.</strong></li>
+  <li>All taxes and credit card fees — no surprise add-ons at checkout</li>
+  <li>Furniture assembly and disassembly</li>
+  <li>Shrink wrap, moving blankets, tape, and floor runners for protection</li>
+</ul>
+<p style="margin-top:10px;">What you see when you book is what you pay. No hidden line items.</p>`
+      },
+      {
+        q: 'What will I never pay for with VYV Moving?',
+        a: `<p>There are charges you'll never see on a VYV invoice:</p>
+<ul>
+  <li>Stair charges</li>
+  <li>Heavy item fees</li>
+  <li>After-hours charges</li>
+  <li>Tool fees</li>
+  <li>Fuel surcharges</li>
+</ul>
+<p style="margin-top:10px;">Our pricing is straightforward: hourly rate × hours worked + travel fee. That's it.</p>`
+      },
+      {
+        q: 'What is VYV Moving\'s hourly minimum?',
+        a: `<p>Our minimum is <strong>2 hours</strong>. After the 2-hour minimum is met, time is billed in <strong>15-minute increments</strong>. So if your job takes 2 hours and 45 minutes, you pay for 2 hours and 45 minutes — not a full 3 hours.</p>`
+      },
+      {
+        q: 'What forms of payment do you accept?',
+        a: `<p>We accept:</p>
+<ul>
+  <li>All major credit and debit cards (Visa, Mastercard, Amex, Discover)</li>
+  <li>Cash</li>
+</ul>
+<p style="margin-top:10px;">We do not accept checks. Your deposit is charged at booking and the remaining balance is due at the end of your move.</p>`
+      },
+      {
+        q: 'What is the average tip for movers?',
+        a: `<p>Tips are never required, but they mean a lot when the crew does great work. Like at a restaurant, most people tip somewhere between <strong>10–25%</strong> of the total move cost.</p>
+<p style="margin-top:10px;">You can tip in cash or add it to your card at the end — 100% goes directly to your crew. If tipping isn't in the budget, an honest online review that mentions your crew by name is the next best thing. It genuinely helps them and helps the business.</p>`
+      },
+      {
+        q: 'How can I reduce my moving expenses?',
+        a: `<p>A few things that make a real difference:</p>
+<ol style="margin-top:10px;">
+  <li><strong>Be ready before the crew arrives.</strong> Pack everything you can before move day. Boxes sealed and labeled = your crew loads faster = lower bill.</li>
+  <li><strong>Take down wall-mounted TVs yourself if you can.</strong> Home Depot sells good TV boxes. We can take them down, but you'll pay for the time.</li>
+  <li><strong>Downsize before you move.</strong> Less stuff = faster load = lower cost. Sell, donate, or toss anything you don't need at the new place.</li>
+  <li><strong>Book mid-week (Tuesday–Thursday).</strong> Our weekday rates are lower specifically to reward flexible customers.</li>
+  <li><strong>Don't just pick the lowest bid.</strong> A cheaper hourly rate with fewer movers often ends up costing more in hours. Always ask how many movers you get.</li>
+  <li><strong>Find free boxes.</strong> Nextdoor, Facebook Marketplace, and Buy Nothing groups often have free moving boxes from recent movers.</li>
+  <li><strong>Pack yourself if you have time.</strong> Professional packing is a great service, but it adds hours. If you pack ahead, you save money.</li>
+</ol>`
+      },
+      {
+        q: 'What is the average cost of a DIY move?',
+        a: `<p>DIY moves can save money, but come with real trade-offs:</p>
+<ul style="margin-top:10px;">
+  <li>A long, exhausting day (or days, depending on your home size)</li>
+  <li>Risk of injury or damage to your belongings</li>
+  <li>Asking favors from friends and family</li>
+  <li>Truck rental, gas, food for helpers</li>
+  <li>Supplies: boxes, tape, wrap, blankets</li>
+</ul>
+<p style="margin-top:12px;">For a local DIY move, most people spend between <strong>$500–$800</strong> once you factor everything in. That's not always far off from what professional movers cost — especially when you consider the time, stress, and risk involved.</p>
+<p style="margin-top:10px;">Use our <a href="/calculator.html" style="color:#8B5BC7;font-weight:600;">moving cost calculator</a> to compare your options side by side.</p>`
+      },
+      {
+        q: 'What is considered a long-distance move?',
+        a: `<p>A move is generally considered long-distance when it exceeds <strong>400–450 miles</strong>. Long-distance moves are typically billed by weight and mileage rather than hourly.</p>
+<p style="margin-top:10px;">VYV Moving currently focuses on <strong>local moves within Virginia</strong> — Fredericksburg, Stafford, Spotsylvania, Northern Virginia, Richmond, and surrounding areas. If your move is taking you out of state or across a long distance, text us and we'll be straight with you about whether we can help or give you a trusted referral.</p>`
+      },
+      {
+        q: 'What is the cost of a local professional move?',
+        a: `<p>Local move costs depend on a few factors:</p>
+<ul style="margin-top:10px;">
+  <li>Number of movers and hourly rate</li>
+  <li>How long the job takes</li>
+  <li>Distance between your locations (affects travel fee)</li>
+  <li>Volume and complexity of what's being moved</li>
+</ul>
+<p style="margin-top:12px;">Most local moves with professional movers run between <strong>$600–$1,800</strong>, depending on home size and moving speed. At VYV, your crew doesn't start billing until you check them in on move day — so you're always in control of the clock.</p>
+<p style="margin-top:10px;">Get a real estimate for your specific move with our <a href="/calculator.html" style="color:#8B5BC7;font-weight:600;">moving cost calculator</a>.</p>`
+      }
+    ]
+  },
   moveday: {
     title: 'What to Expect on My Move Day',
     img: '/images/pexels-shvets-production-7203848.jpg',
