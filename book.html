@@ -863,7 +863,7 @@
   // ── Rates by day-of-week (0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat)
   const RATES = {
     2: { 0:180, 1:165, 2:165, 3:170, 4:170, 5:180, 6:180 },
-    3: { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
+    3: { 0:220, 1:201, 2:199, 3:199, 4:199, 5:210, 6:220 }
   };
   // Days that always show "Few Left" (2=Tue, 3=Wed)
   const FEW_LEFT_DAYS = new Set([2, 3]);
@@ -1409,7 +1409,7 @@
   let packViewYear, packViewMonth, packSelectedDate = null, packSelectedTime = null;
   let addPackingService = false;
   // Packing uses same rates as 3 movers
-  const PACK_RATES = RATES[3]; // { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
+  const PACK_RATES = RATES[3]; // { 0:220, 1:201, 2:199, 3:199, 4:199, 5:210, 6:220 }
 
   function goToPackingStep() {
     document.getElementById('step4').classList.remove('active');
