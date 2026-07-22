@@ -624,10 +624,17 @@
     .mobile-drawer.open { transform: none; }
     .mobile-drawer a {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--tw);
       transition: color 0.25s;
+      padding: 8px 0;
+    }
+    .mobile-drawer a.m-sub {
+      font-size: 0.95rem;
+      opacity: 0.8;
+      padding-left: 20px;
+      font-weight: 600;
     }
     .mobile-drawer a:hover { color: var(--lv); }
 
@@ -1658,13 +1665,13 @@
   <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
     <a href="/" onclick="toggleNav()">Home</a>
     <a href="/#services" onclick="toggleNav()">Services</a>
-    <a href="/calculator.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Moving Calculator</a>
-    <a href="/locations/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Service Areas</a>
+    <a href="/calculator.html" onclick="toggleNav()" class="m-sub">Moving Calculator</a>
+    <a href="/locations/" onclick="toggleNav()" class="m-sub">Service Areas</a>
     <a href="/#reviews" onclick="toggleNav()">Reviews</a>
     <a href="/contact.html" onclick="toggleNav()">Contact</a>
     <a href="/blog/" onclick="toggleNav()">Resources</a>
-    <a href="/blog/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Blog</a>
-    <a href="/faq.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">FAQ</a>
+    <a href="/blog/" onclick="toggleNav()" class="m-sub">Blog</a>
+    <a href="/faq.html" onclick="toggleNav()" class="m-sub">FAQ</a>
     <a href="/careers.html" onclick="toggleNav()">Careers</a>
     <a href="sms:+15403001414" onclick="toggleNav()">(540) 300-1414 — Text</a>
     <a href="/book.html#reservation" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
