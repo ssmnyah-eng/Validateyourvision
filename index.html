@@ -2608,17 +2608,33 @@
     async function handleLeadFormSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('lf-submit');
-      btn.disabled = true; btn.textContent = 'Going…';
       const fd = new FormData(e.target);
 
-      // Build redirect URL immediately -- don't wait on Formspree
+      // Validate all fields
+      const fields = [
+        { id: 'lf-from',  val: fd.get('moving_from') },
+        { id: 'lf-to',    val: fd.get('moving_to') },
+        { id: 'lf-name',  val: fd.get('name') },
+        { id: 'lf-email', val: fd.get('email') },
+        { id: 'lf-phone', val: fd.get('phone') },
+      ];
+      const empty = fields.filter(f => !f.val || !f.val.trim());
+      empty.forEach(f => {
+        const el = document.getElementById(f.id);
+        if (el) { el.style.borderColor = '#ef4444'; el.addEventListener('input', () => el.style.borderColor = 'rgba(255,255,255,0.12)', { once: true }); }
+      });
+      if (empty.length) { document.getElementById(empty[0].id).focus(); return; }
+
+      btn.disabled = true; btn.textContent = 'Going…';
+
+      // Build redirect URL -- skip to calendar step
       const params = new URLSearchParams();
-      params.set('name', fd.get('name') || '');
-      params.set('email', fd.get('email') || '');
-      params.set('phone', fd.get('phone') || '');
-      params.set('from', fd.get('moving_from') || '');
-      params.set('to', fd.get('moving_to') || '');
-      params.set('skip', 'map');
+      params.set('name', fd.get('name').trim());
+      params.set('email', fd.get('email').trim());
+      params.set('phone', fd.get('phone').trim());
+      params.set('from', fd.get('moving_from').trim());
+      params.set('to', fd.get('moving_to').trim());
+      params.set('skip', 'calendar');
       const dest = '/book.html?' + params.toString();
 
       // Fire Formspree in background, don't block redirect

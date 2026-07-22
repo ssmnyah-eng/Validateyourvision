@@ -901,15 +901,15 @@
       setVal('s0-from',  from);
       setVal('s0-to',    to);
 
-      const skipToMap = p.get('skip') === 'map';
+      const skipToCalendar = p.get('skip') === 'calendar' || p.get('skip') === 'map';
       document.addEventListener('DOMContentLoaded', function() {
         sendLead(name, email, phone, from, to);
         initStops();
         document.getElementById('step0').classList.remove('active');
-        if (skipToMap) {
-          // Auto-select 3-man crew and go straight to map step
+        document.getElementById('step1').classList.remove('active');
+        if (skipToCalendar) {
+          // Auto-select 3-man crew and go straight to calendar/date step
           crewSize = 3;
-          document.getElementById('step1').classList.remove('active');
           document.getElementById('step2').classList.add('active');
           updateProgress(2);
         } else {
