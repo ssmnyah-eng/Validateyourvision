@@ -1342,6 +1342,8 @@
     attachPlaces('s0-from', null);
     attachPlaces('s0-to', null);
     attachPlacesToStops();
+    // Re-attach in case stops were initialized before Google loaded
+    setTimeout(attachPlacesToStops, 300);
   }
 
   function setMapSrc(from, to) {
