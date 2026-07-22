@@ -761,6 +761,10 @@
               <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
             </div>
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
+              <span>Move deposit</span>
+              <span style="font-weight:700;color:#190E2A;" id="summary-move-deposit">$250</span>
+            </div>
             <span id="summary-est-hours" style="display:none;"></span>
             <span id="summary-est-labor" style="display:none;"></span>
             <span id="summary-est-total" style="display:none;"></span>
@@ -771,16 +775,20 @@
                 <span>Hourly rate (3 packers, 2 hr min)</span>
                 <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
               </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
+                <span>Packing deposit</span>
+                <span style="font-weight:700;color:#190E2A;">$250</span>
+              </div>
             </div>
 
             <hr style="border:none;border-top:1px solid #e5e7eb;margin:14px 0;" />
 
-            <!-- Deposit due today (styled like 3MM) -->
+            <!-- Deposit due today -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <span style="font-size:1rem;font-weight:700;color:#190E2A;">Deposit due today:</span>
+              <span style="font-size:1rem;font-weight:700;color:#190E2A;">Due today:</span>
               <span style="font-weight:800;color:#190E2A;font-size:1.2rem;" id="summary-deposit-amount">--</span>
             </div>
-            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note">Secures your moving date. Applied to your final balance on move day.</div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note">Deposits secure your date(s) and are applied to your final balance.</div>
 
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
@@ -899,7 +907,7 @@
 
         <!-- PAY BUTTON -->
         <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" disabled style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);opacity:0.5;cursor:not-allowed;transition:opacity 0.2s;">
-          PAY <span id="btn-deposit-amount">$250 DEPOSIT</span> AND RESERVE
+          PAY DEPOSIT AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">
           Your deposit secures your moving date and is fully applied toward your final balance. The remaining balance is due on move day.
@@ -1482,6 +1490,8 @@
     addPackingService = document.getElementById('addPackingCheck').checked;
     document.getElementById('packingDetail').style.display = addPackingService ? 'block' : 'none';
     document.getElementById('packingToggleLabel').style.borderColor = addPackingService ? '#8B5BC7' : '#ede6ff';
+    document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
+    updateDepositDisplay();
   }
 
   function changePackMonth(delta) {
@@ -1582,15 +1592,22 @@
     return `${wh} hr ${mn} min`;
   }
 
-  let depositAmount = 250; // flat deposit -- $250 within 50 miles of Fredericksburg, $300 beyond
+  let moveDeposit = 250;  // $250 move deposit (within 50 mi), $300 beyond
+  let packDeposit = 250;  // always $250
+  let depositAmount = 250; // total due today (move + packing if selected)
 
-  function setDepositFromMiles(miles) {
-    depositAmount = miles > 50 ? 300 : 250;
+  function updateDepositDisplay() {
+    depositAmount = moveDeposit + (addPackingService ? packDeposit : 0);
     document.getElementById('summary-deposit-amount').textContent = `$${depositAmount}`;
-    const btnSpan = document.getElementById('btn-deposit-amount');
-    if (btnSpan) btnSpan.textContent = `$${depositAmount} DEPOSIT`;
     const sbDep = document.getElementById('sb-deposit-amount');
     if (sbDep) sbDep.textContent = `$${depositAmount}`;
+    const moveDepEl = document.getElementById('summary-move-deposit');
+    if (moveDepEl) moveDepEl.textContent = `$${moveDeposit}`;
+  }
+
+  function setDepositFromMiles(miles) {
+    moveDeposit = miles > 50 ? 300 : 250;
+    updateDepositDisplay();
   }
 
   // ── Stripe setup ──
