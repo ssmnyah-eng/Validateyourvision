@@ -383,7 +383,7 @@
       <!-- Step 5 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
         <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">5</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day -- we show up, you relax</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day: we show up, you relax</p>
       </div>
     </div>
   </div>
@@ -405,7 +405,7 @@
 
       <!-- ══ STEP 0: Contact / Address Capture ══ -->
       <div class="step" id="step0">
-        <div class="step-label">Step 1 of 7 -- Your Info</div>
+        <div class="step-label">Step 1 of 7: Your Info</div>
         <h1>Let's start your reservation</h1>
         <p class="subtitle">Tell us a little about your move and how to reach you.</p>
 
@@ -458,12 +458,12 @@
 
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step active" id="step1">
-        <div class="step-label">Step 1 of 3 -- Your Crew</div>
+        <div class="step-label">Step 1 of 3: Your Crew</div>
         <h1>Your crew is ready.</h1>
-        <p class="subtitle">All moves are handled by our 3-mover crew -- the fastest way to get you moved and often the lowest total bill.</p>
+        <p class="subtitle">All moves are handled by our 3-mover crew, the fastest way to get you moved and often the lowest total bill.</p>
 
         <div class="why-3" style="max-width:480px;">
-          <strong>3 movers. $199/hr.</strong> More hands means a faster move. A faster move means a lower final bill. Your crew doesn't start until you sign them in on move day -- you control the clock.
+          <strong>3 movers. $199/hr.</strong> More hands means a faster move. A faster move means a lower final bill. Your crew doesn't start until you sign them in on move day. You control the clock..
         </div>
 
         <div style="max-width:480px;margin-top:24px;">
@@ -476,7 +476,7 @@
               <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Full home &amp; apartment moves</div>
               <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Finishes up to 40% faster</div>
               <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Often a lower total bill vs 2 movers</div>
-              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> You sign them in on arrival -- you control the clock</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> You sign them in on arrival. You control the clock.</div>
             </div>
           </div>
         </div>
@@ -486,7 +486,7 @@
 
       <!-- ══ STEP 2: Calendar ══ -->
       <div class="step" id="step2">
-        <div class="step-label">Step 2 of 3 -- Move Date</div>
+        <div class="step-label">Step 2 of 3: Move Date</div>
         <h1>What date would you like to move?</h1>
         <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
 
@@ -533,7 +533,7 @@
 
       <!-- ══ STEP 3: Move Details / Stops ══ -->
       <div class="step" id="step3">
-        <div class="step-label">Step 3 of 3 -- Move Details</div>
+        <div class="step-label">Step 3 of 3: Move Details</div>
         <h1>Where are you moving?</h1>
         <p class="subtitle">Tell us about each location so we can plan your move accurately.</p>
 
@@ -645,7 +645,7 @@
                 <span>&#10003;</span> Each room organized exactly how you want it.
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
-                <span>&#10003;</span> Kick your feet up and relax -- we handle the boxes.
+                <span>&#10003;</span> Kick your feet up and relax. We handle the boxes..
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;font-size:0.82rem;color:#16a34a;font-weight:600;">
                 <span>&#10003;</span> Want your closet color coordinated? No problem.
@@ -1175,7 +1175,7 @@
       card.className = 'stop-card';
       card.innerHTML = `
         <div class="stop-header">
-          <div class="stop-title">Stop ${i + 1} -- <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
+          <div class="stop-title">Stop ${i + 1}: <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
           <div class="stop-controls">
             <button class="stop-ctrl-btn" title="Move up" onclick="moveStop(${i},-1)" ${!canUp?'disabled style="opacity:0.3;cursor:default;"':''}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
