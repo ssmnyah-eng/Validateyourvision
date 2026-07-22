@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virginia Moving Guides — Blog Portal</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --dp: #190E2A; --mp: #210D46; --ap: #4A237A; --lv: #8B5BC7;
+      --tw: #ECEBEE; --muted: rgba(236,235,238,0.45);
+      --border: rgba(139,91,199,0.25); --card: rgba(255,255,255,0.04);
+      --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+    }
+    body { font-family: 'Poppins', sans-serif; background: #0b0715; color: var(--tw); min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; background: linear-gradient(135deg,#190E2A,#210D46);
+    }
+    .login-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 44px 38px; width: 100%; max-width: 360px; text-align: center;
+    }
+    .login-logo { font-size: 2.2rem; margin-bottom: 6px; }
+    .login-box h1 { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+    .login-box p { font-size: 0.78rem; color: var(--muted); margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; padding: 13px 16px; border: 1.5px solid var(--border);
+      border-radius: 12px; background: rgba(255,255,255,0.06); color: var(--tw);
+      font-family: 'Poppins',sans-serif; font-size: 0.95rem; outline: none;
+      margin-bottom: 10px;
+    }
+    .login-box input:focus { border-color: var(--lv); }
+    .login-box input::placeholder { color: var(--muted); }
+    #login-err { font-size: 0.78rem; color: var(--red); min-height: 18px; margin-bottom: 8px; }
+    .login-hint { font-size: 0.72rem; color: var(--muted); margin-top: 16px; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: 'Poppins',sans-serif; font-size: 0.85rem; font-weight: 600;
+      transition: opacity .18s, transform .12s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: var(--lv); color: #fff; }
+    .btn-ghost { background: var(--card); border: 1px solid var(--border); color: var(--tw); }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-success { background: var(--green); color: #fff; }
+    .btn-sm { padding: 7px 14px; font-size: 0.78rem; }
+    .btn-full { width: 100%; justify-content: center; }
+
+    /* ── APP LAYOUT ── */
+    #app { display: none; min-height: 100vh; }
+
+    /* sidebar */
+    .sidebar {
+      position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+      background: rgba(255,255,255,0.03); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; padding: 24px 0; z-index: 100;
+    }
+    .sidebar-brand {
+      padding: 0 20px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+    }
+    .sidebar-brand span { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+    .sidebar-brand strong { display: block; font-size: 0.9rem; margin-top: 2px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+      border-radius: 0; cursor: pointer; font-size: 0.84rem; color: var(--muted);
+      transition: color .15s, background .15s; border-left: 3px solid transparent;
+    }
+    .nav-item:hover { color: var(--tw); background: rgba(139,91,199,0.08); }
+    .nav-item.active { color: var(--lv); border-left-color: var(--lv); background: rgba(139,91,199,0.12); }
+    .nav-icon { width: 18px; text-align: center; flex-shrink: 0; }
+    .sidebar-bottom { margin-top: auto; padding: 16px 20px; border-top: 1px solid var(--border); }
+    .sidebar-bottom button { background: none; border: none; color: var(--muted); font-size: 0.78rem; cursor: pointer; font-family: inherit; }
+    .sidebar-bottom button:hover { color: var(--tw); }
+
+    /* main content */
+    .main { margin-left: 220px; padding: 36px 40px; min-height: 100vh; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .page-header h1 { font-size: 1.4rem; font-weight: 800; }
+    .page-header p { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+
+    /* ── POSTS LIST ── */
+    .posts-grid { display: flex; flex-direction: column; gap: 12px; }
+    .post-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 24px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .post-thumb {
+      width: 80px; height: 60px; border-radius: 8px; object-fit: cover;
+      background: var(--ap); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .post-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .post-info { flex: 1; min-width: 0; }
+    .post-info h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .post-meta { font-size: 0.74rem; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+    .post-slug { font-family: monospace; font-size: 0.72rem; color: var(--lv); opacity: .8; }
+    .post-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+    /* ── FORM ── */
+    .form-section { margin-bottom: 32px; }
+    .form-section-title {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--lv); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid.full { grid-template-columns: 1fr; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field.span2 { grid-column: 1 / -1; }
+    label { font-size: 0.76rem; font-weight: 600; color: var(--muted); }
+    label .req { color: var(--lv); margin-left: 2px; }
+    input[type=text], input[type=date], input[type=url], select, textarea {
+      background: rgba(255,255,255,0.05); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--tw); font-family: 'Poppins',sans-serif;
+      font-size: 0.86rem; padding: 11px 14px; outline: none; width: 100%;
+      transition: border-color .15s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--lv); }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    select option { background: #210D46; }
+    textarea { resize: vertical; min-height: 120px; line-height: 1.55; }
+    .field-hint { font-size: 0.7rem; color: var(--muted); }
+
+    /* body editor tabs */
+    .editor-tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border); }
+    .editor-tab {
+      padding: 8px 16px; font-size: 0.78rem; cursor: pointer; border-bottom: 2px solid transparent;
+      color: var(--muted); font-weight: 600; transition: color .15s;
+    }
+    .editor-tab.active { color: var(--lv); border-bottom-color: var(--lv); }
+    .editor-pane { display: none; }
+    .editor-pane.active { display: block; }
+    .preview-box {
+      background: rgba(255,255,255,0.03); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 20px; min-height: 200px; line-height: 1.7;
+      font-size: 0.9rem;
+    }
+    .preview-box h1, .preview-box h2, .preview-box h3 { margin: 16px 0 8px; }
+    .preview-box p { margin-bottom: 10px; }
+    .preview-box ul, .preview-box ol { margin: 8px 0 10px 22px; }
+    .preview-box li { margin-bottom: 4px; }
+    .preview-box table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    .preview-box td, .preview-box th { border: 1px solid var(--border); padding: 8px 12px; font-size: 0.84rem; }
+    .preview-box th { background: rgba(139,91,199,.15); }
+
+    /* FAQ builder */
+    .faq-item {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px; margin-bottom: 10px;
+    }
+    .faq-item-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .faq-item-label { font-size: 0.74rem; font-weight: 700; color: var(--lv); }
+    .faq-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; }
+    .faq-remove:hover { color: var(--red); }
+    .faq-item input { margin-bottom: 8px; }
+    #add-faq-btn { margin-top: 4px; }
+
+    /* status toast */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      padding: 13px 22px; border-radius: 12px; font-size: 0.84rem; font-weight: 600;
+      background: var(--green); color: #fff;
+      transform: translateY(80px); opacity: 0; transition: all .3s;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.error { background: var(--red); }
+    #toast.warn { background: var(--yellow); color: #1a1a1a; }
+
+    /* settings */
+    .settings-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; margin-bottom: 16px;
+    }
+    .settings-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; }
+
+    /* spinner */
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* empty state */
+    .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .empty-icon { font-size: 3rem; margin-bottom: 14px; }
+    .empty h2 { font-size: 1.1rem; font-weight: 700; color: var(--tw); margin-bottom: 6px; }
+    .empty p { font-size: 0.84rem; margin-bottom: 20px; }
+
+    /* confirm modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.7);
+      display: flex; align-items: center; justify-content: center; z-index: 500;
+    }
+    .modal {
+      background: #1a0d30; border: 1px solid var(--border); border-radius: 16px;
+      padding: 30px; max-width: 380px; width: 90%; text-align: center;
+    }
+    .modal h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .modal p { font-size: 0.83rem; color: var(--muted); margin-bottom: 22px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: center; }
+
+    /* seo score */
+    .seo-bar { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .seo-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; }
+    .seo-bar-fill { height: 100%; border-radius: 3px; transition: width .4s; }
+    .seo-label { font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+
+    /* image preview */
+    .img-preview { margin-top: 6px; width: 100%; max-height: 120px; object-fit: cover; border-radius: 8px; display: none; }
+    .img-preview.show { display: block; }
+
+    /* char counter */
+    .char-count { font-size: 0.7rem; color: var(--muted); text-align: right; margin-top: 3px; }
+    .char-count.over { color: var(--red); }
+
+    @media (max-width: 900px) {
+      .sidebar { width: 60px; }
+      .sidebar-brand, .nav-item span, .sidebar-bottom button { display: none; }
+      .nav-item { justify-content: center; padding: 14px; }
+      .main { margin-left: 60px; padding: 24px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.span2 { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── LOGIN ─── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">✍️</div>
+    <h1>Virginia Moving Guides</h1>
+    <p>Blog Portal — Admin Access Only</p>
+    <input type="password" id="login-pass" placeholder="Enter password" />
+    <div id="login-err"></div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Sign In</button>
+    <p class="login-hint">First time? Default password is <strong>vyv2024</strong>. Change it in Settings.</p>
+  </div>
+</div>
+
+<!-- ─── APP ─── -->
+<div id="app">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span>VYV Moving</span>
+      <strong>Blog Portal</strong>
+    </div>
+    <div class="nav-item active" data-page="posts" onclick="nav(this)">
+      <span class="nav-icon">📝</span><span>All Posts</span>
+    </div>
+    <div class="nav-item" data-page="new" onclick="nav(this)">
+      <span class="nav-icon">➕</span><span>New Post</span>
+    </div>
+    <div class="nav-item" data-page="settings" onclick="nav(this)">
+      <span class="nav-icon">⚙️</span><span>Settings</span>
+    </div>
+    <div class="sidebar-bottom">
+      <button onclick="logout()">← Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- POSTS PAGE -->
+    <div id="page-posts">
+      <div class="page-header">
+        <div>
+          <h1>Virginia Moving Cost &amp; Planning Guides</h1>
+          <p>All published blog posts for validateyourvision.com</p>
+        </div>
+        <button class="btn btn-primary" onclick="nav(document.querySelector('[data-page=new]'))">+ New Post</button>
+      </div>
+      <div id="posts-list">
+        <div class="empty">
+          <div class="spinner" style="margin:0 auto 16px"></div>
+          <p>Loading posts…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW / EDIT PAGE -->
+    <div id="page-new" style="display:none">
+      <div class="page-header">
+        <div>
+          <h1 id="editor-title">New Blog Post</h1>
+          <p>Fill out all fields below. SEO fields power your Google rankings.</p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+          <button class="btn btn-primary" id="save-btn" onclick="savePost()">
+            <span id="save-label">Publish Post</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="post-form" onsubmit="return false">
+
+        <!-- SEO section -->
+        <div class="form-section">
+          <div class="form-section-title">SEO &amp; Metadata</div>
+          <div class="form-grid">
+            <div class="field span2">
+              <label>Page Title (browser tab &amp; Google headline)<span class="req">*</span></label>
+              <input type="text" id="f-title" placeholder="How Much Do Movers Cost in Richmond VA? (2026)" maxlength="65" oninput="updateChars('f-title','title-chars',65);updateSlug();updateSeoScore()" />
+              <div class="char-count" id="title-chars">0 / 65</div>
+            </div>
+            <div class="field span2">
+              <label>Meta Description (Google snippet — 150-160 characters ideal)<span class="req">*</span></label>
+              <textarea id="f-desc" rows="2" placeholder="Concise summary of what this post answers. Write for the person searching, not for robots." maxlength="170" oninput="updateChars('f-desc','desc-chars',160);updateSeoScore()"></textarea>
+              <div class="char-count" id="desc-chars">0 / 160</div>
+            </div>
+            <div class="field">
+              <label>Focus Keyword</label>
+              <input type="text" id="f-keyword" placeholder="movers cost richmond va" oninput="updateSeoScore()" />
+              <div class="field-hint">Main phrase you want this post to rank for</div>
+            </div>
+            <div class="field">
+              <label>Publish Date<span class="req">*</span></label>
+              <input type="date" id="f-date" />
+            </div>
+            <div class="field span2">
+              <label>URL Slug<span class="req">*</span></label>
+              <input type="text" id="f-slug" placeholder="how-much-do-movers-cost-richmond-va" oninput="sanitizeSlug(this)" />
+              <div class="field-hint">Will be published at: <code id="slug-preview" style="color:var(--lv)">validateyourvision.com/blog/</code></div>
+            </div>
+          </div>
+
+          <!-- SEO Score -->
+          <div style="margin-top:16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)">SEO Score</span>
+              <span id="seo-score-label" class="seo-label">—</span>
+            </div>
+            <div class="seo-bar">
+              <div class="seo-bar-track"><div class="seo-bar-fill" id="seo-bar" style="width:0%;background:var(--muted)"></div></div>
+            </div>
+            <ul id="seo-tips" style="margin-top:10px;padding-left:16px;font-size:.72rem;color:var(--muted);list-style:disc;line-height:1.8"></ul>
+          </div>
+        </div>
+
+        <!-- Images section -->
+        <div class="form-section">
+          <div class="form-section-title">Images</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Hero / OG Image URL<span class="req">*</span></label>
+              <input type="url" id="f-hero" placeholder="https://..." oninput="previewImg('f-hero','hero-preview')" />
+              <img id="hero-preview" class="img-preview" alt="hero preview" />
+              <div class="field-hint">Use a Pexels or uploaded image URL. 1200×630 ideal for social sharing.</div>
+            </div>
+            <div class="field">
+              <label>Thumbnail Image URL</label>
+              <input type="url" id="f-thumb" placeholder="https://... (optional, defaults to hero)" oninput="previewImg('f-thumb','thumb-preview')" />
+              <img id="thumb-preview" class="img-preview" alt="thumb preview" />
+              <div class="field-hint">Shown in the blog listing card. Same as hero if left blank.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body section -->
+        <div class="form-section">
+          <div class="form-section-title">Post Body</div>
+          <div class="editor-tabs">
+            <div class="editor-tab active" onclick="switchTab(this,'write')">Write HTML</div>
+            <div class="editor-tab" onclick="switchTab(this,'preview')">Preview</div>
+            <div class="editor-tab" onclick="switchTab(this,'help')">Formatting Help</div>
+          </div>
+          <div class="editor-pane active" id="tab-write">
+            <textarea id="f-body" rows="22" placeholder="Write your post in HTML. Use &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;strong&gt;, &lt;table&gt; tags. See Formatting Help tab for quick reference." style="border-radius:0 0 10px 10px;border-top:none" oninput="updateSeoScore()"></textarea>
+          </div>
+          <div class="editor-pane" id="tab-preview">
+            <div class="preview-box" id="body-preview"></div>
+          </div>
+          <div class="editor-pane" id="tab-help">
+            <div class="preview-box" style="font-size:.8rem;line-height:1.9">
+              <strong>Headings:</strong><br>
+              <code>&lt;h2&gt;Section Title&lt;/h2&gt;</code><br>
+              <code>&lt;h3&gt;Sub-section&lt;/h3&gt;</code><br><br>
+              <strong>Paragraphs &amp; text:</strong><br>
+              <code>&lt;p&gt;Your paragraph text here.&lt;/p&gt;</code><br>
+              <code>&lt;strong&gt;bold&lt;/strong&gt;</code> &nbsp; <code>&lt;em&gt;italic&lt;/em&gt;</code><br><br>
+              <strong>Lists:</strong><br>
+              <code>&lt;ul&gt;&lt;li&gt;Item one&lt;/li&gt;&lt;li&gt;Item two&lt;/li&gt;&lt;/ul&gt;</code><br><br>
+              <strong>Numbered list:</strong><br>
+              <code>&lt;ol&gt;&lt;li&gt;Step one&lt;/li&gt;&lt;/ol&gt;</code><br><br>
+              <strong>Callout box (tip):</strong><br>
+              <code>&lt;div class="callout"&gt;Pro tip: text here.&lt;/div&gt;</code><br><br>
+              <strong>Table:</strong><br>
+              <code>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Col 1&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Data&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</code><br><br>
+              <strong>Internal link:</strong><br>
+              <code>&lt;a href="/book.html"&gt;Get a free quote&lt;/a&gt;</code><br><br>
+              <strong>Image:</strong><br>
+              <code>&lt;img src="https://..." alt="description" style="width:100%;border-radius:12px;margin:16px 0"&gt;</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ section -->
+        <div class="form-section">
+          <div class="form-section-title">FAQ Section (boosts Google rich results)</div>
+          <div id="faq-list"></div>
+          <button class="btn btn-ghost btn-sm" id="add-faq-btn" type="button" onclick="addFaq()">+ Add FAQ Item</button>
+        </div>
+
+        <!-- CTA section -->
+        <div class="form-section">
+          <div class="form-section-title">Call to Action</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>CTA Button Text</label>
+              <input type="text" id="f-cta-text" placeholder="Get a Free Moving Quote" />
+            </div>
+            <div class="field">
+              <label>CTA Button Link</label>
+              <input type="text" id="f-cta-link" placeholder="/book.html" />
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="page-settings" style="display:none">
+      <div class="page-header"><div><h1>Settings</h1><p>Portal configuration</p></div></div>
+
+      <div class="settings-card">
+        <h3>🔑 GitHub Access Token</h3>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px">Required to save blog posts to your GitHub repository. Generate a token at <strong>GitHub → Settings → Developer Settings → Personal Access Tokens → Fine-grained tokens</strong>. Grant read &amp; write access to <em>Contents</em> for the validateyourvision repository.</p>
+        <div class="field" style="margin-bottom:14px">
+          <label>Personal Access Token</label>
+          <input type="password" id="s-token" placeholder="github_pat_..." />
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveToken()">Save Token</button>
+        <span id="token-status" style="font-size:.75rem;margin-left:10px;color:var(--green)"></span>
+      </div>
+
+      <div class="settings-card">
+        <h3>🔒 Change Password</h3>
+        <div class="form-grid" style="max-width:400px">
+          <div class="field">
+            <label>Current Password</label>
+            <input type="password" id="s-old-pass" placeholder="Current password" />
+          </div>
+          <div class="field">
+            <label>New Password</label>
+            <input type="password" id="s-new-pass" placeholder="New password" />
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="margin-top:14px" onclick="changePassword()">Update Password</button>
+      </div>
+
+      <div class="settings-card">
+        <h3>ℹ️ How to Use</h3>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.8">
+          <strong style="color:var(--tw)">To create a new post:</strong> Click "New Post" in the sidebar. Fill in all fields, then click "Publish Post." The post is automatically saved to GitHub and will appear live on your site within a few minutes.<br><br>
+          <strong style="color:var(--tw)">To edit a post:</strong> Click the Edit button on any post in "All Posts." Change what you need, then click "Save Changes."<br><br>
+          <strong style="color:var(--tw)">Images:</strong> Upload photos to your GitHub repository's <code>/images/</code> folder, then paste the URL here like <code>https://validateyourvision.com/images/your-photo.jpg</code> — or use any public image URL from Pexels, etc.<br><br>
+          <strong style="color:var(--tw)">SEO:</strong> Each post automatically gets a JSON-LD schema block for Google rich results. The FAQ section generates FAQPage structured data that can appear as rich snippets in search.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirm-modal" style="display:none">
+  <div class="modal">
+    <h3 id="modal-title">Are you sure?</h3>
+    <p id="modal-body">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="modal-confirm-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────
+const REPO   = 'ssmnyah-eng/validateyourvision';
+const BRANCH = 'gh-pages';
+const SITE   = 'https://validateyourvision.com';
+const DEFAULT_PASS = 'vyv2024';
+
+// ─── AUTH ─────────────────────────────────────────────────
+function doLogin() {
+  const pass = document.getElementById('login-pass').value;
+  const stored = localStorage.getItem('blog_pass') || DEFAULT_PASS;
+  if (pass === stored) {
+    localStorage.setItem('blog_auth', '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadPosts();
+    loadSettings();
+  } else {
+    document.getElementById('login-err').textContent = 'Incorrect password.';
+  }
+}
+function logout() {
+  localStorage.removeItem('blog_auth');
+  location.reload();
+}
+document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+if (localStorage.getItem('blog_auth')) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadPosts();
+  loadSettings();
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────
+function nav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  const page = el.dataset.page;
+  document.querySelectorAll('.main > div[id^=page-]').forEach(p => p.style.display = 'none');
+  document.getElementById('page-' + page).style.display = 'block';
+  if (page === 'new' && !editingSlug) resetForm();
+  if (page === 'posts') loadPosts();
+  if (page === 'new') {
+    document.getElementById('editor-title').textContent = editingSlug ? 'Edit Post' : 'New Blog Post';
+    document.getElementById('save-label').textContent = editingSlug ? 'Save Changes' : 'Publish Post';
+  }
+}
+
+// ─── GITHUB API ───────────────────────────────────────────
+function ghToken() { return localStorage.getItem('gh_token') || ''; }
+
+async function ghGet(path) {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
+    headers: { Authorization: `token ${ghToken()}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) throw new Error(`GitHub ${r.status}: ${r.statusText}`);
+  return r.json();
+}
+
+async function ghPut(path, content, message, sha) {
+  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: BRANCH };
+  if (sha) body.sha = sha;
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: 'PUT', headers: { Authorization: `token ${ghToken()}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || `GitHub ${r.status}`); }
+  return r.json();
+}
+
+async function ghDelete(path, message, sha) {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: 'DELETE', headers: { Authorization: `token ${ghToken()}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, sha, branch: BRANCH })
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || `GitHub ${r.status}`); }
+}
+
+// ─── LOAD POSTS ───────────────────────────────────────────
+let postsCache = [];
+
+async function loadPosts() {
+  const el = document.getElementById('posts-list');
+  el.innerHTML = '<div class="empty"><div class="spinner" style="margin:0 auto 16px"></div><p>Loading posts from GitHub…</p></div>';
+  try {
+    if (!ghToken()) throw new Error('NO_TOKEN');
+    const files = await ghGet('blog');
+    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html');
+    postsCache = htmlFiles;
+    if (!htmlFiles.length) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">📄</div><h2>No posts yet</h2><p>Create your first blog post using the New Post button.</p></div>';
+      return;
+    }
+    // Fetch metadata for each post
+    const posts = await Promise.all(htmlFiles.map(f => fetchPostMeta(f)));
+    renderPosts(posts);
+  } catch(err) {
+    if (err.message === 'NO_TOKEN') {
+      el.innerHTML = `<div class="empty"><div class="empty-icon">🔑</div><h2>GitHub Token Required</h2><p>Go to <strong>Settings</strong> and enter your GitHub Personal Access Token to manage posts.</p><button class="btn btn-primary" onclick="nav(document.querySelector('[data-page=settings]'))">Open Settings</button></div>`;
+    } else {
+      el.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><h2>Could not load posts</h2><p>${err.message}</p><button class="btn btn-ghost btn-sm" onclick="loadPosts()">Retry</button></div>`;
+    }
+  }
+}
+
+async function fetchPostMeta(fileInfo) {
+  try {
+    const data = await ghGet(`blog/${fileInfo.name}`);
+    const html = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    const titleM = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    const descM  = html.match(/<meta name="description" content="([^"]+)"/i);
+    const imgM   = html.match(/property="og:image" content="([^"]+)"/i);
+    const dateM  = html.match(/"datePublished"\s*:\s*"([^"]+)"/);
+    return {
+      slug: fileInfo.name.replace('.html',''),
+      filename: fileInfo.name,
+      sha: data.sha,
+      title: titleM ? titleM[1] : fileInfo.name,
+      desc: descM ? descM[1] : '',
+      image: imgM ? imgM[1] : '',
+      date: dateM ? dateM[1] : '',
+      raw: html
+    };
+  } catch {
+    return { slug: fileInfo.name.replace('.html',''), filename: fileInfo.name, sha: fileInfo.sha, title: fileInfo.name, desc: '', image: '', date: '', raw: '' };
+  }
+}
+
+function renderPosts(posts) {
+  const el = document.getElementById('posts-list');
+  posts.sort((a,b) => b.date.localeCompare(a.date));
+  el.innerHTML = `<div class="posts-grid">${posts.map(p => `
+    <div class="post-card">
+      <div class="post-thumb">
+        ${p.image ? `<img src="${p.image}" alt="" onerror="this.style.display='none'">` : '📄'}
+      </div>
+      <div class="post-info">
+        <h3>${escHtml(p.title)}</h3>
+        <div class="post-meta">
+          <span>${p.date || 'No date'}</span>
+          <span class="post-slug">blog/${p.slug}.html</span>
+        </div>
+        <div class="post-meta" style="margin-top:3px">${escHtml(p.desc.substring(0,100))}${p.desc.length>100?'…':''}</div>
+      </div>
+      <div class="post-actions">
+        <a href="${SITE}/blog/${p.slug}.html" target="_blank" class="btn btn-ghost btn-sm">View ↗</a>
+        <button class="btn btn-ghost btn-sm" onclick="editPost('${p.slug}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDelete('${p.slug}','${p.sha}')">Delete</button>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+// ─── EDIT POST ────────────────────────────────────────────
+let editingSlug = null;
+let editingSha  = null;
+
+async function editPost(slug) {
+  showToast('Loading post…', 'warn');
+  try {
+    const data = await ghGet(`blog/${slug}.html`);
+    const html = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    editingSlug = slug;
+    editingSha  = data.sha;
+    parseAndFill(html, slug);
+    nav(document.querySelector('[data-page=new]'));
+    document.getElementById('editor-title').textContent = 'Edit Post';
+    document.getElementById('save-label').textContent = 'Save Changes';
+    toast('Post loaded. Make your changes.','');
+  } catch(e) {
+    showToast('Could not load post: ' + e.message, 'error');
+  }
+}
+
+function parseAndFill(html, slug) {
+  const get = (re) => { const m = html.match(re); return m ? m[1] : ''; };
+  document.getElementById('f-title').value   = get(/<title[^>]*>([^<]+)<\/title>/i);
+  document.getElementById('f-desc').value    = get(/<meta name="description" content="([^"]+)"/i);
+  document.getElementById('f-slug').value    = slug;
+  document.getElementById('f-hero').value    = get(/property="og:image" content="([^"]+)"/i);
+  document.getElementById('f-thumb').value   = get(/property="og:image" content="([^"]+)"/i);
+  document.getElementById('f-keyword').value = get(/<meta name="keywords" content="([^"]+)"/i);
+  document.getElementById('f-cta-text').value= get(/id="cta-btn"[^>]*>([^<]+)/i) || 'Get a Free Moving Quote';
+  document.getElementById('f-cta-link').value= get(/id="cta-btn"[^>]*href="([^"]+)"/i) || '/book.html';
+
+  // Date
+  const dm = html.match(/"datePublished"\s*:\s*"([^"]+)"/);
+  if (dm) document.getElementById('f-date').value = dm[1];
+
+  // Body: extract between <!-- POST_BODY_START --> and <!-- POST_BODY_END -->
+  const bodyM = html.match(/<!-- POST_BODY_START -->([\s\S]*?)<!-- POST_BODY_END -->/);
+  document.getElementById('f-body').value = bodyM ? bodyM[1].trim() : '';
+
+  // FAQ
+  document.getElementById('faq-list').innerHTML = '';
+  const faqM = [...html.matchAll(/"@type"\s*:\s*"Question"[\s\S]*?"name"\s*:\s*"([^"]+)"[\s\S]*?"text"\s*:\s*"([^"]+)"/g)];
+  faqM.forEach(m => addFaq(m[1], m[2]));
+
+  updateSlug(); updateSeoScore();
+  ['f-hero','f-thumb'].forEach(id => previewImg(id, id.replace('f-','') + '-preview'));
+}
+
+// ─── FORM HELPERS ─────────────────────────────────────────
+function resetForm() {
+  editingSlug = null; editingSha = null;
+  document.getElementById('post-form').reset();
+  document.getElementById('faq-list').innerHTML = '';
+  document.getElementById('slug-preview').textContent = SITE + '/blog/';
+  document.getElementById('hero-preview').classList.remove('show');
+  document.getElementById('thumb-preview').classList.remove('show');
+  updateSeoScore();
+  ['title-chars','desc-chars'].forEach(id => document.getElementById(id).textContent = '0 / ' + (id.startsWith('title')? 65 : 160));
+  switchTab(document.querySelector('.editor-tab.active'), 'write');
+}
+
+function updateSlug() {
+  const title = document.getElementById('f-title').value;
+  if (!editingSlug) {
+    const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+    document.getElementById('f-slug').value = slug;
+  }
+  const slug = document.getElementById('f-slug').value;
+  document.getElementById('slug-preview').textContent = SITE + '/blog/' + (slug || '…') + '.html';
+}
+
+function sanitizeSlug(el) {
+  el.value = el.value.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-');
+  updateSlug();
+}
+
+function updateChars(fieldId, countId, limit) {
+  const len = document.getElementById(fieldId).value.length;
+  const el  = document.getElementById(countId);
+  el.textContent = `${len} / ${limit}`;
+  el.classList.toggle('over', len > limit);
+}
+
+function previewImg(inputId, previewId) {
+  const url = document.getElementById(inputId).value.trim();
+  const img = document.getElementById(previewId);
+  if (url) { img.src = url; img.classList.add('show'); }
+  else { img.classList.remove('show'); }
+}
+
+function switchTab(el, name) {
+  document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.editor-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'preview') document.getElementById('body-preview').innerHTML = document.getElementById('f-body').value;
+}
+
+// ─── SEO SCORE ────────────────────────────────────────────
+function updateSeoScore() {
+  const title   = document.getElementById('f-title').value;
+  const desc    = document.getElementById('f-desc').value;
+  const slug    = document.getElementById('f-slug').value;
+  const keyword = document.getElementById('f-keyword').value.toLowerCase();
+  const body    = document.getElementById('f-body').value;
+  let score = 0; const tips = [];
+
+  if (title.length >= 30 && title.length <= 65) score += 20; else tips.push('Title should be 30-65 characters');
+  if (keyword && title.toLowerCase().includes(keyword)) score += 15; else if (keyword) tips.push('Include your keyword in the title');
+  if (desc.length >= 120 && desc.length <= 165) score += 15; else tips.push('Meta description: aim for 120-165 chars');
+  if (keyword && desc.toLowerCase().includes(keyword)) score += 10; else if (keyword) tips.push('Include your keyword in the meta description');
+  if (slug && keyword && slug.includes(keyword.replace(/\s+/g,'-'))) score += 10; else if (keyword) tips.push('Include your keyword in the URL slug');
+  if (body.length > 800) score += 15; else tips.push('Post body should be at least 800 characters');
+  const h2count = (body.match(/<h2/gi)||[]).length;
+  if (h2count >= 2) score += 10; else tips.push('Add at least 2 <h2> headings to structure the post');
+  const faqCount = document.getElementById('faq-list').children.length;
+  if (faqCount >= 3) score += 5; else tips.push('Add 3+ FAQ items for rich snippet eligibility');
+
+  const bar = document.getElementById('seo-bar');
+  const label = document.getElementById('seo-score-label');
+  bar.style.width = score + '%';
+  bar.style.background = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)';
+  label.textContent = score + '/100 — ' + (score >= 80 ? 'Great' : score >= 50 ? 'OK' : 'Needs Work');
+  label.style.color = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)';
+  document.getElementById('seo-tips').innerHTML = tips.map(t => `<li>${t}</li>`).join('');
+}
+
+// ─── FAQ BUILDER ──────────────────────────────────────────
+let faqCount = 0;
+function addFaq(q='', a='') {
+  faqCount++;
+  const id = faqCount;
+  const div = document.createElement('div');
+  div.className = 'faq-item'; div.dataset.faqId = id;
+  div.innerHTML = `
+    <div class="faq-item-header">
+      <span class="faq-item-label">FAQ #${id}</span>
+      <button type="button" class="faq-remove" onclick="this.closest('.faq-item').remove();updateSeoScore()">✕</button>
+    </div>
+    <input type="text" placeholder="Question: e.g. How much do movers cost in Richmond?" value="${escAttr(q)}" data-faq-q />
+    <textarea rows="2" placeholder="Answer: Write a clear, helpful answer (2-4 sentences)." data-faq-a>${escHtml(a)}</textarea>`;
+  document.getElementById('faq-list').appendChild(div);
+  updateSeoScore();
+}
+
+function getFaqs() {
+  return [...document.querySelectorAll('.faq-item')].map(el => ({
+    q: el.querySelector('[data-faq-q]').value.trim(),
+    a: el.querySelector('[data-faq-a]').value.trim()
+  })).filter(f => f.q && f.a);
+}
+
+// ─── SAVE POST ────────────────────────────────────────────
+async function savePost() {
+  if (!ghToken()) { showToast('Add your GitHub token in Settings first.', 'error'); return; }
+  const title   = document.getElementById('f-title').value.trim();
+  const desc    = document.getElementById('f-desc').value.trim();
+  const slug    = document.getElementById('f-slug').value.trim();
+  const date    = document.getElementById('f-date').value;
+  const hero    = document.getElementById('f-hero').value.trim();
+  const body    = document.getElementById('f-body').value.trim();
+  const keyword = document.getElementById('f-keyword').value.trim();
+  const ctaText = document.getElementById('f-cta-text').value.trim() || 'Get a Free Moving Quote';
+  const ctaLink = document.getElementById('f-cta-link').value.trim() || '/book.html';
+  const thumb   = document.getElementById('f-thumb').value.trim() || hero;
+
+  if (!title || !desc || !slug || !date || !hero || !body) {
+    showToast('Please fill in all required fields (marked with *).', 'error'); return;
+  }
+
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+
+  try {
+    const faqs = getFaqs();
+    const html = buildPostHtml({ title, desc, slug, date, hero, thumb, body, keyword, ctaText, ctaLink, faqs });
+    const path = `blog/${slug}.html`;
+    const msg  = editingSlug ? `Update blog post: ${title}` : `Add blog post: ${title}`;
+    await ghPut(path, html, msg, editingSha || undefined);
+
+    // Update blog index
+    await updateBlogIndex();
+
+    showToast(editingSlug ? 'Post updated! Changes live in ~1 minute.' : 'Post published! Live in ~1 minute.');
+    editingSlug = null; editingSha = null;
+    nav(document.querySelector('[data-page=posts]'));
+  } catch(e) {
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span id="save-label">' + (editingSlug ? 'Save Changes' : 'Publish Post') + '</span>';
+  }
+}
+
+function cancelEdit() {
+  editingSlug = null; editingSha = null;
+  nav(document.querySelector('[data-page=posts]'));
+}
+
+// ─── BUILD HTML ───────────────────────────────────────────
+function buildPostHtml({ title, desc, slug, date, hero, thumb, body, keyword, ctaText, ctaLink, faqs }) {
+  const faqSchema = faqs.length ? `,
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        ${faqs.map(f => `{
+          "@type": "Question",
+          "name": ${JSON.stringify(f.q)},
+          "acceptedAnswer": { "@type": "Answer", "text": ${JSON.stringify(f.a)} }
+        }`).join(',\n        ')}
+      ]
+    }` : '';
+
+  const faqHtml = faqs.length ? `
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    ${faqs.map(f => `
+    <div class="faq-block">
+      <h3 class="faq-q">${escHtml(f.q)}</h3>
+      <p class="faq-a">${escHtml(f.a)}</p>
+    </div>`).join('')}
+  </section>` : '';
+
+  const keyMeta = keyword ? `\n  <meta name="keywords" content="${escAttr(keyword)}" />` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escHtml(title)}</title>
+  <meta name="description" content="${escAttr(desc)}" />${keyMeta}
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${SITE}/blog/${slug}.html" />
+  <meta property="og:title" content="${escAttr(title)}" />
+  <meta property="og:description" content="${escAttr(desc)}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="${SITE}/blog/${slug}.html" />
+  <meta property="og:image" content="${escAttr(hero)}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="${escAttr(hero)}" />
+
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "${SITE}/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "${SITE}/blog/" },
+        { "@type": "ListItem", "position": 3, "name": ${JSON.stringify(title)}, "item": "${SITE}/blog/${slug}.html" }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": ${JSON.stringify(title)},
+      "description": ${JSON.stringify(desc)},
+      "datePublished": "${date}",
+      "dateModified": "${date}",
+      "image": "${escAttr(hero)}",
+      "author": { "@type": "Organization", "name": "Validate Your Vision", "url": "${SITE}" },
+      "publisher": { "@type": "Organization", "name": "Validate Your Vision", "url": "${SITE}", "logo": { "@type": "ImageObject", "url": "${SITE}/assets/og-image.png" } },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "${SITE}/blog/${slug}.html" }
+    }${faqSchema}
+  ]
+  <\/script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --dp: #190E2A; --mp: #210D46; --ap: #4A237A; --lv: #8B5BC7;
+      --tw: #ECEBEE; --lbg: #ffffff; --lbg2: #F4F0FF;
+      --ltxt: #1a1625; --lmuted: #5c5470;
+      --radius: 16px; --shadow: 0 4px 24px rgba(74,35,122,0.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--lbg); color: var(--ltxt); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav { background: var(--dp); padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 50; }
+    .nav-logo { font-family: 'Raleway',sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--tw); letter-spacing: -.01em; }
+    .nav-logo span { color: var(--lv); }
+    .nav-book { background: var(--lv); color: #fff; padding: 9px 18px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; transition: opacity .15s; }
+    .nav-book:hover { opacity: .85; }
+
+    /* ARTICLE */
+    .hero-img { width: 100%; max-height: 420px; object-fit: cover; }
+    .article-wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .breadcrumb { font-size: 0.75rem; color: var(--lmuted); margin-bottom: 20px; }
+    .breadcrumb a { color: var(--ap); }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .article-date { font-size: 0.75rem; color: var(--lmuted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+    h1.article-title { font-family: 'Raleway',sans-serif; font-size: clamp(1.6rem,4vw,2.4rem); font-weight: 800; color: var(--dp); line-height: 1.2; text-wrap: balance; margin-bottom: 20px; }
+    .article-body h2 { font-family: 'Raleway',sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--dp); margin: 36px 0 12px; }
+    .article-body h3 { font-family: 'Raleway',sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ap); margin: 24px 0 8px; }
+    .article-body p { margin-bottom: 16px; font-size: 1rem; color: var(--ltxt); }
+    .article-body ul, .article-body ol { margin: 8px 0 18px 22px; }
+    .article-body li { margin-bottom: 6px; }
+    .article-body strong { font-weight: 700; }
+    .article-body table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem; }
+    .article-body th { background: var(--lbg2); color: var(--dp); font-weight: 700; padding: 10px 14px; border: 1px solid rgba(74,35,122,.15); }
+    .article-body td { padding: 9px 14px; border: 1px solid rgba(74,35,122,.1); }
+    .article-body tr:nth-child(even) td { background: var(--lbg2); }
+    .article-body .callout { background: var(--lbg2); border-left: 4px solid var(--lv); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.93rem; }
+    .article-body img { max-width: 100%; }
+
+    /* FAQ */
+    .faq-section { margin-top: 48px; }
+    .faq-section h2 { font-family: 'Raleway',sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--dp); margin-bottom: 20px; }
+    .faq-block { border-top: 1px solid rgba(74,35,122,.1); padding: 18px 0; }
+    .faq-q { font-size: 1rem; font-weight: 700; color: var(--dp); margin-bottom: 8px; }
+    .faq-a { font-size: 0.93rem; color: var(--lmuted); line-height: 1.65; }
+
+    /* CTA */
+    .cta-box { background: linear-gradient(135deg,var(--dp),var(--ap)); border-radius: 18px; padding: 40px 32px; text-align: center; margin: 48px 0; color: #fff; }
+    .cta-box h2 { font-family: 'Raleway',sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+    .cta-box p { font-size: 0.9rem; opacity: .8; margin-bottom: 22px; }
+    .cta-btn { display: inline-block; background: var(--lv); color: #fff; padding: 14px 32px; border-radius: 10px; font-weight: 800; font-size: 0.95rem; transition: opacity .15s; }
+    .cta-btn:hover { opacity: .85; }
+
+    /* FOOTER */
+    .footer { background: var(--dp); color: rgba(236,235,238,.6); text-align: center; padding: 32px 24px; font-size: 0.8rem; }
+    .footer a { color: rgba(236,235,238,.8); }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">VYV <span>Moving</span></a>
+  <a class="nav-book" href="/book.html">Book a Move</a>
+</nav>
+
+<img class="hero-img" src="${escAttr(hero)}" alt="${escAttr(title)}" />
+
+<div class="article-wrap">
+  <div class="breadcrumb"><a href="/">Home</a> › <a href="/blog/">Moving Guides</a> › ${escHtml(title)}</div>
+  <div class="article-date">${date}</div>
+  <h1 class="article-title">${escHtml(title)}</h1>
+
+  <div class="article-body">
+<!-- POST_BODY_START -->
+${body}
+<!-- POST_BODY_END -->
+  </div>
+
+${faqHtml}
+
+  <div class="cta-box">
+    <h2>Ready to Make Your Move?</h2>
+    <p>VYV Moving serves Richmond, Fredericksburg, Alexandria, and all of Northern Virginia.</p>
+    <a class="cta-btn" href="${escAttr(ctaLink)}" id="cta-btn">${escHtml(ctaText)}</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>&copy; ${new Date().getFullYear()} Validate Your Vision Moving. Serving Virginia families.</p>
+  <p style="margin-top:6px"><a href="/">Home</a> &nbsp;|&nbsp; <a href="/blog/">Blog</a> &nbsp;|&nbsp; <a href="/book.html">Book a Move</a> &nbsp;|&nbsp; <a href="/policy.html">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>`;
+}
+
+// ─── UPDATE BLOG INDEX ────────────────────────────────────
+async function updateBlogIndex() {
+  try {
+    // Fetch all posts to rebuild index
+    const files = await ghGet('blog');
+    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html');
+    const posts = await Promise.all(htmlFiles.map(f => fetchPostMeta(f)));
+    posts.sort((a,b) => b.date.localeCompare(a.date));
+
+    const indexData = await ghGet('blog/index.html');
+    let indexHtml = decodeURIComponent(escape(atob(indexData.content.replace(/\n/g,''))));
+
+    // Replace the post cards section between markers
+    const cardHtml = posts.map(p => `
+          <article class="blog-card">
+            <a href="/blog/${p.slug}.html">
+              <div class="blog-thumb">
+                <img src="${escAttr(p.image || '/assets/og-image.png')}" alt="${escAttr(p.title)}" loading="lazy" />
+              </div>
+              <div class="blog-content">
+                <p class="blog-date">${p.date}</p>
+                <h2>${escHtml(p.title)}</h2>
+                <p class="blog-excerpt">${escHtml(p.desc.substring(0, 130))}${p.desc.length > 130 ? '…' : ''}</p>
+                <span class="blog-read">Read Guide →</span>
+              </div>
+            </a>
+          </article>`).join('\n');
+
+    indexHtml = indexHtml.replace(
+      /<!-- POSTS_START -->[\s\S]*?<!-- POSTS_END -->/,
+      `<!-- POSTS_START -->\n${cardHtml}\n          <!-- POSTS_END -->`
+    );
+
+    await ghPut('blog/index.html', indexHtml, 'Update blog index', indexData.sha);
+  } catch(e) {
+    // Non-fatal: index update failing won't block the post save
+    console.warn('Blog index update skipped:', e.message);
+  }
+}
+
+// ─── DELETE ───────────────────────────────────────────────
+let pendingDelete = null;
+
+function confirmDelete(slug, sha) {
+  pendingDelete = { slug, sha };
+  document.getElementById('modal-title').textContent = 'Delete this post?';
+  document.getElementById('modal-body').textContent = `"${slug}.html" will be permanently removed from your website.`;
+  document.getElementById('modal-confirm-btn').onclick = doDelete;
+  document.getElementById('confirm-modal').style.display = 'flex';
+}
+
+async function doDelete() {
+  closeModal();
+  if (!pendingDelete) return;
+  try {
+    await ghDelete(`blog/${pendingDelete.slug}.html`, `Delete blog post: ${pendingDelete.slug}`, pendingDelete.sha);
+    showToast('Post deleted.');
+    loadPosts();
+  } catch(e) {
+    showToast('Delete failed: ' + e.message, 'error');
+  }
+  pendingDelete = null;
+}
+
+function closeModal() { document.getElementById('confirm-modal').style.display = 'none'; }
+
+// ─── SETTINGS ─────────────────────────────────────────────
+function loadSettings() {
+  const t = ghToken();
+  if (t) {
+    document.getElementById('s-token').value = t;
+    document.getElementById('token-status').textContent = 'Token saved.';
+  }
+}
+
+function saveToken() {
+  const t = document.getElementById('s-token').value.trim();
+  if (!t) { showToast('Enter a token first.','error'); return; }
+  localStorage.setItem('gh_token', t);
+  document.getElementById('token-status').textContent = 'Saved!';
+  showToast('GitHub token saved.');
+}
+
+function changePassword() {
+  const oldP = document.getElementById('s-old-pass').value;
+  const newP = document.getElementById('s-new-pass').value;
+  const stored = localStorage.getItem('blog_pass') || DEFAULT_PASS;
+  if (oldP !== stored) { showToast('Current password is incorrect.','error'); return; }
+  if (!newP || newP.length < 4) { showToast('New password must be at least 4 characters.','error'); return; }
+  localStorage.setItem('blog_pass', newP);
+  showToast('Password updated!');
+  document.getElementById('s-old-pass').value = '';
+  document.getElementById('s-new-pass').value = '';
+}
+
+// ─── TOAST ────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = ''; }, 3500);
+}
+function toast(msg, type) { showToast(msg, type); }
+
+// ─── UTILS ────────────────────────────────────────────────
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+// Set today's date as default
+document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+document.getElementById('f-cta-text').value = 'Get a Free Moving Quote';
+document.getElementById('f-cta-link').value = '/book.html';
+</script>
+</body>
+</html>

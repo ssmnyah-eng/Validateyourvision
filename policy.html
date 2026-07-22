@@ -81,33 +81,89 @@
 </head>
 <body>
 
-  <nav>
-    <a href="/" class="nav-logo">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,8 92,30 92,70 50,92 8,70 8,30" fill="none" stroke="#8B5BC7" stroke-width="6"/><polygon points="50,18 82,34 82,66 50,82 18,66 18,34" fill="#210D46"/><path d="M50 28 L68 38 L68 58 L50 68 L32 58 L32 38 Z" fill="#4A237A"/><path d="M50 38 L60 44 L60 56 L50 62 L40 56 L40 44 Z" fill="#8B5BC7"/><circle cx="50" cy="50" r="5" fill="#ECEBEE"/></svg>
-      Validate Your Vision
-    </a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/#services">Services</a>
-      <a href="/locations/">Areas</a>
-      <a href="/blog/">Blog</a>
-      <a href="/pricing-estimator.html" class="btn-nav">Build My Blueprint</a>
-    </div>
-    <button class="hamburger" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <div class="mobile-drawer" id="drawer">
-    <button class="close-btn" onclick="document.getElementById('drawer').classList.remove('open')" aria-label="Close">✕</button>
-    <a href="/" onclick="document.getElementById('drawer').classList.remove('open')">Home</a>
-    <a href="/#services" onclick="document.getElementById('drawer').classList.remove('open')">Services</a>
-    <a href="/locations/" onclick="document.getElementById('drawer').classList.remove('open')">Areas</a>
-    <a href="/blog/" onclick="document.getElementById('drawer').classList.remove('open')">Blog</a>
-    <a href="/pricing-estimator.html" class="btn-nav" style="margin-top:24px;text-align:center;" onclick="document.getElementById('drawer').classList.remove('open')">Build My Blueprint</a>
+    <nav id="nav" aria-label="Main navigation" style="background:#190E2A;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;max-width:1200px;margin:0 auto;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;" aria-label="Validate Your Vision home">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;display:block;flex-shrink:0;">
+          <rect width="100" height="100" rx="12" fill="#210D46"/>
+          <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+          <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+          <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
+          <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
+          <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
+          <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
+          <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+          <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+          <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+        </svg>
+        <span style="font-family:'Poppins',sans-serif;font-size:0.9rem;font-weight:700;color:#ECEBEE;">Validate Your Vision</span>
+      </a>
+      <div id="vyv-nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
+        <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Move Calculator</a>
+        <div class="vyv-svc-dd" style="position:relative;">
+  <button class="vyv-dd-btn" onclick="var m=this.closest('.vyv-svc-dd');m.classList.toggle('open')" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:4px;font-family:'Poppins',sans-serif;white-space:nowrap;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="vyv-dd-menu" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(25,14,42,0.18);min-width:210px;padding:8px 0;z-index:9999;display:none;margin-top:0;">
+    <a href="/same-day-movers.html" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Same Day Movers</a>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Packing Services</a>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Apartment Movers</a>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Residential Movers</a>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Commercial Movers</a>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#190E2A;font-size:0.85rem;font-weight:600;text-decoration:none;white-space:nowrap;">Labor Only Movers</a>
+    <div style="height:1px;background:#ede6ff;margin:4px 0;"></div>
+    <a href="/#services" style="display:block;padding:10px 20px;color:#8B5BC7;font-size:0.85rem;font-weight:700;text-decoration:none;white-space:nowrap;">All Moving Services</a>
   </div>
-
-  <div class="page-hero">
+</div>
+        <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Reviews</a>
+        <a href="/#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">FAQ</a>
+        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Blog</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <a href="sms:+15403001414" style="display:flex;align-items:center;gap:6px;color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;" class="vyv-nav-phone">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (540) 300-1414
+        </a>
+        <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.82rem;padding:9px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;letter-spacing:0.04em;">Book Now</a>
+        <button id="vyv-ham" onclick="document.getElementById('vyv-drawer').classList.toggle('vyv-open')" aria-label="Toggle navigation"
+          style="background:none;border:none;cursor:pointer;display:none;flex-direction:column;gap:5px;padding:4px;">
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+          <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div id="vyv-drawer" style="display:none;flex-direction:column;gap:4px;background:#190E2A;padding:16px 20px 24px;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Move Calculator</a>
+    <div style="border-bottom:1px solid rgba(139,91,199,0.1);">
+    <button onclick="var d=document.getElementById('vyv-svc-sub');d.style.display=d.style.display==='block'?'none':'block'" style="background:none;border:none;cursor:pointer;color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;display:flex;align-items:center;justify-content:space-between;width:100%;font-family:'Poppins',sans-serif;">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div id="vyv-svc-sub" style="display:none;padding-left:16px;padding-bottom:8px;">
+      <a href="/same-day-movers.html" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Same Day Movers</a>
+      <a href="/#services" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Packing Services</a>
+      <a href="/#services" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Apartment Movers</a>
+      <a href="/#services" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Residential Movers</a>
+      <a href="/#services" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Commercial Movers</a>
+      <a href="/#services" style="display:block;color:rgba(236,235,238,0.75);font-size:0.88rem;font-weight:600;text-decoration:none;padding:7px 0;">Labor Only Movers</a>
+      <a href="/#services" style="display:block;color:#8B5BC7;font-size:0.88rem;font-weight:700;text-decoration:none;padding:7px 0;">All Moving Services</a>
+    </div>
+  </div>
+    <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Reviews</a>
+    <a href="/#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">FAQ</a>
+    <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">Blog</a>
+    <a href="sms:+15403001414" style="color:#8B5BC7;font-size:0.95rem;font-weight:600;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(139,91,199,0.1);">(540) 300-1414</a>
+    <a href="/book.html" style="background:#2563eb;color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.9rem;padding:12px 20px;border-radius:8px;text-decoration:none;text-align:center;margin-top:8px;letter-spacing:0.04em;">Book Now</a>
+  </div>
+  <style>
+    #vyv-nav-links a:hover { color:#fff !important; }
+    @media(max-width:780px) { #vyv-nav-links { display:none !important; } .vyv-nav-phone { display:none !important; } #vyv-ham { display:flex !important; } }
+    #vyv-drawer.vyv-open { display:flex !important; }
+    .vyv-svc-dd:hover .vyv-dd-menu { display:block !important; }
+    .vyv-svc-dd.open .vyv-dd-menu { display:block !important; }
+  </style>
+  <script>document.addEventListener('click',function(e){if(!e.target.closest('.vyv-svc-dd'))document.querySelectorAll('.vyv-svc-dd').forEach(function(d){d.classList.remove('open')})});</script>
+<div class="page-hero">
     <p class="eyebrow">Validate Your Vision Moving</p>
     <h1>Policies &amp; Terms</h1>
     <p>Everything you need to know before, during, and after your move. No fine print surprises.</p>
@@ -122,7 +178,7 @@
       <div class="toc">
         <p class="toc-label">On This Page</p>
         <ol>
-          <li><a href="#walkthrough-booking">Walkthrough Booking Policy</a></li>
+          <li><a href="#walkthrough-booking">Move Reservation Policy</a></li>
           <li><a href="#move-cancellation">Move Cancellation Policy</a></li>
           <li><a href="#damage-liability">Damage &amp; Liability</a></li>
           <li><a href="#privacy">Privacy Policy</a></li>
@@ -131,25 +187,25 @@
         </ol>
       </div>
 
-      <!-- 1. WALKTHROUGH BOOKING -->
+      <!-- 1. MOVE RESERVATION DEPOSIT -->
       <div class="policy-section" id="walkthrough-booking">
         <p class="section-num">Section 1</p>
-        <h2>Walkthrough Booking Policy</h2>
+        <h2>Move Reservation Policy</h2>
 
-        <p>Your $50 priority reservation secures your virtual walkthrough slot. The walkthrough is a 10 to 30 minute video call where we confirm your inventory, assess access, and lock in your guaranteed flat rate.</p>
+        <p>Your refundable deposit secures your moving date and confirms your crew. The deposit amount is 20% of your estimated move total, rounded up to the nearest dollar.</p>
 
         <div class="callout callout-green">
-          <strong>Your $50 is applied to your final balance</strong>
-          <p>The priority reservation is not an additional charge. It is credited toward your total moving cost. Nothing is added on top of it.</p>
+          <strong>Your deposit is applied to your final balance</strong>
+          <p>The deposit is not an additional charge. It is credited toward your total moving cost. Nothing is added on top of it.</p>
         </div>
 
-        <p><strong>Rescheduling.</strong> Need to move your walkthrough time? Text us at 540-300-1414 at least 24 hours before your scheduled call and we will get you rescheduled at no charge.</p>
+        <p><strong>Rescheduling.</strong> Need to change your move date? Text us at 540-300-1414 at least 24 hours before your scheduled move and we will get you rescheduled at no charge.</p>
 
-        <p><strong>Cancellations.</strong> If you decide not to move forward after booking your walkthrough, your $50 is fully refunded. Just let us know before your scheduled walkthrough time.</p>
+        <p><strong>Cancellations.</strong> If you decide not to move forward after booking, your deposit is fully refunded. Just let us know before your scheduled move date.</p>
 
-        <p><strong>No-shows.</strong> If you miss your scheduled walkthrough without prior notice, the $50 reservation is forfeited and is non-refundable. If something came up, text us right away and we will do our best to work with you.</p>
+        <p><strong>No-shows.</strong> If we arrive on move day and cannot proceed due to customer unavailability without prior notice, your deposit may be forfeited. If something came up, text us right away at (540) 300-1414 and we will do our best to work with you.</p>
 
-        <p><strong>Scope of your guaranteed price.</strong> Your flat rate covers only what we visually confirm during the walkthrough. Any rooms, items, or spaces not shown on the video call are not included in the final price.</p>
+        <p><strong>Scope of your guaranteed price.</strong> Your flat rate covers what is submitted in your online moving plan. Any rooms, items, or spaces not included in your booking details are not guaranteed under the original price and may be subject to adjustment.</p>
       </div>
 
       <!-- 2. MOVE CANCELLATION -->
@@ -157,11 +213,11 @@
         <p class="section-num">Section 2</p>
         <h2>Move Cancellation Policy</h2>
 
-        <p>After your virtual walkthrough, a $450 move deposit locks in your moving date and confirms your crew. That deposit is applied toward your final balance. Your cancellation window depends on your move date and the time of year.</p>
+        <p>Your 20% deposit locks in your moving date and confirms your crew. That deposit is applied toward your final balance. Your cancellation window depends on your move date and the time of year.</p>
 
         <div class="callout callout-green">
-          <strong>Your $450 deposit is applied to your final bill</strong>
-          <p>The move deposit is not a fee on top of your price. It is part of your total moving cost, paid upfront to hold your date.</p>
+          <strong>Your deposit is applied to your final bill</strong>
+          <p>The deposit is not a fee on top of your price. It is part of your total moving cost, paid upfront to hold your date.</p>
         </div>
 
         <h3 style="font-family:'Raleway',sans-serif;font-size:0.95rem;font-weight:700;color:var(--mp);margin:24px 0 12px;">Standard Season (October through April)</h3>
@@ -215,7 +271,7 @@
         <ul>
           <li>Packed by the customer (not professionally packed by our crew)</li>
           <li>Already damaged or in poor condition before the move</li>
-          <li>Not included in the virtual walkthrough inventory</li>
+          <li>Not included in your submitted moving plan inventory</li>
           <li>Items of extraordinary value not disclosed at the time of booking</li>
         </ul>
 
@@ -241,7 +297,7 @@
 
         <p><strong>How we use it.</strong> We use your information only to:</p>
         <ul>
-          <li>Respond to your estimate request and schedule your walkthrough</li>
+          <li>Respond to your estimate request and confirm your move details</li>
           <li>Communicate with you about your move</li>
           <li>Improve our website and services through aggregated analytics data</li>
         </ul>
@@ -266,11 +322,11 @@
 
         <p>By using validateyourvision.com or booking a move with Validate Your Vision, you agree to the following terms.</p>
 
-        <p><strong>Accuracy of information.</strong> You agree to provide accurate information when using our Moving Blueprint Builder. Your guaranteed flat rate is based on the details you supply and what we confirm during your virtual walkthrough. Inaccurate or incomplete information may result in a revised price.</p>
+        <p><strong>Accuracy of information.</strong> You agree to provide accurate information when using our Moving Blueprint Builder. Your guaranteed flat rate is based on the details you supply in your online moving plan. Inaccurate or incomplete information may result in a revised price.</p>
 
-        <p><strong>Guaranteed flat rate.</strong> Your price is locked in only after your virtual walkthrough is complete and your move deposit is paid. Price ranges generated by the online estimator are estimates only and are not binding quotes.</p>
+        <p><strong>Guaranteed flat rate.</strong> Your price is locked in after your move deposit is paid and your booking is confirmed. Price ranges generated by the online estimator are estimates only and are not binding quotes.</p>
 
-        <p><strong>Items not covered.</strong> We do not transport hazardous materials, flammable liquids, firearms, controlled substances, perishable food, or live animals. Items not disclosed during the virtual walkthrough and not visible on the video call are not included in your flat rate and may be subject to additional charges or may not be moved.</p>
+        <p><strong>Items not covered.</strong> We do not transport hazardous materials, flammable liquids, firearms, controlled substances, perishable food, or live animals. Items not included in your submitted moving plan are not included in your flat rate and may be subject to additional charges or may not be moved.</p>
 
         <p><strong>Access requirements.</strong> You are responsible for ensuring legal access to both your origin and destination addresses on moving day, including any HOA approvals, elevator reservations, or parking permits required. Delays caused by access issues are not our responsibility and may affect your final time and cost.</p>
 
@@ -301,17 +357,80 @@
     </div>
   </div>
 
-  <footer>
-    <strong>Validate Your Vision</strong> &nbsp;&middot;&nbsp; Fredericksburg, VA &nbsp;&middot;&nbsp; Licensed &amp; Insured &nbsp;&middot;&nbsp;
-    <a href="sms:+15403001414">540-300-1414 (text only)</a> &nbsp;&middot;&nbsp;
-    <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/locations/">Areas We Serve</a>
-      <a href="/blog/">Blog</a>
-      <a href="/pricing-estimator.html">Get a Quote</a>
-      <a href="/policy.html">Policies &amp; Terms</a>
+    <footer style="background:#190E2A;padding:52px 20px 0;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
+      <div>
+        <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;flex-shrink:0;">
+            <rect width="100" height="100" rx="12" fill="#210D46"/>
+            <line x1="4" y1="29" x2="26" y2="29" stroke="#ECEBEE" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="8" y1="35" x2="26" y2="35" stroke="#ECEBEE" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+            <line x1="13" y1="40" x2="26" y2="40" stroke="#ECEBEE" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+            <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <polyline points="64,39 78,26 89,37" fill="none" stroke="#ECEBEE" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            <rect x="69" y="20" width="8" height="13" rx="1" fill="#ECEBEE"/>
+            <rect x="44" y="29" width="12" height="12" rx="1" fill="none" stroke="#ECEBEE" stroke-width="2"/>
+            <line x1="50" y1="29" x2="50" y2="41" stroke="#ECEBEE" stroke-width="1.2"/>
+            <line x1="44" y1="35" x2="56" y2="35" stroke="#ECEBEE" stroke-width="1.2"/>
+            <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+            <line x1="14" y1="87" x2="36" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+            <line x1="64" y1="87" x2="86" y2="87" stroke="#8B5BC7" stroke-width="1.5" opacity="0.8"/>
+          </svg>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:#ECEBEE;line-height:1.1;">Validate Your Vision</div>
+            <div style="font-size:0.72rem;color:#8B5BC7;font-weight:500;">Professional Movers</div>
+          </div>
+        </a>
+        <p style="font-size:0.88rem;color:rgba(236,235,238,0.7);line-height:1.7;margin-bottom:20px;">Professional movers who treat your belongings like our own. When you want something done right, hire a professional!</p>
+        <div style="display:flex;gap:10px;margin-bottom:20px;">
+          <a href="https://www.facebook.com/validateyourvision" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.3);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#8B5BC7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/validateyourvision" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.3);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@validateyourvision" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;background:rgba(139,91,199,0.15);border:1px solid rgba(139,91,199,0.3);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#8B5BC7"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+          </a>
+        </div>
+        <div style="font-size:0.75rem;color:rgba(139,91,199,0.8);line-height:1.8;">Fredericksburg &middot; Stafford &middot; Spotsylvania<br>Woodbridge &middot; Northern VA &middot; Richmond</div>
+      </div>
+      <div>
+        <h4 style="font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Contact us</h4>
+        <a href="sms:+15403001414" style="display:inline-flex;align-items:center;gap:8px;border:2px solid #8B5BC7;border-radius:30px;padding:10px 22px;color:#ECEBEE;font-weight:600;font-size:0.9rem;text-decoration:none;margin-bottom:24px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          (540) 300-1414
+        </a>
+        <div style="font-size:0.88rem;color:rgba(236,235,238,0.8);line-height:2.1;margin-bottom:16px;">
+          <div>Mon - Fri: 7 AM - 7 PM</div>
+          <div>Sat: 7 AM - 5 PM</div>
+          <div>Sun: 7 AM - 3:30 PM</div>
+        </div>
+        <a href="mailto:hello@validateyourvision.com" style="font-size:0.82rem;color:#8B5BC7;text-decoration:none;">hello@validateyourvision.com</a>
+      </div>
+      <div>
+        <h4 style="font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;color:#ECEBEE;margin-bottom:20px;">Quick Links</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="/book.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Move Calculator</a>
+          <a href="/#services" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Services</a>
+          <a href="/locations/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Service Areas</a>
+          <a href="/blog/" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Blog</a>
+          <a href="/policy.html" style="font-size:0.88rem;color:rgba(236,235,238,0.75);text-decoration:none;">Privacy &amp; Terms</a>
+        </div>
+        <div style="margin-top:24px;font-size:0.78rem;color:rgba(139,91,199,0.7);line-height:1.7;">Licensed &amp; Insured<br>Locally Owned &amp; Operated<br>Fredericksburg, Virginia</div>
+      </div>
     </div>
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:18px 0 22px;">
+      <div style="display:flex;gap:20px;font-size:0.78rem;">
+        <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Privacy</a>
+        <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Terms</a>
+        <a href="/#faq-inner" style="color:rgba(236,235,238,0.5);text-decoration:none;">FAQ</a>
+        <a href="sms:+15403001414" style="color:rgba(236,235,238,0.5);text-decoration:none;">Contact</a>
+        <a href="/book.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Moving Calculator</a>
+      </div>
+      <p style="font-size:0.78rem;color:rgba(236,235,238,0.3);margin:0;">&copy; 2026 Validate Your Vision. All Rights Reserved.</p>
+    </div>
+    <style>@media(max-width:700px){footer > div:first-of-type{grid-template-columns:1fr!important;}}</style>
   </footer>
 
 </body>

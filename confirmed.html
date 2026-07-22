@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Booked | Validate Your Vision Moving</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Raleway:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{--dp:#190E2A;--mp:#210D46;--ap:#4A237A;--lv:#8B5BC7;--tw:#ECEBEE;--lbg:#ffffff;--lbg2:#F4F0FF;--ltxt:#1a1625;--lmuted:#5c5470;--radius:16px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--lbg);color:var(--ltxt);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+
+    /* NAV */
+    nav{background:var(--dp);padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:10px;color:var(--tw);font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem}.nav-logo svg{width:36px;height:36px}
+    .nav-links{display:flex;align-items:center;gap:28px}.nav-links a{color:rgba(236,235,238,0.8);font-size:0.88rem;font-family:'Raleway',sans-serif;font-weight:600}.nav-links a:hover{color:var(--tw)}
+    .btn-nav{background:var(--lv);color:var(--tw)!important;padding:10px 20px;border-radius:50px}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}.hamburger span{display:block;width:22px;height:2px;background:var(--tw);border-radius:2px}
+    .mobile-drawer{display:none;flex-direction:column;gap:0;background:var(--mp);position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;padding:80px 32px 32px}.mobile-drawer.open{display:flex}
+    .mobile-drawer a{color:var(--tw);font-family:'Raleway',sans-serif;font-weight:700;font-size:1.1rem;padding:16px 0;border-bottom:1px solid rgba(236,235,238,0.08)}.mobile-drawer .close-btn{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--tw);font-size:1.5rem;cursor:pointer}
+    @media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+    /* CONFIRMATION HERO */
+    .confirm-hero{background:linear-gradient(135deg,var(--mp) 0%,var(--ap) 100%);padding:72px 24px 64px;text-align:center}
+    .checkmark-circle{width:80px;height:80px;background:rgba(255,255,255,0.12);border:3px solid rgba(139,91,199,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:2rem}
+    .confirm-hero .eyebrow{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,235,238,0.6);margin-bottom:12px}
+    .confirm-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3rem);color:var(--tw);line-height:1.15;margin-bottom:16px}
+    .confirm-hero h1 span{color:#c4a0f0}
+    .confirm-hero p{font-size:1rem;color:rgba(236,235,238,0.78);max-width:520px;margin:0 auto}
+
+    /* CONTENT */
+    .container{max-width:680px;margin:0 auto;padding:0 24px}
+    .confirm-body{padding:64px 0 80px;display:flex;flex-direction:column;gap:24px}
+
+    /* CARDS */
+    .card{background:var(--lbg2);border:1px solid rgba(74,35,122,0.12);border-radius:var(--radius);padding:28px 32px}
+    .card-label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--lv);margin-bottom:8px}
+    .card h2{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--mp);margin-bottom:14px}
+    .card p{font-size:0.93rem;color:var(--lmuted);line-height:1.8;margin-bottom:10px}
+    .card p:last-child{margin-bottom:0}
+
+    /* STEPS */
+    .steps-list{display:flex;flex-direction:column;gap:16px;margin-top:4px}
+    .step-row{display:flex;gap:16px;align-items:flex-start}
+    .step-num{width:32px;height:32px;min-width:32px;background:var(--ap);color:var(--tw);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Raleway',sans-serif;font-weight:800;font-size:0.8rem}
+    .step-text strong{display:block;font-size:0.93rem;color:var(--ltxt);margin-bottom:2px}
+    .step-text span{font-size:0.87rem;color:var(--lmuted);line-height:1.6}
+
+    /* CTA */
+    .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--lv);color:var(--tw);font-family:'Raleway',sans-serif;font-weight:800;font-size:1rem;padding:16px 32px;border-radius:50px;width:100%;margin-top:8px}
+    .btn-primary:hover{background:#7a4db5}
+    .btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:var(--ap);border:2px solid var(--ap);font-family:'Raleway',sans-serif;font-weight:700;font-size:0.93rem;padding:13px 28px;border-radius:50px;width:100%;margin-top:10px}
+    .btn-secondary:hover{background:var(--lbg2)}
+
+    /* CALLOUT */
+    .callout-green{background:#d4eddf;border:1px solid #9dd0b4;border-radius:12px;padding:18px 22px}
+    .callout-green strong{display:block;font-family:'Raleway',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#1e5c3f;margin-bottom:5px}
+    .callout-green p{font-size:0.88rem;color:#1e5c3f;line-height:1.7;margin:0}
+
+    /* TIPS LIST */
+    .tips-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .tips-list li{display:flex;gap:10px;font-size:0.88rem;color:var(--lmuted);line-height:1.7;align-items:flex-start}
+    .tips-list li::before{content:"✓";color:var(--lv);font-weight:700;flex-shrink:0;margin-top:2px}
+    .tips-list li strong{color:var(--ltxt)}
+
+    /* STARS */
+    .stars{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
+    .star{font-size:2.4rem;color:#d0c8e0;cursor:pointer;transition:color 0.15s;user-select:none;line-height:1}
+    .star.active{color:#f4c430}
+    .star:hover{color:#f4c430}
+    .rating-msg{font-size:0.88rem;color:var(--lmuted);min-height:20px}
+
+    /* FOOTER */
+    footer{background:var(--dp);color:rgba(236,235,238,0.55);text-align:center;padding:32px 24px;font-size:0.82rem}
+    footer a{color:rgba(236,235,238,0.55)}footer strong{color:var(--tw)}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,8 92,30 92,70 50,92 8,70 8,30" fill="none" stroke="#8B5BC7" stroke-width="6"/><polygon points="50,18 82,34 82,66 50,82 18,66 18,34" fill="#210D46"/><path d="M50 28 L68 38 L68 58 L50 68 L32 58 L32 38 Z" fill="#4A237A"/><path d="M50 38 L60 44 L60 56 L50 62 L40 56 L40 44 Z" fill="#8B5BC7"/><circle cx="50" cy="50" r="5" fill="#ECEBEE"/></svg>
+      Validate Your Vision
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/same-day-movers.html">Same Day Movers</a>
+      <a href="/#services">Services</a>
+      <a href="/locations/">Areas</a>
+      <a href="/blog/">Blog</a>
+      <a href="/book.html" class="btn-nav">Build My Blueprint</a>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-drawer" id="drawer">
+    <button class="close-btn" onclick="document.getElementById('drawer').classList.remove('open')" aria-label="Close">✕</button>
+    <a href="/" onclick="document.getElementById('drawer').classList.remove('open')">Home</a>
+    <a href="/#services" onclick="document.getElementById('drawer').classList.remove('open')">Services</a>
+    <a href="/locations/" onclick="document.getElementById('drawer').classList.remove('open')">Areas</a>
+    <a href="/blog/" onclick="document.getElementById('drawer').classList.remove('open')">Blog</a>
+    <a href="/book.html" class="btn-nav" style="margin-top:24px;text-align:center;" onclick="document.getElementById('drawer').classList.remove('open')">Build My Blueprint</a>
+  </div>
+
+  <div class="confirm-hero">
+    <div class="checkmark-circle">&#10003;</div>
+    <p class="eyebrow">Move Reserved</p>
+    <h1>You're <span>Booked.</span></h1>
+    <p>That was easy. Thank you for choosing VYV — we are genuinely looking forward to making this move the smoothest one you have ever had.</p>
+  </div>
+
+  <div class="container">
+    <div class="confirm-body">
+
+      <div class="callout-green">
+        <strong>Your deposit is applied to your final balance</strong>
+        <p>The priority reservation is not a separate charge. It comes off your total moving cost. Nothing is added on top of it.</p>
+      </div>
+
+      <div class="card">
+        <p class="card-label">What Happens Next</p>
+        <h2>Here is your roadmap to moving day</h2>
+        <div class="steps-list">
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <strong>Check your email</strong>
+              <span>You will receive a booking confirmation with your move date, crew size, and pricing details.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <strong>Start packing early</strong>
+              <span>Box up non-essentials first. Label every box with the room name. The more ready you are, the faster your crew moves.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <strong>Have questions? Just text us</strong>
+              <span>Text us anytime at 540-300-1414. We will answer quickly and handle any changes to your booking.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <strong>Moving day</strong>
+              <span>Your crew arrives on time, in uniform, with a clear plan. Your price does not change.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-label">Good to Know</p>
+        <h2>A few things before moving day</h2>
+        <p>Need to reschedule? Text us at least 24 hours before your move and we will sort it out at no charge.</p>
+        <p>Have questions? Text us anytime.</p>
+        <a href="sms:+15403001414" class="btn-primary">Text Us &nbsp; 540-300-1414</a>
+        <a href="/" class="btn-secondary">Back to Main Site</a>
+      </div>
+
+      <!-- MOVING TIPS -->
+      <div class="card">
+        <p class="card-label">Your Free Moving Guide</p>
+        <h2>Moving tips to get you ahead of the game</h2>
+        <p style="font-size:0.88rem;color:var(--lmuted);margin-bottom:18px;">We included a full moving tips PDF in your confirmation email. Here are the highlights to get you started now.</p>
+        <ul class="tips-list">
+          <li><strong>Start packing non-essentials early.</strong> Books, decor, seasonal items, and anything you will not need for the next few weeks should be boxed first. Label every box with the room and a quick description.</li>
+          <li><strong>Pack one room completely before starting another.</strong> Partial rooms on moving day slow everything down and increase the chance something gets left behind.</li>
+          <li><strong>Keep a moving day bag.</strong> Pack a separate bag with phone chargers, medications, toiletries, a change of clothes, and snacks. You will not want to dig through boxes for these on night one.</li>
+          <li><strong>Photograph your electronics setup before disconnecting.</strong> A quick photo of the back of your TV and router saves a lot of frustration when you are setting up in the new place.</li>
+          <li><strong>Defrost the freezer 24 hours before the move.</strong> We cannot transport a leaking appliance. Give it a full day to drain and dry.</li>
+          <li><strong>Reserve parking at both locations.</strong> If you are in an apartment, HOA community, or busy street, arrange parking for the truck in advance. Delays from parking issues are not covered under your flat rate.</li>
+          <li><strong>Do a final walkthrough before we leave.</strong> Check every closet, cabinet, garage shelf, and outdoor area. Once we are gone and the truck is unloaded, anything left behind is your responsibility to retrieve.</li>
+        </ul>
+      </div>
+
+      <!-- RATING -->
+      <div class="card" style="text-align:center;">
+        <p class="card-label">How Did We Do?</p>
+        <h2>Rate your booking experience</h2>
+        <p style="font-size:0.9rem;color:var(--lmuted);margin-bottom:20px;">Was booking fast and easy? Let us know — your feedback helps us improve.</p>
+        <form id="rating-form" action="https://formspree.io/f/mwvdowqr" method="POST">
+          <input type="hidden" name="form_type" value="Booking Experience Rating" />
+          <input type="hidden" name="rating" id="rating-input" value="" />
+          <div class="stars" id="stars">
+            <span class="star" data-val="1">&#9733;</span>
+            <span class="star" data-val="2">&#9733;</span>
+            <span class="star" data-val="3">&#9733;</span>
+            <span class="star" data-val="4">&#9733;</span>
+            <span class="star" data-val="5">&#9733;</span>
+          </div>
+          <div class="rating-msg" id="rating-msg"></div>
+          <div id="rating-submit" style="display:none;margin-top:16px;">
+            <button type="submit" style="background:var(--lv);color:var(--tw);font-family:'Raleway',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:50px;border:none;cursor:pointer;">Submit Rating</button>
+          </div>
+          <div id="rating-thanks" style="display:none;margin-top:14px;font-size:0.9rem;color:var(--lmuted);">Thank you! We appreciate you taking a second to share that.</div>
+        </form>
+      </div>
+
+      <div style="text-align:center;padding:8px 0 16px">
+        <p style="font-size:0.82rem;color:var(--lmuted);">By booking you agree to our <a href="/policy.html" style="color:var(--lv);">booking and cancellation policies</a>.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <strong>Validate Your Vision</strong> &nbsp;&middot;&nbsp; Fredericksburg, VA &nbsp;&middot;&nbsp; Licensed &amp; Insured &nbsp;&middot;&nbsp;
+    <a href="sms:+15403001414">540-300-1414 (text only)</a> &nbsp;&middot;&nbsp;
+    <a href="mailto:hello@validateyourvision.com">hello@validateyourvision.com</a> &nbsp;&middot;&nbsp;
+    <a href="/policy.html">Policies &amp; Terms</a>
+  </footer>
+
+  <script>
+    const stars = document.querySelectorAll('.star');
+    const msg = document.getElementById('rating-msg');
+    const thanks = document.getElementById('rating-thanks');
+    const submitBtn = document.getElementById('rating-submit');
+    const ratingInput = document.getElementById('rating-input');
+    const form = document.getElementById('rating-form');
+    const messages = ['','1 star — we hear you. Thank you for the honest feedback.','2 stars — thanks for letting us know. We will keep improving.','3 stars — glad it was okay. We will work to make it better.','4 stars — really glad to hear that. Thank you!','5 stars — that means everything to us. Thank you so much!'];
+    let selected = 0;
+    stars.forEach(s => {
+      s.addEventListener('mouseover', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= s.dataset.val)); });
+      s.addEventListener('mouseout', () => { stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected)); });
+      s.addEventListener('click', () => {
+        selected = s.dataset.val;
+        ratingInput.value = selected + ' out of 5 stars';
+        stars.forEach(x => x.classList.toggle('active', x.dataset.val <= selected));
+        msg.textContent = messages[selected];
+        submitBtn.style.display = 'block';
+      });
+    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selected) return;
+      await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      submitBtn.style.display = 'none';
+      thanks.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
+ 

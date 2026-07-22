@@ -383,7 +383,7 @@
       <!-- Step 5 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
         <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">5</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day -- we show up, you relax</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day: we show up, you relax</p>
       </div>
     </div>
   </div>
@@ -405,7 +405,7 @@
 
       <!-- ══ STEP 0: Contact / Address Capture ══ -->
       <div class="step" id="step0">
-        <div class="step-label">Step 1 of 7 -- Your Info</div>
+        <div class="step-label">Step 1 of 7: Your Info</div>
         <h1>Let's start your reservation</h1>
         <p class="subtitle">Tell us a little about your move and how to reach you.</p>
 
@@ -458,48 +458,35 @@
 
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step active" id="step1">
-        <div class="step-label">Step 1 of 3 -- Crew Size</div>
-        <h1>How many movers do you need?</h1>
-        <p class="subtitle">2 movers are for smaller jobs. If you're doing a full move, you want 3.</p>
+        <div class="step-label">Step 1 of 3: Your Crew</div>
+        <h1>Your crew is ready.</h1>
+        <p class="subtitle">All moves are handled by our 3-mover crew, the fastest way to get you moved and often the lowest total bill.</p>
 
-        <div class="why-3">
-          <strong>Doing a full move? Always go with 3 movers.</strong> They finish significantly faster, and when you factor in the reduced hours, the total bill is often <em>lower</em> than 2 movers. 2-mover crews are built for storage drop-offs, single-item deliveries, and small labor jobs.
+        <div class="why-3" style="max-width:480px;">
+          <strong>3 movers. $199/hr.</strong> More hands means a faster move. A faster move means a lower final bill. Your crew doesn't start until you sign them in on move day. You control the clock..
         </div>
 
-        <div class="crew-grid">
-          <!-- 2 Movers -->
-          <div class="crew-card" id="card2" onclick="selectCrew(2)">
-            <div class="crew-icon">👥</div>
-            <div class="crew-title">2 Movers</div>
-            <div class="crew-rate">Starting at $165/hr</div>
-            <div class="crew-pros">
-              <div class="crew-pro">Storage drop-offs</div>
-              <div class="crew-pro">Single-item deliveries</div>
-              <div class="crew-pro">Small hauls &amp; labor jobs</div>
-              <div class="crew-pro">Lighter, smaller tasks</div>
-            </div>
-          </div>
-          <!-- 3 Movers -->
-          <div class="crew-card" id="card3" onclick="selectCrew(3)">
-            <div class="badge">For Full Moves</div>
-            <div class="crew-icon">👥👤</div>
-            <div class="crew-title">3 Movers</div>
-            <div class="crew-rate">Starting at $199/hr</div>
-            <div class="crew-pros">
-              <div class="crew-pro">Full home &amp; apartment moves</div>
-              <div class="crew-pro">Finishes up to 40% faster</div>
-              <div class="crew-pro">Often cheaper total bill</div>
-              <div class="crew-pro">Recommended for all moves</div>
+        <div style="max-width:480px;margin-top:24px;">
+          <div id="card3" class="crew-card selected" style="border:2px solid #8B5BC7;background:#f5f0ff;border-radius:16px;padding:32px 28px;position:relative;">
+            <div class="badge" style="position:absolute;top:16px;right:16px;">Your Crew</div>
+            <div style="font-size:2.5rem;margin-bottom:12px;">👥👤</div>
+            <div style="font-size:1.6rem;font-weight:800;color:#190E2A;margin-bottom:4px;">3 Movers</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#8B5BC7;margin-bottom:20px;">$199/hr</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Full home &amp; apartment moves</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Finishes up to 40% faster</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> Often a lower total bill vs 2 movers</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.95rem;color:#190E2A;"><span style="color:#8B5BC7;font-weight:700;">✓</span> You sign them in on arrival. You control the clock.</div>
             </div>
           </div>
         </div>
 
-        <button class="btn-continue" id="crewContinueBtn" onclick="goToCalendar()" style="background:#ccc;box-shadow:none;cursor:default;">CONTINUE</button>
+        <button class="btn-continue" id="crewContinueBtn" onclick="selectCrew(3)" style="margin-top:28px;max-width:480px;width:100%;">CONTINUE &rarr;</button>
       </div>
 
       <!-- ══ STEP 2: Calendar ══ -->
       <div class="step" id="step2">
-        <div class="step-label">Step 2 of 3 -- Move Date</div>
+        <div class="step-label">Step 2 of 3: Move Date</div>
         <h1>What date would you like to move?</h1>
         <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
 
@@ -546,7 +533,7 @@
 
       <!-- ══ STEP 3: Move Details / Stops ══ -->
       <div class="step" id="step3">
-        <div class="step-label">Step 3 of 3 -- Move Details</div>
+        <div class="step-label">Step 3 of 3: Move Details</div>
         <h1>Where are you moving?</h1>
         <p class="subtitle">Tell us about each location so we can plan your move accurately.</p>
 
@@ -658,7 +645,7 @@
                 <span>&#10003;</span> Each room organized exactly how you want it.
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
-                <span>&#10003;</span> Kick your feet up and relax -- we handle the boxes.
+                <span>&#10003;</span> Kick your feet up and relax. We handle the boxes..
               </div>
               <div style="display:flex;gap:6px;align-items:flex-start;font-size:0.82rem;color:#16a34a;font-weight:600;">
                 <span>&#10003;</span> Want your closet color coordinated? No problem.
@@ -876,7 +863,7 @@
   // ── Rates by day-of-week (0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat)
   const RATES = {
     2: { 0:180, 1:165, 2:165, 3:170, 4:170, 5:180, 6:180 },
-    3: { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
+    3: { 0:220, 1:201, 2:199, 3:199, 4:199, 5:210, 6:220 }
   };
   // Days that always show "Few Left" (2=Tue, 3=Wed)
   const FEW_LEFT_DAYS = new Set([2, 3]);
@@ -893,6 +880,45 @@
 
   // ── Step 0 helpers ──
   let s0Data = {}; // populated either from URL params or Step 0 form
+
+  // If homepage form pre-filled all fields via URL params, skip step 0
+  (function prefillFromURL() {
+    const p = new URLSearchParams(window.location.search);
+    const name  = p.get('name')  || '';
+    const email = p.get('email') || '';
+    const phone = p.get('phone') || '';
+    const from  = p.get('from')  || '';
+    const to    = p.get('to')    || '';
+    if (name && email && phone && from && to) {
+      s0Data = { name, email, phone, from, to };
+      // Pre-fill step 0 fields in case user navigates back
+      const parts = name.split(' ');
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      setVal('s0-first', parts[0] || '');
+      setVal('s0-last',  parts.slice(1).join(' ') || '');
+      setVal('s0-email', email);
+      setVal('s0-phone', phone);
+      setVal('s0-from',  from);
+      setVal('s0-to',    to);
+
+      const skipToCalendar = p.get('skip') === 'calendar' || p.get('skip') === 'map';
+      document.addEventListener('DOMContentLoaded', function() {
+        sendLead(name, email, phone, from, to);
+        initStops();
+        document.getElementById('step0').classList.remove('active');
+        document.getElementById('step1').classList.remove('active');
+        if (skipToCalendar) {
+          // Auto-select 3-man crew and go straight to calendar/date step
+          crewSize = 3;
+          document.getElementById('step2').classList.add('active');
+          updateProgress(2);
+        } else {
+          document.getElementById('step1').classList.add('active');
+          updateProgress(1);
+        }
+      });
+    }
+  })();
 
   function goFromStep0() {
     const first = document.getElementById('s0-first').value.trim();
@@ -927,20 +953,14 @@
 
   function selectCrew(n) {
     crewSize = n;
-    document.getElementById('card2').classList.toggle('selected', n === 2);
-    document.getElementById('card3').classList.toggle('selected', n === 3);
-    var btn = document.getElementById('crewContinueBtn');
-    btn.style.background = '#2563eb';
-    btn.style.boxShadow = '0 4px 16px rgba(37,99,235,0.4)';
-    btn.style.cursor = 'pointer';
+    const c3 = document.getElementById('card3');
+    if (c3) c3.classList.add('selected');
+    goToCalendar();
   }
 
   function goToCalendar() {
-    if (!crewSize) {
-      document.getElementById('card2').style.borderColor = '#ef4444';
-      document.getElementById('card3').style.borderColor = '#ef4444';
-      return;
-    }
+    crewSize = crewSize || 3;
+    if (!crewSize) return;
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
     document.getElementById('progressFill').style.width = '50%';
@@ -1155,7 +1175,7 @@
       card.className = 'stop-card';
       card.innerHTML = `
         <div class="stop-header">
-          <div class="stop-title">Stop ${i + 1} -- <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
+          <div class="stop-title">Stop ${i + 1}: <span style="color:#8B5BC7;font-weight:600;">${labels[i]}</span></div>
           <div class="stop-controls">
             <button class="stop-ctrl-btn" title="Move up" onclick="moveStop(${i},-1)" ${!canUp?'disabled style="opacity:0.3;cursor:default;"':''}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
@@ -1316,6 +1336,8 @@
     attachPlaces('s0-from', null);
     attachPlaces('s0-to', null);
     attachPlacesToStops();
+    // Re-attach in case stops were initialized before Google loaded
+    setTimeout(attachPlacesToStops, 300);
   }
 
   function setMapSrc(from, to) {
@@ -1387,7 +1409,7 @@
   let packViewYear, packViewMonth, packSelectedDate = null, packSelectedTime = null;
   let addPackingService = false;
   // Packing uses same rates as 3 movers
-  const PACK_RATES = RATES[3]; // { 0:214, 1:199, 2:199, 3:204, 4:204, 5:214, 6:214 }
+  const PACK_RATES = RATES[3]; // { 0:220, 1:201, 2:199, 3:199, 4:199, 5:210, 6:220 }
 
   function goToPackingStep() {
     document.getElementById('step4').classList.remove('active');
