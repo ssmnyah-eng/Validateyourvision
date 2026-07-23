@@ -1722,7 +1722,7 @@
     <!-- DARK FORM BAR (full width) -->
     <div id="lead-form" style="background:#190E2A;padding:20px 24px;">
       <form id="lead-capture-form" onsubmit="handleLeadFormSubmit(event)" novalidate>
-        <div style="max-width:1200px;margin:0 auto;">
+        <div id="lf-inner" style="max-width:1200px;margin:0 auto;">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;" id="lf-fields-row">
             <!-- Moving From -->
             <div style="flex:1 1 160px;min-width:130px;position:relative;">
@@ -1779,7 +1779,7 @@
           </div>
 
           <!-- consent + see pricing -->
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;">
+          <div id="lf-consent-row" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
               <input type="checkbox" id="lf-consent" name="consent" required
                 style="width:15px;height:15px;accent-color:#8B5BC7;flex-shrink:0;" />
@@ -1817,9 +1817,16 @@
       #hero video { position: absolute; height: 100% !important; }
       #hero h1 { position: relative; margin-top: 40px; max-width: 100% !important; padding: 20px !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
       
-      #lf-fields-row { flex-direction: column !important; }
-      #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; }
-      #lf-fields-row button { width: 100% !important; }
+      #lead-form { padding: 20px 0 24px !important; }
+      #lf-inner { padding: 0 14px !important; }
+      #lf-fields-row { flex-direction: column !important; gap: 12px !important; }
+      #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; width: 100% !important; }
+      #lf-fields-row > div input { font-size: 1rem !important; padding: 0 14px 0 44px !important; border-radius: 14px !important; height: 54px !important; width: 100% !important; box-sizing: border-box !important; border: 1.5px solid rgba(255,255,255,0.18) !important; }
+      #lf-fields-row > div > div { left: 14px !important; }
+      #lf-fields-row button { width: 100% !important; height: 54px !important; padding: 0 !important; font-size: 1.05rem !important; border-radius: 14px !important; letter-spacing: .06em !important; }
+      #lf-consent-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; margin-top: 16px !important; }
+      #lf-consent-row label span { font-size: 0.8rem !important; line-height: 1.5 !important; }
+      #lf-consent-row input[type="checkbox"] { width: 18px !important; height: 18px !important; }
     }
     @media(max-width:900px){
       #hero-float-card { width: 240px !important; right: 16px !important; padding: 16px 14px !important; }
