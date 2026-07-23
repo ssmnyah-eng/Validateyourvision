@@ -2009,14 +2009,22 @@
   </section>
 
   <!-- ===== WHO WE ARE ===== -->
+  <style>
+    @media(max-width:768px){
+      #who-we-are-grid { grid-template-columns: 1fr !important; }
+      #who-we-are-photo { min-height: 260px !important; }
+      #who-we-are-copy { padding: 36px 24px !important; }
+      #who-we-are-copy h2 { font-size: 1.6rem !important; }
+    }
+  </style>
   <section style="background:#190E2A;overflow:hidden;" aria-labelledby="about-heading">
-    <div style="display:grid;grid-template-columns:1fr 1fr;">
+    <div id="who-we-are-grid" style="display:grid;grid-template-columns:1fr 1fr;">
       <!-- Left: photo -->
-      <div style="overflow:hidden;position:relative;min-height:320px;">
+      <div id="who-we-are-photo" style="overflow:hidden;position:relative;min-height:320px;">
         <img src="/images/crew-photo.webp" alt="VYV Moving crew carrying boxes into a home" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;" />
       </div>
       <!-- Right: copy -->
-      <div style="padding:44px 48px;display:flex;flex-direction:column;justify-content:center;">
+      <div id="who-we-are-copy" style="padding:44px 48px;display:flex;flex-direction:column;justify-content:center;">
         <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#8B5BC7;margin:0 0 10px;">Who We Are</p>
         <h2 id="about-heading" style="font-size:clamp(1.4rem,2.6vw,2.1rem);font-weight:900;color:#ffffff;line-height:1.2;margin:0 0 16px;">We Show Up on Time, <span style="color:#8B5BC7;">Work Fast, and Leave No Surprises</span> on Your Bill.</h2>
         <p style="color:rgba(236,235,238,0.78);font-size:0.9rem;line-height:1.8;margin:0 0 14px;">VYV Moving is a locally owned moving company serving Fredericksburg, Stafford, Spotsylvania, Woodbridge, and the greater Northern Virginia and Richmond areas. We started this company because we got tired of seeing people get overcharged, strung along, or handed off to guys who didn't care.</p>
