@@ -1806,7 +1806,7 @@
           </div>
 
           <!-- consent + see pricing -->
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;">
+          <div id="lf-consent-row" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
               <input type="checkbox" id="lf-consent" name="consent" required
                 style="width:15px;height:15px;accent-color:#8B5BC7;flex-shrink:0;" />
@@ -1831,9 +1831,15 @@
     /* Hero floating card hidden on small screens */
     @media(max-width:680px){
       #hero-float-card { display: none !important; }
-      #lf-fields-row { flex-direction: column !important; }
+      #lead-form { padding: 20px 16px !important; }
+      #lf-fields-row { flex-direction: column !important; gap: 10px !important; }
       #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; }
-      #lf-fields-row button { width: 100% !important; }
+      #lf-fields-row > div input { font-size: 1rem !important; padding: 15px 14px 15px 38px !important; border-radius: 10px !important; }
+      #lf-fields-row > div:last-child { margin-top: 2px; }
+      #lf-fields-row button { width: 100% !important; padding: 16px !important; font-size: 1rem !important; border-radius: 10px !important; letter-spacing: .06em; }
+      #lf-consent-row { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; margin-top: 14px !important; }
+      #lf-consent-row label span { font-size: 0.82rem !important; }
+      #lf-consent-row input[type="checkbox"] { width: 18px !important; height: 18px !important; }
     }
     @media(max-width:900px){
       #hero-float-card { width: 240px !important; right: 16px !important; padding: 16px 14px !important; }
