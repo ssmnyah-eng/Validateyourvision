@@ -621,7 +621,7 @@
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.77,0,0.175,1);
     }
-    .mobile-drawer.open { transform: none; }
+    .mobile-drawer.open { display: flex; transform: none; }
     .mobile-drawer a {
       font-family: 'Poppins', sans-serif;
       font-size: 1.6rem;
@@ -1622,7 +1622,7 @@
         </a>
                 <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
         <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
-          style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
+          style="background:none;border:none;cursor:pointer;display:none;flex-direction:column;gap:5px;padding:4px;">
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
@@ -1933,7 +1933,7 @@
 
   <!-- ===== PRICING PROMO ===== -->
   <section style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+    <div id="pricing-promo-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
 
       <!-- LEFT: perks -->
       <div>

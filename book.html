@@ -92,7 +92,7 @@
     .cal-month { font-weight: 700; font-size: 1rem; color: #190E2A; }
     .cal-nav {
       background: none; border: none; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 8px;
+      width: 44px; height: 44px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       color: #8B5BC7; font-size: 1.2rem; transition: background 0.15s;
     }
@@ -243,7 +243,7 @@
     .chip:hover { border-color: #8B5BC7; background: #F4F0FF; }
     .chip.active { background: #190E2A; border-color: #190E2A; color: #fff; }
     .chip-circle {
-      width: 38px; height: 38px; border-radius: 50%;
+      width: 44px; height: 44px; border-radius: 50%;
       border: 1.5px solid #ddd6f7; background: #fff;
       font-family: 'Poppins', sans-serif; font-size: 0.82rem;
       font-weight: 700; color: #4A237A; cursor: pointer;
@@ -406,9 +406,20 @@
     <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:#190E2A;margin-bottom:6px;">Book Your Move Online</h2>
     <p style="font-size:0.9rem;color:#5c4a7a;margin-bottom:44px;">We made it easy so you can focus on everything else.</p>
 
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
+    <style>
+      @media(max-width:600px){
+        #hiw-grid { grid-template-columns: repeat(3,1fr) !important; gap: 24px 8px !important; }
+        #hiw-grid > div:nth-child(n+4) { display: none; }
+        #hiw-connector { display: none !important; }
+      }
+      @media(min-width:601px) and (max-width:780px){
+        #hiw-grid { grid-template-columns: repeat(5,1fr) !important; gap: 0; }
+        #hiw-grid p { font-size: 0.72rem !important; }
+      }
+    </style>
+    <div id="hiw-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
       <!-- connector line -->
-      <div style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(to right,#8B5BC7 0,#8B5BC7 6px,transparent 6px,transparent 12px);z-index:0;"></div>
+      <div id="hiw-connector" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(to right,#8B5BC7 0,#8B5BC7 6px,transparent 6px,transparent 12px);z-index:0;"></div>
 
       <!-- Step 1 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
@@ -843,7 +854,7 @@
           </div>
 
           <!-- 2-column: billing fields left, card elements right -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+          <div id="s6-billing-cols" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
 
             <!-- LEFT: name + address -->
             <div>
