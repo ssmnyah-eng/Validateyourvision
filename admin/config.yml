@@ -1,0 +1,67 @@
+backend:
+  name: github
+  repo: ssmnyah-eng/Validateyourvision
+  branch: gh-pages
+
+# Where uploaded images go
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Show live preview in editor
+show_preview_links: true
+
+collections:
+
+  # ── Blog Posts ──────────────────────────────────────────────────────────────
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "blog/posts"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    preview_path: "/blog/post.html?slug={{slug}}"
+    fields:
+      - { label: "Title",          name: "title",       widget: "string" }
+      - { label: "Publish Date",   name: "date",        widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, default: "" }
+      - { label: "Description",    name: "description", widget: "string",   hint: "One sentence shown in Google search results and blog index." }
+      - { label: "Featured Image", name: "image",       widget: "image",    required: false }
+      - { label: "Alt Text",       name: "image_alt",   widget: "string",   required: false }
+      - { label: "Body",           name: "body",        widget: "markdown" }
+
+  # ── Site Settings ────────────────────────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - label: "Business Info"
+        name: "business"
+        file: "_data/business.yml"
+        fields:
+          - { label: "Company Name",  name: "name",    widget: "string", default: "VYV Moving" }
+          - { label: "Phone (SMS)",   name: "phone",   widget: "string", default: "+15403001414", hint: "Used in SMS links. Format: +1xxxxxxxxxx" }
+          - { label: "Email",         name: "email",   widget: "string", default: "info@validateyourvision.com" }
+          - label: "Service Areas"
+            name: "service_areas"
+            widget: "list"
+            field: { label: "City/Region", name: "area", widget: "string" }
+          - label: "Hours"
+            name: "hours"
+            widget: "object"
+            fields:
+              - { label: "Weekdays",  name: "weekdays",  widget: "string", default: "Mon–Fri 7 AM – 7 PM" }
+              - { label: "Saturday",  name: "saturday",  widget: "string", default: "Sat 7 AM – 5 PM" }
+              - { label: "Sunday",    name: "sunday",    widget: "string", default: "Sun by appointment" }
+
+      - label: "Promotions / Announcements"
+        name: "promos"
+        file: "_data/promos.yml"
+        fields:
+          - label: "Active Promotions"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Headline",    name: "headline",   widget: "string" }
+              - { label: "Detail",      name: "detail",     widget: "string" }
+              - { label: "Active",      name: "active",     widget: "boolean", default: true }
+              - { label: "Expires",     name: "expires",    widget: "datetime", required: false }
