@@ -47,7 +47,9 @@ function doGet(e) {
     const action = e.parameter.action || 'get_bookings';
 
     // Public: customer portal polling
-    if (action === 'get_move') return json(getMove(e.parameter.id, e.parameter.moveToken));
+    if (action === 'get_move')          return json(getMove(e.parameter.id, e.parameter.moveToken));
+    // Public: availability check (only reveals dates + slots, no personal info)
+    if (action === 'get_booked_slots')  return json(getBookedSlots());
 
     const token = e.parameter.token;
     if (token !== ADMIN_TOKEN) return json({ ok: false, error: 'Unauthorized' });
@@ -335,6 +337,43 @@ function getLeads() {
       return obj;
     })
   };
+}
+
+// ── GET BOOKED SLOTS (public — dates + AM/PM only, no PII) ───
+function getBookedSlots() {
+  const ss   = getOrCreateSheet(BOOKINGS_SHEET, []);
+  const data = ss.getDataRange().getValues();
+  if (data.length < 2) return { ok: true, slots: {} };
+  const headers = data[0];
+  const slots = {};
+
+  data.slice(1).forEach(function(row) {
+    const obj = {};
+    headers.forEach(function(h, i) { obj[h] = row[i]; });
+
+    // Ignore cancelled bookings; keep upcoming + in-progress
+    const status = String(obj['Status'] || '').toLowerCase();
+    if (status === 'cancelled' || status === 'canceled') return;
+
+    const moveDate = String(obj['Move Date'] || '');
+    const timeMatch = moveDate.match(/\b(AM|PM)\b/);
+    if (!timeMatch) return;
+    const slot = timeMatch[1];
+
+    // "Wednesday, August 13, 2025 AM" → "August 13, 2025"
+    const withoutSlot    = moveDate.replace(/\s*\b(?:AM|PM)\b\s*/g, '').trim();
+    const withoutWeekday = withoutSlot.replace(/^\w+,\s*/, '');
+    const d = new Date(withoutWeekday);
+    if (isNaN(d.getTime())) return;
+
+    const key = d.getFullYear() + '-' +
+                String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                String(d.getDate()).padStart(2, '0');
+    if (!slots[key]) slots[key] = [];
+    if (slots[key].indexOf(slot) === -1) slots[key].push(slot);
+  });
+
+  return { ok: true, slots: slots };
 }
 
 // ── CONFIRMATION EMAIL ────────────────────────────────────────

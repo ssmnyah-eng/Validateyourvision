@@ -882,6 +882,23 @@
   let selectedDate = null;
   let selectedTime = null;
 
+  // ── Availability: keyed by "YYYY-MM-DD" → ["AM"] | ["PM"] | ["AM","PM"] ──
+  let bookedSlots = {};
+  (function fetchBookedSlots() {
+    fetch(SHEET_SCRIPT_URL + '?action=get_booked_slots')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d.ok) bookedSlots = d.slots || {}; })
+      .catch(function(){});
+  })();
+
+  function dateKey(date) {
+    return date.getFullYear() + '-' +
+           String(date.getMonth()+1).padStart(2,'0') + '-' +
+           String(date.getDate()).padStart(2,'0');
+  }
+  function slotsTaken(date) { return bookedSlots[dateKey(date)] || []; }
+  function isFullyBooked(date) { const s = slotsTaken(date); return s.includes('AM') && s.includes('PM'); }
+
   // ── Step 0 helpers ──
   let s0Data = {}; // populated either from URL params or Step 0 form
 
@@ -1054,9 +1071,26 @@
         if (isSelected) el.classList.add('selected');
         const color = rateColor(rate);
         const fewLeft = FEW_LEFT_DAYS.has(dow);
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>${fewLeft ? `<div style="font-size:0.55rem;font-weight:800;color:${isSelected?'#fff':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">Few Left</div>` : ''}`;
-        if (!isSelected) el.querySelector('.day-price').style.color = color;
-        el.addEventListener('click', () => selectDay(date));
+        const fullyBooked = isFullyBooked(date);
+        const taken = slotsTaken(date);
+        const oneLeft = !fullyBooked && taken.length === 1;
+        let subLabel = '';
+        if (fullyBooked) {
+          subLabel = `<div style="font-size:0.52rem;font-weight:800;color:${isSelected?'rgba(255,255,255,0.7)':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">FULL</div>`;
+        } else if (oneLeft) {
+          subLabel = `<div style="font-size:0.52rem;font-weight:800;color:${isSelected?'rgba(255,255,255,0.7)':'#f97316'};letter-spacing:0.04em;line-height:1;margin-top:2px;">1 SLOT</div>`;
+        } else if (fewLeft) {
+          subLabel = `<div style="font-size:0.55rem;font-weight:800;color:${isSelected?'#fff':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">Few Left</div>`;
+        }
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>${subLabel}`;
+        if (!isSelected) el.querySelector('.day-price').style.color = fullyBooked ? '#bbb' : color;
+        if (fullyBooked) {
+          el.classList.add('past');
+          el.style.opacity = '0.45';
+          el.style.cursor = 'not-allowed';
+        } else {
+          el.addEventListener('click', () => selectDay(date));
+        }
       }
       grid.appendChild(el);
     }
@@ -1065,8 +1099,29 @@
   function selectDay(date) {
     selectedDate = date;
     selectedTime = null;
-    document.getElementById('amBtn').classList.remove('active');
-    document.getElementById('pmBtn').classList.remove('active');
+    const taken = slotsTaken(date);
+    const amBooked = taken.includes('AM');
+    const pmBooked = taken.includes('PM');
+
+    const amBtn = document.getElementById('amBtn');
+    const pmBtn = document.getElementById('pmBtn');
+    amBtn.classList.remove('active');
+    pmBtn.classList.remove('active');
+
+    // Disable booked slots
+    amBtn.disabled = amBooked;
+    pmBtn.disabled = pmBooked;
+    amBtn.querySelector('.time-desc').textContent = amBooked
+      ? 'This slot is fully booked.'
+      : 'Crew arrives at 7 AM sharp. Great for early birds!';
+    pmBtn.querySelector('.time-desc').textContent = pmBooked
+      ? 'This slot is fully booked.'
+      : 'Begins between 4–5 PM.';
+    amBtn.style.opacity = amBooked ? '0.45' : '';
+    pmBtn.style.opacity = pmBooked ? '0.45' : '';
+    amBtn.style.cursor = amBooked ? 'not-allowed' : '';
+    pmBtn.style.cursor = pmBooked ? 'not-allowed' : '';
+
     document.getElementById('timeSelect').style.display = 'grid';
     document.getElementById('dateContinueBtn').disabled = true;
     updateLabel();
@@ -1074,6 +1129,9 @@
   }
 
   function selectTime(t) {
+    // Guard: don't select a booked slot
+    const taken = selectedDate ? slotsTaken(selectedDate) : [];
+    if (taken.includes(t)) return;
     selectedTime = t;
     document.getElementById('amBtn').classList.toggle('active', t === 'AM');
     document.getElementById('pmBtn').classList.toggle('active', t === 'PM');
@@ -1476,19 +1534,43 @@
         if (FEW_LEFT_DAYS.has(dow)) {
           el.innerHTML += `<div style="font-size:0.55rem;color:${isSel?'#fff':'#dc2626'};font-weight:700;line-height:1;">Few Left</div>`;
         }
-        el.addEventListener('click', () => {
-          packSelectedDate = date; packSelectedTime = null;
-          document.getElementById('packAmBtn').classList.remove('active');
-          document.getElementById('packPmBtn').classList.remove('active');
-          document.getElementById('packTimeSelect').style.display = 'grid';
-          renderPackCal();
-        });
+        if (isFullyBooked(date)) {
+          el.classList.add('past');
+          el.style.opacity = '0.45';
+          el.style.cursor = 'not-allowed';
+          el.innerHTML += `<div style="font-size:0.52rem;font-weight:800;color:#dc2626;letter-spacing:0.04em;line-height:1;margin-top:2px;">FULL</div>`;
+        } else {
+          const takenPack = slotsTaken(date);
+          if (takenPack.length === 1) {
+            el.innerHTML += `<div style="font-size:0.52rem;font-weight:800;color:#f97316;letter-spacing:0.04em;line-height:1;margin-top:2px;">1 SLOT</div>`;
+          }
+          el.addEventListener('click', () => {
+            packSelectedDate = date; packSelectedTime = null;
+            const taken = slotsTaken(date);
+            const packAmBtn = document.getElementById('packAmBtn');
+            const packPmBtn = document.getElementById('packPmBtn');
+            packAmBtn.classList.remove('active');
+            packPmBtn.classList.remove('active');
+            packAmBtn.disabled = taken.includes('AM');
+            packPmBtn.disabled = taken.includes('PM');
+            packAmBtn.querySelector('.time-desc').textContent = taken.includes('AM') ? 'This slot is fully booked.' : 'Packing starts at 7 AM sharp.';
+            packPmBtn.querySelector('.time-desc').textContent = taken.includes('PM') ? 'This slot is fully booked.' : 'PM packing starts after our AM crew wraps up.';
+            packAmBtn.style.opacity = taken.includes('AM') ? '0.45' : '';
+            packPmBtn.style.opacity = taken.includes('PM') ? '0.45' : '';
+            packAmBtn.style.cursor = taken.includes('AM') ? 'not-allowed' : '';
+            packPmBtn.style.cursor = taken.includes('PM') ? 'not-allowed' : '';
+            document.getElementById('packTimeSelect').style.display = 'grid';
+            renderPackCal();
+          });
+        }
       }
       grid.appendChild(el);
     }
   }
 
   function selectPackTime(t) {
+    const taken = packSelectedDate ? slotsTaken(packSelectedDate) : [];
+    if (taken.includes(t)) return;
     packSelectedTime = t;
     document.getElementById('packAmBtn').classList.toggle('active', t === 'AM');
     document.getElementById('packPmBtn').classList.toggle('active', t === 'PM');
