@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- UNDER CONSTRUCTION: remove the line below when ready to go live -->
+  <meta http-equiv="refresh" content="0; url=/under-construction.html" />
+
 
   <!-- ===== SEO: Title & Meta ===== -->
   <title>Movers Fredericksburg VA | Book Online & Get a Guaranteed Flat Rate | Validate Your Vision</title>
@@ -621,7 +624,7 @@
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.77,0,0.175,1);
     }
-    .mobile-drawer.open { display: flex; transform: none; }
+    .mobile-drawer.open { transform: none; }
     .mobile-drawer a {
       font-family: 'Poppins', sans-serif;
       font-size: 1.6rem;
@@ -1490,20 +1493,22 @@
       /* Trust badges: 2-column grid instead of horizontal scroll */
       .trust-row {
         display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        justify-content: unset;
-        overflow-x: unset;
-        flex-wrap: unset;
-        padding: 0;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0 !important;
+        justify-content: unset !important;
+        overflow-x: unset !important;
+        flex-wrap: wrap !important;
+        padding: 0 !important;
       }
       .trust-badge {
-        border-right: none !important;
-        border-bottom: 1px solid rgba(236,235,238,0.1);
-        padding: 12px 14px;
-        font-size: 0.82rem;
-        justify-content: flex-start;
+        border-right: 1px solid rgba(236,235,238,0.1) !important;
+        border-bottom: 1px solid rgba(236,235,238,0.1) !important;
+        padding: 12px 14px !important;
+        font-size: 0.82rem !important;
+        justify-content: center !important;
+        width: 100% !important;
       }
+      .trust-badge:nth-child(even) { border-right: none !important; }
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
       .float-cta a span { display: none; }
       .float-cta a { padding: 14px 16px; border-radius: 50%; }
@@ -1586,32 +1591,19 @@
 
       <!-- Nav links center -->
       <div class="nav-links" style="display:flex;align-items:center;gap:4px;flex:1;justify-content:center;">
-      <div class="nav-dd">
-        <a href="/#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Services <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/calculator.html">Moving Calculator</a>
-          <a href="/locations/">Service Areas</a>
+        <a href="/book.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Book Your Move</a>
+        <div class="nav-dropdown">
+          <a href="#services" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Services <span class="nav-dropdown-arrow">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="/same-day-movers.html">Same Day Moves</a>
+            <a href="/#services">Local Moving</a>
+            <a href="/#services">Packing Services</a>
+            <a href="/#services">Senior Moving</a>
+          </div>
         </div>
-      </div>
-      <a href="/#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Reviews</a>
-      <div class="nav-dd">
-        <a href="#" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Company <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/contact.html">Contact</a>
-          <a href="/our-history.html">Our History</a>
-          <a href="/our-values.html">Our Values</a>
-          <a href="/our-team.html">Our Team</a>
-          <a href="/our-awards.html">Our Awards</a>
-        </div>
-      </div>
-      <div class="nav-dd">
-        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Resources <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/blog/">Blog</a>
-          <a href="/faq.html">FAQ</a>
-        </div>
-      </div>
-      <a href="/careers.html" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;">Careers</a>
+        <a href="#reviews" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Reviews</a>
+        <a href="#faq-inner" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">FAQ</a>
+        <a href="/blog/" style="color:rgba(236,235,238,0.88);font-size:0.82rem;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(236,235,238,0.88)'">Blog</a>
       </div>
 
       <!-- Right side -->
@@ -1620,9 +1612,9 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           (540) 300-1414
         </a>
-                <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
+        <a href="/book.html" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;white-space:nowrap;">Book Now</a>
         <button id="ham" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false"
-          style="background:none;border:none;cursor:pointer;display:none;flex-direction:column;gap:5px;padding:4px;">
+          style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
           <span style="display:block;width:22px;height:2px;background:#ECEBEE;border-radius:2px;"></span>
@@ -1631,20 +1623,15 @@
     </div>
   </nav>
 
-    <!-- Mobile Drawer -->
+  <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="drawer" role="dialog" aria-label="Mobile navigation">
-    <a href="/" onclick="toggleNav()">Home</a>
-    <a href="/#services" onclick="toggleNav()">Services</a>
-    <a href="/calculator.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Moving Calculator</a>
-    <a href="/locations/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Service Areas</a>
-    <a href="/#reviews" onclick="toggleNav()">Reviews</a>
-    <a href="/contact.html" onclick="toggleNav()">Contact</a>
-    <a href="/blog/" onclick="toggleNav()">Resources</a>
-    <a href="/blog/" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Blog</a>
-    <a href="/faq.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">FAQ</a>
-    <a href="/careers.html" onclick="toggleNav()">Careers</a>
-    <a href="sms:+15403001414" onclick="toggleNav()">(540) 300-1414 — Text</a>
-    <a href="/book.html#reservation" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
+    <a href="/book.html" onclick="toggleNav()">Book Your Move</a>
+    <a href="#services" onclick="toggleNav()">Services</a>
+    <a href="/same-day-movers.html" onclick="toggleNav()" style="padding-left:28px;font-size:0.82rem;opacity:0.8;">Same Day Moves</a>
+    <a href="#reviews" onclick="toggleNav()">Reviews</a>
+    <a href="#faq-inner" onclick="toggleNav()">FAQ</a>
+    <a href="/blog/" onclick="toggleNav()">Blog</a>
+    <a href="/book.html" class="btn btn-primary" onclick="toggleNav()">Book Now</a>
   </div>
 
   <style>
@@ -1661,17 +1648,6 @@
     }
     .nav-tick.active { opacity: 1; transform: translateY(0); }
     .nav-tick.exit { opacity: 0; transform: translateY(-10px); }
-
-    /* ── UPDATED NAV DROPDOWNS ── */
-    .nav-dd { position: relative; display: flex; align-items: center; }
-    .nav-dd > a { display: flex !important; align-items: center; gap: 4px; }
-    .nav-dd-menu { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px); background: #210D46; border: 1px solid rgba(139,91,199,0.25); border-radius: 12px; padding: 8px 0; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; z-index: 10; }
-    .nav-dd:hover .nav-dd-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .nav-dd-menu a { display: block !important; padding: 10px 20px; font-size: 0.82rem; color: rgba(236,235,238,0.75); text-decoration: none; white-space: nowrap; transition: color 0.12s, background 0.12s; }
-    .nav-dd-menu a::after { display: none !important; }
-    .nav-dd-menu a:hover { color: #ECEBEE; background: rgba(139,91,199,0.15); }
-    @media(max-width:960px){ .nav-links,.nav-phone { display:none!important; } }
-    .nav-bookbtn { background: #8B5BC7; color: #fff !important; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
     @media(max-width:600px){
       .nav-ticker { display: none; }
       .nav-phone { display: none; }
@@ -1749,7 +1725,7 @@
     <!-- DARK FORM BAR (full width) -->
     <div id="lead-form" style="background:#190E2A;padding:20px 24px;">
       <form id="lead-capture-form" onsubmit="handleLeadFormSubmit(event)" novalidate>
-        <div style="max-width:1200px;margin:0 auto;">
+        <div id="lf-inner" style="max-width:1200px;margin:0 auto;">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;" id="lf-fields-row">
             <!-- Moving From -->
             <div style="flex:1 1 160px;min-width:130px;position:relative;">
@@ -1814,7 +1790,7 @@
                 I agree to texts and calls under <a href="/policy.html" style="color:#8B5BC7;">terms</a> and <a href="/policy.html" style="color:#8B5BC7;">privacy</a>. We don't sell your data to anyone for any purpose.
               </span>
             </label>
-            <a href="/book.html#reservation" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;color:#ffffff;font-weight:500;font-style:italic;text-decoration:none;white-space:nowrap;opacity:0.85;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <a href="/book.html" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;color:#ffffff;font-weight:500;font-style:italic;text-decoration:none;white-space:nowrap;opacity:0.85;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M21 12c0 4.97-4.03 9-9 9"/><path d="M15 17l-3 4-3-4"/></svg>
               See Pricing
             </a>
@@ -1830,19 +1806,39 @@
   <style>
     /* Hero floating card hidden on small screens */
     @media(max-width:680px){
-      #hero-float-card { display: none !important; }
-      #lead-form { padding: 20px 16px !important; }
-      #lf-fields-row { flex-direction: column !important; gap: 10px !important; }
-      #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; }
-      #lf-fields-row > div input { font-size: 1rem !important; padding: 15px 14px 15px 38px !important; border-radius: 10px !important; }
-      #lf-fields-row > div:last-child { margin-top: 2px; }
-      #lf-fields-row button { width: 100% !important; padding: 16px !important; font-size: 1rem !important; border-radius: 10px !important; letter-spacing: .06em; }
-      #lf-consent-row { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; margin-top: 14px !important; }
-      #lf-consent-row label span { font-size: 0.82rem !important; }
+      #hero-float-card { 
+        position: relative !important; 
+        top: 0 !important; 
+        right: 0 !important; 
+        transform: none !important; 
+        margin: 20px auto !important; 
+        width: 90% !important; 
+        display: block !important;
+      }
+      #hero { padding-top: 64px; }
+      #hero > div:first-child { height: auto !important; min-height: 400px; display: flex; flex-direction: column; }
+      #hero video { position: absolute; height: 100% !important; }
+      #hero h1 { position: relative; margin-top: 40px; max-width: 100% !important; padding: 20px !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+      
+      #lead-form { padding: 20px 0 24px !important; }
+      #lf-inner { padding: 0 14px !important; }
+      #lf-fields-row { flex-direction: column !important; gap: 12px !important; }
+      #lf-fields-row > div { flex: 1 1 100% !important; min-width: 0 !important; width: 100% !important; }
+      #lf-fields-row > div input { font-size: 1rem !important; padding: 0 14px 0 44px !important; border-radius: 14px !important; height: 54px !important; width: 100% !important; box-sizing: border-box !important; border: 1.5px solid rgba(255,255,255,0.18) !important; }
+      #lf-fields-row > div > div { left: 14px !important; }
+      #lf-fields-row button { width: 100% !important; height: 54px !important; padding: 0 !important; font-size: 1.05rem !important; border-radius: 14px !important; letter-spacing: .06em !important; }
+      #lf-consent-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; margin-top: 16px !important; }
+      #lf-consent-row label span { font-size: 0.8rem !important; line-height: 1.5 !important; }
       #lf-consent-row input[type="checkbox"] { width: 18px !important; height: 18px !important; }
     }
     @media(max-width:900px){
       #hero-float-card { width: 240px !important; right: 16px !important; padding: 16px 14px !important; }
+    }
+    @media(max-width:768px){
+      #footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; text-align: center; }
+      #footer-grid > div { display: flex; flex-direction: column; align-items: center; }
+      #footer-grid a { justify-content: center; }
+      #pricing-promo-grid div:last-child > div:first-of-type { grid-template-columns: 1fr !important; }
     }
   </style>
 
@@ -1938,7 +1934,7 @@
   </section>
 
   <!-- ===== PRICING PROMO ===== -->
-  <section style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
+  <section id="pricing-promo" style="background:#fff;padding:48px 20px;" aria-labelledby="pricing-promo-heading">
     <div id="pricing-promo-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
 
       <!-- LEFT: perks -->
@@ -1964,6 +1960,8 @@
             <span style="color:#190E2A;font-size:0.95rem;line-height:1.6;">Your deposit is applied toward your balance, not extra. <strong>Nothing hidden. Nothing added at the end.</strong></span>
           </li>
         </ul>
+        <a href="/book.html" style="display:inline-flex;align-items:center;gap:8px;background:#190E2A;color:#fff;padding:16px 32px;border-radius:10px;font-size:0.95rem;font-weight:800;letter-spacing:0.03em;text-decoration:none;">Book Your Move Now &rarr;</a>
+        <p style="margin:12px 0 0;font-size:0.8rem;color:#8B5BC7;font-style:italic;">Spots fill fast on weekends. Secure your date with a deposit today.</p>
       </div>
 
       <!-- RIGHT: math cards + crew photo -->
@@ -2000,9 +1998,7 @@
             </div>
           </div>
         </div>
-        <p style="font-size:0.75rem;color:#8B5BC7;font-style:italic;margin:0 0 28px;line-height:1.5;">Example based on a 2-bedroom apartment move. Actual time varies by job size and distance. 3-man crew often finishes faster, keeping your total lower despite the higher hourly rate.</p>
-        <a href="/book.html#reservation" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#190E2A;color:#fff;padding:20px 36px;border-radius:12px;font-size:1.1rem;font-weight:900;letter-spacing:0.03em;text-decoration:none;box-shadow:0 6px 24px rgba(25,14,42,0.22);transition:background 0.2s;" onmouseover="this.style.background='#4A237A'" onmouseout="this.style.background='#190E2A'">Book Your Move Now &rarr;</a>
-        <p style="margin:14px 0 0;font-size:0.78rem;color:#5c4a7a;text-align:center;line-height:1.5;">No phone tag. No sales calls. Pick your date, secure it with a deposit, and your crew is confirmed — all in under 2 minutes.</p>
+        <p style="font-size:0.75rem;color:#8B5BC7;font-style:italic;margin:0 0 20px;line-height:1.5;">Example based on a 2-bedroom apartment move. Actual time varies by job size and distance. 3-man crew often finishes faster, keeping your total lower despite the higher hourly rate.</p>
       </div>
     </div>
 
@@ -2015,27 +2011,19 @@
   </section>
 
   <!-- ===== WHO WE ARE ===== -->
-  <style>
-    @media(max-width:768px){
-      #who-we-are-grid { grid-template-columns: 1fr !important; }
-      #who-we-are-photo { min-height: 260px !important; }
-      #who-we-are-copy { padding: 36px 24px !important; }
-      #who-we-are-copy h2 { font-size: 1.6rem !important; }
-    }
-  </style>
   <section style="background:#190E2A;overflow:hidden;" aria-labelledby="about-heading">
-    <div id="who-we-are-grid" style="display:grid;grid-template-columns:1fr 1fr;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
       <!-- Left: photo -->
-      <div id="who-we-are-photo" style="overflow:hidden;position:relative;min-height:320px;">
-        <img src="/images/crew-photo.webp" alt="VYV Moving crew carrying boxes into a home" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;" />
+      <div style="overflow:hidden;">
+        <img src="/images/crew-photo.webp" alt="VYV Moving crew carrying boxes into a home" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
       </div>
       <!-- Right: copy -->
-      <div id="who-we-are-copy" style="padding:44px 48px;display:flex;flex-direction:column;justify-content:center;">
-        <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#8B5BC7;margin:0 0 10px;">Who We Are</p>
-        <h2 id="about-heading" style="font-size:clamp(1.4rem,2.6vw,2.1rem);font-weight:900;color:#ffffff;line-height:1.2;margin:0 0 16px;">We Show Up on Time, <span style="color:#8B5BC7;">Work Fast, and Leave No Surprises</span> on Your Bill.</h2>
-        <p style="color:rgba(236,235,238,0.78);font-size:0.9rem;line-height:1.8;margin:0 0 14px;">VYV Moving is a locally owned moving company serving Fredericksburg, Stafford, Spotsylvania, Woodbridge, and the greater Northern Virginia and Richmond areas. We started this company because we got tired of seeing people get overcharged, strung along, or handed off to guys who didn't care.</p>
-        <p style="color:rgba(236,235,238,0.78);font-size:0.9rem;line-height:1.8;margin:0 0 22px;">Every move we take on gets our full effort — furniture wrapped right, boxes stacked right, clock started when we're actually working. Whether you're moving a studio or a 4-bedroom house, you get the same crew, same pricing, and same standard of care.</p>
-        <a href="/book.html#reservation" style="color:#8B5BC7;font-size:0.88rem;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(139,91,199,0.4);padding-bottom:3px;width:fit-content;">Book your move &rarr;</a>
+      <div style="padding:64px 56px;display:flex;flex-direction:column;justify-content:center;">
+        <p style="font-size:0.75rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#8B5BC7;margin:0 0 14px;">Who We Are</p>
+        <h2 id="about-heading" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:#ffffff;line-height:1.2;margin:0 0 24px;">Local Movers Who <span style="color:#8B5BC7;">Actually Care</span> About Your Stuff</h2>
+        <p style="color:rgba(236,235,238,0.8);font-size:0.95rem;line-height:1.8;margin:0 0 18px;">We're VYV Moving, a small, locally owned crew out of Fredericksburg, VA serving Northern Virginia and the Richmond metro. We started this company because we believe moving doesn't have to be stressful, overpriced, or full of surprises.</p>
+        <p style="color:rgba(236,235,238,0.8);font-size:0.95rem;line-height:1.8;margin:0 0 32px;">Every job gets our full effort. We handle your furniture like it's ours, we show up when we say we will, and we won't add fees you didn't agree to. Simple as that.</p>
+        <a href="/book.html" style="color:#8B5BC7;font-size:0.9rem;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(139,91,199,0.4);padding-bottom:3px;width:fit-content;">Book your move &rarr;</a>
       </div>
     </div>
     <style>
@@ -2082,7 +2070,7 @@
         <div style="background:#ffffff;border-radius:12px;padding:28px 24px;box-shadow:0 2px 10px rgba(74,35,122,0.06);">
           <div style="font-size:1.5rem;font-weight:800;color:#e0d8f0;margin-bottom:12px;">05</div>
           <h3 style="color:#190E2A;font-size:1rem;font-weight:700;margin-bottom:8px;">Real Price Data</h3>
-          <p style="color:#5c4a7a;font-size:0.88rem;line-height:1.7;margin:0;">Use our <a href="/book.html#reservation" style="color:#8B5BC7;font-weight:600;">move calculator</a> to see what your Virginia neighbors paid for similar moves. No guesswork, no surprises.</p>
+          <p style="color:#5c4a7a;font-size:0.88rem;line-height:1.7;margin:0;">Use our <a href="/book.html" style="color:#8B5BC7;font-weight:600;">move calculator</a> to see what your Virginia neighbors paid for similar moves. No guesswork, no surprises.</p>
         </div>
 
         <div style="background:#ffffff;border-radius:12px;padding:28px 24px;box-shadow:0 2px 10px rgba(74,35,122,0.06);">
@@ -2226,7 +2214,7 @@
         </div>
       </div>
       <div style="text-align:center;margin-top:32px;">
-        <a href="/book.html#reservation" style="display:inline-block;background:#1d4ed8;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
+        <a href="/book.html" style="display:inline-block;background:#1d4ed8;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
       </div>
     </div>
   </section>
@@ -2263,7 +2251,7 @@
           <span style="color:#190E2A;font-weight:600;font-size:0.9rem;">Northern Virginia</span>
         </div>
       </div>
-      <a href="/book.html#reservation" style="display:inline-block;background:#1d4ed8;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
+      <a href="/book.html" style="display:inline-block;background:#1d4ed8;color:#fff;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;">Get Your Free Estimate</a>
     </div>
   </section>
 
@@ -2273,7 +2261,7 @@
       <div>
         <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:800;color:#190E2A;margin-bottom:8px;">Your Moving Questions,<br><span style="color:#8B5BC7;">Answered</span></h2>
         <div style="height:3px;width:48px;background:#8B5BC7;border-radius:2px;margin:16px 0 24px;"></div>
-        <a href="/faq.html" style="display:inline-block;background:#190E2A;color:#fff;font-weight:700;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;">More Questions</a>
+        <a href="#faq-inner" style="display:inline-block;background:#190E2A;color:#fff;font-weight:700;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;">More Questions</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <details style="background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #ede6ff;">
@@ -2326,7 +2314,7 @@
         <!-- Card 1 -->
         <a href="/blog/how-much-do-movers-cost-fredericksburg-va.html" style="text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid #ede6ff;box-shadow:0 2px 16px rgba(74,35,122,0.09);display:flex;flex-direction:column;background:#fff;transition:box-shadow 0.2s;">
           <div style="height:200px;overflow:hidden;position:relative;">
-            <img src="/images/pexels-royal-moving-storage-1098629817-20706509.jpg" alt="Moving boxes and furniture being loaded" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#190E2A,#4A237A)';this.style.display='none'" />
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Moving boxes and furniture being loaded" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#190E2A,#4A237A)';this.style.display='none'" />
             <div style="position:absolute;top:12px;left:12px;background:#8B5BC7;color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;">Pricing Guide</div>
           </div>
           <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;">
@@ -2339,7 +2327,7 @@
         <!-- Card 2 -->
         <a href="/blog/how-to-prepare-for-moving-day-fredericksburg-va.html" style="text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid #ede6ff;box-shadow:0 2px 16px rgba(74,35,122,0.09);display:flex;flex-direction:column;background:#fff;transition:box-shadow 0.2s;">
           <div style="height:200px;overflow:hidden;position:relative;">
-            <img src="/images/pexels-tima-miroshnichenko-6169055.jpg" alt="Organized moving boxes ready for moving day" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#4A237A,#8B5BC7)';this.style.display='none'" />
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Organized moving boxes ready for moving day" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#4A237A,#8B5BC7)';this.style.display='none'" />
             <div style="position:absolute;top:12px;left:12px;background:#8B5BC7;color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;">Moving Tips</div>
           </div>
           <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;">
@@ -2352,7 +2340,7 @@
         <!-- Card 3 -->
         <a href="/blog/how-to-pack-a-kitchen-for-a-move.html" style="text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid #ede6ff;box-shadow:0 2px 16px rgba(74,35,122,0.09);display:flex;flex-direction:column;background:#fff;transition:box-shadow 0.2s;">
           <div style="height:200px;overflow:hidden;position:relative;">
-            <img src="/images/pexels-curtis-adams-1694007-4221389.jpg" alt="Kitchen items being packed for a move" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#210D46,#190E2A)';this.style.display='none'" />
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kitchen items being packed for a move" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#210D46,#190E2A)';this.style.display='none'" />
             <div style="position:absolute;top:12px;left:12px;background:#8B5BC7;color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;">Packing Tips</div>
           </div>
           <div style="padding:20px 22px;flex:1;display:flex;flex-direction:column;">
@@ -2377,7 +2365,7 @@
   <!-- ===== FOOTER ===== -->
   <footer style="background:#0f0820;color:#ECEBEE;padding:56px 24px 0;">
     <!-- Main footer grid -->
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
+    <div id="footer-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(139,91,199,0.2);">
 
       <!-- Left: logo + tagline + socials + service area -->
       <div>
@@ -2456,9 +2444,9 @@
       <div style="display:flex;gap:20px;font-size:0.78rem;">
         <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Privacy</a>
         <a href="/policy.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Terms</a>
-        <a href="/faq.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">FAQ</a>
+        <a href="#faq-inner" style="color:rgba(236,235,238,0.5);text-decoration:none;">FAQ</a>
         <a href="sms:+15403001414" style="color:rgba(236,235,238,0.5);text-decoration:none;">Contact</a>
-        <a href="/book.html#reservation" style="color:rgba(236,235,238,0.5);text-decoration:none;">Book Your Move</a>
+        <a href="/book.html" style="color:rgba(236,235,238,0.5);text-decoration:none;">Book Your Move</a>
       </div>
       <div style="display:flex;gap:14px;">
         <a href="https://www.facebook.com/validateyourvision" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color:rgba(236,235,238,0.4);">
@@ -2477,7 +2465,7 @@
 
   <!-- Floating CTA -->
   <div class="float-cta">
-    <a href="/book.html#reservation" aria-label="Book your move">
+    <a href="/book.html" aria-label="Book your move">
       📅 <span>Reserve Your Moving Date</span>
     </a>
   </div>

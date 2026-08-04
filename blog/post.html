@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Loading… | VYV Moving</title>
+  <meta id="meta-desc" name="description" content="" />
+  <link rel="canonical" id="canonical" href="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dp:#190E2A; --mp:#210D46; --lv:#8B5BC7; --tw:#ECEBEE;
+      --bg:#f9f8fc; --fg:#1a1028; --card:#fff;
+      --border:rgba(139,91,199,0.15);
+    }
+    @media(prefers-color-scheme:dark){
+      :root{ --bg:#0e0b17; --fg:#ECEBEE; --card:#1a1028; --border:rgba(139,91,199,0.3); }
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;}
+    a{color:var(--lv);}
+    nav{background:var(--dp);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+    nav a.logo{color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;text-decoration:none;}
+    nav a.back{color:rgba(255,255,255,0.7);font-size:0.88rem;text-decoration:none;display:flex;align-items:center;gap:6px;}
+    nav a.back:hover{color:#fff;}
+    .hero-img{width:100%;max-height:420px;object-fit:cover;display:block;}
+    .container{max-width:740px;margin:0 auto;padding:40px 24px 80px;}
+    .eyebrow{font-size:0.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lv);font-weight:600;margin-bottom:12px;}
+    h1{font-family:'Poppins',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.25;text-wrap:balance;margin-bottom:16px;}
+    .meta{font-size:0.82rem;color:rgba(139,91,199,0.8);margin-bottom:36px;}
+    .post-body{font-size:1.05rem;line-height:1.8;}
+    .post-body h2{font-family:'Poppins',sans-serif;font-size:1.4rem;font-weight:700;margin:2.2em 0 .6em;color:var(--fg);}
+    .post-body h3{font-family:'Poppins',sans-serif;font-size:1.15rem;font-weight:600;margin:1.8em 0 .5em;}
+    .post-body p{margin-bottom:1.2em;}
+    .post-body ul,.post-body ol{margin:0 0 1.2em 1.4em;}
+    .post-body li{margin-bottom:.4em;}
+    .post-body blockquote{border-left:4px solid var(--lv);padding-left:16px;color:rgba(139,91,199,0.9);font-style:italic;margin:1.5em 0;}
+    .post-body img{max-width:100%;border-radius:10px;margin:1.5em 0;}
+    .post-body strong{font-weight:600;}
+    .post-body a{color:var(--lv);}
+    .post-body code{background:rgba(139,91,199,0.1);padding:2px 6px;border-radius:4px;font-size:.92em;}
+    .post-body pre{background:var(--mp);color:var(--tw);padding:16px;border-radius:10px;overflow-x:auto;margin:1.5em 0;}
+    .post-body hr{border:none;border-top:1px solid var(--border);margin:2.5em 0;}
+    .cta-bar{background:var(--mp);border-radius:14px;padding:28px 32px;margin-top:60px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+    .cta-bar p{color:var(--tw);font-family:'Poppins',sans-serif;font-weight:600;font-size:1.05rem;}
+    .cta-bar a{background:#1d4ed8;color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;white-space:nowrap;}
+    #loading{text-align:center;padding:80px 24px;color:rgba(139,91,199,0.7);font-size:1rem;}
+    #error{text-align:center;padding:80px 24px;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">VYV Moving</a>
+  <a href="/blog/" class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    All Articles
+  </a>
+</nav>
+
+<div id="loading">Loading article…</div>
+<div id="error" style="display:none">
+  <p style="font-size:1.2rem;margin-bottom:12px;">Post not found.</p>
+  <a href="/blog/" style="color:var(--lv)">← Back to blog</a>
+</div>
+
+<article id="article" style="display:none">
+  <img id="hero-img" class="hero-img" src="" alt="" style="display:none" />
+  <div class="container">
+    <div class="eyebrow">VYV Moving · Tips &amp; Guides</div>
+    <h1 id="post-title"></h1>
+    <div class="meta" id="post-meta"></div>
+    <div class="post-body" id="post-body"></div>
+    <div class="cta-bar">
+      <p>Ready for a stress-free move?</p>
+      <a href="/book.html">Book My Move →</a>
+    </div>
+  </div>
+</article>
+
+<!-- Marked.js for Markdown rendering -->
+<script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+<script>
+(async function() {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug');
+  if (!slug) { showError(); return; }
+
+  try {
+    const res = await fetch(`/blog/posts/${slug}.md`);
+    if (!res.ok) throw new Error('not found');
+    const raw = await res.text();
+
+    // Parse front-matter (--- ... ---) and body
+    const fm = {};
+    let body = raw;
+    const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+    if (fmMatch) {
+      fmMatch[1].split(/\r?\n/).forEach(line => {
+        const m = line.match(/^(\w+):\s*"?(.*?)"?\s*$/);
+        if (m) fm[m[1]] = m[2];
+      });
+      body = fmMatch[2];
+    }
+
+    // Populate page
+    document.getElementById('page-title').textContent = (fm.title || 'Article') + ' | VYV Moving';
+    document.getElementById('meta-desc').setAttribute('content', fm.description || '');
+    document.getElementById('canonical').setAttribute('href', location.origin + location.pathname + location.search);
+    document.getElementById('post-title').textContent = fm.title || '';
+
+    const dateEl = document.getElementById('post-meta');
+    if (fm.date) {
+      const d = new Date(fm.date);
+      dateEl.textContent = d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    }
+
+    if (fm.image) {
+      const img = document.getElementById('hero-img');
+      img.src = fm.image;
+      img.alt = fm.image_alt || fm.title || '';
+      img.style.display = 'block';
+    }
+
+    document.getElementById('post-body').innerHTML = marked.parse(body);
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('article').style.display = 'block';
+
+  } catch(e) {
+    showError();
+  }
+
+  function showError() {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

@@ -14,6 +14,28 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: #f7f5ff; color: #190E2A; min-height: 100vh; }
 
+    /* ── Top nav bar ── */
+    .vyv-tip::after { content: attr(data-tip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; font-size:0.78rem; font-weight:400; line-height:1.5; padding:10px 14px; border-radius:8px; width:260px; text-align:left; pointer-events:none; opacity:0; white-space:normal; z-index:9999; transition:opacity .15s; }
+    .vyv-tip:hover::after { opacity:1; }
+    .topbar {
+      background: #190E2A;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 58px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .topbar-logo-text { font-weight: 800; font-size: 0.95rem; color: #ECEBEE; }
+    .topbar-back {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(236,235,238,0.7); font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; cursor: pointer; background: none; border: none;
+    }
+    .topbar-back:hover { color: #ECEBEE; }
+    .topbar-sms {
+      display: flex; align-items: center; gap: 7px;
+      color: #ECEBEE; font-weight: 600; font-size: 0.88rem; text-decoration: none;
+    }
+
     /* ── Progress bar ── */
     .progress-bar { height: 4px; background: rgba(139,91,199,0.2); }
     .progress-fill { height: 100%; background: linear-gradient(90deg,#8B5BC7,#16a34a); transition: width 0.4s; }
@@ -22,7 +44,7 @@
     .layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - 64px);
+      min-height: calc(100vh - 62px);
     }
     .left-panel {
       padding: 48px 40px;
@@ -92,7 +114,7 @@
     .cal-month { font-weight: 700; font-size: 1rem; color: #190E2A; }
     .cal-nav {
       background: none; border: none; cursor: pointer;
-      width: 44px; height: 44px; border-radius: 8px;
+      width: 32px; height: 32px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       color: #8B5BC7; font-size: 1.2rem; transition: background 0.15s;
     }
@@ -243,7 +265,7 @@
     .chip:hover { border-color: #8B5BC7; background: #F4F0FF; }
     .chip.active { background: #190E2A; border-color: #190E2A; color: #fff; }
     .chip-circle {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 38px; height: 38px; border-radius: 50%;
       border: 1.5px solid #ddd6f7; background: #fff;
       font-family: 'Poppins', sans-serif; font-size: 0.82rem;
       font-weight: 700; color: #4A237A; cursor: pointer;
@@ -273,8 +295,8 @@
 
     /* Sticky map */
     .right-panel {
-      position: sticky; top: 64px;
-      height: calc(100vh - 64px);
+      position: sticky; top: 58px;
+      height: calc(100vh - 58px);
     }
 
     @media (max-width: 780px) {
@@ -282,6 +304,10 @@
       .right-panel { display: none; }
       .left-panel { padding: 28px 16px; }
       .crew-grid { gap: 12px; }
+      
+      /* Fix How It Works steps for mobile */
+      .hiw-steps-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      .hiw-connector { display: none !important; }
     }
     /* Step 6: hide map panel, expand checkout full-width */
     body.step6-active .right-panel { display: none !important; }
@@ -292,100 +318,28 @@
       #s6-layout { grid-template-columns: 1fr !important; }
       #s6-billing-cols { grid-template-columns: 1fr !important; }
     }
-
-    /* ── Full nav ── */
-    :root { --dp:#190E2A; --mp:#210D46; --lv:#8B5BC7; --tw:#ECEBEE; }
-    #nav { background:var(--dp); position:sticky; top:0; z-index:999; border-bottom:1px solid rgba(139,91,199,0.2); }
-    .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .nav-links { display:flex; align-items:center; gap:4px; flex:1; justify-content:center; }
-    .nav-links a { color:rgba(236,235,238,0.88); font-size:0.82rem; font-weight:600; padding:6px 10px; border-radius:6px; white-space:nowrap; text-decoration:none; }
-    .nav-links a:hover { color:#fff; }
-    .nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
-    .nav-phone { display:flex; align-items:center; gap:6px; color:rgba(236,235,238,0.88); font-size:0.82rem; font-weight:700; text-decoration:none; }
-    .nav-phone:hover { color:var(--lv); }
-    .nav-bookbtn { background:var(--lv); color:#fff !important; padding:9px 20px; border-radius:50px; font-size:0.82rem; font-weight:700; text-decoration:none; white-space:nowrap; }
-    .nav-dd { position:relative; display:flex; align-items:center; }
-    .nav-dd > a { display:flex !important; align-items:center; gap:4px; }
-    .nav-dd-menu { position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(-6px); background:#210D46; border:1px solid rgba(139,91,199,0.25); border-radius:12px; padding:8px 0; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity 0.18s,transform 0.18s; z-index:10; }
-    .nav-dd:hover .nav-dd-menu { opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
-    .nav-dd-menu a { display:block !important; padding:10px 20px; font-size:0.82rem; color:rgba(236,235,238,0.75); text-decoration:none; white-space:nowrap; transition:color 0.12s,background 0.12s; }
-    .nav-dd-menu a:hover { color:#ECEBEE; background:rgba(139,91,199,0.15); }
-    #ham { background:none; border:none; cursor:pointer; display:none; flex-direction:column; gap:5px; padding:4px; }
-    #ham span { display:block; width:22px; height:2px; background:var(--tw); border-radius:2px; }
-    @media(max-width:960px){ .nav-links,.nav-phone { display:none!important; } #ham { display:flex!important; } }
-    .mobile-drawer { display:none; flex-direction:column; background:var(--mp); position:fixed; inset:0; z-index:1000; padding:80px 32px 32px; overflow-y:auto; }
-    .mobile-drawer.open { display:flex; }
-    .mobile-drawer a { color:var(--tw); font-weight:700; font-size:1.05rem; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07); text-decoration:none; }
-    .drawer-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--tw); font-size:1.6rem; cursor:pointer; }
   </style>
 </head>
 <body>
 
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;display:block;">
-        <rect width="120" height="120" rx="18" fill="#190E2A"/>
-        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="900" font-size="52" fill="#8B5BC7">VYV</text>
-        <text x="50%" y="80%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="16" fill="#ECEBEE" letter-spacing="2">MOVING</text>
-      </svg>
-    </a>
-    <div class="nav-links">
-      <div class="nav-dd">
-        <a href="/#services">Services <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/calculator.html">Moving Calculator</a>
-          <a href="/locations/">Service Areas</a>
-        </div>
-      </div>
-      <a href="/#reviews">Reviews</a>
-      <div class="nav-dd">
-        <a href="#">Company <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/contact.html">Contact</a>
-          <a href="/our-history.html">Our History</a>
-          <a href="/our-values.html">Our Values</a>
-          <a href="/our-team.html">Our Team</a>
-          <a href="/our-awards.html">Our Awards</a>
-        </div>
-      </div>
-      <div class="nav-dd">
-        <a href="/blog/">Resources <span style="font-size:0.6rem;opacity:0.7;">▾</span></a>
-        <div class="nav-dd-menu">
-          <a href="/blog/">Blog</a>
-          <a href="/faq.html">FAQ</a>
-        </div>
-      </div>
-      <a href="/careers.html">Careers</a>
-    </div>
-    <div class="nav-right">
-      <a href="sms:+15403001414" class="nav-phone">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        (540) 300-1414
-      </a>
-      <a href="/book.html#reservation" class="nav-bookbtn">Book Now</a>
-      <button id="ham" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
-<div class="mobile-drawer" id="drawer">
-  <button class="drawer-close" onclick="document.getElementById('drawer').classList.remove('open')">&times;</button>
-  <a href="/">Home</a>
-  <a href="/#services">Services</a>
-  <a href="/calculator.html" class="m-sub">Moving Calculator</a>
-  <a href="/locations/" class="m-sub">Service Areas</a>
-  <a href="/#reviews">Reviews</a>
-  <a href="/contact.html">Contact</a>
-  <a href="/blog/">Resources</a>
-  <a href="/blog/" class="m-sub">Blog</a>
-  <a href="/faq.html" class="m-sub">FAQ</a>
-  <a href="/careers.html">Careers</a>
-  <a href="sms:+15403001414">(540) 300-1414 — Text</a>
-  <a href="/book.html#reservation" style="background:#8B5BC7;color:#fff;text-align:center;border-radius:8px;margin-top:16px;padding:14px 0;">Book Now</a>
+<div class="topbar">
+  <button class="topbar-back" onclick="history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <a href="/" class="topbar-logo">
+    <svg style="width:36px;height:36px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="12" fill="#210D46"/>
+      <polyline points="26,46 50,20 74,46" fill="none" stroke="#ECEBEE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="50" y="82" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="30" fill="#ECEBEE" text-anchor="middle" letter-spacing="-1">VYV</text>
+    </svg>
+    <span class="topbar-logo-text">Validate Your Vision</span>
+  </a>
+  <a href="sms:+15403001414" class="topbar-sms">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    (540) 300-1414
+  </a>
 </div>
-
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
 
 <!-- ── HERO BANNER ── -->
@@ -406,20 +360,9 @@
     <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:#190E2A;margin-bottom:6px;">Book Your Move Online</h2>
     <p style="font-size:0.9rem;color:#5c4a7a;margin-bottom:44px;">We made it easy so you can focus on everything else.</p>
 
-    <style>
-      @media(max-width:600px){
-        #hiw-grid { grid-template-columns: repeat(3,1fr) !important; gap: 24px 8px !important; }
-        #hiw-grid > div:nth-child(n+4) { display: none; }
-        #hiw-connector { display: none !important; }
-      }
-      @media(min-width:601px) and (max-width:780px){
-        #hiw-grid { grid-template-columns: repeat(5,1fr) !important; gap: 0; }
-        #hiw-grid p { font-size: 0.72rem !important; }
-      }
-    </style>
-    <div id="hiw-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
+    <div class="hiw-steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
       <!-- connector line -->
-      <div id="hiw-connector" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(to right,#8B5BC7 0,#8B5BC7 6px,transparent 6px,transparent 12px);z-index:0;"></div>
+      <div class="hiw-connector" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(to right,#8B5BC7 0,#8B5BC7 6px,transparent 6px,transparent 12px);z-index:0;"></div>
 
       <!-- Step 1 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
@@ -429,12 +372,12 @@
       <!-- Step 2 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
         <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">2</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Pick your date and secure your crew</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your booking details</p>
       </div>
       <!-- Step 3 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">3</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your booking details</p>
+        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">3</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Pick your date and secure your crew</p>
       </div>
       <!-- Step 4 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
@@ -443,7 +386,7 @@
       </div>
       <!-- Step 5 -->
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">5</div>
+        <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">5</div>
         <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day: we show up, you relax</p>
       </div>
     </div>
@@ -467,7 +410,7 @@
       <!-- ══ STEP 0: Contact / Address Capture ══ -->
       <div class="step" id="step0">
         <div class="step-label">Step 1 of 7: Your Info</div>
-        <h1 id="reservation">Let's start your reservation</h1>
+        <h1>Let's start your reservation</h1>
         <p class="subtitle">Tell us a little about your move and how to reach you.</p>
 
         <div style="display:flex;flex-direction:column;gap:14px;max-width:480px;margin-top:24px;">
@@ -556,6 +499,9 @@
           <iframe id="mobileMapFrame" title="Your Move Route" style="width:100%;height:100%;border:none;display:block;" loading="lazy"></iframe>
         </div>
 
+        <!-- Price legend -->
+        <div class="price-legend" id="priceLegend"></div>
+
         <div class="cal-wrap">
           <div class="cal-header">
             <button class="cal-nav" id="prevBtn" onclick="changeMonth(-1)">&#8249;</button>
@@ -575,16 +521,15 @@
           <div class="time-select" id="timeSelect" style="display:none;">
             <button class="time-btn" id="amBtn" onclick="selectTime('AM')">
               Select AM
-              <div class="time-desc">Crew arrives at 7 AM sharp.</div>
+              <div class="time-desc">Crew arrives at 7 AM sharp. Great for early birds!</div>
             </button>
             <button class="time-btn" id="pmBtn" onclick="selectTime('PM')">
               Select PM
-              <div class="time-desc">PM moves start after our AM crew wraps up. Begins between 4–5 PM.</div>
+              <div class="time-desc">PM moves start after our AM crew wraps up.</div>
             </button>
           </div>
         </div>
 
-        <p style="font-size:0.75rem;color:#6b7280;margin-top:14px;text-align:center;">2-hour minimum applies. Starting price = 2 hrs × hourly rate + travel fee.</p>
         <div class="selected-label" id="selectedLabel"></div>
         <button class="btn-continue" id="dateContinueBtn" disabled onclick="goToDetails()">CONTINUE</button>
         <button class="btn-back" onclick="goBack()">&#8592; Change crew size</button>
@@ -694,12 +639,10 @@
                 </button>
                 <button class="time-btn" id="packPmBtn" onclick="selectPackTime('PM')">
                   Select PM
-                  <div class="time-desc">PM packing starts after our AM crew wraps up. Begins between 4–5 PM.</div>
+                  <div class="time-desc">PM packing starts after our AM crew wraps up.</div>
                 </button>
               </div>
             </div>
-
-            <p style="font-size:0.75rem;color:#6b7280;margin-top:10px;margin-bottom:4px;">2-hour minimum applies. Starting price = 2 hrs × hourly rate + travel fee.</p>
 
             <div style="margin-top:14px;">
               <div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:0.82rem;color:#16a34a;font-weight:600;">
@@ -768,14 +711,10 @@
               <span style="font-weight:700;color:#190E2A;" id="summary-rate-display"></span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:#374151;margin-bottom:2px;">
-              <span>Travel fee <span style="font-size:0.75rem;color:#6b7280;">(based on distance)</span></span>
+              <span>Truck fee <span style="font-size:0.75rem;color:#6b7280;">(based on distance)</span></span>
               <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
             </div>
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
-            <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
-              <span>Move deposit</span>
-              <span style="font-weight:700;color:#190E2A;" id="summary-move-deposit">$250</span>
-            </div>
             <span id="summary-est-hours" style="display:none;"></span>
             <span id="summary-est-labor" style="display:none;"></span>
             <span id="summary-est-total" style="display:none;"></span>
@@ -786,36 +725,28 @@
                 <span>Hourly rate (3 packers, 2 hr min)</span>
                 <span id="packRateDisplay" style="font-weight:700;color:#190E2A;">$199/hr</span>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#374151;margin-bottom:6px;">
-                <span>Packing deposit</span>
-                <span style="font-weight:700;color:#190E2A;">$250</span>
-              </div>
             </div>
 
             <hr style="border:none;border-top:1px solid #e5e7eb;margin:14px 0;" />
 
-            <!-- Deposit due today -->
+            <!-- Deposit due today (styled like 3MM) -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <span style="font-size:1rem;font-weight:700;color:#190E2A;">Due today:</span>
+              <span style="font-size:1rem;font-weight:700;color:#190E2A;">Deposit due today:</span>
               <span style="font-weight:800;color:#190E2A;font-size:1.2rem;" id="summary-deposit-amount">--</span>
             </div>
-            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note">Deposits secure your date(s) and are applied to your final balance.</div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-bottom:14px;" id="summary-deposit-note">Secures your moving date. Applied to your final balance on move day.</div>
 
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">Free cancellation within 24 hours</span>
+              <span style="font-size:0.85rem;color:#374151;">Free cancellation</span>
             </div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
               <span style="font-size:0.85rem;color:#374151;">Deposit applied to total bill</span>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-              <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">Date changes are always free</span>
-            </div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">2-hour minimum applies</span>
+              <span style="font-size:0.85rem;color:#374151;">Date changes are always free</span>
             </div>
 
             <!-- hidden IDs kept for JS compatibility -->
@@ -832,17 +763,6 @@
         <!-- BILLING SECTION (full width) -->
         <div id="billing-section" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
 
-          <!-- Card-on-file notice -->
-          <div style="background:#F4F0FF;border:1.5px solid #c4b5fd;border-radius:12px;padding:16px 18px;margin-bottom:20px;">
-            <div style="display:flex;align-items:flex-start;gap:10px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              <div>
-                <div style="font-weight:700;font-size:0.9rem;color:#190E2A;margin-bottom:4px;">This card will be held on file as your final payment method.</div>
-                <div style="font-size:0.78rem;color:#4A237A;line-height:1.6;">Your card is charged the deposit today. The remaining balance is collected when your move is complete. If you'd like to pay the final balance with a different card, call or text us after booking: <a href="sms:+15403001414" style="color:#8B5BC7;font-weight:700;text-decoration:none;">(540) 300-1414</a>.</div>
-              </div>
-            </div>
-          </div>
-
           <!-- Billing header -->
           <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
             <span style="font-weight:800;font-size:1rem;color:#190E2A;">Billing Information</span>
@@ -854,7 +774,7 @@
           </div>
 
           <!-- 2-column: billing fields left, card elements right -->
-          <div id="s6-billing-cols" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
 
             <!-- LEFT: name + address -->
             <div>
@@ -912,13 +832,13 @@
           <input type="checkbox" id="terms-checkbox" onchange="const b=document.getElementById('finalSubmitBtn');b.disabled=!this.checked;b.style.opacity=this.checked?'1':'0.5';b.style.cursor=this.checked?'pointer':'not-allowed';"
             style="width:18px;height:18px;accent-color:#6d28d9;margin-top:2px;flex-shrink:0;cursor:pointer;">
           <span style="font-size:0.78rem;color:#3b0764;line-height:1.6;">
-            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations made less than 24 hours before my move date will incur a no-show fee equal to 50% of my deposit. Rescheduling is always free at any time. No-shows forfeit the deposit in full. My deposit amount is shown above before payment.
+            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations or reschedules made less than 12 hours before my move are non-refundable, no-shows forfeit the deposit, and my deposit amount is shown above before payment.
           </span>
         </label>
 
         <!-- PAY BUTTON -->
         <button class="btn-continue" onclick="submitFinalReservation()" id="finalSubmitBtn" disabled style="background:#16a34a;font-size:1rem;padding:18px;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(22,163,74,0.3);opacity:0.5;cursor:not-allowed;transition:opacity 0.2s;">
-          PAY DEPOSIT AND RESERVE
+          PAY <span id="btn-deposit-amount">$250 DEPOSIT</span> AND RESERVE
         </button>
         <p style="text-align:center;font-size:0.72rem;color:#6b7280;margin-top:10px;line-height:1.6;">
           Your deposit secures your moving date and is fully applied toward your final balance. The remaining balance is due on move day.
@@ -961,6 +881,23 @@
   let viewMonth = today.getMonth();
   let selectedDate = null;
   let selectedTime = null;
+
+  // ── Availability: keyed by "YYYY-MM-DD" → ["AM"] | ["PM"] | ["AM","PM"] ──
+  let bookedSlots = {};
+  (function fetchBookedSlots() {
+    fetch(SHEET_SCRIPT_URL + '?action=get_booked_slots')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d.ok) bookedSlots = d.slots || {}; })
+      .catch(function(){});
+  })();
+
+  function dateKey(date) {
+    return date.getFullYear() + '-' +
+           String(date.getMonth()+1).padStart(2,'0') + '-' +
+           String(date.getDate()).padStart(2,'0');
+  }
+  function slotsTaken(date) { return bookedSlots[dateKey(date)] || []; }
+  function isFullyBooked(date) { const s = slotsTaken(date); return s.includes('AM') && s.includes('PM'); }
 
   // ── Step 0 helpers ──
   let s0Data = {}; // populated either from URL params or Step 0 form
@@ -1069,7 +1006,22 @@
     document.getElementById('progressFill').style.width = '25%';
   }
 
-  function buildLegend() { /* legend removed */ }
+  function buildLegend() {
+    const rates = RATES[crewSize];
+    const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
+    const colors = ['#16a34a','#8B5BC7','#c2410c'];
+    const dayDesc = crewSize === 2
+      ? ['Tue/Wed','Mon/Thu','Fri/Sat/Sun']
+      : ['Tue/Wed','Mon/Thu','Fri/Sat/Sun'];
+    const lg = document.getElementById('priceLegend');
+    lg.innerHTML = '';
+    unique.forEach((r,i) => {
+      lg.innerHTML += `<div class="legend-item">
+        <div class="legend-dot" style="background:${colors[i]||'#aaa'}"></div>
+        <span><strong>$${r}/hr</strong> -- ${dayDesc[i]}</span>
+      </div>`;
+    });
+  }
 
   function rateColor(rate) {
     const rates = Object.values(RATES[crewSize]);
@@ -1119,9 +1071,26 @@
         if (isSelected) el.classList.add('selected');
         const color = rateColor(rate);
         const fewLeft = FEW_LEFT_DAYS.has(dow);
-        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>${fewLeft ? `<div style="font-size:0.55rem;font-weight:800;color:${isSelected?'#fff':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">Few Left</div>` : ''}`;
-        if (!isSelected) el.querySelector('.day-price').style.color = color;
-        el.addEventListener('click', () => selectDay(date));
+        const fullyBooked = isFullyBooked(date);
+        const taken = slotsTaken(date);
+        const oneLeft = !fullyBooked && taken.length === 1;
+        let subLabel = '';
+        if (fullyBooked) {
+          subLabel = `<div style="font-size:0.52rem;font-weight:800;color:${isSelected?'rgba(255,255,255,0.7)':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">FULL</div>`;
+        } else if (oneLeft) {
+          subLabel = `<div style="font-size:0.52rem;font-weight:800;color:${isSelected?'rgba(255,255,255,0.7)':'#f97316'};letter-spacing:0.04em;line-height:1;margin-top:2px;">1 SLOT</div>`;
+        } else if (fewLeft) {
+          subLabel = `<div style="font-size:0.55rem;font-weight:800;color:${isSelected?'#fff':'#dc2626'};letter-spacing:0.04em;line-height:1;margin-top:2px;">Few Left</div>`;
+        }
+        el.innerHTML = `<div class="day-num">${d}</div><div class="day-price" data-color="${color}">$${rate}</div>${subLabel}`;
+        if (!isSelected) el.querySelector('.day-price').style.color = fullyBooked ? '#bbb' : color;
+        if (fullyBooked) {
+          el.classList.add('past');
+          el.style.opacity = '0.45';
+          el.style.cursor = 'not-allowed';
+        } else {
+          el.addEventListener('click', () => selectDay(date));
+        }
       }
       grid.appendChild(el);
     }
@@ -1130,8 +1099,29 @@
   function selectDay(date) {
     selectedDate = date;
     selectedTime = null;
-    document.getElementById('amBtn').classList.remove('active');
-    document.getElementById('pmBtn').classList.remove('active');
+    const taken = slotsTaken(date);
+    const amBooked = taken.includes('AM');
+    const pmBooked = taken.includes('PM');
+
+    const amBtn = document.getElementById('amBtn');
+    const pmBtn = document.getElementById('pmBtn');
+    amBtn.classList.remove('active');
+    pmBtn.classList.remove('active');
+
+    // Disable booked slots
+    amBtn.disabled = amBooked;
+    pmBtn.disabled = pmBooked;
+    amBtn.querySelector('.time-desc').textContent = amBooked
+      ? 'This slot is fully booked.'
+      : 'Crew arrives at 7 AM sharp. Great for early birds!';
+    pmBtn.querySelector('.time-desc').textContent = pmBooked
+      ? 'This slot is fully booked.'
+      : 'Begins between 4–5 PM.';
+    amBtn.style.opacity = amBooked ? '0.45' : '';
+    pmBtn.style.opacity = pmBooked ? '0.45' : '';
+    amBtn.style.cursor = amBooked ? 'not-allowed' : '';
+    pmBtn.style.cursor = pmBooked ? 'not-allowed' : '';
+
     document.getElementById('timeSelect').style.display = 'grid';
     document.getElementById('dateContinueBtn').disabled = true;
     updateLabel();
@@ -1139,6 +1129,9 @@
   }
 
   function selectTime(t) {
+    // Guard: don't select a booked slot
+    const taken = selectedDate ? slotsTaken(selectedDate) : [];
+    if (taken.includes(t)) return;
     selectedTime = t;
     document.getElementById('amBtn').classList.toggle('active', t === 'AM');
     document.getElementById('pmBtn').classList.toggle('active', t === 'PM');
@@ -1228,8 +1221,6 @@
 
   function renderStops() {
     const list = document.getElementById('stops-list');
-    // Clear cached autocomplete instances for stop inputs so they re-attach to new DOM nodes
-    stops.forEach((_, i) => { delete _acInstances[`addr-${i}`]; });
     list.innerHTML = '';
     const labels = stops.map((s, i) => {
       if (i === 0) return 'Moving from';
@@ -1501,8 +1492,6 @@
     addPackingService = document.getElementById('addPackingCheck').checked;
     document.getElementById('packingDetail').style.display = addPackingService ? 'block' : 'none';
     document.getElementById('packingToggleLabel').style.borderColor = addPackingService ? '#8B5BC7' : '#ede6ff';
-    document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
-    updateDepositDisplay();
   }
 
   function changePackMonth(delta) {
@@ -1545,19 +1534,43 @@
         if (FEW_LEFT_DAYS.has(dow)) {
           el.innerHTML += `<div style="font-size:0.55rem;color:${isSel?'#fff':'#dc2626'};font-weight:700;line-height:1;">Few Left</div>`;
         }
-        el.addEventListener('click', () => {
-          packSelectedDate = date; packSelectedTime = null;
-          document.getElementById('packAmBtn').classList.remove('active');
-          document.getElementById('packPmBtn').classList.remove('active');
-          document.getElementById('packTimeSelect').style.display = 'grid';
-          renderPackCal();
-        });
+        if (isFullyBooked(date)) {
+          el.classList.add('past');
+          el.style.opacity = '0.45';
+          el.style.cursor = 'not-allowed';
+          el.innerHTML += `<div style="font-size:0.52rem;font-weight:800;color:#dc2626;letter-spacing:0.04em;line-height:1;margin-top:2px;">FULL</div>`;
+        } else {
+          const takenPack = slotsTaken(date);
+          if (takenPack.length === 1) {
+            el.innerHTML += `<div style="font-size:0.52rem;font-weight:800;color:#f97316;letter-spacing:0.04em;line-height:1;margin-top:2px;">1 SLOT</div>`;
+          }
+          el.addEventListener('click', () => {
+            packSelectedDate = date; packSelectedTime = null;
+            const taken = slotsTaken(date);
+            const packAmBtn = document.getElementById('packAmBtn');
+            const packPmBtn = document.getElementById('packPmBtn');
+            packAmBtn.classList.remove('active');
+            packPmBtn.classList.remove('active');
+            packAmBtn.disabled = taken.includes('AM');
+            packPmBtn.disabled = taken.includes('PM');
+            packAmBtn.querySelector('.time-desc').textContent = taken.includes('AM') ? 'This slot is fully booked.' : 'Packing starts at 7 AM sharp.';
+            packPmBtn.querySelector('.time-desc').textContent = taken.includes('PM') ? 'This slot is fully booked.' : 'PM packing starts after our AM crew wraps up.';
+            packAmBtn.style.opacity = taken.includes('AM') ? '0.45' : '';
+            packPmBtn.style.opacity = taken.includes('PM') ? '0.45' : '';
+            packAmBtn.style.cursor = taken.includes('AM') ? 'not-allowed' : '';
+            packPmBtn.style.cursor = taken.includes('PM') ? 'not-allowed' : '';
+            document.getElementById('packTimeSelect').style.display = 'grid';
+            renderPackCal();
+          });
+        }
       }
       grid.appendChild(el);
     }
   }
 
   function selectPackTime(t) {
+    const taken = packSelectedDate ? slotsTaken(packSelectedDate) : [];
+    if (taken.includes(t)) return;
     packSelectedTime = t;
     document.getElementById('packAmBtn').classList.toggle('active', t === 'AM');
     document.getElementById('packPmBtn').classList.toggle('active', t === 'PM');
@@ -1603,22 +1616,15 @@
     return `${wh} hr ${mn} min`;
   }
 
-  let moveDeposit = 250;  // $250 move deposit (within 50 mi), $300 beyond
-  let packDeposit = 250;  // always $250
-  let depositAmount = 250; // total due today (move + packing if selected)
-
-  function updateDepositDisplay() {
-    depositAmount = moveDeposit + (addPackingService ? packDeposit : 0);
-    document.getElementById('summary-deposit-amount').textContent = `$${depositAmount}`;
-    const sbDep = document.getElementById('sb-deposit-amount');
-    if (sbDep) sbDep.textContent = `$${depositAmount}`;
-    const moveDepEl = document.getElementById('summary-move-deposit');
-    if (moveDepEl) moveDepEl.textContent = `$${moveDeposit}`;
-  }
+  let depositAmount = 250; // flat deposit -- $250 within 50 miles of Fredericksburg, $300 beyond
 
   function setDepositFromMiles(miles) {
-    moveDeposit = miles > 50 ? 300 : 250;
-    updateDepositDisplay();
+    depositAmount = miles > 50 ? 300 : 250;
+    document.getElementById('summary-deposit-amount').textContent = `$${depositAmount}`;
+    const btnSpan = document.getElementById('btn-deposit-amount');
+    if (btnSpan) btnSpan.textContent = `$${depositAmount} DEPOSIT`;
+    const sbDep = document.getElementById('sb-deposit-amount');
+    if (sbDep) sbDep.textContent = `$${depositAmount}`;
   }
 
   // ── Stripe setup ──
