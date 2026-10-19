@@ -424,7 +424,7 @@
     <h2>Apply in 2 Minutes</h2>
     <p class="sub">No résumé required to get started. Just fill this out and we'll be in touch within 1–2 business days.</p>
 
-    <form id="career-form" onsubmit="submitApp(event)">
+    <form id="career-form" action="https://formspree.io/f/mwvdowqr" method="POST" onsubmit="submitApp(event)">
       <div class="form-row">
         <div class="form-field">
           <label>First Name</label>
@@ -514,12 +514,25 @@
 </footer>
 
 <script>
-function submitApp(e) {
+async function submitApp(e) {
   e.preventDefault();
-  document.getElementById('career-form').style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
-  document.getElementById('form-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const form = e.target;
+  if (!form.reportValidity()) return;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  try {
+    const data = new FormData(form); data.append('_subject', 'VYV Careers Application'); data.append('source', 'Careers');
+    const response = await fetch(form.action, {method:'POST', body:data, headers:{Accept:'application/json'}});
+    if (!response.ok) throw new Error('Application could not be sent.');
+    form.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+    document.getElementById('form-success').scrollIntoView({behavior:'smooth',block:'center'});
+  } catch (error) {
+    alert('Your application was not sent. Please retry or text (540) 301-1152.');
+    btn.disabled = false; btn.textContent = 'Submit Application →';
+  }
 }
+
 </script>
 </body>
 </html>

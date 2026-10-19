@@ -91,3 +91,39 @@ test('setup creates an isolated tab and is safe to run twice',()=>{
  assert.equal(created,1);assert.equal(JSON.stringify(source),original);
  assert.equal(tabs['Bookings VYV'].getDataRange().getValues().length,2);
 });
+test('public booking routes do not expose administrative privileges',()=>{
+ const c=backend();c.getProp=()=>'';
+ const request = body => ({postData:{contents:JSON.stringify(body)}});
+ assert.equal(decoded(c.doPost(request({action:'get_bookings',token:'vyv2026admin'}))).ok,false);
+ c.getProp=()=> 'private-admin-key-with-at-least-32-characters';
+ c.getBookings=()=>c.jsonOk({bookings:[]});
+ assert.equal(decoded(c.doPost(request({action:'get_bookings',token:'vyv2026admin'}))).ok,false);
+ assert.equal(decoded(c.doPost(request({action:'get_bookings',token:'private-admin-key-with-at-least-32-characters'}))).ok,true);
+ c.saveBooking=()=>c.jsonOk({verifiedPaidSave:true});
+ assert.equal(decoded(c.doPost(request({action:'save'}))).verifiedPaidSave,true);
+});
+test('saved arrival windows and explicit times parse to consistent dates',()=>{
+ const c=backend();
+ for (const [value,day,time,slot] of [
+  ['Tuesday, October 20, 2026 AM','2026-10-20','07:00','AM'],
+  ['Tuesday, October 20, 2026 PM','2026-10-20','16:00','PM'],
+  ['2026-10-20 15:30','2026-10-20','15:30','PM'],
+  ['October 20, 2026 9:00 AM','2026-10-20','09:00','AM']]) {
+  const p=c.bookingDateParts(value);assert.equal(p.day,day);assert.equal(p.time,time);assert.equal(p.slot,slot);
+ }
+});
+test('admin timer retry preserves the original start and rejects closed moves',()=>{
+ const c=backend();const row=Array(27).fill('');row[19]='Moving';row[21]='2026-10-20T11:00:00Z';
+ c.findRow=()=>row;c.updateRowField=()=>{throw Error('Timer must not reset');};
+ assert.equal(decoded(c.startTimerAdmin({moveToken:'audit'})).checkinAt,row[21]);
+ row[19]='Cancelled';assert.equal(decoded(c.startTimerAdmin({moveToken:'audit'})).ok,false);
+});
+test('rescheduling rejects invalid dates and occupied arrival windows',()=>{
+ const c=backend();const row=Array(27).fill('');row[19]='Upcoming';row[1]='audit';c.findRow=()=>row;
+ c.Utilities={formatDate:()=> '2026-10-20'};
+ assert.equal(decoded(c.rescheduleBooking({moveToken:'audit',newDate:'2020-01-01',newTime:'09:00'})).ok,false);
+ assert.equal(decoded(c.rescheduleBooking({moveToken:'audit',newDate:'bad',newTime:'09:00'})).ok,false);
+ const occupied=Array(27).fill('');occupied[1]='other';occupied[5]='October 22, 2026 AM';occupied[19]='Upcoming';
+ c.getSheet=()=>({getDataRange:()=>({getValues:()=>[[],row,occupied]})});
+ assert.match(decoded(c.rescheduleBooking({moveToken:'audit',newDate:'2026-10-22',newTime:'09:00'})).error,/already booked/);
+});

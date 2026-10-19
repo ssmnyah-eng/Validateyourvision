@@ -1,28 +1,36 @@
-# Payment deployment required
+# Backend VYV deployment and audit — October 19, 2026
 
-The public website is hosted on GitHub Pages. The booking/payment server is a separate Google Apps Script deployment; merging this repository does not update that server.
+GitHub Pages and Apps Script deploy separately. The user deployed v5 successfully: health reports `ok: true`, `paymentsConfigured: true`; setup copied 3 legacy rows to `Bookings VYV`. The new URL is configured in all five customer/admin pages. GitHub publishing was still queued at the last audit, so the live pages still used the old URL.
 
-The live server returned `{"ok":false,"error":"Unauthorized"}` for both public availability and payment initialization checks on October 19, 2026. Stripe Elements loads in the browser, but an actual deposit cannot be confirmed until the server is updated.
+## Required security update
 
-## Deploy the prepared repair
+The former admin password and server token were embedded in public source. Treat both as compromised. Version 6 removes that server credential and validates administrative requests against the private Apps Script `ADMIN_TOKEN` property. Without a private key, administration fails closed. Public booking saves still require a verified paid Stripe deposit; lead capture does not need administrator access.
 
-1. Open the Apps Script project that owns the web app URL configured as `SHEET_SCRIPT_URL` in `book.html`. Preserve the existing spreadsheet binding and script properties.
-2. The corrected source now follows the user-confirmed Backend VYB project supplied as Pasted text(8). It preserves that version's 27-column layout, customer check-in, cancellation, rescheduling, and final invoicing. Back up the current project before replacing its code. The similarly named older project uses a different layout and must not be substituted.
-3. Apply the payment creation/verification/save changes in `vyv-booking-backend.js`. Keep `STRIPE_SK` only in Script Properties. Never put a Stripe secret key in HTML or GitHub.
-4. Run `setupBackend` once from the editor. It creates a separate `Bookings VYV` tab with the current headings and copies recognized legacy records without changing the old `Bookings` tab. Repeat runs do not duplicate copied tokens. Then update the existing web app deployment to a new version, retaining its URL and access configuration.
-5. Request the existing web app URL with `?action=health`. Expect `version: booking-payments-v5`, `ok: true`, and `paymentsConfigured: true`.
-6. Check public `?action=get_booked_slots` returns `ok: true`. Run successful, declined, and authentication-required card scenarios in a separate Stripe test-mode setup, including a failed booking save followed by retry. Never use test card numbers against the live key.
-7. Confirm a successful payment creates exactly one spreadsheet booking and that retrying its save neither charges again nor creates another booking. Check notifications and customer move links with a controlled test booking.
+1. Back up the Apps Script project. Replace its code with `vyv-booking-backend.js` (also supplied as Backend_VYV_Replacement.txt).
+2. In Project Settings → Script Properties, add `ADMIN_TOKEN` with a new random private value of at least 32 characters. Use a password manager to generate it. Keep `STRIPE_SK` and the existing Twilio properties. Do not paste any private value in chat or GitHub.
+3. Save and update the existing web-app deployment to a new version, retaining its URL. No spreadsheet migration is needed after the successful v5 setup.
+4. Open the deployment URL with `?action=health`. Expect `booking-payments-v6`, `paymentsConfigured: true`, and `adminConfigured: true`.
+5. Sign into `/admin.html` using the new private access key. The dashboard now verifies the key on the server; old browser-only login flags do not grant access. The key stays in memory until logout/reload.
 
-## Remaining audit limits
+Version 6 also fixes arrival-window date parsing, prevents admin timer retries from resetting the start, rejects malformed/past reschedules and occupied windows, and distinguishes eligible refunds requiring manual review in the administrator notification.
 
-- No real card was charged and no real reservation was created during this audit. The live UI was checked through Stripe's secure card fields using clearly marked audit contact details.
-- Confirmation emails, SMS delivery, admin actions, cancellation/refunds, rescheduling, and the move-day timer need a controlled booking after backend deployment. The matching customer actions are now present in source; their delivery and Stripe behavior remain unverified until deployment.
-- Existing admin authentication uses a shared token embedded in public HTML. That token is not a secure administrative boundary; move administrative operations behind real server-side authentication before storing customer data in production.
-- The retained estimator source contains an older walkthrough/deposit pricing model; that page redirects to the main hourly booking flow. Those commercial terms need the owner's decision; this repair preserves their amounts.
+## Audit findings repaired in website source
 
-## Checks
+- Booking navigation/progress, address autocomplete, additional stops, current phone and missing local navigation targets.
+- Careers previously displayed success without submitting anything. It now submits to the existing Formspree endpoint, and failed submissions preserve the form.
+- Review feedback previously displayed success even for rejected server responses. It now checks the response and supports retry.
+- Customer cancellation/rescheduling dates failed on stored human-readable AM/PM arrival windows. Dates now parse and refund previews use America/New_York.
+- Reservation deposit/refund/rescheduling copy conflicted across the homepage, FAQ, policy and confirmation pages. It now follows current checkout/terms: $250/$300 deposit, 12-hour refund window, $75 late-rescheduling fee.
+- Admin failed loads showed sample bookings as real data, and canonical backend field names did not match the dashboard. Failed loads now show an error, and fields/statuses are normalized.
+- Administrative HTML interpolations escape customer names, route cities, crew/status and calendar titles.
 
-`python tests/site-audit.py` checks all 41 HTML pages for missing local files, fragments, JavaScript syntax errors, and the retired phone number.
+## Evidence and limits
 
-`node --test tests/*.test.cjs` checks booking navigation, progress milestones, stop controls, homepage handoff, acknowledged booking saves, payment verification, idempotent requests, and duplicate-charge prevention using mocks rather than live payments.
+- All 41 deployed HTML URLs returned HTTP 200 during the audit. Local link/fragment and inline-JavaScript syntax scan: 0 errors.
+- `node --test tests/*.test.cjs`: 20 passing tests covering navigation, stops, paid-save retry, Stripe verification/idempotency, migration, admin access, date/time behavior, reschedule rejection and careers submission failures.
+- Live browser: booking begins at step 1, FAQ search works, Stripe secure fields and address suggestions were verified in the preceding audit. An extension-generated console error is unrelated to the site's scripts.
+- No card charged and no live reservation/refund/cancellation created. Automatic approval review rejected creation of a live unpaid $250 PaymentIntent; this check was not retried. Stripe account/key matching, successful/declined/3DS flows and real payment→booking→notification delivery require a controlled test environment or explicit approval for the blocked initialization.
+- Formspree inbox acceptance/delivery and Twilio delivery were not exercised by sending messages.
+- Admin security remains unresolved on the running Apps Script until version 6 is manually deployed with a new private key. Removing a credential from current HTML does not revoke historical copies.
+- Availability is a preview rather than a locked inventory reservation; simultaneous checkouts/reschedules require a transactional slot-hold design to guarantee no overlap. Pricing fields supplied by the browser also need server-side recalculation before they can be trusted for final automated billing. Review final balances in admin before charging.
+- Some older flat-rate/blueprint marketing and redirect-only estimator content remains. A separate quote step has now been requested and is the next implementation task; estimates must be clearly distinguished from a guaranteed final price.

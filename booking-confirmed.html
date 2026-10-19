@@ -227,7 +227,7 @@
       <div class="card">
         <p class="card-label">Good to Know</p>
         <h2>A few things before moving day</h2>
-        <p>Need to reschedule? Text us at least 24 hours before your move and we will sort it out at no charge.</p>
+        <p>Need to reschedule? Text us at least 12 hours before your scheduled move time for a free date change, subject to availability. Changes with less notice carry a $75 fee.</p>
         <p>Have questions? Text us anytime.</p>
         <a href="sms:+15403011152" class="btn-primary">Text Us &nbsp; 540-301-1152</a>
         <a href="/" class="btn-secondary">Back to Main Site</a>
@@ -386,9 +386,14 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!selected) return;
-      await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      submitBtn.style.display = 'none';
-      thanks.style.display = 'block';
+      submitBtn.disabled = true;
+      try {
+        const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error('Review was not accepted.');
+        submitBtn.style.display = 'none';
+        thanks.style.display = 'block';
+      } catch (error) { msg.textContent = 'Your review was not sent. Please try again.'; }
+      finally { submitBtn.disabled = false; }
     });
   </script>
 </body>

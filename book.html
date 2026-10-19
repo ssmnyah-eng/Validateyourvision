@@ -350,7 +350,7 @@
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 40px;max-width:640px;">
     <p style="color:#8B5BC7;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Flat-Rate Moving</p>
     <h1 style="color:#fff;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.25;margin-bottom:10px;">Book Your Move Online<br>in Minutes</h1>
-    <p style="color:rgba(236,235,238,0.85);font-size:0.9rem;line-height:1.6;">No hidden fees. No hourly surprises. Secure your date with a flat deposit and pay the rest when the job is done.</p>
+    <p style="color:rgba(236,235,238,0.85);font-size:0.9rem;line-height:1.6;">See your hourly rate and deposit before reserving. Secure your date with a flat deposit and pay the rest when the job is done.</p>
   </div>
 </div>
 
@@ -743,7 +743,7 @@
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">Date changes are always free</span>
+              <span style="font-size:0.85rem;color:#374151;">Free date changes with 12 hours notice</span>
             </div>
 
             <!-- hidden IDs kept for JS compatibility -->
@@ -829,7 +829,7 @@
           <input type="checkbox" id="terms-checkbox" onchange="const b=document.getElementById('finalSubmitBtn');b.disabled=!this.checked;b.style.opacity=this.checked?'1':'0.5';b.style.cursor=this.checked?'pointer':'not-allowed';"
             style="width:18px;height:18px;accent-color:#6d28d9;margin-top:2px;flex-shrink:0;cursor:pointer;">
           <span style="font-size:0.78rem;color:#3b0764;line-height:1.6;">
-            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations or reschedules made less than 12 hours before my move are non-refundable, no-shows forfeit the deposit, and my deposit amount is shown above before payment.
+            I have read and agree to VYV Moving's <a href="/terms.html" target="_blank" style="color:#6d28d9;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>. I understand that cancellations made less than 12 hours before my move are non-refundable, reschedules with less than 12 hours notice carry a $75 fee, no-shows forfeit the deposit, and my deposit amount is shown above before payment.
           </span>
         </label>
 
@@ -886,7 +886,7 @@
   (function fetchBookedSlots() {
     fetch(SHEET_SCRIPT_URL + '?action=get_booked_slots')
       .then(function(r){ return r.json(); })
-      .then(function(d){ if (d.ok) bookedSlots = d.slots || {}; })
+      .then(function(d){ if (d.ok) { bookedSlots = d.slots || {}; if (crewSize) renderCal(); } })
       .catch(function(){});
   })();
 

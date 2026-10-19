@@ -231,16 +231,38 @@ function show(id) {
   });
 }
 
+function moveDateParts(value) {
+  const raw = String(value || '').trim().replace(/^\w+,\s*/, '');
+  const clock = raw.match(/(?:T|\s)(\d{1,2}:\d{2})(?:\s*(AM|PM))?$/i);
+  const slot = raw.match(/\b(AM|PM)$/i);
+  const clean = clock ? raw.slice(0, clock.index) : raw.replace(/\s+(AM|PM)$/i, '');
+  const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(clean) ? clean + 'T12:00:00' : clean);
+  if (isNaN(d)) return null;
+  let time = clock ? clock[1] : slot ? (slot[1].toUpperCase() === 'AM' ? '07:00' : '16:00') : '08:00';
+  if (clock && clock[2]) { let [h,m] = time.split(':').map(Number); h = h % 12 + (clock[2].toUpperCase() === 'PM' ? 12 : 0); time = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0'); }
+  return {date: d, time};
+}
+
 function fmt(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+  const p = moveDateParts(dateStr);
+  return p ? p.date.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }) : String(dateStr || '');
 }
 
 function hoursUntil(dateStr, timeStr) {
-  if (!dateStr) return 999;
-  const dateTime = new Date(dateStr + 'T' + (timeStr || '08:00'));
-  return (dateTime - Date.now()) / 3_600_000;
+  const p = moveDateParts(dateStr);
+  if (!p) return null;
+  const day = p.date.getFullYear() + '-' + String(p.date.getMonth()+1).padStart(2,'0') + '-' + String(p.date.getDate()).padStart(2,'0');
+  const time = timeStr || p.time;
+  // Business time zone, independent of the customer's browser location.
+  let instant = new Date(day + 'T' + time + ':00Z');
+  for (let i = 0; i < 2; i++) {
+    const local = new Intl.DateTimeFormat('en-CA', {timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(instant);
+    const v = Object.fromEntries(local.map(x => [x.type,x.value]));
+    const shown = Date.UTC(+v.year,+v.month-1,+v.day,+v.hour,+v.minute);
+    const target = Date.parse(day + 'T' + time + ':00Z');
+    instant = new Date(instant.getTime() + target - shown);
+  }
+  return (instant - Date.now()) / 3600000;
 }
 
 async function loadBooking() {
@@ -270,7 +292,7 @@ async function loadBooking() {
 
     document.getElementById('b-name').textContent    = b.name || '';
     document.getElementById('b-date').textContent    = fmt(b.moveDate);
-    document.getElementById('b-time').textContent    = b.startTime || '';
+    document.getElementById('b-time').textContent    = b.startTime || moveDateParts(b.moveDate)?.time || '';
     document.getElementById('b-from').textContent    = b.fromAddress || '';
     document.getElementById('b-to').textContent      = b.toAddress || '';
     document.getElementById('b-deposit').textContent = b.depositAmount ? '$' + b.depositAmount : 'On file';
@@ -278,9 +300,9 @@ async function loadBooking() {
     // Set reschedule link
     document.getElementById('reschedule-link').href = '/reschedule.html?token=' + MOVE_TOKEN;
 
-    // Check refund eligibility (48 hr rule)
+    // Check the 12-hour refund window in the business time zone.
     const hours = hoursUntil(b.moveDate, b.startTime);
-    if (hours < 12) {
+    if (hours === null || hours < 12) {
       document.getElementById('refund-eligible').style.display   = 'none';
       document.getElementById('refund-ineligible').style.display = '';
     }

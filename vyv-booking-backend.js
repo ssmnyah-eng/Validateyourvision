@@ -5,7 +5,6 @@
 // ═══════════════════════════════════════════════════════════════
 
 const SHEET_ID      = '1-KEfahm-VkdVG2T_tV6GyF4kRTIUqchanSKKL-kNagM';
-const ADMIN_TOKEN   = 'vyv2026admin';
 const BOOKING_TAB   = 'Bookings VYV';
 const LEGACY_BOOKING_TAB = 'Bookings';
 const LEADS_TAB     = 'Leads';
@@ -50,7 +49,8 @@ function doPost(e) {
     const data    = JSON.parse(e.postData.contents);
     const action  = data.action  || '';
     const token   = data.token   || '';
-    const isAdmin = token === ADMIN_TOKEN;
+    const adminSecret = getProp('ADMIN_TOKEN') || '';
+    const isAdmin = adminSecret.length >= 32 && adminSecret !== 'vyv2026admin' && token === adminSecret;
 
     // ── Public routes (no token needed) ──
     if (action === 'create_payment_intent') return createPaymentIntent(data);
@@ -59,11 +59,13 @@ function doPost(e) {
     if (action === 'reschedule')            return rescheduleBooking(data);
     if (action === 'cancel')               return cancelBooking(data);
 
+    // Paid saves verify the Stripe deposit; no administrative secret belongs in public HTML.
+    if (action === 'save') return saveBooking(data);
+    if (action === 'save_lead') return saveLead(data);
+
     // ── Admin routes ──
     if (!isAdmin) return jsonErr('Unauthorized');
 
-    if (action === 'save')              return saveBooking(data);
-    if (action === 'save_lead')         return saveLead(data);
     if (action === 'get_bookings')      return getBookings(data);
     if (action === 'update_status')     return updateStatus(data);
     if (action === 'on_the_way')        return onTheWay(data);
@@ -81,7 +83,7 @@ function doPost(e) {
 function doGet(e) {
   try {
     const action = e.parameter.action;
-    if (action === 'health') { getSheet(BOOKING_TAB); return jsonOk({ version: 'booking-payments-v5', paymentsConfigured: !!getProp('STRIPE_SK') }); }
+    if (action === 'health') { getSheet(BOOKING_TAB); return jsonOk({ version: 'booking-payments-v6', paymentsConfigured: !!getProp('STRIPE_SK'), adminConfigured: (getProp('ADMIN_TOKEN') || '').length >= 32 }); }
     if (action === 'get_booked_slots') return getBookedSlots();
     if (action === 'get_move') return getMove({moveToken: e.parameter.moveToken});
     return jsonErr('Unknown public action');
@@ -93,13 +95,10 @@ function getBookedSlots() {
   const slots = {};
   rows.slice(1).forEach(row => {
     if (['cancelled','canceled'].includes(String(row[19]).toLowerCase())) return;
-    const value = String(row[5] || '');
-    const slot = value.match(/\b(AM|PM)\b/i)?.[1]?.toUpperCase();
-    if (!slot) return;
-    const clean = value.replace(/\b(?:AM|PM)\b/ig, '').replace(/^\w+,\s*/, '').trim();
-    const date = new Date(clean);
-    if (isNaN(date.getTime())) return;
-    const key = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
+    const parts = bookingDateParts(row[5]);
+    if (!parts) return;
+    const slot = parts.slot;
+    const key = parts.day;
     if (!slots[key]) slots[key] = [];
     if (!slots[key].includes(slot)) slots[key].push(slot);
   });
@@ -244,8 +243,8 @@ function getMove(data) {
 function customerCheckin(data) {
   const existing = findRow(data.moveToken);
   if (!existing) return jsonErr('Booking not found');
-  if (existing[21]) return jsonOk({checkinAt: existing[21]});
   if (['cancelled','completed'].includes(String(existing[19]).toLowerCase())) return jsonErr('This booking cannot be checked in');
+  if (existing[21]) return jsonOk({checkinAt: existing[21]});
   const result = updateRowField(data.moveToken, {
     19: 'Moving',               // Status
     21: new Date().toISOString() // Checkin At
@@ -327,6 +326,10 @@ function arrivedAction(data) {
 //  START TIMER (admin manual override)
 // ═══════════════════════════════════════════════════════════════
 function startTimerAdmin(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+  if (['cancelled','completed'].includes(String(row[19]).toLowerCase())) return jsonErr('This booking cannot be started');
+  if (row[21]) return jsonOk({checkinAt: row[21]});
   const now = new Date().toISOString();
   const result = updateRowField(data.moveToken, {
     19: 'Moving',
@@ -463,6 +466,14 @@ function rescheduleBooking(data) {
     return jsonErr('This booking cannot be rescheduled at this time.');
   }
 
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(data.newDate || '') || !/^([01]\d|2[0-3]):[0-5]\d$/.test(data.newTime || '')) return jsonErr('Choose a valid future date and time.');
+  const tomorrow = Utilities.formatDate(new Date(Date.now() + 86400000), 'America/New_York', 'yyyy-MM-dd');
+  if (data.newDate < tomorrow || !isFinite(new Date(data.newDate + 'T12:00:00').getTime())) return jsonErr('Choose a future move date.');
+  const slot = Number(data.newTime.slice(0,2)) < 12 ? 'AM' : 'PM';
+  const otherRows = getSheet(BOOKING_TAB).getDataRange().getValues().slice(1).filter(r => r[1] !== data.moveToken && !['cancelled','canceled','completed'].includes(String(r[19]).toLowerCase()));
+  const conflict = otherRows.some(r => { const p = bookingDateParts(r[5]); return p && p.day === data.newDate && p.slot === slot; });
+  if (conflict) return jsonErr('That arrival window is already booked. Please choose another time.');
+
   // Check 12-hour rule
   const moveDateStr = String(row[5] || '');
   const hoursUntil  = hoursUntilMove(moveDateStr);
@@ -541,7 +552,7 @@ function cancelBooking(data) {
     GmailApp.sendEmail(NOTIFY_EMAIL,
       'Booking cancelled — ' + row[2],
       row[2] + ' cancelled their move scheduled for ' + row[5] + '.' +
-      (refunded ? ' Deposit refunded.' : ' NO refund (within 12-hour window).')
+      (refunded ? ' Deposit refunded.' : refundable ? ' Eligible refund requires manual review.' : ' NO refund (within 12-hour window).')
     );
   } catch(e) {}
 
@@ -804,18 +815,23 @@ function rowToBooking(row) {
   };
 }
 
-function hoursUntilMove(moveDateStr) {
-  const value = String(moveDateStr || '').trim();
-  const slot = value.match(/\b(AM|PM)\s*$/i)?.[1]?.toUpperCase();
-  const clean = value.replace(/\b(?:AM|PM)\s*$/i, '').replace(/^\w+,\s*/, '').trim();
-  const date = new Date(clean);
-  if (isNaN(date.getTime())) throw new Error('Move date could not be read. Please contact us.');
-  const hasClock = /\d{1,2}:\d{2}/.test(clean);
-  if (slot && !hasClock) {
-    const day = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
-    const offset = Utilities.formatDate(date, 'America/New_York', 'Z');
-    const instant = new Date(day + (slot === 'AM' ? 'T07:00:00' : 'T16:00:00') + offset.slice(0,3) + ':' + offset.slice(3));
-    return (instant - Date.now()) / 3600000;
-  }
-  return (date - Date.now()) / 3600000;
+function hoursUntilMove(value) {
+  const p = bookingDateParts(value);
+  if (!p) throw new Error('Move date could not be read. Please contact us.');
+  const noon = new Date(p.day + 'T12:00:00Z');
+  const offset = Utilities.formatDate(noon, 'America/New_York', 'Z');
+  return (new Date(p.day + 'T' + p.time + ':00' + offset.slice(0,3) + ':' + offset.slice(3)) - Date.now()) / 3600000;
+}
+
+function bookingDateParts(value) {
+  const raw = String(value || '').trim().replace(/^\w+,\s*/, '');
+  const clock = raw.match(/(?:T|\s)(\d{1,2}:\d{2})(?:\s*(AM|PM))?$/i);
+  const suffix = raw.match(/\b(AM|PM)$/i)?.[1]?.toUpperCase();
+  const clean = clock ? raw.slice(0, clock.index) : raw.replace(/\s+(AM|PM)$/i, '');
+  const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(clean) ? clean + 'T12:00:00' : clean);
+  if (isNaN(d)) return null;
+  let hour = clock ? Number(clock[1].split(':')[0]) : suffix === 'PM' ? 16 : 7;
+  if (clock && clock[2]) hour = hour % 12 + (clock[2].toUpperCase() === 'PM' ? 12 : 0);
+  const time = String(hour).padStart(2,'0') + ':' + (clock ? clock[1].split(':')[1] : '00');
+  return { day: d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'), time, slot: hour < 12 ? 'AM' : 'PM' };
 }

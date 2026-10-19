@@ -349,7 +349,7 @@
     </svg>
     <h1>Team Dashboard</h1>
     <p>Validate Your Vision Moving</p>
-    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()" />
+    <input type="password" id="pw-input" placeholder="Private admin access key" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" />
     <button onclick="doLogin()">Sign In</button>
     <div id="login-error"></div>
   </div>
@@ -442,7 +442,7 @@
         </div>
         <div id="setup-note" style="display:none;" class="setup-note">
           <strong>Setup needed for live data</strong>
-          Add your Google Apps Script URL to SCRIPT_URL in this file to see real bookings. Demo data shown below.
+          Bookings could not be refreshed. Please retry or sign in again.
         </div>
       </div>
 
@@ -607,31 +607,32 @@
 //  CONFIG -- edit these values
 // ─────────────────────────────────────────────────────
 const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbw1yL2yQICaVmDsveep-b2KOYkABwjqH6lMMpH0pesOvFaXZ9mrd43Drt8nU14km5N2/exec';
-const ADMIN_TOKEN    = 'vyv2026admin';
-const ADMIN_PASSWORD = 'VYV2026!';
+let ADMIN_TOKEN = ''; // Supplied at login; validated only by the server.
 const DAILY_GOAL     = 4;           // max moves per day your crew can handle
 const MONTHLY_GOAL   = 20;          // target moves per month
 
 // ─────────────────────────────────────────────────────
 //  AUTH
 // ─────────────────────────────────────────────────────
-function doLogin() {
-  if (document.getElementById('pw-input').value === ADMIN_PASSWORD) {
-    sessionStorage.setItem('vyv_admin','1');
+async function doLogin() {
+  const input = document.getElementById('pw-input');
+  const error = document.getElementById('login-error');
+  error.textContent = 'Checking access...';
+  try {
+    const response = await fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify({action:'get_bookings', token:input.value})});
+    const data = await response.json();
+    if (!data.ok || !Array.isArray(data.bookings)) throw new Error(data.error || 'Access could not be verified.');
+    ADMIN_TOKEN = input.value; input.value = ''; error.textContent = '';
     boot();
-  } else {
-    document.getElementById('login-error').textContent = 'Incorrect password.';
-  }
+  } catch (e) { error.textContent = e.message || 'Unable to sign in. Please retry.'; }
 }
-function doLogout() { sessionStorage.removeItem('vyv_admin'); location.reload(); }
-
+function doLogout() { ADMIN_TOKEN = ''; sessionStorage.removeItem('vyv_admin'); location.reload(); }
 function boot() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').classList.add('visible');
   loadBookings();
   setInterval(loadBookings, 180000);
 }
-if (sessionStorage.getItem('vyv_admin') === '1') boot();
 
 // ─────────────────────────────────────────────────────
 //  STATE
@@ -654,8 +655,7 @@ const DEMO = [
 async function loadBookings() {
   if (!SCRIPT_URL) {
     document.getElementById('setup-note').style.display = 'block';
-    allBookings = DEMO;
-    renderAll();
+    document.getElementById('setup-note').textContent = 'Booking server is not configured.';
     return;
   }
   try {
@@ -664,12 +664,13 @@ async function loadBookings() {
       body: JSON.stringify({ token: ADMIN_TOKEN, action: 'get_bookings' })
     });
     const d = await r.json();
-    allBookings = (d.bookings || []).reverse();
+    if (!d.ok || !Array.isArray(d.bookings)) throw new Error(d.error || 'Bookings could not be loaded.');
+    document.getElementById('setup-note').style.display = 'none';
+    allBookings = d.bookings.map(b => ({...b, from:b.fromAddress || b.from || '', to:b.toAddress || b.to || '', deposit:'$' + (b.depositAmount || '0'), status:String(b.status || '').toLowerCase() === 'completed' ? 'Complete' : b.status})).reverse();
     renderAll();
   } catch {
     document.getElementById('setup-note').style.display = 'block';
-    allBookings = DEMO;
-    renderAll();
+    document.getElementById('setup-note').textContent = 'Unable to refresh bookings. Any displayed records may be out of date. Retry or sign in again.';
   }
 }
 
@@ -677,6 +678,7 @@ async function loadBookings() {
 //  HELPERS
 // ─────────────────────────────────────────────────────
 const AV_COLORS = ['#4A237A','#1d4ed8','#0f766e','#b45309','#7c3aed','#be185d','#0369a1'];
+function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function avatarColor(name) {
   let h = 0;
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AV_COLORS.length;
@@ -692,7 +694,7 @@ function getStatus(b) { return (b.status || 'Upcoming').toString(); }
 function parseDate(str) {
   if (!str) return null;
   try {
-    const clean = str.replace(/\s+\d{1,2}:\d{2}\s*(AM|PM)?$/i,'').replace(/^[A-Za-z]+,\s*/,'');
+    const clean = str.replace(/\s+\d{1,2}:\d{2}\s*(AM|PM)?$/i,'').replace(/\s+(AM|PM)$/i,'').replace(/^[A-Za-z]+,\s*/,'');
     const d = new Date(clean);
     return isNaN(d) ? null : d;
   } catch { return null; }
@@ -744,7 +746,7 @@ function serviceChips(b) {
   out.push('<span class="chip chip-move">Moving</span>');
   if ((b.packing||'').toLowerCase().startsWith('yes')) out.push('<span class="chip chip-pack">Packing</span>');
   if ((b.specialty||'') && (b.specialty||'').toLowerCase() !== 'none') out.push('<span class="chip chip-special">Specialty</span>');
-  out.push(`<span class="chip chip-crew">${b.crew || 'Crew'}</span>`);
+  out.push(`<span class="chip chip-crew">${esc(b.crew || 'Crew')}</span>`);
   return out.join('');
 }
 
@@ -797,9 +799,9 @@ function updateScoreboard() {
       const dep = (b.deposit||'').split(' ')[0];
       return `<div class="monthly-row">
         <div class="monthly-dot"></div>
-        <div class="monthly-name">${b.name}</div>
+        <div class="monthly-name">${esc(b.name)}</div>
         <div class="monthly-date">${dateFmt}</div>
-        <div class="monthly-dep">${dep}</div>
+        <div class="monthly-dep">${esc(dep)}</div>
       </div>`;
     }).join('');
   }
@@ -882,15 +884,15 @@ function renderList() {
 
     return `<div class="bk-card ${isUrgent?'urgent':''} ${isTomorrow?'tomorrow':''} ${selected?'selected':''}" onclick="selectBooking(${origIdx})">
       <div class="bk-avatar" style="background:${color};">
-        ${ini}
+        ${esc(ini)}
         ${repeat ? '<div class="repeat-star">★</div>' : ''}
       </div>
       <div class="bk-body">
         <div class="bk-top">
-          <div class="bk-name">${name}</div>
+          <div class="bk-name">${esc(name)}</div>
           ${isDouble ? '<div class="bk-double">DOUBLE BOOKED</div>' : ''}
         </div>
-        <div class="bk-route">${fromCity}<span class="arrow">→</span>${toCity}</div>
+        <div class="bk-route">${esc(fromCity)}<span class="arrow">→</span>${esc(toCity)}</div>
         <div class="bk-chips">${serviceChips(b)}</div>
       </div>
       <div class="bk-right">
@@ -934,7 +936,7 @@ function selectBooking(idx) {
   // Status chip
   const s = status.toLowerCase();
   const cls = s === 'complete' ? 'chip chip-crew' : s === 'cancelled' ? 'chip chip-special' : 'chip chip-move';
-  document.getElementById('d-status-chip').innerHTML = `<span class="${cls}" style="font-size:0.7rem;padding:4px 12px;">${status}</span>`;
+  document.getElementById('d-status-chip').innerHTML = `<span class="${cls}" style="font-size:0.7rem;padding:4px 12px;">${esc(status)}</span>`;
 
   // Service chips
   document.getElementById('d-chips').innerHTML = serviceChips(b);
@@ -1305,7 +1307,7 @@ async function updateStatus(newStatus) {
   renderAll();
   const s = newStatus.toLowerCase();
   const cls = s === 'complete' ? 'chip chip-crew' : s === 'cancelled' ? 'chip chip-special' : 'chip chip-move';
-  document.getElementById('d-status-chip').innerHTML = `<span class="${cls}" style="font-size:0.7rem;padding:4px 12px;">${newStatus}</span>`;
+  document.getElementById('d-status-chip').innerHTML = `<span class="${cls}" style="font-size:0.7rem;padding:4px 12px;">${esc(newStatus)}</span>`;
 }
 
 // ─────────────────────────────────────────────────────
@@ -1368,7 +1370,7 @@ function renderCal() {
     const isSel     = calFilterDay === day && calYear === new Date().getFullYear() && calMonth === new Date().getMonth();
     const cls       = ['cal-day', isToday?'today':'', hasMove?(isUrgent?'urgent-day':'has-move'):'', isSel?'selected-day':''].filter(Boolean).join(' ');
     const dot       = hasMove ? '<div class="cal-dot"></div>' : '';
-    html += `<div class="${cls}" onclick="calDayClick(${day})" title="${hasMove ? moves.map(b=>b.name).join(', ') : ''}">${day}${dot}</div>`;
+    html += `<div class="${cls}" onclick="calDayClick(${day})" title="${hasMove ? esc(moves.map(b=>b.name).join(', ')) : ''}">${day}${dot}</div>`;
   }
 
   document.getElementById('cal-grid').innerHTML = html;
@@ -1427,10 +1429,10 @@ function renderListForDay(targetDate) {
     const countdownTxt=hrs<=2?`${Math.max(1,Math.round(hrs*60))} MIN`:`${Math.round(hrs)} HRS`;
     const selected = selectedIdx===origIdx;
     return `<div class="bk-card ${isUrgent?'urgent':''} ${isTomorrow?'tomorrow':''} ${selected?'selected':''}" onclick="selectBooking(${origIdx})">
-      <div class="bk-avatar" style="background:${color};">${ini}${repeat?'<div class="repeat-star">★</div>':''}</div>
+      <div class="bk-avatar" style="background:${color};">${esc(ini)}${repeat?'<div class="repeat-star">★</div>':''}</div>
       <div class="bk-body">
-        <div class="bk-top"><div class="bk-name">${name}</div>${isDouble?'<div class="bk-double">DOUBLE BOOKED</div>':''}</div>
-        <div class="bk-route">${fromCity}<span class="arrow">→</span>${toCity}</div>
+        <div class="bk-top"><div class="bk-name">${esc(name)}</div>${isDouble?'<div class="bk-double">DOUBLE BOOKED</div>':''}</div>
+        <div class="bk-route">${esc(fromCity)}<span class="arrow">→</span>${esc(toCity)}</div>
         <div class="bk-chips">${serviceChips(b)}</div>
       </div>
       <div class="bk-right">
