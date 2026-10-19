@@ -909,15 +909,13 @@
   </div>
 </div>
 
+<script src="/assets/booking-pricing.js"></script>
 <script src="/assets/quote-estimator.js"></script>
 <script>
   const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1yL2yQICaVmDsveep-b2KOYkABwjqH6lMMpH0pesOvFaXZ9mrd43Drt8nU14km5N2/exec';
 
   // ── Rates by day-of-week (0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat)
-  const RATES = {
-    2: { 0:180, 1:165, 2:165, 3:170, 4:170, 5:180, 6:180 },
-    3: { 0:220, 1:201, 2:199, 3:199, 4:199, 5:210, 6:220 }
-  };
+  const RATES = window.VYVPricing.rates;
   // Days that always show "Few Left" (2=Tue, 3=Wed)
   const FEW_LEFT_DAYS = new Set([2, 3]);
 
@@ -1671,7 +1669,7 @@
   let depositAmount = 250; // flat deposit -- $250 within 50 miles of Fredericksburg, $300 beyond
 
   function setDepositFromMiles(miles) {
-    depositAmount = miles > 50 ? 300 : 250;
+    depositAmount = window.VYVPricing.depositFromBaseMiles(miles);
     document.getElementById('summary-deposit-amount').textContent = `$${depositAmount}`;
     const btnSpan = document.getElementById('btn-deposit-amount');
     if (btnSpan) btnSpan.textContent = `$${depositAmount} DEPOSIT`;
@@ -1790,8 +1788,7 @@
   }
 
   function calcTruckFeeFromMiles(miles) {
-    if (miles <= 50) return 99;
-    return 125;
+    return window.VYVPricing.truckFeeFromMiles(miles);
   }
 
   let distancePricing = Promise.resolve();
@@ -1963,3 +1960,4 @@
 </script>
 </body>
 </html>
+

@@ -6,6 +6,7 @@ const path = require('node:path');
 function backend() {
  const c = vm.createContext({console, ContentService:{MimeType:{JSON:'json'},createTextOutput:text=>({text,setMimeType(){return this;}})}});
  vm.runInContext(fs.readFileSync(path.join(__dirname,'../vyv-booking-backend.js'),'utf8'), c);
+ c.staffOccupiedSlots=()=>[];
  c.getSheet=()=>({getDataRange:()=>({getValues:()=>[[]]})});
  return c;
 }
@@ -127,3 +128,4 @@ test('rescheduling rejects invalid dates and occupied arrival windows',()=>{
  c.getSheet=()=>({getDataRange:()=>({getValues:()=>[[],row,occupied]})});
  assert.match(decoded(c.rescheduleBooking({moveToken:'audit',newDate:'2026-10-22',newTime:'09:00'})).error,/already booked/);
 });
+

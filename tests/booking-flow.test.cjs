@@ -53,6 +53,7 @@ function page(file, search = '') {
     FormData: class { constructor(form) { this.form = form; } get(k) { return this.form.fields[k]; } }
   });
   context.window = context;
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../assets/booking-pricing.js'),'utf8'),context);
   vm.runInContext(fs.readFileSync(path.join(__dirname,'../assets/quote-estimator.js'),'utf8'),context);
   context.VYVAddresses = { attach() {}, routeMiles: async () => 5 };
   const run = code => vm.runInContext(code, context);
@@ -173,3 +174,4 @@ test('quote blocks checkout when route pricing fails and recovers on retry',asyn
 test('selected packing requires a date and arrival window before quoting',()=>{
  const p=page('book.html','?name=Test+Customer&email=test%40example.com&phone=5551234567&from=First+Street&to=Last+Street');p.run('goFromStep0(); selectCrew(3); selectDay(new Date(Date.now()+86400000)); selectTime("AM"); goToDetails(); goToMoveInfo(); addPackingService = true; goToPackingStep(); goToQuoteStep();');active(p,5);
 });
+
