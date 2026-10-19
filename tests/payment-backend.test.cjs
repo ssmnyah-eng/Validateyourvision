@@ -4,39 +4,61 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
 function backend() {
- const c = vm.createContext({console});
+ const c = vm.createContext({console, ContentService:{MimeType:{JSON:'json'},createTextOutput:text=>({text,setMimeType(){return this;}})}});
  vm.runInContext(fs.readFileSync(path.join(__dirname,'../vyv-booking-backend.js'),'utf8'), c);
+ c.getSheet=()=>({getDataRange:()=>({getValues:()=>[[]]})});
  return c;
 }
-test('deposit creation rejects unexpected amounts and requires a stable request ID', () => {
+const decoded = result => JSON.parse(result.text);
+const payment = () => ({id:'pi_audit',status:'succeeded',currency:'usd',amount_received:25000,metadata:{type:'deposit'},receipt_email:'audit@example.invalid',customer:'cus_audit',payment_method:'pm_audit'});
+test('deposit creation validates amount and uses stable idempotency keys', () => {
  const c=backend();
- assert.equal(c.createDepositIntent({amountCents:0}).ok,false);
- assert.equal(c.createDepositIntent({amountCents:25000}).ok,false);
+ assert.equal(decoded(c.createPaymentIntent({amountCents:0})).ok,false);
+ assert.equal(decoded(c.createPaymentIntent({amountCents:25000})).ok,false);
  const calls=[];
- c.stripeRequest=(method,path,params,key)=>{calls.push({method,path,params,key});return path==='/customers'?{id:'cus_audit'}:{client_secret:'audit'};};
- assert.equal(c.createDepositIntent({amountCents:25000,email:'audit@example.invalid',name:'Audit',requestId:'audit-1234567890123456'}).ok,true);
+ c.stripeApi=(method,path,params,key)=>{calls.push({method,path,params,key});return path==='/customers'?{id:'cus_audit'}:{client_secret:'audit'};};
+ const result=c.createPaymentIntent({amountCents:25000,email:'audit@example.invalid',name:'Audit',requestId:'audit-1234567890123456'});
+ assert.equal(decoded(result).clientSecret,'audit');
  assert.equal(calls[1].params.confirm,undefined);
  assert.equal(calls[1].params.customer,'cus_audit');
  assert.ok(calls.every(x=>x.key));
 });
-test('save verifies payment and saves only once without another Stripe charge', () => {
- const c=backend();const calls=[];let row, count=0;
- c.stripeRequest=(method,path)=>{calls.push(method);return {id:'pi_audit',status:'succeeded',currency:'usd',amount_received:25000,metadata:{type:'deposit'},receipt_email:'audit@example.invalid',customer:'cus_audit',payment_method:'pm_audit'};};
+test('verified deposit saves once in the existing 27-column layout without another charge', () => {
+ const c=backend();const calls=[];const rows=[Array(27).fill('')];
+ c.stripeApi=(method,path)=>{calls.push(method);return payment();};
  c.LockService={getScriptLock:()=>({waitLock(){},releaseLock(){}})};
- c.getOrCreateSheet=()=>({appendRow(r){row=r;count++;}});
- c.findBooking=id=>row?{ID:id,MoveToken:row[23]}:null;
+ c.getSheet=()=>({appendRow:r=>rows.push(r),getDataRange:()=>({getValues:()=>rows})});
  c.generateToken=()=> 'audit-token';
- c.sendConfirmationEmail=c.sendOwnerAlert=c.createCalendarEvent=()=>{};
+ c.sendConfirmationEmail=c.notifyAdmin=()=>{};
  const input={paymentIntentId:'pi_audit',email:'audit@example.invalid'};
- assert.equal(c.saveBooking(input).ok,true);
- assert.equal(c.saveBooking(input).ok,true);
- assert.equal(count,1);
- assert.deepEqual(calls,['GET','GET']);
- assert.equal(row[17],'$250');
+ assert.equal(decoded(c.saveBooking(input)).moveToken,'audit-token');
+ assert.equal(decoded(c.saveBooking(input)).id,'audit-token');
+ assert.equal(rows.length,2);
+ assert.equal(rows[1].length,27);
+ assert.deepEqual(calls,['get','get']);
+ assert.equal(rows[1][16],'$250');
+ assert.equal(rows[1][17],'pi_audit');
+ assert.equal(rows[1][18],'pm_audit');
 });
-test('unpaid or mismatched deposits cannot create a booking',()=>{
+test('unpaid and mismatched deposits cannot create a booking',()=>{
  const c=backend();
- assert.throws(()=>c.verifiedDeposit({}),/paid deposit/);
- c.stripeRequest=()=>({status:'requires_payment_method',currency:'usd',amount_received:0});
- assert.throws(()=>c.verifiedDeposit({paymentIntentId:'pi_audit'}),/verification/);
+ assert.throws(()=>c.verifyDeposit({}),/paid deposit/);
+ c.stripeApi=()=>({...payment(),status:'requires_payment_method'});
+ assert.throws(()=>c.verifyDeposit({paymentIntentId:'pi_audit'}),/verification/);
+ c.stripeApi=payment;
+ assert.throws(()=>c.verifyDeposit({paymentIntentId:'pi_audit',email:'other@example.invalid'}),/verification/);
+});
+test('availability understands AM and PM and ignores cancelled bookings',()=>{
+ const c=backend();const rows=[[],Array(27).fill(''),Array(27).fill(''),Array(27).fill('')];
+ rows[1][5]='Tuesday, October 20, 2026 AM';rows[1][19]='Upcoming';
+ rows[2][5]='Tuesday, October 20, 2026 PM';rows[2][19]='Upcoming';
+ rows[3][5]='Wednesday, October 21, 2026 AM';rows[3][19]='Cancelled';
+ c.getSheet=()=>({getDataRange:()=>({getValues:()=>rows})});
+ assert.deepEqual(decoded(c.getBookedSlots()).slots,{'2026-10-20':['AM','PM']});
+});
+test('customer check-in does not reset a running timer',()=>{
+ const c=backend();const row=Array(27).fill('');row[21]='2026-10-20T11:00:00Z';
+ c.findRow=()=>row;
+ c.updateRowField=()=>{throw Error('Timer must not reset');};
+ assert.equal(decoded(c.customerCheckin({moveToken:'audit'})).checkinAt,row[21]);
 });
