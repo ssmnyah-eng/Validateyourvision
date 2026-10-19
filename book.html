@@ -380,7 +380,7 @@
       </div>
       <div id="booking-milestone-4" style="text-align:center;">
         <div id="booking-circle-4" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">5</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Your estimate</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Your quote</p>
       </div>
       <div id="booking-milestone-5" style="text-align:center;">
         <div id="booking-circle-5" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">6</div>
@@ -666,13 +666,13 @@
           </div>
         </div>
 
-        <button class="btn-continue" style="margin-top:20px;" onclick="goToQuoteStep()">SEE YOUR ESTIMATED TOTAL</button>
+        <button class="btn-continue" style="margin-top:20px;" onclick="goToQuoteStep()">SEE YOUR QUOTE</button>
       </div>
 
       <div class="step" id="step6">
-        <div class="step-label">Step 7 of 8: Your Estimate</div>
-        <h1>Your move, estimated.</h1>
-        <p style="color:#5c4a7a;line-height:1.7;">A planning range based on your crew, belongings, access and route. Your final bill uses actual time worked and agreed charges.</p>
+        <div class="step-label">Step 7 of 8: Your Quote</div>
+        <h1>Your moving quote.</h1>
+        <p style="color:#5c4a7a;line-height:1.7;">Your estimated quote is based on your crew, belongings, access and route. Your final charge is based on actual work time at your booked hourly rate, plus the truck fee and agreed services.</p>
         <div class="quote-card">
           <label for="quote-density">How full is your home?</label>
           <select id="quote-density" onchange="refreshQuote()"><option value="normal">Normally furnished</option><option value="heavy">Very full — lots of furniture, boxes or storage</option><option value="light">Lightly furnished</option></select>
@@ -683,7 +683,7 @@
           <label style="display:flex;gap:10px;align-items:center;"><input id="quote-long-carry" type="checkbox" onchange="refreshQuote()" style="width:auto;" />Long walk from the truck to a door (over about 100 feet)</label>
         </div>
         <div class="quote-card" aria-live="polite">
-          <p style="font-weight:700;color:#6d28d9;">ESTIMATED TOTAL</p>
+          <p style="font-weight:700;color:#6d28d9;">ESTIMATED QUOTE TOTAL</p>
           <div id="quote-total" style="font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;color:#190E2A;">Calculating route…</div>
           <p id="quote-hours" style="color:#5c4a7a;"></p>
           <div id="quote-stages" style="font-size:.82rem;color:#5c4a7a;line-height:1.9;"></div>
@@ -694,7 +694,7 @@
           <div class="quote-row"><span>Estimated balance after deposit</span><strong id="quote-balance">—</strong></div>
           <p id="quote-review" style="color:#92400e;font-weight:600;"></p>
           <p id="quote-assumptions" style="font-size:0.78rem;color:#6b7280;line-height:1.7;"></p>
-          <p style="font-size:0.78rem;color:#6b7280;line-height:1.7;">This is an estimate, not a fixed price or time limit. Extra belongings, access delays, traffic or extra trips can increase the final bill. Packing materials and charges not listed here are not included. A large or unusual move needs a crew review.</p>
+          <p style="font-size:0.78rem;color:#6b7280;line-height:1.7;">Your quote is an estimated range and does not guarantee the final price or completion time. Your final charge may be higher or lower based on actual work time and agreed services. Extra belongings, access delays, traffic or extra trips can add time. Packing materials and charges not listed here are not included. A large or unusual move needs a crew review.</p>
           <p id="quote-error" role="alert" style="color:#b91c1c;"></p>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -711,7 +711,7 @@
         <!-- Page header -->
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToQuote()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#190E2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          <h1 style="font-size:1.15rem;font-weight:800;color:#190E2A;margin:0;">Review your estimate and reserve your crew.</h1>
+          <h1 style="font-size:1.15rem;font-weight:800;color:#190E2A;margin:0;">Review your quote and reserve your crew.</h1>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Refundable with at least 12 hours notice"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         </div>
 
@@ -761,9 +761,9 @@
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
             <div class="quote-row"><span>Estimated moving time</span><strong id="summary-est-hours"></strong></div>
             <div class="quote-row"><span>Estimated moving labor</span><strong id="summary-est-labor"></strong></div>
-            <div class="quote-row"><span>Estimated total incl. selected packing</span><strong id="summary-est-total"></strong></div>
+            <div class="quote-row"><span>Estimated quote incl. selected packing</span><strong id="summary-est-total"></strong></div>
             <div class="quote-row"><span>Estimated balance after deposit</span><strong id="summary-est-balance"></strong></div>
-            <p style="font-size:0.75rem;color:#6b7280;">Planning range; final bill depends on actual work. Deposit is credited, not added to the total.</p>
+            <p style="font-size:0.75rem;color:#6b7280;">This quote is an estimated range. Final charges depend on actual work time and agreed services. Your deposit is credited toward the final bill.</p>
 
             <div id="packingPriceLine" style="display:none;">
               <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:6px;">Packing / Unpacking</div>
@@ -814,7 +814,7 @@
             <span style="font-weight:800;font-size:1rem;color:#190E2A;">Billing Information</span>
             <div style="display:flex;align-items:center;gap:6px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span style="font-size:0.78rem;font-weight:600;color:#374151;">Guaranteed <strong>Safe &amp; Secure</strong> Checkout</span>
+              <span style="font-size:0.78rem;font-weight:600;color:#374151;"><strong>Secure</strong> Checkout</span>
               <span style="background:#190E2A;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.03em;">Powered by Stripe</span>
             </div>
           </div>
