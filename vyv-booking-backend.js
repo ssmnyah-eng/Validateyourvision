@@ -1,661 +1,748 @@
-// ─────────────────────────────────────────────────────────────
-//  VYV Moving — Google Apps Script Backend v2
-//  Paste into script.google.com → Deploy as Web App → Anyone
-//
-//  Set these in GAS BEFORE deploying:
-//  Project Settings → Script Properties → Add property
-//    STRIPE_SK     → your Stripe live secret key (sk_live_...)
-//    TWILIO_TOKEN  → your Twilio auth token
-//    TWILIO_SID    → your Twilio account SID (ACf13...)
-//    TWILIO_FROM   → your Twilio phone number (+1737...)
-// ─────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  VYV Moving — Google Apps Script Backend
+//  Paste this entire file into your GAS editor and re-deploy.
+//  Script Properties required: STRIPE_SK, TWILIO_SID, TWILIO_TOKEN, TWILIO_FROM
+// ═══════════════════════════════════════════════════════════════
 
-const ADMIN_TOKEN    = 'vyv2026admin';
-const NOTIFY_EMAIL   = 'hello@validateyourvision.com';
-const CALENDAR_ID    = 'primary';
-const BOOKINGS_SHEET = 'Bookings';
-const LEADS_SHEET    = 'Leads';
-const SITE_URL       = 'https://validateyourvision.com';
-const RATES          = { 2: 165, 3: 199 }; // $ per hour, 15-min prorate
+const SHEET_ID      = '1-KEfahm-VkdVG2T_tV6GyF4kRTIUqchanSKKL-kNagM';
+const ADMIN_TOKEN   = 'vyv2026admin';
+const BOOKING_TAB   = 'Bookings';
+const LEADS_TAB     = 'Leads';
+const NOTIFY_EMAIL  = 'hello@validateyourvision.com';
+const BUSINESS_PHONE= '+15403011152';
+const REVIEW_LINK   = 'https://g.page/r/CTEfnP3H0I5qEAI/review';
 
-// ── ROUTING ───────────────────────────────────────────────────
+// ── Spreadsheet column layout (0-based) ──────────────────────
+// A  0  Timestamp
+// B  1  Move Token
+// C  2  Name
+// D  3  Email
+// E  4  Phone
+// F  5  Move Date
+// G  6  Crew
+// H  7  Rate
+// I  8  Truck Fee
+// J  9  From
+// K 10  To
+// L 11  Stops
+// M 12  Volume
+// N 13  Specialty Items
+// O 14  Packing
+// P 15  Notes
+// Q 16  Deposit Amount
+// R 17  Payment Intent ID
+// S 18  Payment Method ID
+// T 19  Status
+// U 20  Booked At
+// V 21  Checkin At
+// W 22  Completed At
+// X 23  Hours Worked
+// Y 24  Labor Amount
+// Z 25  Final Charge
+// AA 26 Charge Status
+
+// ═══════════════════════════════════════════════════════════════
+//  ENTRY POINT
+// ═══════════════════════════════════════════════════════════════
 function doPost(e) {
   try {
-    const d = JSON.parse(e.postData.contents);
+    const data    = JSON.parse(e.postData.contents);
+    const action  = data.action  || '';
+    const token   = data.token   || '';
+    const isAdmin = token === ADMIN_TOKEN;
 
-    // Public (customer uses move token, not admin token)
-    if (d.action === 'start_timer') return json(startTimer(d));
+    // ── Public routes (no token needed) ──
+    if (action === 'create_payment_intent') return createPaymentIntent(data);
+    if (action === 'get_move')              return getMove(data);
+    if (action === 'customer_checkin')      return customerCheckin(data);
+    if (action === 'reschedule')            return rescheduleBooking(data);
+    if (action === 'cancel')               return cancelBooking(data);
 
-    if (d.action === 'create_payment_intent') return json(createDepositIntent(d));
+    // ── Admin routes ──
+    if (!isAdmin) return jsonErr('Unauthorized');
 
-    // Admin
-    if (d.token !== ADMIN_TOKEN) return json({ ok: false, error: 'Unauthorized' });
+    if (action === 'save')              return saveBooking(data);
+    if (action === 'save_lead')         return saveLead(data);
+    if (action === 'get_bookings')      return getBookings(data);
+    if (action === 'update_status')     return updateStatus(data);
+    if (action === 'on_the_way')        return onTheWay(data);
+    if (action === 'arrived')           return arrivedAction(data);
+    if (action === 'complete_move')     return completeMove(data);
+    if (action === 'charge_balance')    return chargeBalance(data);
+    if (action === 'start_timer_admin') return startTimerAdmin(data);
 
-    if (d.action === 'save')          return json(saveBooking(d));
-    if (d.action === 'save_lead')     return json(saveLead(d));
-    if (d.action === 'update_status') return json(updateStatus(d));
-    if (d.action === 'on_the_way')    return json(onTheWay(d));
-    if (d.action === 'arrived')       return json(arrived(d));
-    if (d.action === 'complete_move') return json(completeMove(d));
-
-    return json({ ok: false, error: 'Unknown action' });
+    return jsonErr('Unknown action: ' + action);
   } catch (err) {
-    return json({ ok: false, error: err.message });
+    return jsonErr('Server error: ' + err.message);
   }
 }
 
 function doGet(e) {
   try {
-    const action = e.parameter.action || 'get_bookings';
-    if (action === 'health') return json({ ok: true, version: 'booking-payments-v3', paymentsConfigured: !!PropertiesService.getScriptProperties().getProperty('STRIPE_SK') });
-
-    // Public: customer portal polling
-    if (action === 'get_move')          return json(getMove(e.parameter.id, e.parameter.moveToken));
-    // Public: availability check (only reveals dates + slots, no personal info)
-    if (action === 'get_booked_slots')  return json(getBookedSlots());
-
-    const token = e.parameter.token;
-    if (token !== ADMIN_TOKEN) return json({ ok: false, error: 'Unauthorized' });
-
-    if (action === 'get_bookings') return json(getBookings());
-    if (action === 'get_leads')    return json(getLeads());
-
-    return json({ ok: false, error: 'Unknown action' });
-  } catch (err) {
-    return json({ ok: false, error: err.message });
-  }
+    const action = e.parameter.action;
+    if (action === 'health') return jsonOk({ version: 'booking-payments-v4', paymentsConfigured: !!getProp('STRIPE_SK') });
+    if (action === 'get_booked_slots') return getBookedSlots();
+    if (action === 'get_move') return getMove({moveToken: e.parameter.moveToken});
+    return jsonErr('Unknown public action');
+  } catch (error) { return jsonErr(error.message); }
 }
 
-// Create one unconfirmed deposit. Card confirmation stays in Stripe.js.
-function createDepositIntent(d) {
-  if (![25000, 30000].includes(d.amountCents)) return { ok: false, error: 'Invalid deposit amount' };
-  if (!d.email || !d.name || !d.requestId || !/^[a-zA-Z0-9_-]{16,80}$/.test(d.requestId)) {
-    return { ok: false, error: 'Contact details and request ID are required' };
-  }
-  const customer = stripeRequest('POST', '/customers', { email: d.email, name: d.name }, 'customer-' + d.requestId);
-  const intent = stripeRequest('POST', '/payment_intents', {
-    amount: d.amountCents, currency: 'usd', customer: customer.id,
-    'payment_method_types[]': 'card', setup_future_usage: 'off_session',
-    receipt_email: d.email, description: d.description || 'VYV Moving deposit',
-    'metadata[type]': 'deposit'
-  }, 'deposit-' + d.requestId);
-  return { ok: true, clientSecret: intent.client_secret };
-}
-
-// Verify the existing payment. Never initiate a second deposit when saving.
-function verifiedDeposit(d) {
-  if (!/^pi_[a-zA-Z0-9]+$/.test(d.paymentIntentId || '')) throw new Error('A paid deposit is required');
-  const intent = stripeRequest('GET', '/payment_intents/' + d.paymentIntentId);
-  if (intent.status !== 'succeeded' || intent.currency !== 'usd' ||
-      ![25000, 30000].includes(intent.amount_received) ||
-      intent.metadata?.type !== 'deposit' ||
-      (intent.receipt_email || '').toLowerCase() !== (d.email || '').toLowerCase()) {
-    throw new Error('Deposit verification failed');
-  }
-  return intent;
-}
-
-// Serialize duplicate save requests so a paid deposit creates just one booking.
-function saveBooking(d) {
-  const lock = LockService.getScriptLock();
-  lock.waitLock(30000);
-  try { return saveVerifiedBooking(d); }
-  finally { lock.releaseLock(); }
-}
-
-function saveVerifiedBooking(d) {
-  const ss = getOrCreateSheet(BOOKINGS_SHEET, [
-    'ID','Booked At','Name','Email','Phone',
-    'Move Date','Time','Crew','Rate','Truck Fee',
-    'Moving From','Moving To','Stops',
-    'Property Details','Volume','Specialty','Packing',
-    'Deposit','Payment Method','Notes','Status',
-    'StripeCustomerId','StripePaymentMethodId','MoveToken',
-    'TimerStart','TimerEnd','FinalHours','FinalCharge'
-  ]);
-
-  const payment = verifiedDeposit(d);
-  const id = 'VYV-' + payment.id;
-  const existing = findBooking(id);
-  if (existing) return { ok: true, id, moveToken: existing.MoveToken };
-  const moveToken = generateToken();
-  const stripeCustomerId = payment.customer || '';
-  const stripePaymentMethodId = payment.payment_method || '';
-  d.deposit = '$' + payment.amount_received / 100;
-  d.paymentMethod = stripePaymentMethodId;
-
-  ss.appendRow([
-    id,
-    d.bookedAt || new Date().toISOString(),
-    d.name, d.email, d.phone,
-    d.moveDate, d.time || '',
-    d.crew, d.rate, d.truckFee || '',
-    d.from, d.to, d.stops || 1,
-    d.propertyDetails || '',
-    d.volume || '', d.specialty || '', d.packing || 'No',
-    d.deposit || '', d.paymentMethod || '',
-    d.notes || '', 'Upcoming',
-    stripeCustomerId, stripePaymentMethodId, moveToken,
-    '', '', '', ''
-  ]);
-
-  const full = { ...d, id, moveToken };
-  // Notification failures must not make a saved booking look like a payment failure.
-  [() => sendConfirmationEmail(full, id), () => sendOwnerAlert(full, id), () => createCalendarEvent(full, id)].forEach(send => {
-    try { send(); } catch (error) { console.error('Booking notification failed: ' + error.message); }
-  });
-
-  return { ok: true, id, moveToken };
-}
-
-// ── ON THE WAY ────────────────────────────────────────────────
-function onTheWay(d) {
-  const b = findBooking(d.id);
-  if (!b) return { ok: false, error: 'Not found' };
-
-  updateBookingField(d.id, 'Status', 'On The Way');
-
-  const first = b.Name.split(' ')[0];
-  GmailApp.sendEmail(b.Email, `Your VYV movers are on the way, ${first}!`, '',
-    { htmlBody: onTheWayHtml(b), name: 'VYV Moving' });
-
-  const phone = (b.Phone || '').replace(/\D/g, '');
-  if (phone) sendSMS('+1' + phone,
-    `Hi ${first}! Your VYV Moving crew is on the way. We will see you shortly! Questions? Reply here.`);
-
-  return { ok: true };
-}
-
-// ── ARRIVED ───────────────────────────────────────────────────
-function arrived(d) {
-  const b = findBooking(d.id);
-  if (!b) return { ok: false, error: 'Not found' };
-
-  updateBookingField(d.id, 'Status', 'Arrived');
-
-  const first     = b.Name.split(' ')[0];
-  const moveToken = b.MoveToken || '';
-  const link      = `${SITE_URL}/move-day.html?id=${b.ID}&moveToken=${moveToken}`;
-
-  GmailApp.sendEmail(b.Email, `Your VYV movers have arrived, ${first}!`, '',
-    { htmlBody: arrivedHtml(b, link), name: 'VYV Moving' });
-
-  const phone = (b.Phone || '').replace(/\D/g, '');
-  if (phone) sendSMS('+1' + phone,
-    `Hi ${first}! Your VYV Moving crew has arrived. Tap to sign them in and start your move: ${link}`);
-
-  return { ok: true };
-}
-
-// ── START TIMER (customer signs in movers) ────────────────────
-function startTimer(d) {
-  const b = findBookingByToken(d.id, d.moveToken);
-  if (!b) return { ok: false, error: 'Invalid link' };
-
-  if (b.TimerStart) return { ok: true, timerStart: b.TimerStart, alreadyStarted: true };
-
-  const now = new Date().toISOString();
-  updateBookingField(d.id, 'TimerStart', now);
-  updateBookingField(d.id, 'Status', 'In Progress');
-
-  return { ok: true, timerStart: now };
-}
-
-// ── GET MOVE (customer portal) ────────────────────────────────
-function getMove(id, moveToken) {
-  if (!id || !moveToken) return { ok: false, error: 'Missing params' };
-  const b = findBookingByToken(id, moveToken);
-  if (!b) return { ok: false, error: 'Not found' };
-
-  return {
-    ok: true,
-    booking: {
-      id:         b.ID,
-      name:       b.Name,
-      moveDate:   b['Move Date'],
-      crew:       b.Crew,
-      rate:       b.Rate,
-      from:       b['Moving From'],
-      to:         b['Moving To'],
-      status:     b.Status,
-      timerStart: b.TimerStart || '',
-      timerEnd:   b.TimerEnd   || '',
-      deposit:    b.Deposit    || ''
-    }
-  };
-}
-
-// ── COMPLETE MOVE ─────────────────────────────────────────────
-function completeMove(d) {
-  const b = findBooking(d.id);
-  if (!b)            return { ok: false, error: 'Not found' };
-  if (!b.TimerStart) return { ok: false, error: 'Timer not started' };
-
-  const now       = new Date();
-  const elapsedMs = now - new Date(b.TimerStart);
-
-  const blockMs  = 15 * 60 * 1000;
-  const blocks   = Math.ceil(elapsedMs / blockMs);
-  const hours    = blocks / 4;
-
-  const crewNum     = parseInt((b.Crew || '2').replace(/\D/g, '')) || 2;
-  const ratePerHour = RATES[crewNum] || 165;
-  const totalAmount = Math.round(hours * ratePerHour * 100) / 100;
-  const depositPaid = parseFloat((b.Deposit || '').replace(/[^0-9.]/g, '')) || 250;
-  const finalCharge = Math.max(0, Math.round((totalAmount - depositPaid) * 100) / 100);
-
-  let charged = false;
-  if (b.StripeCustomerId && b.StripePaymentMethodId && finalCharge > 0) {
-    charged = chargeFinal(b, finalCharge, hours, ratePerHour).ok;
-  }
-
-  const timerEnd = now.toISOString();
-  updateBookingField(d.id, 'TimerEnd',    timerEnd);
-  updateBookingField(d.id, 'FinalHours',  hours.toFixed(2));
-  updateBookingField(d.id, 'FinalCharge', finalCharge.toFixed(2));
-  updateBookingField(d.id, 'Status',      'Complete');
-
-  sendReceipt(b, hours, ratePerHour, totalAmount, depositPaid, finalCharge, b.TimerStart, timerEnd);
-
-  return { ok: true, hours, totalAmount, depositPaid, finalCharge, charged };
-}
-
-function chargeFinal(b, finalCharge, hours, ratePerHour) {
-  const sk = PropertiesService.getScriptProperties().getProperty('STRIPE_SK');
-  if (!sk) return { ok: false };
-  try {
-    const r = stripeRequest('POST', '/payment_intents', {
-      amount: Math.round(finalCharge * 100),
-      currency: 'usd',
-      customer: b.StripeCustomerId,
-      payment_method: b.StripePaymentMethodId,
-      confirm: 'true',
-      off_session: 'true',
-      'metadata[bookingId]': b.ID,
-      'metadata[type]': 'final_charge',
-      description: `VYV final balance - ${b.Name} - ${hours}hr @ $${ratePerHour}/hr`
-    });
-    return { ok: !r.error };
-  } catch (err) {
-    console.log('Final charge error: ' + err.message);
-    return { ok: false };
-  }
-}
-
-// ── SAVE LEAD ─────────────────────────────────────────────────
-function saveLead(d) {
-  const ss = getOrCreateSheet(LEADS_SHEET, [
-    'Captured At','Name','Email','Phone','Moving From','Moving To','Source'
-  ]);
-  ss.appendRow([
-    d.capturedAt || new Date().toISOString(),
-    d.name||'', d.email||'', d.phone||'',
-    d.from||'', d.to||'', d.source||'Booking Form'
-  ]);
-  return { ok: true };
-}
-
-// ── UPDATE STATUS ─────────────────────────────────────────────
-function updateStatus(d) {
-  return updateBookingField(d.id, 'Status', d.status)
-    ? { ok: true }
-    : { ok: false, error: 'Not found' };
-}
-
-// ── GET BOOKINGS ──────────────────────────────────────────────
-function getBookings() {
-  const ss   = getOrCreateSheet(BOOKINGS_SHEET, []);
-  const data = ss.getDataRange().getValues();
-  if (data.length < 2) return { ok: true, bookings: [] };
-  const headers = data[0];
-  return {
-    ok: true,
-    bookings: data.slice(1).map(row => {
-      const obj = {};
-      headers.forEach((h, i) => { obj[h] = row[i]; });
-      return obj;
-    })
-  };
-}
-
-// ── GET LEADS ─────────────────────────────────────────────────
-function getLeads() {
-  const ss   = getOrCreateSheet(LEADS_SHEET, []);
-  const data = ss.getDataRange().getValues();
-  if (data.length < 2) return { ok: true, leads: [] };
-  const headers = data[0];
-  return {
-    ok: true,
-    leads: data.slice(1).map(row => {
-      const obj = {};
-      headers.forEach((h, i) => { obj[h] = row[i]; });
-      return obj;
-    })
-  };
-}
-
-// ── GET BOOKED SLOTS (public — dates + AM/PM only, no PII) ───
 function getBookedSlots() {
-  const ss   = getOrCreateSheet(BOOKINGS_SHEET, []);
-  const data = ss.getDataRange().getValues();
-  if (data.length < 2) return { ok: true, slots: {} };
-  const headers = data[0];
+  const rows = getSheet(BOOKING_TAB).getDataRange().getValues();
   const slots = {};
-
-  data.slice(1).forEach(function(row) {
-    const obj = {};
-    headers.forEach(function(h, i) { obj[h] = row[i]; });
-
-    // Ignore cancelled bookings; keep upcoming + in-progress
-    const status = String(obj['Status'] || '').toLowerCase();
-    if (status === 'cancelled' || status === 'canceled') return;
-
-    const moveDate = String(obj['Move Date'] || '');
-    const timeMatch = moveDate.match(/\b(AM|PM)\b/);
-    if (!timeMatch) return;
-    const slot = timeMatch[1];
-
-    // "Wednesday, August 13, 2025 AM" → "August 13, 2025"
-    const withoutSlot    = moveDate.replace(/\s*\b(?:AM|PM)\b\s*/g, '').trim();
-    const withoutWeekday = withoutSlot.replace(/^\w+,\s*/, '');
-    const d = new Date(withoutWeekday);
-    if (isNaN(d.getTime())) return;
-
-    const key = d.getFullYear() + '-' +
-                String(d.getMonth() + 1).padStart(2, '0') + '-' +
-                String(d.getDate()).padStart(2, '0');
+  rows.slice(1).forEach(row => {
+    if (['cancelled','canceled'].includes(String(row[19]).toLowerCase())) return;
+    const value = String(row[5] || '');
+    const slot = value.match(/\b(AM|PM)\b/i)?.[1]?.toUpperCase();
+    if (!slot) return;
+    const clean = value.replace(/\b(?:AM|PM)\b/ig, '').replace(/^\w+,\s*/, '').trim();
+    const date = new Date(clean);
+    if (isNaN(date.getTime())) return;
+    const key = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
     if (!slots[key]) slots[key] = [];
-    if (slots[key].indexOf(slot) === -1) slots[key].push(slot);
+    if (!slots[key].includes(slot)) slots[key].push(slot);
   });
-
-  return { ok: true, slots: slots };
+  return jsonOk({slots});
 }
 
-// ── CONFIRMATION EMAIL ────────────────────────────────────────
-function sendConfirmationEmail(d, id) {
-  if (!d.email) return;
-  const firstName = (d.name || '').split(' ')[0] || 'there';
-  const subject   = `You're booked, ${firstName}! -- VYV Moving`;
-
-  const html = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<style>
-body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}
-.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}
-.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hdr-sub{font-size:.65rem;color:#8B5BC7;margin-top:1px;}
-.hero{background:#fff;border-bottom:1px solid #e6dff5;padding:24px 28px 20px;text-align:center;}
-.badge{display:inline-block;background:#d4eddf;border:1px solid #9dd0b4;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
-.hero h1{font-size:1.35rem;font-weight:800;color:#190E2A;margin:0 0 6px;line-height:1.25;}.hero h1 span{color:#4A237A;}
-.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}
-.body{padding:20px 28px 28px;}
-.callout{background:#d4eddf;border:1px solid #9dd0b4;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:.78rem;color:#166534;line-height:1.55;}
-.callout strong{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;}
-.journey{background:#faf8ff;border:1px solid #e6dff5;border-radius:10px;padding:16px;margin-bottom:14px;}
-.j-label{font-size:.62rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
-.j-title{font-size:.85rem;font-weight:700;color:#190E2A;margin-bottom:12px;}
-.truck-row{text-align:center;margin-bottom:6px;font-size:1.6rem;}
-.track{height:5px;background:#e6dff5;border-radius:3px;margin-bottom:8px;}
-.track-fill{height:100%;width:10%;background:#16a34a;border-radius:3px;}
-.steps-row{display:flex;justify-content:space-between;text-align:center;}
-.s-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.s-dot{width:22px;height:22px;border-radius:50%;border:2px solid #d4c9e8;background:#fff;font-size:.6rem;font-weight:700;color:#a892cc;display:flex;align-items:center;justify-content:center;margin:0 auto;}
-.s-dot.active{background:#16a34a;border-color:#16a34a;color:#fff;}
-.s-lbl{font-size:.58rem;color:#a892cc;line-height:1.3;max-width:60px;}.s-lbl.active{color:#16a34a;font-weight:700;}
-.steps-card{border:1px solid #e6dff5;border-radius:10px;overflow:hidden;margin-bottom:14px;}
-.sc-hdr{background:#190E2A;padding:12px 16px;}.sc-lbl{font-size:.6rem;font-weight:700;color:#8B5BC7;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;}.sc-hdr h3{font-size:.82rem;font-weight:700;color:#ECEBEE;margin:0;}
-.si{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid #e6dff5;background:#fff;}.si:last-child{border-bottom:none;}
-.si-num{width:22px;height:22px;min-width:22px;border-radius:50%;background:#4A237A;color:#fff;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px;}
-.si-num.cur{background:#16a34a;}
-.si-content strong{display:block;font-size:.78rem;font-weight:700;color:#190E2A;margin-bottom:1px;}
-.si-content span{font-size:.72rem;color:#6b5b8a;line-height:1.5;}
-.here{display:inline-block;background:#d4eddf;color:#166534;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:50px;margin-left:4px;vertical-align:middle;}
-.notice{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;gap:8px;align-items:flex-start;}
-.notice strong{display:block;font-size:.68rem;font-weight:700;color:#0c4a6e;margin-bottom:2px;}
-.notice p{font-size:.72rem;color:#0369a1;line-height:1.5;margin:0;}
-.btns{display:flex;gap:8px;margin-bottom:14px;}
-.btn{flex:1;display:block;text-align:center;padding:10px 12px;border-radius:7px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-decoration:none;text-transform:uppercase;}
-.btn-rs{color:#4A237A;border:2px solid #4A237A;}.btn-cn{color:#dc2626;border:2px solid #fca5a5;}
-.tips{background:#faf8ff;border:1px solid #e6dff5;border-radius:8px;padding:12px 14px;margin-bottom:14px;}
-.tips-title{font-size:.7rem;font-weight:700;color:#190E2A;margin-bottom:8px;}
-.tip{display:flex;gap:7px;font-size:.72rem;color:#6b5b8a;line-height:1.5;margin-bottom:6px;}.tip:last-child{margin-bottom:0;}
-.tip-ck{color:#8B5BC7;font-weight:700;flex-shrink:0;}.tip strong{color:#190E2A;}
-.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}
-.ftr{background:#190E2A;padding:18px 28px;text-align:center;}.ftr-name{font-size:.8rem;font-weight:800;color:#ECEBEE;}.ftr-sub{font-size:.62rem;color:#8B5BC7;margin-top:2px;}
-.ftr p{font-size:.65rem;color:rgba(236,235,238,.4);line-height:1.8;margin-top:10px;}.ftr a{color:rgba(139,91,199,.8);text-decoration:none;}
-</style></head><body>
-<div class="wrap">
-<div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div><div class="hdr-sub">Fredericksburg, VA &middot; Licensed &amp; Insured</div></div>
-<div class="hero">
-  <div class="badge">&#9679; Move Confirmed</div>
-  <h1>Congrats, <span>${firstName}.</span><br>You're officially booked.</h1>
-  <p>Your crew is reserved and your date is locked in. We can't wait to make this the smoothest move you've ever had.</p>
-</div>
-<div class="body">
-<div class="callout"><strong>&#10003; Deposit received &amp; applied to your balance</strong>Your deposit is not an extra fee. It comes straight off your total on move day. The remaining balance is due when the job is complete.</div>
-<div class="journey">
-  <div class="j-label">Your move journey</div><div class="j-title">Here's where you stand</div>
-  <div class="truck-row">&#128666;</div>
-  <div class="track"><div class="track-fill"></div></div>
-  <div class="steps-row">
-    <div class="s-col"><div class="s-dot active">&#10003;</div><div class="s-lbl active">Booked</div></div>
-    <div class="s-col"><div class="s-dot">2</div><div class="s-lbl">Prep &amp; Pack</div></div>
-    <div class="s-col"><div class="s-dot">3</div><div class="s-lbl">Crew En Route</div></div>
-    <div class="s-col"><div class="s-dot">4</div><div class="s-lbl">Moving Day</div></div>
-    <div class="s-col"><div class="s-dot">5</div><div class="s-lbl">Done &amp; Paid</div></div>
-  </div>
-</div>
-<div class="steps-card">
-  <div class="sc-hdr"><div class="sc-lbl">What happens next</div><h3>Your roadmap to moving day</h3></div>
-  <div class="si"><div class="si-num cur">&#10003;</div><div class="si-content"><strong>You're booked <span class="here">You are here</span></strong><span>Deposit received, date locked in. You'll get a text from us the day before to confirm.</span></div></div>
-  <div class="si"><div class="si-num">2</div><div class="si-content"><strong>Pack early</strong><span>Start with non-essentials. Label every box with the room name. The more ready you are, the faster your crew moves.</span></div></div>
-  <div class="si"><div class="si-num">3</div><div class="si-content"><strong>We text + email you when we're on the way</strong><span>You'll get a heads-up before your crew leaves. No need to track anything -- we come to you.</span></div></div>
-  <div class="si"><div class="si-num">4</div><div class="si-content"><strong>Moving day</strong><span>Your crew arrives in uniform with a clear plan. Your price does not change.</span></div></div>
-  <div class="si" style="border-bottom:none;"><div class="si-num">5</div><div class="si-content"><strong>Done -- balance charged automatically</strong><span>When the job is complete, the remaining balance is charged to your card on file. No chasing invoices.</span></div></div>
-</div>
-<div class="notice"><div style="font-size:1rem;">&#128241;</div><div><strong>We'll reach out before your movers leave</strong><p>You'll receive both a text and an email when your crew is on the way.</p></div></div>
-<div class="btns">
-  <a href="sms:+15403011152?body=Hi, I need to reschedule. Booking: ${d.name}" class="btn btn-rs">Reschedule</a>
-  <a href="sms:+15403011152?body=Hi, I need to cancel. Booking: ${d.name}" class="btn btn-cn">Cancel Booking</a>
-</div>
-<div class="tips">
-  <div class="tips-title">Before moving day</div>
-  <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Start boxing non-essentials now.</strong> Label every box with the room name.</span></div>
-  <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Defrost the freezer 24 hours ahead.</strong> We can't move a leaking appliance.</span></div>
-  <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Reserve parking at both locations.</strong> Parking delays come out of your time.</span></div>
-  <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Pack a moving day bag.</strong> Charger, meds, snacks. Keep it with you, not on the truck.</span></div>
-</div>
-<div class="contact">Questions? Text us anytime at <a href="sms:+15403011152">(540) 301-1152</a><br>
-<span style="font-size:.68rem;color:#b0a0cc;">Changes? Text us at least 24 hours before your move at no charge.</span></div>
-</div>
-<div class="ftr">
-  <div class="ftr-name">Validate Your Vision Moving</div>
-  <div class="ftr-sub">Fredericksburg, VA &middot; Licensed &amp; Insured &middot; Locally Owned</div>
-  <p>You received this because you booked a move with VYV.<br>
-  <a href="https://validateyourvision.com/policy.html">Cancellation &amp; Refund Policy</a> &middot; <a href="https://validateyourvision.com">validateyourvision.com</a></p>
-</div>
-</div></body></html>`;
-
-  GmailApp.sendEmail(d.email, subject, '', { htmlBody: html, name: 'VYV Moving' });
-}
-
-// ── OWNER ALERT ───────────────────────────────────────────────
-function sendOwnerAlert(d, id) {
-  const subject = `New Booking: ${d.name} -- ${d.moveDate}`;
-  const body    = `New VYV booking!\n\nID: ${id}\nName: ${d.name}\nEmail: ${d.email}\nPhone: ${d.phone}\nMove Date: ${d.moveDate}\nCrew: ${d.crew}\nFrom: ${d.from}\nTo: ${d.to}\nDeposit: ${d.deposit}\nPacking: ${d.packing||'No'}\nNotes: ${d.notes||'None'}\n\nDashboard: https://validateyourvision.com/admin.html`;
-  GmailApp.sendEmail(NOTIFY_EMAIL, subject, body, { name: 'VYV Booking System' });
-}
-
-// ── CALENDAR EVENT ────────────────────────────────────────────
-function createCalendarEvent(d, id) {
-  try {
-    const cal     = CalendarApp.getCalendarById(CALENDAR_ID) || CalendarApp.getDefaultCalendar();
-    const dateStr = d.moveDate ? d.moveDate.replace(/(AM|PM).*/,'').trim() : '';
-    const isAM    = d.moveDate && d.moveDate.includes('AM');
-    const date    = dateStr ? new Date(dateStr) : new Date();
-    const start   = new Date(date);
-    start.setHours(isAM ? 7 : 12, 0, 0, 0);
-    const end = new Date(start);
-    end.setHours(start.getHours() + 4);
-    cal.createEvent(`VYV Move: ${d.name} (${d.crew})`, start, end, {
-      description: `ID: ${id}\nCustomer: ${d.name}\nPhone: ${d.phone}\nFrom: ${d.from}\nTo: ${d.to}\nCrew: ${d.crew} @ ${d.rate}\nDeposit: ${d.deposit}\nPacking: ${d.packing||'No'}\nNotes: ${d.notes||'None'}`
-    });
-  } catch (err) {
-    console.log('Calendar error: ' + err.message);
-  }
-}
-
-// ── RECEIPT ───────────────────────────────────────────────────
-function sendReceipt(b, hours, ratePerHour, totalAmount, depositPaid, finalCharge, timerStart, timerEnd) {
-  const firstName = b.Name.split(' ')[0];
-  const duration  = formatDuration(new Date(timerEnd) - new Date(timerStart));
-
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
-<style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hdr-sub{font-size:.65rem;color:#8B5BC7;margin-top:1px;}.hero{background:#fff;border-bottom:1px solid #e6dff5;padding:24px 28px;text-align:center;}.badge{display:inline-block;background:#d4eddf;border:1px solid #9dd0b4;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.hero h1{font-size:1.35rem;font-weight:800;color:#190E2A;margin:0 0 6px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px 28px;}.receipt{border:1px solid #e6dff5;border-radius:10px;overflow:hidden;margin-bottom:14px;}.r-hdr{background:#190E2A;padding:10px 16px;}.r-hdr h3{font-size:.82rem;font-weight:700;color:#ECEBEE;margin:0;}.r-row{display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid #f0ecf8;font-size:.78rem;}.r-row:last-child{border-bottom:none;}.r-label{color:#6b5b8a;}.r-val{font-weight:600;color:#190E2A;}.r-total{background:#faf8ff;font-weight:800;font-size:.85rem;}.r-total .r-label{color:#4A237A;font-weight:700;}.r-total .r-val{color:#4A237A;}.r-charged{background:#d4eddf;font-weight:700;}.r-charged .r-label,.r-charged .r-val{color:#166534;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:18px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);line-height:1.8;}.ftr a{color:rgba(139,91,199,.8);text-decoration:none;}
-</style></head><body>
-<div class="wrap">
-<div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div><div class="hdr-sub">Fredericksburg, VA &middot; Licensed &amp; Insured</div></div>
-<div class="hero"><div class="badge">&#10003; Move Complete</div><h1>You're all moved in, ${firstName}.</h1><p>Your crew wrapped up in ${duration}. Thank you for choosing VYV Moving!</p></div>
-<div class="body">
-<div class="receipt">
-  <div class="r-hdr"><h3>Move Receipt</h3></div>
-  <div class="r-row"><span class="r-label">Time on the job</span><span class="r-val">${duration}</span></div>
-  <div class="r-row"><span class="r-label">Crew</span><span class="r-val">${b.Crew}</span></div>
-  <div class="r-row"><span class="r-label">Rate</span><span class="r-val">$${ratePerHour}/hr (15-min prorate)</span></div>
-  <div class="r-row r-total"><span class="r-label">Total</span><span class="r-val">$${totalAmount.toFixed(2)}</span></div>
-  <div class="r-row"><span class="r-label">Deposit already paid</span><span class="r-val">-$${depositPaid.toFixed(2)}</span></div>
-  <div class="r-row r-charged"><span class="r-label">&#10003; Charged to card on file</span><span class="r-val">$${finalCharge.toFixed(2)}</span></div>
-</div>
-<div class="contact">Questions about your receipt? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div>
-</div>
-<div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; <a href="https://validateyourvision.com">validateyourvision.com</a></div>
-</div></body></html>`;
-
-  GmailApp.sendEmail(b.Email, `Your VYV Moving receipt -- $${finalCharge.toFixed(2)} charged today`, '', {
-    htmlBody: html, name: 'VYV Moving'
-  });
-
-  const phone = (b.Phone || '').replace(/\D/g, '');
-  if (phone) sendSMS('+1' + phone,
-    `VYV Moving: Move complete! ${duration} on the job. Total: $${totalAmount.toFixed(2)}, deposit paid: $${depositPaid.toFixed(2)}, charged today: $${finalCharge.toFixed(2)}. Thank you!`);
-}
-
-// ── EMAIL TEMPLATES ───────────────────────────────────────────
-function onTheWayHtml(b) {
-  const firstName = b.Name.split(' ')[0];
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#fef3c7;border:1px solid #f59e0b;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#92400e;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.truck{font-size:3rem;margin:10px 0;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">On the way</div><div class="truck">&#128666;</div><h1>Your crew is on the way, ${firstName}!</h1><p>Your VYV Moving team has left and is heading to you now. Make sure parking is clear and you're ready to go!</p></div><div class="body"><div class="contact">Questions? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
-}
-
-function arrivedHtml(b, moveLink) {
-  const firstName = b.Name.split(' ')[0];
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#d4eddf;border:1px solid #9dd0b4;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.btn-wrap{text-align:center;margin:16px 0;}.btn{display:inline-block;background:#16a34a;color:#fff;font-weight:800;font-size:.9rem;padding:14px 32px;border-radius:10px;text-decoration:none;letter-spacing:.03em;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">&#10003; Arrived</div><h1>Your movers are here, ${firstName}!</h1><p>Your VYV crew has arrived. Tap the button below to sign them in and start your move clock.</p></div><div class="body"><div class="btn-wrap"><a href="${moveLink}" class="btn">Sign In My Movers</a></div><div class="contact">Questions? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
-}
-
-// ── TWILIO SMS ────────────────────────────────────────────────
-function sendSMS(to, body) {
-  const props = PropertiesService.getScriptProperties();
-  const sid   = props.getProperty('TWILIO_SID');
-  const token = props.getProperty('TWILIO_TOKEN');
-  const from  = props.getProperty('TWILIO_FROM');
-  if (!sid || !token || !from) return;
-  try {
-    UrlFetchApp.fetch(
-      `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`,
-      {
-        method: 'post',
-        headers: { Authorization: 'Basic ' + Utilities.base64Encode(sid + ':' + token) },
-        payload: { To: to, From: from, Body: body },
-        muteHttpExceptions: true
-      }
-    );
-  } catch (err) {
-    console.log('SMS error: ' + err.message);
-  }
-}
-
-// ── STRIPE API ────────────────────────────────────────────────
-function stripeRequest(method, path, params, idempotencyKey) {
-  const sk = PropertiesService.getScriptProperties().getProperty('STRIPE_SK');
-  const options = {
-    method: method.toLowerCase(),
-    headers: { Authorization: 'Bearer ' + sk },
-    muteHttpExceptions: true
-  };
-  if (!sk) throw new Error('Stripe is not configured on the booking server');
-  if (idempotencyKey) options.headers['Idempotency-Key'] = idempotencyKey;
-  let url = 'https://api.stripe.com/v1' + path;
-  if (method === 'POST') {
-    options.payload     = params;
-    options.contentType = 'application/x-www-form-urlencoded';
-  } else if (params) {
-    url += '?' + Object.entries(params).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&');
-  }
-  const result = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+// ═══════════════════════════════════════════════════════════════
+//  STRIPE — CREATE PAYMENT INTENT (deposit)
+// ═══════════════════════════════════════════════════════════════
+// Stripe requests throw readable errors without exposing credentials.
+function stripeApi(method, path, payload, requestKey) {
+  const secret = getProp('STRIPE_SK');
+  if (!secret) throw new Error('Stripe is not configured in Script Properties');
+  const options = { method, headers: { Authorization: 'Bearer ' + secret }, muteHttpExceptions: true };
+  if (payload) options.payload = payload;
+  if (requestKey) options.headers['Idempotency-Key'] = requestKey;
+  const result = JSON.parse(UrlFetchApp.fetch('https://api.stripe.com/v1' + path, options).getContentText());
   if (result.error) throw new Error(result.error.message || 'Stripe request failed');
   return result;
 }
 
-// ── SHEET HELPERS ─────────────────────────────────────────────
-function findBooking(id) {
-  const ss   = getOrCreateSheet(BOOKINGS_SHEET, []);
-  const data = ss.getDataRange().getValues();
-  if (data.length < 2) return null;
-  const headers = data[0];
-  for (let i = 1; i < data.length; i++) {
-    const obj = {};
-    headers.forEach((h, j) => { obj[h] = data[i][j]; });
-    if (obj['ID'] === id) return obj;
+function createPaymentIntent(data) {
+  if (![25000, 30000].includes(data.amountCents)) return jsonErr('Invalid deposit amount');
+  if (!data.email || !data.name || !/^[a-zA-Z0-9_-]{16,80}$/.test(data.requestId || '')) {
+    return jsonErr('Contact details and a payment request ID are required');
   }
-  return null;
+  getSheet(BOOKING_TAB); // Check the spreadsheet before a customer can pay.
+  const customer = stripeApi('post', '/customers', { email: data.email, name: data.name }, 'customer-' + data.requestId);
+  const pi = stripeApi('post', '/payment_intents', {
+    amount: String(data.amountCents), currency: 'usd', customer: customer.id,
+    receipt_email: data.email, description: 'VYV Moving deposit — ' + data.name,
+    setup_future_usage: 'off_session', 'payment_method_types[]': 'card', 'metadata[type]': 'deposit'
+  }, 'deposit-' + data.requestId);
+  return jsonOk({ clientSecret: pi.client_secret });
 }
 
-function findBookingByToken(id, moveToken) {
-  const b = findBooking(id);
-  return (b && b.MoveToken === moveToken) ? b : null;
+function verifyDeposit(data) {
+  if (!/^pi_[a-zA-Z0-9]+$/.test(data.paymentIntentId || '')) throw new Error('A paid deposit is required');
+  const pi = stripeApi('get', '/payment_intents/' + data.paymentIntentId);
+  if (pi.status !== 'succeeded' || pi.currency !== 'usd' ||
+      ![25000, 30000].includes(pi.amount_received) || pi.metadata?.type !== 'deposit' ||
+      (pi.receipt_email || '').toLowerCase() !== (data.email || '').toLowerCase()) {
+    throw new Error('Deposit verification failed');
+  }
+  return pi;
 }
 
-function updateBookingField(id, field, value) {
-  const ss      = getOrCreateSheet(BOOKINGS_SHEET, []);
-  const data    = ss.getDataRange().getValues();
-  if (data.length < 2) return false;
-  const headers = data[0];
-  const idCol   = headers.indexOf('ID');
-  const fCol    = headers.indexOf(field);
-  if (idCol < 0 || fCol < 0) return false;
-  for (let i = 1; i < data.length; i++) {
-    if (data[i][idCol] === id) {
-      ss.getRange(i + 1, fCol + 1).setValue(value);
-      return true;
+// ═══════════════════════════════════════════════════════════════
+//  SAVE BOOKING
+// ═══════════════════════════════════════════════════════════════
+function saveBooking(data) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try { return savePaidBooking(data); }
+  finally { lock.releaseLock(); }
+}
+
+function savePaidBooking(data) {
+  const payment = verifyDeposit(data);
+  const sheet = getSheet(BOOKING_TAB);
+  const rows = sheet.getDataRange().getValues();
+  const existing = rows.slice(1).find(row => row[17] === payment.id);
+  if (existing) return jsonOk({ id: existing[1], moveToken: existing[1] });
+  data.deposit = '$' + payment.amount_received / 100;
+  data.paymentMethod = payment.payment_method;
+  const token = generateToken();
+  const row   = [
+    new Date().toISOString(),   // A  Timestamp
+    token,                      // B  Move Token
+    data.name        || '',     // C  Name
+    data.email       || '',     // D  Email
+    data.phone       || '',     // E  Phone
+    data.moveDate    || '',     // F  Move Date
+    data.crew        || '',     // G  Crew
+    data.rate        || '',     // H  Rate
+    data.truckFee    || '',     // I  Truck Fee
+    data.from        || '',     // J  From
+    data.to          || '',     // K  To
+    data.stops       || '',     // L  Stops
+    data.volume      || '',     // M  Volume
+    data.specialty   || '',     // N  Specialty
+    data.packing     || '',     // O  Packing
+    data.notes       || '',     // P  Notes
+    data.deposit     || '',     // Q  Deposit Amount
+    data.paymentIntentId || '', // R  Payment Intent ID
+    data.paymentMethod   || '', // S  Payment Method ID
+    data.status      || 'Upcoming', // T Status
+    data.bookedAt    || new Date().toISOString(), // U Booked At
+    '',                         // V  Checkin At
+    '',                         // W  Completed At
+    '',                         // X  Hours Worked
+    '',                         // Y  Labor Amount
+    '',                         // Z  Final Charge
+    ''                          // AA Charge Status
+  ];
+  sheet.appendRow(row);
+  [() => sendConfirmationEmail(data, token), () => notifyAdmin(data)].forEach(send => {
+    try { send(); } catch (error) { console.error('Notification failed: ' + error.message); }
+  });
+  return jsonOk({ id: token, moveToken: token });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SAVE LEAD (partial — no payment yet)
+// ═══════════════════════════════════════════════════════════════
+function saveLead(data) {
+  try {
+    const ss    = SpreadsheetApp.openById(SHEET_ID);
+    let sheet   = ss.getSheetByName(LEADS_TAB);
+    if (!sheet) {
+      sheet = ss.insertSheet(LEADS_TAB);
+      sheet.appendRow(['Captured At','Name','Email','Phone','From','To','Source']);
     }
+    sheet.appendRow([
+      data.capturedAt || new Date().toISOString(),
+      data.name  || '',
+      data.email || '',
+      data.phone || '',
+      data.from  || '',
+      data.to    || '',
+      data.source || 'Website'
+    ]);
+    return jsonOk({});
+  } catch(e) {
+    return jsonOk({}); // never fail a lead save
   }
-  return false;
 }
 
-function generateToken() {
-  return Utilities.base64Encode(
-    Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,
-      Math.random().toString() + Date.now())
-  ).replace(/[^a-zA-Z0-9]/g, '').slice(0, 24);
+// ═══════════════════════════════════════════════════════════════
+//  GET MOVE (customer-facing, by moveToken)
+// ═══════════════════════════════════════════════════════════════
+function getMove(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+  return jsonOk({ ok: true, booking: rowToBooking(row) });
 }
 
-function formatDuration(ms) {
-  const totalMin = Math.floor(ms / 60000);
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
-  return h > 0 ? `${h} hr ${m} min` : `${m} min`;
+// ═══════════════════════════════════════════════════════════════
+//  CUSTOMER CHECK-IN (customer taps "Check In Your Crew")
+// ═══════════════════════════════════════════════════════════════
+function customerCheckin(data) {
+  const existing = findRow(data.moveToken);
+  if (!existing) return jsonErr('Booking not found');
+  if (existing[21]) return jsonOk({checkinAt: existing[21]});
+  if (['cancelled','completed'].includes(String(existing[19]).toLowerCase())) return jsonErr('This booking cannot be checked in');
+  const result = updateRowField(data.moveToken, {
+    19: 'Moving',               // Status
+    21: new Date().toISOString() // Checkin At
+  });
+  if (!result) return jsonErr('Booking not found');
+
+  // Notify admin by email
+  try {
+    const row = findRow(data.moveToken);
+    if (row) {
+      GmailApp.sendEmail(
+        NOTIFY_EMAIL,
+        'Customer checked in — ' + row[2],
+        row[2] + ' has checked in their crew. Timer is running.\nBooking: ' + row[5]
+      );
+    }
+  } catch(e) {}
+
+  return jsonOk({ checkinAt: new Date().toISOString() });
 }
 
-function getOrCreateSheet(name, headers) {
-  const ss  = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(name);
-  if (!sheet) {
-    sheet = ss.insertSheet(name);
-    if (headers.length) sheet.appendRow(headers);
+// ═══════════════════════════════════════════════════════════════
+//  ON THE WAY (admin button)
+// ═══════════════════════════════════════════════════════════════
+function onTheWay(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  updateRowField(data.moveToken, { 19: 'On The Way' });
+
+  const name  = row[2];
+  const email = row[3];
+  const phone = row[4];
+
+  // Email customer
+  try {
+    GmailApp.sendEmail(email,
+      'Your VYV Moving crew is on the way!',
+      'Hi ' + name + ',\n\nGreat news — your crew is on the way and will arrive shortly.\n\nQuestions? Text us at (540) 301-1152.\n\nVYV Moving Team'
+    );
+  } catch(e) {}
+
+  // SMS customer
+  sendSMS(phone, 'Hi ' + name.split(' ')[0] + '! Your VYV Moving crew is on the way. See you soon!');
+
+  return jsonOk({});
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ARRIVED (admin button — sends check-in link to customer)
+// ═══════════════════════════════════════════════════════════════
+function arrivedAction(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  updateRowField(data.moveToken, { 19: 'Arrived' });
+
+  const name     = row[2];
+  const email    = row[3];
+  const phone    = row[4];
+  const token    = row[1];
+  const moveLink = 'https://validateyourvision.com/move-day.html?token=' + token;
+
+  // Email customer
+  try {
+    GmailApp.sendEmail(email,
+      'Your VYV crew has arrived — tap to check in',
+      'Hi ' + name + ',\n\nYour crew is here! Tap the link below to check them in and start the clock:\n\n' + moveLink + '\n\nVYV Moving Team'
+    );
+  } catch(e) {}
+
+  // SMS customer
+  sendSMS(phone, 'Hi ' + name.split(' ')[0] + '! Your VYV crew has arrived. Check them in here: ' + moveLink);
+
+  return jsonOk({});
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  START TIMER (admin manual override)
+// ═══════════════════════════════════════════════════════════════
+function startTimerAdmin(data) {
+  const now = new Date().toISOString();
+  const result = updateRowField(data.moveToken, {
+    19: 'Moving',
+    21: now
+  });
+  if (!result) return jsonErr('Booking not found');
+  return jsonOk({ checkinAt: now });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  COMPLETE MOVE (admin — stops timer, calculates bill)
+// ═══════════════════════════════════════════════════════════════
+function completeMove(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  const completedAt = new Date();
+  const checkinAt   = row[21] ? new Date(row[21]) : null;
+  const rateStr     = String(row[7] || '130');
+  const ratePerHr   = parseFloat(rateStr.replace(/[^0-9.]/g, '')) || 130;
+  const truckFeeRaw = String(row[8] || '99');
+  const truckFee    = parseFloat(truckFeeRaw.replace(/[^0-9.]/g, '')) || 99;
+  const depositRaw  = String(row[16] || '250');
+  const depositAmt  = parseFloat(depositRaw.replace(/[^0-9.]/g, '')) || 250;
+
+  // Hours worked — round up to nearest 15 min
+  let hours = 0;
+  if (checkinAt) {
+    hours = (completedAt - checkinAt) / 3600000;
+    hours = Math.ceil(hours * 4) / 4; // ceil to nearest 0.25
+  }
+
+  const laborAmount = Math.round(hours * ratePerHr * 100) / 100;
+  const totalAmount = Math.round((laborAmount + truckFee) * 100) / 100;
+  const finalCharge = Math.max(0, Math.round((totalAmount - depositAmt) * 100) / 100);
+
+  // Save to spreadsheet
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][1] !== data.moveToken) continue;
+    sheet.getRange(i + 1, 20).setValue('Completed');
+    sheet.getRange(i + 1, 23).setValue(completedAt.toISOString());
+    sheet.getRange(i + 1, 24).setValue(hours);
+    sheet.getRange(i + 1, 25).setValue(laborAmount);
+    sheet.getRange(i + 1, 26).setValue(finalCharge);
+    break;
+  }
+
+  return jsonOk({
+    completedAt: completedAt.toISOString(),
+    hours,
+    rate:        rateStr,
+    laborAmount,
+    truckFee,
+    depositPaid: depositAmt,
+    totalAmount,
+    finalCharge
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CHARGE BALANCE (admin — after reviewing receipt)
+//  Receives final edited values from admin panel
+// ═══════════════════════════════════════════════════════════════
+function chargeBalance(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  const pmId        = row[18]; // Payment Method ID saved at deposit
+  const name        = row[2];
+  const email       = row[3];
+  const finalCharge = parseFloat(data.finalCharge) || 0;
+  const hours       = parseFloat(data.hours)       || 0;
+  const rate        = data.rate                    || row[7];
+  const truckFee    = parseFloat(data.truckFee)    || 0;
+  const depositPaid = parseFloat(data.depositPaid) || 0;
+
+  const amountCents = Math.round(finalCharge * 100);
+
+  if (amountCents > 0) {
+    const sk = getProp('STRIPE_SK');
+
+    if (row[26] === 'Charged') return jsonOk({finalCharge: row[25], alreadyCharged: true});
+    const deposit = stripeApi('get', '/payment_intents/' + row[17]);
+    // A stable key makes retries of this invoice amount reuse one charge.
+    const resp = UrlFetchApp.fetch('https://api.stripe.com/v1/payment_intents', {
+      method: 'post',
+      headers: { Authorization: 'Bearer ' + sk, 'Idempotency-Key': 'balance-' + data.moveToken + '-' + amountCents },
+      payload: {
+        customer:         deposit.customer,
+        amount:           String(amountCents),
+        currency:         'usd',
+        payment_method:   pmId,
+        confirm:          'true',
+        off_session:      'true',
+        receipt_email:    email,
+        description:      'VYV Moving balance — ' + name,
+        'payment_method_types[]': 'card'
+      }
+    });
+    const pi = JSON.parse(resp.getContentText());
+    if (pi.error) return jsonErr(pi.error.message);
+    if (pi.status !== 'succeeded') return jsonErr('The balance payment needs customer authentication or another payment method.');
+  }
+
+  // Save final bill to spreadsheet
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][1] !== data.moveToken) continue;
+    sheet.getRange(i + 1, 24).setValue(hours);
+    sheet.getRange(i + 1, 25).setValue(parseFloat(data.laborAmount) || hours * parseFloat(String(rate).replace(/[^0-9.]/g,'')) || 0);
+    sheet.getRange(i + 1, 26).setValue(finalCharge);
+    sheet.getRange(i + 1, 27).setValue('Charged');
+    break;
+  }
+
+  // Send confirmation email to customer
+  sendFinalInvoiceEmail({ name, email, hours, rate, truckFee, depositPaid, finalCharge });
+
+  return jsonOk({ finalCharge });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RESCHEDULE (customer-facing)
+// ═══════════════════════════════════════════════════════════════
+function rescheduleBooking(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  const status = String(row[19] || '').toLowerCase();
+  if (status === 'cancelled' || status === 'completed' || status === 'moving' || status === 'arrived') {
+    return jsonErr('This booking cannot be rescheduled at this time.');
+  }
+
+  // Check 12-hour rule
+  const moveDateStr = String(row[5] || '');
+  const hoursUntil  = hoursUntilMove(moveDateStr);
+  const isLateReschedule = hoursUntil < 12;
+
+  // Update move date
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][1] !== data.moveToken) continue;
+    sheet.getRange(i + 1, 6).setValue(data.newDate + ' ' + (data.newTime || ''));
+    sheet.getRange(i + 1, 20).setValue('Upcoming');
+    break;
+  }
+
+  // Notify admin
+  try {
+    GmailApp.sendEmail(NOTIFY_EMAIL,
+      (isLateReschedule ? '[LATE $75 FEE] ' : '') + 'Reschedule request — ' + row[2],
+      row[2] + ' rescheduled their move.\nNew date: ' + data.newDate + ' ' + (data.newTime || '') +
+      (data.note ? '\nNote: ' + data.note : '') +
+      (isLateReschedule ? '\n\nWARNING: Less than 12 hours notice. $75 late reschedule fee applies.' : '') +
+      '\nEmail: ' + row[3] + '\nPhone: ' + row[4]
+    );
+  } catch(e) {}
+
+  return jsonOk({ rescheduled: true, lateReschedule: isLateReschedule });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CANCEL (customer-facing)
+// ═══════════════════════════════════════════════════════════════
+function cancelBooking(data) {
+  const row = findRow(data.moveToken);
+  if (!row) return jsonErr('Booking not found');
+
+  const status = String(row[19] || '').toLowerCase();
+  if (status === 'cancelled')  return jsonErr('Already cancelled.');
+  if (status === 'completed')  return jsonErr('Move already completed.');
+  if (status === 'moving' || status === 'arrived') return jsonErr('Move is in progress. Call us directly.');
+
+  const moveDateStr = String(row[5] || '');
+  const hoursLeft   = hoursUntilMove(moveDateStr);
+  const refundable  = hoursLeft >= 12;
+
+  // Mark cancelled
+  updateRowField(data.moveToken, { 19: 'Cancelled' });
+
+  // Issue Stripe refund if eligible
+  let refunded = false;
+  if (refundable && row[17]) {
+    try {
+      const sk   = getProp('STRIPE_SK');
+      const resp = UrlFetchApp.fetch('https://api.stripe.com/v1/refunds', {
+        method: 'post',
+        headers: { Authorization: 'Bearer ' + sk },
+        payload: { payment_intent: row[17] }
+      });
+      const r = JSON.parse(resp.getContentText());
+      refunded = !r.error;
+    } catch(e) {}
+  }
+
+  // Email customer
+  try {
+    GmailApp.sendEmail(row[3],
+      'Your VYV Moving booking has been cancelled',
+      'Hi ' + row[2] + ',\n\nYour move on ' + row[5] + ' has been cancelled.' +
+      (refunded ? '\n\nYour deposit refund is on the way and should appear within 5 to 10 business days.' : '\n\nAs the cancellation was made less than 12 hours before your move, the deposit is non-refundable per our cancellation policy.') +
+      '\n\nQuestions? Text us at (540) 301-1152.\n\nVYV Moving Team'
+    );
+  } catch(e) {}
+
+  // Notify admin
+  try {
+    GmailApp.sendEmail(NOTIFY_EMAIL,
+      'Booking cancelled — ' + row[2],
+      row[2] + ' cancelled their move scheduled for ' + row[5] + '.' +
+      (refunded ? ' Deposit refunded.' : ' NO refund (within 12-hour window).')
+    );
+  } catch(e) {}
+
+  return jsonOk({ cancelled: true, refunded });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GET ALL BOOKINGS (admin dashboard)
+// ═══════════════════════════════════════════════════════════════
+function getBookings(data) {
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  const bookings = [];
+  for (let i = 1; i < rows.length; i++) {
+    bookings.push(rowToBooking(rows[i]));
+  }
+  return jsonOk({ bookings });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  UPDATE STATUS (admin quick actions)
+// ═══════════════════════════════════════════════════════════════
+function updateStatus(data) {
+  const result = updateRowField(data.moveToken, { 19: data.status });
+  if (!result) return jsonErr('Booking not found');
+  return jsonOk({});
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EMAIL HELPERS
+// ═══════════════════════════════════════════════════════════════
+function sendConfirmationEmail(data, token) {
+  const moveLink = 'https://validateyourvision.com/move-day.html?token=' + token;
+  const cancelLink = 'https://validateyourvision.com/cancel.html?token=' + token;
+  const reschedLink = 'https://validateyourvision.com/reschedule.html?token=' + token;
+
+  const subject = 'Your VYV Moving booking is confirmed!';
+  const body =
+    'Hi ' + data.name + ',\n\n' +
+    'You are all set! Here are your booking details:\n\n' +
+    'Date: ' + data.moveDate + '\n' +
+    'Crew: ' + data.crew + '\n' +
+    'Rate: ' + data.rate + '\n' +
+    'From: ' + data.from + '\n' +
+    'To: ' + data.to + '\n' +
+    'Deposit paid: ' + data.deposit + '\n\n' +
+    'Track your crew on move day here:\n' + moveLink + '\n\n' +
+    'Need to reschedule? ' + reschedLink + '\n' +
+    'Need to cancel? ' + cancelLink + '\n\n' +
+    'Cancellations and reschedules are free up to 12 hours before your move.\n\n' +
+    'Text us anytime at (540) 301-1152.\n\nVYV Moving Team';
+
+  try { GmailApp.sendEmail(data.email, subject, body); } catch(e) {}
+}
+
+function sendFinalInvoiceEmail({ name, email, hours, rate, truckFee, depositPaid, finalCharge }) {
+  const labor = (hours * parseFloat(String(rate).replace(/[^0-9.]/g,''))) || 0;
+  const subject = 'Your VYV Moving invoice — thank you!';
+  const body =
+    'Hi ' + name + ',\n\n' +
+    'Your move is complete! Here is your final invoice:\n\n' +
+    'Hours worked: ' + parseFloat(hours).toFixed(2) + ' hrs\n' +
+    'Labor (' + rate + '): $' + labor.toFixed(2) + '\n' +
+    'Truck fee: $' + parseFloat(truckFee).toFixed(2) + '\n' +
+    'Deposit applied: -$' + parseFloat(depositPaid).toFixed(2) + '\n' +
+    '─────────────────────\n' +
+    'Balance charged: $' + parseFloat(finalCharge).toFixed(2) + '\n\n' +
+    'Thank you so much for trusting us with your move. We hope everything went smoothly!\n\n' +
+    'If you have a moment, a Google review means the world to a small business:\n' + REVIEW_LINK + '\n\n' +
+    'Questions? Text us at (540) 301-1152.\n\nVYV Moving Team';
+
+  try { GmailApp.sendEmail(email, subject, body); } catch(e) {}
+}
+
+function notifyAdmin(data) {
+  try {
+    GmailApp.sendEmail(NOTIFY_EMAIL,
+      'New booking — ' + data.name + ' on ' + data.moveDate,
+      'Name: ' + data.name + '\nEmail: ' + data.email + '\nPhone: ' + data.phone +
+      '\nDate: ' + data.moveDate + '\nCrew: ' + data.crew + '\nRate: ' + data.rate +
+      '\nFrom: ' + data.from + '\nTo: ' + data.to +
+      '\nDeposit: ' + data.deposit + '\nPacking: ' + data.packing
+    );
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SMS (Twilio)
+// ═══════════════════════════════════════════════════════════════
+function sendSMS(to, message) {
+  try {
+    const sid   = getProp('TWILIO_SID');
+    const token = getProp('TWILIO_TOKEN');
+    const from  = getProp('TWILIO_FROM');
+    if (!sid || !token || !from) return;
+    UrlFetchApp.fetch('https://api.twilio.com/2010-04-01/Accounts/' + sid + '/Messages.json', {
+      method: 'post',
+      headers: { Authorization: 'Basic ' + Utilities.base64Encode(sid + ':' + token) },
+      payload: { To: to, From: from, Body: message }
+    });
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getSheet(name) {
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(name);
+  if (!sheet) throw new Error('Missing spreadsheet tab: ' + name);
+  if (name === BOOKING_TAB) {
+    const header = sheet.getRange(1, 1, 1, 27).getValues()[0];
+    if (/^(Booking ID|ID)$/i.test(String(header[0] || '').trim())) {
+      throw new Error('Bookings uses an older column layout. Migrate it before enabling this backend.');
+    }
   }
   return sheet;
 }
 
-function json(obj) {
+function getProp(key) {
+  return PropertiesService.getScriptProperties().getProperty(key) || '';
+}
+
+function generateToken() {
+  return Utilities.getUuid();
+}
+
+function jsonOk(obj) {
   return ContentService
-    .createTextOutput(JSON.stringify(obj))
+    .createTextOutput(JSON.stringify({ ok: true, ...obj }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function jsonErr(msg) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: false, error: msg }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function findRow(moveToken) {
+  if (!moveToken) return null;
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][1] === moveToken) return rows[i];
+  }
+  return null;
+}
+
+function updateRowField(moveToken, fieldMap) {
+  const sheet = getSheet(BOOKING_TAB);
+  const rows  = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][1] !== moveToken) continue;
+    for (const [col, val] of Object.entries(fieldMap)) {
+      sheet.getRange(i + 1, parseInt(col) + 1).setValue(val);
+    }
+    return true;
+  }
+  return false;
+}
+
+function rowToBooking(row) {
+  return {
+    moveToken:     row[1]  || '',
+    name:          row[2]  || '',
+    email:         row[3]  || '',
+    phone:         row[4]  || '',
+    moveDate:      row[5]  || '',
+    crew:          row[6]  || '',
+    rate:          row[7]  || '',
+    truckFee:      row[8]  || '',
+    fromAddress:   row[9]  || '',
+    toAddress:     row[10] || '',
+    stops:         row[11] || '',
+    volume:        row[12] || '',
+    specialty:     row[13] || '',
+    packing:       row[14] || '',
+    notes:         row[15] || '',
+    depositAmount: String(row[16] || '').replace(/[^0-9.]/g, '') || '0',
+    paymentIntentId: row[17] || '',
+    status:        row[19] || 'Upcoming',
+    bookedAt:      row[20] || '',
+    checkinAt:     row[21] || '',
+    completedAt:   row[22] || '',
+    hoursWorked:   row[23] || null,
+    laborAmount:   row[24] || null,
+    finalCharge:   row[25] || null,
+    chargeStatus:  row[26] || ''
+  };
+}
+
+function hoursUntilMove(moveDateStr) {
+  const value = String(moveDateStr || '').trim();
+  const slot = value.match(/\b(AM|PM)\s*$/i)?.[1]?.toUpperCase();
+  const clean = value.replace(/\b(?:AM|PM)\s*$/i, '').replace(/^\w+,\s*/, '').trim();
+  const date = new Date(clean);
+  if (isNaN(date.getTime())) throw new Error('Move date could not be read. Please contact us.');
+  const hasClock = /\d{1,2}:\d{2}/.test(clean);
+  if (slot && !hasClock) {
+    const day = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
+    const offset = Utilities.formatDate(date, 'America/New_York', 'Z');
+    const instant = new Date(day + (slot === 'AM' ? 'T07:00:00' : 'T16:00:00') + offset.slice(0,3) + ':' + offset.slice(3));
+    return (instant - Date.now()) / 3600000;
+  }
+  return (date - Date.now()) / 3600000;
 }
