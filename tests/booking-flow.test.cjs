@@ -47,12 +47,13 @@ function page(file, search = '') {
   const requests = [];
   const context = vm.createContext({ document, URLSearchParams, console,
     location: { search, href: '' }, innerWidth: 1200,
-    addEventListener() {}, setTimeout() {}, setInterval() {}, clearInterval() {},
+    alert() {}, addEventListener() {}, setTimeout() {}, setInterval() {}, clearInterval() {},
     IntersectionObserver: class { observe() {} unobserve() {} },
     fetch: (...args) => { requests.push(args); return Promise.resolve({ json: async () => ({ok: true, slots: {}}) }); },
     FormData: class { constructor(form) { this.form = form; } get(k) { return this.form.fields[k]; } }
   });
   context.window = context;
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../assets/quote-estimator.js'),'utf8'),context);
   context.VYVAddresses = { attach() {}, routeMiles: async () => 5 };
   const run = code => vm.runInContext(code, context);
   for (const script of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
@@ -83,7 +84,7 @@ test('homepage-prefilled and legacy skip URLs still begin at Step 1', () => {
   }
 });
 
-test('all seven sections, stop edits, and backward navigation work without Google or Stripe', () => {
+test('all eight sections, quote, stop edits, and backward navigation work without Google or Stripe', async () => {
   const p = page('book.html', '?name=Test+Customer&email=test%40example.com&phone=5551234567&from=First+Street&to=Last+Street');
   p.run('goFromStep0()'); active(p, 1);
   p.run('selectCrew(3)'); active(p, 2);
@@ -97,19 +98,22 @@ test('all seven sections, stop edits, and backward navigation work without Googl
   assert.equal(p.run('stops[1].propType'), 'Storage');
   p.run('goToMoveInfo()'); active(p, 4);
   p.run('goToPackingStep()'); active(p, 5);
-  p.run('goToFinalStep()'); active(p, 6);
+  p.run('goToQuoteStep()'); active(p,6);
+  await p.run('distancePricing'); await new Promise(setImmediate);
+  assert.equal(p.nodes.get('quote-continue').disabled,false);
+  p.run('goToFinalStep()'); active(p, 7);
   assert.equal(p.nodes.get('cf-first').value, 'Test');
-  for (const [fn, step] of [['goBackToPacking',5],['goBackToMoveInfo',4],['goBackToDetails',3],['goBackToCalendar',2],['goBack',1],['goBackToContact',0]]) {
+  for (const [fn, step] of [['goBackToQuote',6],['goBackToPacking',5],['goBackToMoveInfo',4],['goBackToDetails',3],['goBackToCalendar',2],['goBack',1],['goBackToContact',0]]) {
     p.run(`${fn}()`); active(p, step);
   }
 });
 
-test('five milestones follow all seven panels in either direction', () => {
+test('six milestones follow all eight panels in either direction', () => {
   const p = page('book.html');
-  for (const step of [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0]) {
+  for (const step of [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1, 0]) {
     p.run(`updateProgress(${step})`);
-    const current = [0, 0, 1, 2, 2, 3, 4][step];
-    for (let i = 0; i < 5; i++) {
+    const current = [0, 0, 1, 2, 2, 3, 4, 5][step];
+    for (let i = 0; i < 6; i++) {
       assert.equal(p.nodes.get('booking-circle-' + i).style.background, i === current ? '#16a34a' : '#4A237A');
       assert.equal(p.nodes.get('booking-milestone-' + i)['aria-current'], i === current ? 'step' : undefined);
     }
@@ -136,7 +140,7 @@ test('paid booking retries save without charging twice or showing premature conf
   p.context.crypto = { randomUUID: () => 'audit-request-123456789' };
   let confirmations = 0, saves = 0;
   p.context.paymentMock = { confirmCardPayment: async () => { confirmations++; return {paymentIntent:{id:'pi_audit',status:'succeeded',payment_method:'pm_audit'}}; } };
-  p.run('stripeInstance = paymentMock; stripeCardNumber = {};');
+  p.run('stripeInstance = paymentMock; stripeCardNumber = {}; selectedDate = new Date(Date.now()+86400000); selectedTime = "AM"; crewSize = 3; currentQuote = {total:[800,1200],deposit:250};');
   p.context.fetch = async (_, options) => {
     const body = JSON.parse(options.body);
     if (body.action === 'create_payment_intent') return {json:async () => ({ok:true,clientSecret:'not-a-real-secret'})};
@@ -150,4 +154,22 @@ test('paid booking retries save without charging twice or showing premature conf
   assert.equal(confirmations, 1);
   assert.equal(saves, 2);
   assert.match(p.context.location.href, /booking-confirmed/);
+});
+
+test('quote blocks checkout when route pricing fails and recovers on retry',async()=>{
+ const p=page('book.html','?name=Test+Customer&email=test%40example.com&phone=5551234567&from=First+Street&to=Last+Street');
+ p.run('goFromStep0(); selectCrew(3); selectDay(new Date(Date.now()+86400000)); selectTime("AM"); goToDetails(); goToMoveInfo(); goToPackingStep();');
+ p.context.VYVAddresses.routeMiles=async()=>{throw Error('Route unavailable');};
+ p.run('goToQuoteStep()');await p.run('distancePricing.catch(()=>{})');await new Promise(setImmediate);
+ assert.equal(p.nodes.get('quote-continue').disabled,true);
+ p.run('goToFinalStep()');active(p,6);
+ p.context.VYVAddresses.routeMiles=async()=>10;
+ await p.run('loadQuotePricing()');await new Promise(setImmediate);
+ assert.equal(p.nodes.get('quote-continue').disabled,false);
+ p.run('goToFinalStep()');active(p,7);
+ assert.match(p.nodes.get('summary-est-total').textContent,/\$/);
+});
+
+test('selected packing requires a date and arrival window before quoting',()=>{
+ const p=page('book.html','?name=Test+Customer&email=test%40example.com&phone=5551234567&from=First+Street&to=Last+Street');p.run('goFromStep0(); selectCrew(3); selectDay(new Date(Date.now()+86400000)); selectTime("AM"); goToDetails(); goToMoveInfo(); addPackingService = true; goToPackingStep(); goToQuoteStep();');active(p,5);
 });

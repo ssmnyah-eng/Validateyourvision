@@ -27,10 +27,10 @@ Version 6 also fixes arrival-window date parsing, prevents admin timer retries f
 ## Evidence and limits
 
 - All 41 deployed HTML URLs returned HTTP 200 during the audit. Local link/fragment and inline-JavaScript syntax scan: 0 errors.
-- `node --test tests/*.test.cjs`: 20 passing tests covering navigation, stops, paid-save retry, Stripe verification/idempotency, migration, admin access, date/time behavior, reschedule rejection and careers submission failures.
+- `node --test tests/*.test.cjs`: 27 passing tests covering navigation, stops, paid-save retry, Stripe verification/idempotency, migration, admin access, date/time behavior, reschedule rejection and careers submission failures.
 - Live browser: booking begins at step 1, FAQ search works, Stripe secure fields and address suggestions were verified in the preceding audit. An extension-generated console error is unrelated to the site's scripts.
 - No card charged and no live reservation/refund/cancellation created. Automatic approval review rejected creation of a live unpaid $250 PaymentIntent; this check was not retried. Stripe account/key matching, successful/declined/3DS flows and real payment→booking→notification delivery require a controlled test environment or explicit approval for the blocked initialization.
 - Formspree inbox acceptance/delivery and Twilio delivery were not exercised by sending messages.
 - Admin security remains unresolved on the running Apps Script until version 6 is manually deployed with a new private key. Removing a credential from current HTML does not revoke historical copies.
 - Availability is a preview rather than a locked inventory reservation; simultaneous checkouts/reschedules require a transactional slot-hold design to guarantee no overlap. Pricing fields supplied by the browser also need server-side recalculation before they can be trusted for final automated billing. Review final balances in admin before charging.
-- Some older flat-rate/blueprint marketing and redirect-only estimator content remains. A separate quote step has now been requested and is the next implementation task; estimates must be clearly distinguished from a guaranteed final price.
+- Some older flat-rate/blueprint marketing and redirect-only estimator content remains. A researched quote step is now implemented before checkout. Its model and assumptions are documented in QUOTE-MODEL.md. It clearly distinguishes estimates from a guaranteed final price.

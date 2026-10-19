@@ -348,7 +348,7 @@
   <img src="/pexels-shvets-production-7203848.jpeg" alt="VYV moving crew" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
   <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(25,14,42,0.82) 0%,rgba(25,14,42,0.45) 60%,rgba(25,14,42,0.15) 100%);"></div>
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 40px;max-width:640px;">
-    <p style="color:#8B5BC7;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Flat-Rate Moving</p>
+    <p style="color:#8B5BC7;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Hourly Moving · Upfront Estimate</p>
     <h1 style="color:#fff;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.25;margin-bottom:10px;">Book Your Move Online<br>in Minutes</h1>
     <p style="color:rgba(236,235,238,0.85);font-size:0.9rem;line-height:1.6;">See your hourly rate and deposit before reserving. Secure your date with a flat deposit and pay the rest when the job is done.</p>
   </div>
@@ -361,7 +361,7 @@
     <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:#190E2A;margin-bottom:6px;">Book Your Move Online</h2>
     <p style="font-size:0.9rem;color:#5c4a7a;margin-bottom:44px;">We made it easy so you can focus on everything else.</p>
 
-    <div class="hiw-steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative;" aria-label="Booking progress">
+    <div class="hiw-steps-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;position:relative;" aria-label="Booking progress">
       <div id="booking-milestone-0" style="text-align:center;" aria-current="step">
         <div id="booking-circle-0" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">1</div>
         <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Your info & crew</p>
@@ -380,7 +380,11 @@
       </div>
       <div id="booking-milestone-4" style="text-align:center;">
         <div id="booking-circle-4" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">5</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review & reserve</p>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Your estimate</p>
+      </div>
+      <div id="booking-milestone-5" style="text-align:center;">
+        <div id="booking-circle-5" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">6</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review &amp; reserve</p>
       </div>
     </div>
   </div>
@@ -396,13 +400,21 @@
 }
 </style>
 
+<style>
+.quote-card {background:#fff;border:1px solid #e5d9f7;border-radius:16px;padding:24px;margin:20px 0;box-shadow:0 4px 20px rgba(74,35,122,.05);}
+.quote-card > label {display:block;font-size:.85rem;font-weight:600;color:#4A237A;margin:16px 0 8px;}
+.quote-card select,.quote-card input {width:100%;padding:12px;border:1px solid #cfc2df;border-radius:8px;font:inherit;box-sizing:border-box;background:white;}
+.quote-row {display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #eee;font-size:.85rem;}
+.quote-row strong {text-align:right;}
+@media(max-width:780px){.hiw-steps-grid {grid-template-columns:repeat(3,1fr)!important;}}
+</style>
 <div class="layout">
   <div class="left-panel">
     <div class="left-inner">
 
       <!-- ══ STEP 0: Contact / Address Capture ══ -->
       <div class="step active" id="step0">
-        <div class="step-label">Step 1 of 7: Your Info</div>
+        <div class="step-label">Step 1 of 8: Your Info</div>
         <h1>Let's start your reservation</h1>
         <p class="subtitle">Tell us a little about your move and how to reach you.</p>
 
@@ -455,7 +467,7 @@
 
       <!-- ══ STEP 1: Crew Selector ══ -->
       <div class="step" id="step1">
-        <div class="step-label">Step 2 of 7: Your Crew</div>
+        <div class="step-label">Step 2 of 8: Your Crew</div>
         <h1>Your crew is ready.</h1>
         <p class="subtitle">All moves are handled by our 3-mover crew, the fastest way to get you moved and often the lowest total bill.</p>
 
@@ -484,7 +496,7 @@
 
       <!-- ══ STEP 2: Calendar ══ -->
       <div class="step" id="step2">
-        <div class="step-label">Step 3 of 7: Move Date</div>
+        <div class="step-label">Step 3 of 8: Move Date</div>
         <h1>What date would you like to move?</h1>
         <p class="subtitle">Not sure of your move date? <a href="sms:+15403011152">We're flexible</a>, you can always change it.</p>
 
@@ -531,7 +543,7 @@
 
       <!-- ══ STEP 3: Move Details / Stops ══ -->
       <div class="step" id="step3">
-        <div class="step-label">Step 4 of 7: Move Details</div>
+        <div class="step-label">Step 4 of 8: Move Details</div>
         <h1>Where are you moving?</h1>
         <p class="subtitle">Tell us about each location so we can plan your move accurately.</p>
 
@@ -547,7 +559,7 @@
 
       <!-- ══ STEP 4: Move Info ══ -->
       <div class="step" id="step4">
-        <div class="step-label">Step 5 of 7: Move Information</div>
+        <div class="step-label">Step 5 of 8: Move Information</div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;cursor:pointer;" onclick="goBackToDetails()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
@@ -559,8 +571,8 @@
         <div style="background:#fff;border:1px solid #ede6ff;border-radius:14px;padding:22px;margin-top:24px;box-shadow:0 2px 12px rgba(74,35,122,0.06);">
           <div style="font-size:0.88rem;font-weight:700;color:#190E2A;margin-bottom:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
             How much of your belongings are you moving?
-            <span style="font-weight:500;color:#6b5b8a;">(Does not impact pricing)</span>
-            <span class="vyv-tip" data-tip="Hourly pricing does not change depending on how much of your belongings you are moving. Your crew needs this information to be prepared for the move." style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid #b99fda;color:#8B5BC7;font-size:0.65rem;font-weight:800;cursor:help;position:relative;flex-shrink:0;">&#9432;</span>
+            <span style="font-weight:500;color:#6b5b8a;">(Helps estimate your total time)</span>
+            <span class="vyv-tip" data-tip="Your hourly rate stays the same. More belongings can take longer and increase the estimated total." style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid #b99fda;color:#8B5BC7;font-size:0.65rem;font-weight:800;cursor:help;position:relative;flex-shrink:0;">&#9432;</span>
           </div>
           <div class="chip-group" id="volumeChips">
             <button class="chip active" onclick="selectSingle('volumeChips',this,'volume','everything')">Everything's going</button>
@@ -594,7 +606,7 @@
 
       <!-- ══ STEP 5: Packing / Unpacking Add-on ══ -->
       <div class="step" id="step5">
-        <div class="step-label">Step 6 of 7: Packing Services</div>
+        <div class="step-label">Step 6 of 8: Packing Services</div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToMoveInfo()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           <span style="font-size:0.85rem;color:#8B5BC7;font-weight:600;">Back</span>
@@ -654,18 +666,52 @@
           </div>
         </div>
 
-        <button class="btn-continue" style="margin-top:20px;" onclick="goToFinalStep()">CONTINUE TO RESERVE YOUR CREW</button>
+        <button class="btn-continue" style="margin-top:20px;" onclick="goToQuoteStep()">SEE YOUR ESTIMATED TOTAL</button>
       </div>
 
-      <!-- ══ STEP 6: Final Reservation ══ -->
-      <div class="step" id="step6" style="max-width:100%;">
-        <div class="step-label">Step 7 of 7: Review & Reserve</div>
+      <div class="step" id="step6">
+        <div class="step-label">Step 7 of 8: Your Estimate</div>
+        <h1>Your move, estimated.</h1>
+        <p style="color:#5c4a7a;line-height:1.7;">A planning range based on your crew, belongings, access and route. Your final bill uses actual time worked and agreed charges.</p>
+        <div class="quote-card">
+          <label for="quote-density">How full is your home?</label>
+          <select id="quote-density" onchange="refreshQuote()"><option value="normal">Normally furnished</option><option value="heavy">Very full — lots of furniture, boxes or storage</option><option value="light">Lightly furnished</option></select>
+          <label for="quote-boxes">Approximate number of boxes (optional)</label>
+          <input id="quote-boxes" type="number" min="0" max="1000" placeholder="For example, 50" oninput="refreshQuote()" />
+          <label for="quote-ready">Packing readiness</label>
+          <select id="quote-ready" onchange="refreshQuote()"><option value="ready">Everything will be boxed before moving day</option><option value="not-ready">Some belongings will still need packing</option></select>
+          <label style="display:flex;gap:10px;align-items:center;"><input id="quote-long-carry" type="checkbox" onchange="refreshQuote()" style="width:auto;" />Long walk from the truck to a door (over about 100 feet)</label>
+        </div>
+        <div class="quote-card" aria-live="polite">
+          <p style="font-weight:700;color:#6d28d9;">ESTIMATED TOTAL</p>
+          <div id="quote-total" style="font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;color:#190E2A;">Calculating route…</div>
+          <p id="quote-hours" style="color:#5c4a7a;"></p>
+          <div class="quote-row"><span>Moving labor</span><strong id="quote-labor">—</strong></div>
+          <div class="quote-row"><span>Truck fee</span><strong id="quote-truck">—</strong></div>
+          <div class="quote-row"><span>Packing / unpacking labor</span><strong id="quote-packing">Not selected</strong></div>
+          <div class="quote-row"><span>Deposit due today (credited to total)</span><strong id="quote-deposit">—</strong></div>
+          <div class="quote-row"><span>Estimated balance after deposit</span><strong id="quote-balance">—</strong></div>
+          <p id="quote-review" style="color:#92400e;font-weight:600;"></p>
+          <p id="quote-assumptions" style="font-size:0.78rem;color:#6b7280;line-height:1.7;"></p>
+          <p style="font-size:0.78rem;color:#6b7280;line-height:1.7;">This is an estimate, not a fixed price or time limit. Extra belongings, access delays, traffic or extra trips can increase the final bill. Packing materials and charges not listed here are not included. A large or unusual move needs a crew review.</p>
+          <p id="quote-error" role="alert" style="color:#b91c1c;"></p>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-outline" onclick="goBackToPacking()">← Packing options</button>
+          <button class="btn-outline" onclick="loadQuotePricing()">Refresh route</button>
+          <button class="btn-continue" id="quote-continue" onclick="goToFinalStep()" disabled>REVIEW &amp; RESERVE →</button>
+        </div>
+      </div>
+
+      <!-- ══ STEP 7: Final Reservation ══ -->
+      <div class="step" id="step7" style="max-width:100%;">
+        <div class="step-label">Step 8 of 8: Review & Reserve</div>
 
         <!-- Page header -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToPacking()">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;" onclick="goBackToQuote()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#190E2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          <h1 style="font-size:1.15rem;font-weight:800;color:#190E2A;margin:0;">Complete and reserve your crew. Fully refundable.</h1>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="100% refundable deposit"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h1 style="font-size:1.15rem;font-weight:800;color:#190E2A;margin:0;">Review your estimate and reserve your crew.</h1>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Refundable with at least 12 hours notice"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         </div>
 
         <!-- TOP ROW: Contact left, Pricing right -->
@@ -712,9 +758,11 @@
               <span style="font-weight:700;color:#190E2A;" id="summary-truck-display">Calculating...</span>
             </div>
             <div id="truck-distance-note" style="font-size:0.72rem;color:#8B5BC7;margin-bottom:8px;"></div>
-            <span id="summary-est-hours" style="display:none;"></span>
-            <span id="summary-est-labor" style="display:none;"></span>
-            <span id="summary-est-total" style="display:none;"></span>
+            <div class="quote-row"><span>Estimated moving time</span><strong id="summary-est-hours"></strong></div>
+            <div class="quote-row"><span>Estimated moving labor</span><strong id="summary-est-labor"></strong></div>
+            <div class="quote-row"><span>Estimated total incl. selected packing</span><strong id="summary-est-total"></strong></div>
+            <div class="quote-row"><span>Estimated balance after deposit</span><strong id="summary-est-balance"></strong></div>
+            <p style="font-size:0.75rem;color:#6b7280;">Planning range; final bill depends on actual work. Deposit is credited, not added to the total.</p>
 
             <div id="packingPriceLine" style="display:none;">
               <div style="font-weight:700;color:#4A237A;font-size:0.82rem;margin-bottom:6px;margin-top:6px;">Packing / Unpacking</div>
@@ -735,7 +783,7 @@
 
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
-              <span style="font-size:0.85rem;color:#374151;">Free cancellation</span>
+              <span style="font-size:0.85rem;color:#374151;">Free cancellation with 12 hours notice</span>
             </div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="width:10px;height:10px;background:#16a34a;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
@@ -860,6 +908,7 @@
   </div>
 </div>
 
+<script src="/assets/quote-estimator.js"></script>
 <script>
   const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1yL2yQICaVmDsveep-b2KOYkABwjqH6lMMpH0pesOvFaXZ9mrd43Drt8nU14km5N2/exec';
 
@@ -916,9 +965,9 @@
   })();
 
   function updateProgress(step) {
-    document.getElementById('progressFill').style.width = (step / 6 * 100) + '%';
-    const milestone = [0, 0, 1, 2, 2, 3, 4][step];
-    for (let i = 0; i < 5; i++) {
+    document.getElementById('progressFill').style.width = (step / 7 * 100) + '%';
+    const milestone = [0, 0, 1, 2, 2, 3, 4, 5][step];
+    for (let i = 0; i < 6; i++) {
       const item = document.getElementById('booking-milestone-' + i);
       document.getElementById('booking-circle-' + i).style.background = i === milestone ? '#16a34a' : '#4A237A';
       if (i === milestone) item.setAttribute('aria-current', 'step');
@@ -1560,41 +1609,59 @@
   // ── Step 6: Final reservation ───────────────────────────
   let truckFee = null;
 
-  // ── Move Time Estimator ──────────────────────────────────────
-  // Base hours for 2 movers at full load by square footage
-  const BASE_HOURS = { '0-1000': 2.5, '1000-1500': 3.5, '1500-2000': 5.0, '2000-3000': 7.0, '3000+': 9.5 };
-  // Volume load factor
-  const VOL_FACTOR = { everything: 1.0, most: 0.85, half: 0.65, few: 0.45 };
-  // Specialty item add-ons in minutes
-  const SPEC_MINS = { gun_safe: 30, piano: 45, pool_table: 60, hot_tub: 45, large_tv: 10, antiques: 20, artwork: 10 };
-
-  function estimateHours() {
-    const s = stops[0] || {};
-    let hrs = BASE_HOURS[s.sqft] || 4.5;           // base by sq ft
-    const cf = crewSize === 3 ? 0.70 : 1.0;         // 3 movers = 30% faster
-    hrs = hrs * cf * (VOL_FACTOR[moveVolume] || 1.0);
-    // Garage
-    const garageAdd = { 'None': 0, '1 Car': 0.5, '2 Car': 1.0, '3+ Car': 1.5 };
-    hrs += (garageAdd[s.garage] || 0) * cf;
-    // Stories
-    const storiesAdd = { 1: 0, '1': 0, 2: 0.25, '2': 0.25, 3: 0.5, '3': 0.5 };
-    hrs += storiesAdd[s.stories] || (String(s.stories) === '4+' ? 0.75 : 0);
-    // Specialty items
-    let specMins = 0;
-    specialtyItems.forEach(item => { specMins += (SPEC_MINS[item] || 0); });
-    hrs += specMins / 60;
-    // Extra stops
-    if (stops.length > 1) hrs += (stops.length - 1) * 0.5;
-    // 2-hour minimum, round to nearest 15 min
-    hrs = Math.max(2, Math.round(hrs * 4) / 4);
-    return hrs;
+  function fmtHours(h) { return Number(h).toFixed(2).replace(/\.?0+$/, '') + ' hrs'; }
+  let currentQuote = null;
+  let quoteRouteMiles = null;
+  let quotePricingGeneration = 0;
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function moneyRange(values) { return money(values[0]) + ' – ' + money(values[1]); }
+  function refreshQuote() {
+    const error = document.getElementById('quote-error');
+    try {
+      if (quoteRouteMiles === null || truckFee === null) throw Error('Route pricing is loading. If it cannot load, check all stop addresses and refresh the route.');
+      currentQuote = window.VYVQuote.estimate({stops,crew:crewSize,volume:moveVolume,specialty:specialtyItems,miles:quoteRouteMiles,rate:RATES[crewSize][selectedDate.getDay()],truckFee,deposit:depositAmount,packing:addPackingService,packingRate:addPackingService && packSelectedDate ? PACK_RATES[packSelectedDate.getDay()] : 0,density:document.getElementById('quote-density').value || 'normal',boxes:document.getElementById('quote-boxes').value,ready:document.getElementById('quote-ready').value,longCarry:document.getElementById('quote-long-carry').checked});
+      const q = currentQuote;
+      document.getElementById('quote-total').textContent = moneyRange(q.total);
+      document.getElementById('quote-hours').textContent = fmtHours(q.hours[0]) + ' – ' + fmtHours(q.hours[1]) + ' moving time · ' + crewSize + ' movers at ' + money(q.rate) + '/hr';
+      for (const key of ['labor','balance']) document.getElementById('quote-' + key).textContent = moneyRange(q[key]);
+      document.getElementById('quote-truck').textContent = money(q.truckFee);
+      document.getElementById('quote-deposit').textContent = money(q.deposit);
+      document.getElementById('quote-packing').textContent = addPackingService ? moneyRange(q.packing) + ' (' + q.packingHours.join('–') + ' hrs at ' + money(q.packingRate) + '/hr)' : 'Not selected';
+      document.getElementById('quote-review').textContent = q.needsReview ? 'Crew review recommended: timing may exceed this range. Contact us at (540) 301-1152 to review your inventory and access.' : '';
+      document.getElementById('quote-assumptions').textContent = q.reasons.join(' · ') + '. Route: about ' + q.miles + ' miles across all locations. Packing time is separate from moving time.';
+      document.getElementById('summary-est-hours').textContent = q.hours.join('–') + ' hrs';
+      document.getElementById('summary-est-labor').textContent = moneyRange(q.labor);
+      document.getElementById('summary-est-total').textContent = moneyRange(q.total);
+      document.getElementById('summary-est-balance').textContent = moneyRange(q.balance);
+      error.textContent = '';
+      document.getElementById('quote-continue').disabled = false;
+    } catch (e) {
+      currentQuote = null;
+      error.textContent = e.message;
+      document.getElementById('quote-total').textContent = 'Estimate unavailable';
+      document.getElementById('quote-continue').disabled = true;
+    }
   }
-
-  function fmtHours(h) {
-    const wh = Math.floor(h);
-    const mn = Math.round((h - wh) * 60);
-    if (mn === 0) return `${wh} hrs`;
-    return `${wh} hr ${mn} min`;
+  function goToQuoteStep() {
+    if (addPackingService && (!packSelectedDate || !packSelectedTime)) { alert('Please select a packing date and arrival window.'); return; }
+    if (stops.length < 2 || stops.some(s => !s.address || !s.address.trim())) { alert('Please enter a complete address for every stop.'); return; }
+    document.getElementById('step5').classList.remove('active');
+    document.getElementById('step6').classList.add('active');
+    updateProgress(6);
+    loadQuotePricing();
+  }
+  function loadQuotePricing() {
+    quoteRouteMiles = null; currentQuote = null;
+    document.getElementById('quote-continue').disabled = true;
+    distancePricing = autoCalcTruckFee();
+    distancePricing.then(refreshQuote).catch(refreshQuote);
+    return distancePricing;
+  }
+  function goBackToQuote() {
+    document.getElementById('step7').classList.remove('active');
+    document.getElementById('step6').classList.add('active');
+    document.body.classList.remove('step6-active');
+    updateProgress(6); refreshQuote();
   }
 
   let depositAmount = 250; // flat deposit -- $250 within 50 miles of Fredericksburg, $300 beyond
@@ -1658,9 +1725,10 @@
   }
 
   function goToFinalStep() {
-    document.getElementById('step5').classList.remove('active');
-    document.getElementById('step6').classList.add('active');
-    updateProgress(6);
+    if (!currentQuote) return;
+    document.getElementById('step6').classList.remove('active');
+    document.getElementById('step7').classList.add('active');
+    updateProgress(7);
     // Hide map panel, expand left panel for checkout layout
     document.body.classList.add('step6-active');
 
@@ -1681,9 +1749,7 @@
     const rate = selectedDate ? RATES[crewSize][selectedDate.getDay()] : '';
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
     // Show initial deposit immediately, refine once distance is known
-    setDepositFromMiles(0);
-    distancePricing = autoCalcTruckFee();
-    distancePricing.catch(() => {});
+    refreshQuote();
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
       document.getElementById('packRateDisplay').textContent = `$${PACK_RATES[packSelectedDate.getDay()]}/hr`;
@@ -1713,6 +1779,7 @@
 
   function goBackToPacking() {
     document.getElementById('step6').classList.remove('active');
+    document.getElementById('step7').classList.remove('active');
     document.getElementById('step5').classList.add('active');
     updateProgress(5);
     document.body.classList.remove('step6-active');
@@ -1725,21 +1792,25 @@
 
   let distancePricing = Promise.resolve();
   async function autoCalcTruckFee() {
+    const generation = ++quotePricingGeneration;
     const from = stops[0]?.address || s0Data.from;
     const to = stops[stops.length - 1]?.address || s0Data.to;
     const display = document.getElementById('summary-truck-display');
     const note = document.getElementById('truck-distance-note');
     display.textContent = 'Calculating…';
     try {
-      const [baseMiles, moveMiles] = await Promise.all([
-        window.VYVAddresses.routeMiles('Fredericksburg, VA 22401', from),
-        window.VYVAddresses.routeMiles(from, to)
-      ]);
+      const addresses = stops.length >= 2 ? stops.map(s => s.address) : [from,to];
+      const distances = await Promise.all([window.VYVAddresses.routeMiles('Fredericksburg, VA 22401', from), ...addresses.slice(1).map((address,i)=>window.VYVAddresses.routeMiles(addresses[i], address))]);
+      if (generation !== quotePricingGeneration) return;
+      const baseMiles = distances[0], moveMiles = Math.round(distances.slice(1).reduce((sum,d)=>sum+d,0)*10)/10;
+      quoteRouteMiles = moveMiles;
       setDepositFromMiles(baseMiles);
       truckFee = calcTruckFeeFromMiles(moveMiles);
       display.textContent = '$' + truckFee;
       note.textContent = `${moveMiles} mi between locations · ${baseMiles} mi from Fredericksburg`;
     } catch (error) {
+      if (generation !== quotePricingGeneration) return;
+      quoteRouteMiles = null; truckFee = null;
       display.textContent = 'Address check needed';
       note.textContent = 'Please check your complete pickup and destination addresses, then return to this step.';
       throw error;
@@ -1772,7 +1843,10 @@
 
     try {
       if (!stripeInstance || !stripeCardNumber) throw new Error('Secure card fields are still loading. Please try again.');
-      if (!paidReservationIntent) await distancePricing;
+      if (!paidReservationIntent) {
+        await distancePricing;
+        if (!currentQuote || !selectedDate || !selectedTime || !crewSize) throw new Error('Please review your complete move estimate before reserving.');
+      }
       let paymentIntent = paidReservationIntent;
       if (!paymentIntent) {
       // Step 1: Ask GAS to create a PaymentIntent for the deposit amount
@@ -1836,7 +1910,7 @@
         volume: moveVolume || '',
         specialty: (specialtyItems||[]).join(', ') || 'None',
         packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
-        notes: document.getElementById('cf-notes').value,
+        notes: document.getElementById('cf-notes').value + '\nPlanning estimate (not fixed price): ' + JSON.stringify(currentQuote),
         deposit: `$${depositAmount}`,
         paymentIntentId: paymentIntent.id,
         paymentMethod: paymentIntent.payment_method,
