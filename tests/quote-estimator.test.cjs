@@ -32,3 +32,16 @@ test('missing size and large complex moves request crew review; invalid pricing 
  assert.equal(estimate({stops:[{beds:'5+'},{}]}).needsReview,true);
  assert.throws(()=>estimate({rate:undefined}),/pricing/);
 });
+test('three-mover one-bedroom quote includes the full local job at about five to six hours',()=>{
+ const q=estimate({crew:3,miles:10});
+ assert.equal(q.hours[0],5);assert.equal(q.hours[1],6);
+ for(let i=0;i<2;i++) assert.equal(Object.values(q.stages).reduce((sum,v)=>sum+v[i],0),q.hours[i]);
+ assert.ok(q.stages.loading[0]>0);assert.ok(q.stages.unloading[0]>0);assert.ok(q.stages.protection[0]>0);assert.ok(q.stages.driving[0]>0);
+});
+test('unfinished preparation increases moving hours without charging selected packing twice',()=>{
+ const ready=estimate({crew:3});const unready=estimate({crew:3,ready:'not-ready'});
+ assert.ok(unready.hours[0]>=ready.hours[0]+1);assert.ok(unready.hours[1]>=ready.hours[1]+2.5);
+ const packed=estimate({crew:3,ready:'not-ready',packing:true,packingRate:199});
+ assert.deepEqual(Array.from(packed.hours),Array.from(ready.hours));
+ assert.ok(packed.packing[0]>0);
+});

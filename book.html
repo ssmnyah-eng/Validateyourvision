@@ -686,6 +686,7 @@
           <p style="font-weight:700;color:#6d28d9;">ESTIMATED TOTAL</p>
           <div id="quote-total" style="font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;color:#190E2A;">Calculating route…</div>
           <p id="quote-hours" style="color:#5c4a7a;"></p>
+          <div id="quote-stages" style="font-size:.82rem;color:#5c4a7a;line-height:1.9;"></div>
           <div class="quote-row"><span>Moving labor</span><strong id="quote-labor">—</strong></div>
           <div class="quote-row"><span>Truck fee</span><strong id="quote-truck">—</strong></div>
           <div class="quote-row"><span>Packing / unpacking labor</span><strong id="quote-packing">Not selected</strong></div>
@@ -1623,12 +1624,15 @@
       const q = currentQuote;
       document.getElementById('quote-total').textContent = moneyRange(q.total);
       document.getElementById('quote-hours').textContent = fmtHours(q.hours[0]) + ' – ' + fmtHours(q.hours[1]) + ' moving time · ' + crewSize + ' movers at ' + money(q.rate) + '/hr';
+      const stageLabels = {protection:'Furniture wrapping / protection & preparation',loading:'Loading the truck',driving:'Driving between all move locations',unloading:'Unloading & placement',preparation:'Unfinished preparation allowance'};
+      const stageLines = Object.entries(q.stages).filter(([key,v])=>v[1]>0).map(([key,v])=>stageLabels[key] + ': ' + v.join('–') + ' hrs');
+      document.getElementById('quote-stages').textContent = stageLines.join(' · ');
       for (const key of ['labor','balance']) document.getElementById('quote-' + key).textContent = moneyRange(q[key]);
       document.getElementById('quote-truck').textContent = money(q.truckFee);
       document.getElementById('quote-deposit').textContent = money(q.deposit);
       document.getElementById('quote-packing').textContent = addPackingService ? moneyRange(q.packing) + ' (' + q.packingHours.join('–') + ' hrs at ' + money(q.packingRate) + '/hr)' : 'Not selected';
-      document.getElementById('quote-review').textContent = q.needsReview ? 'Crew review recommended: timing may exceed this range. Contact us at (540) 301-1152 to review your inventory and access.' : '';
-      document.getElementById('quote-assumptions').textContent = q.reasons.join(' · ') + '. Route: about ' + q.miles + ' miles across all locations. Packing time is separate from moving time.';
+      document.getElementById('quote-review').textContent = q.readiness === 'not-ready' && !addPackingService ? 'Unfinished packing adds a preparation allowance to this range. Full packing service/materials are not included; contact us to confirm what needs doing. Crew review recommended:' : q.needsReview ? 'Crew review recommended: timing may exceed this range. Contact us at (540) 301-1152 to review your inventory and access.' : '';
+      document.getElementById('quote-assumptions').textContent = q.reasons.join(' · ') + '. Route: about ' + q.miles + ' miles across all locations. Includes pickup/loading and destination/unloading. No return-to-base time or per-mile charge is added. Selected packing service is estimated separately.';
       document.getElementById('summary-est-hours').textContent = q.hours.join('–') + ' hrs';
       document.getElementById('summary-est-labor').textContent = moneyRange(q.labor);
       document.getElementById('summary-est-total').textContent = moneyRange(q.total);
