@@ -53,7 +53,7 @@ function page(file, search = '') {
     FormData: class { constructor(form) { this.form = form; } get(k) { return this.form.fields[k]; } }
   });
   context.window = context;
-  context.VYVAddresses = { attach() {} };
+  context.VYVAddresses = { attach() {}, routeMiles: async () => 5 };
   const run = code => vm.runInContext(code, context);
   for (const script of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
     if (!/src=|application\/ld\+json/.test(script[1])) run(script[2]);
@@ -127,4 +127,27 @@ test('homepage validates missing details and passes valid details without skippi
   assert.equal(dest.pathname, '/book.html');
   assert.equal(dest.searchParams.get('from'), 'First Street');
   assert.equal(dest.searchParams.has('skip'), false);
+});
+
+test('paid booking retries save without charging twice or showing premature confirmation', async () => {
+  const p = page('book.html');
+  for (const [id, value] of Object.entries({'cf-first':'Audit','cf-last':'Test','cf-email':'audit@example.invalid','cf-phone':'2025550100'})) p.nodes.get(id).value = value;
+  p.nodes.get('terms-checkbox').checked = true;
+  p.context.crypto = { randomUUID: () => 'audit-request-123456789' };
+  let confirmations = 0, saves = 0;
+  p.context.paymentMock = { confirmCardPayment: async () => { confirmations++; return {paymentIntent:{id:'pi_audit',status:'succeeded',payment_method:'pm_audit'}}; } };
+  p.run('stripeInstance = paymentMock; stripeCardNumber = {};');
+  p.context.fetch = async (_, options) => {
+    const body = JSON.parse(options.body);
+    if (body.action === 'create_payment_intent') return {json:async () => ({ok:true,clientSecret:'not-a-real-secret'})};
+    saves++;
+    return {json:async () => saves === 1 ? ({ok:false,error:'Temporary save failure'}) : ({ok:true,id:'VYV-audit'})};
+  };
+  await p.run('submitFinalReservation()');
+  assert.equal(p.context.location.href, '');
+  assert.equal(p.nodes.get('finalSubmitBtn').textContent, 'Retry Saving Paid Booking');
+  await p.run('submitFinalReservation()');
+  assert.equal(confirmations, 1);
+  assert.equal(saves, 2);
+  assert.match(p.context.location.href, /booking-confirmed/);
 });

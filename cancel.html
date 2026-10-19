@@ -157,14 +157,14 @@
   <div id="view-error" style="display:none;" class="loading-state">
     <p style="font-size:1.8rem;">&#128683;</p>
     <p style="font-weight:600; margin: 8px 0 4px;">Link not found</p>
-    <p>This cancel link may have expired or your booking was already processed. Text us at <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a> and we'll help.</p>
+    <p>This cancel link may have expired or your booking was already processed. Text us at <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a> and we'll help.</p>
   </div>
 
   <div id="view-unavailable" style="display:none;" class="loading-state">
     <p style="font-size:1.8rem;">&#128683;</p>
     <p style="font-weight:600; margin: 8px 0 4px;" id="unavail-title">Already cancelled</p>
     <p id="unavailable-msg">This booking has already been cancelled.</p>
-    <p style="margin-top:12px;">Questions? Text us: <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a></p>
+    <p style="margin-top:12px;">Questions? Text us: <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a></p>
   </div>
 
   <div id="view-form" style="display:none;">
@@ -189,7 +189,7 @@
 
     <div id="refund-ineligible" class="warning-box" style="display:none;">
       <strong>No refund applies</strong>
-      Your move is within 12 hours. Per our cancellation policy, deposits are non-refundable for cancellations made less than 12 hours before the scheduled move. Questions? Text us at <a href="sms:+15403001414" style="color:var(--danger);">540-300-1414</a>.
+      Your move is within 12 hours. Per our cancellation policy, deposits are non-refundable for cancellations made less than 12 hours before the scheduled move. Questions? Text us at <a href="sms:+15403011152" style="color:var(--danger);">540-301-1152</a>.
     </div>
 
     <!-- Step 1: initial -->
@@ -214,7 +214,7 @@
     <div class="done-icon">&#10003;</div>
     <h2>Booking Cancelled</h2>
     <p id="done-msg">Your move has been cancelled and a confirmation has been sent to your email.</p>
-    <p style="margin-top:16px; color:var(--muted);">Changed your mind? Text us: <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a></p>
+    <p style="margin-top:16px; color:var(--muted);">Changed your mind? Text us: <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a></p>
     <button class="btn btn-primary" style="margin-top:24px; max-width:280px; margin-left:auto; margin-right:auto;" onclick="window.location='/'">Back to Homepage</button>
   </div>
 
@@ -319,7 +319,7 @@ async function submitCancel() {
       show('view-done');
     } else {
       msg.className = 'error';
-      msg.textContent = data.error || 'Something went wrong. Please try again or text us at 540-300-1414.';
+      msg.textContent = data.error || 'Something went wrong. Please try again or text us at 540-301-1152.';
       msg.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Yes, Cancel My Move';
