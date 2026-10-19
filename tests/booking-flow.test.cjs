@@ -25,7 +25,8 @@ function page(file, search = '') {
     querySelector() { return new Element(); }
     querySelectorAll() { return []; }
     addEventListener(name, cb) { this.listeners[name] = cb; }
-    setAttribute() {}
+    setAttribute(k,v) { this[k] = v; }
+    removeAttribute(k) { delete this[k]; }
     focus() { this.focused = true; }
     scrollIntoView() {}
   }
@@ -52,6 +53,7 @@ function page(file, search = '') {
     FormData: class { constructor(form) { this.form = form; } get(k) { return this.form.fields[k]; } }
   });
   context.window = context;
+  context.VYVAddresses = { attach() {} };
   const run = code => vm.runInContext(code, context);
   for (const script of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
     if (!/src=|application\/ld\+json/.test(script[1])) run(script[2]);
@@ -102,16 +104,16 @@ test('all seven sections, stop edits, and backward navigation work without Googl
   }
 });
 
-test('autocomplete binds to replacement inputs after stops rerender', () => {
+test('five milestones follow all seven panels in either direction', () => {
   const p = page('book.html');
-  let attached = 0;
-  p.context.google = { maps: { places: { Autocomplete: class { constructor() { attached++; } addListener() {} } } } };
-  p.nodes.set('addr-0', new p.Element());
-  p.run('attachPlaces("addr-0", 0); attachPlaces("addr-0", 0)');
-  assert.equal(attached, 1);
-  p.nodes.set('addr-0', new p.Element());
-  p.run('attachPlaces("addr-0", 0)');
-  assert.equal(attached, 2);
+  for (const step of [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0]) {
+    p.run(`updateProgress(${step})`);
+    const current = [0, 0, 1, 2, 2, 3, 4][step];
+    for (let i = 0; i < 5; i++) {
+      assert.equal(p.nodes.get('booking-circle-' + i).style.background, i === current ? '#16a34a' : '#4A237A');
+      assert.equal(p.nodes.get('booking-milestone-' + i)['aria-current'], i === current ? 'step' : undefined);
+    }
+  }
 });
 
 test('homepage validates missing details and passes valid details without skipping steps', async () => {
