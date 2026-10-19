@@ -2529,7 +2529,8 @@
     // ===== SMOOTH SCROLL =====
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
+        const href = a.getAttribute('href');
+        const target = href === '#' ? null : document.querySelector(href);
         if (target) {
           e.preventDefault();
           window.scrollTo({ top: target.offsetTop - 72, behavior: 'smooth' });
@@ -2554,6 +2555,7 @@
     async function handleLeadFormSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('lf-submit');
+      if (!e.target.reportValidity()) return;
       const fd = new FormData(e.target);
 
       // Validate all fields
@@ -2573,14 +2575,13 @@
 
       btn.disabled = true; btn.textContent = 'Going…';
 
-      // Build redirect URL -- skip to calendar step
+      // Carry details to Step 1 for review before continuing.
       const params = new URLSearchParams();
       params.set('name', fd.get('name').trim());
       params.set('email', fd.get('email').trim());
       params.set('phone', fd.get('phone').trim());
       params.set('from', fd.get('moving_from').trim());
       params.set('to', fd.get('moving_to').trim());
-      params.set('skip', 'calendar');
       const dest = '/book.html?' + params.toString();
 
       // Fire Formspree in background, don't block redirect
