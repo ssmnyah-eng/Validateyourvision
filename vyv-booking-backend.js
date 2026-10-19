@@ -26,6 +26,8 @@ function doPost(e) {
     // Public (customer uses move token, not admin token)
     if (d.action === 'start_timer') return json(startTimer(d));
 
+    if (d.action === 'create_payment_intent') return json(createDepositIntent(d));
+
     // Admin
     if (d.token !== ADMIN_TOKEN) return json({ ok: false, error: 'Unauthorized' });
 
@@ -45,6 +47,7 @@ function doPost(e) {
 function doGet(e) {
   try {
     const action = e.parameter.action || 'get_bookings';
+    if (action === 'health') return json({ ok: true, version: 'booking-payments-v3', paymentsConfigured: !!PropertiesService.getScriptProperties().getProperty('STRIPE_SK') });
 
     // Public: customer portal polling
     if (action === 'get_move')          return json(getMove(e.parameter.id, e.parameter.moveToken));
@@ -63,8 +66,44 @@ function doGet(e) {
   }
 }
 
-// ── SAVE BOOKING ──────────────────────────────────────────────
+// Create one unconfirmed deposit. Card confirmation stays in Stripe.js.
+function createDepositIntent(d) {
+  if (![25000, 30000].includes(d.amountCents)) return { ok: false, error: 'Invalid deposit amount' };
+  if (!d.email || !d.name || !d.requestId || !/^[a-zA-Z0-9_-]{16,80}$/.test(d.requestId)) {
+    return { ok: false, error: 'Contact details and request ID are required' };
+  }
+  const customer = stripeRequest('POST', '/customers', { email: d.email, name: d.name }, 'customer-' + d.requestId);
+  const intent = stripeRequest('POST', '/payment_intents', {
+    amount: d.amountCents, currency: 'usd', customer: customer.id,
+    'payment_method_types[]': 'card', setup_future_usage: 'off_session',
+    receipt_email: d.email, description: d.description || 'VYV Moving deposit',
+    'metadata[type]': 'deposit'
+  }, 'deposit-' + d.requestId);
+  return { ok: true, clientSecret: intent.client_secret };
+}
+
+// Verify the existing payment. Never initiate a second deposit when saving.
+function verifiedDeposit(d) {
+  if (!/^pi_[a-zA-Z0-9]+$/.test(d.paymentIntentId || '')) throw new Error('A paid deposit is required');
+  const intent = stripeRequest('GET', '/payment_intents/' + d.paymentIntentId);
+  if (intent.status !== 'succeeded' || intent.currency !== 'usd' ||
+      ![25000, 30000].includes(intent.amount_received) ||
+      intent.metadata?.type !== 'deposit' ||
+      (intent.receipt_email || '').toLowerCase() !== (d.email || '').toLowerCase()) {
+    throw new Error('Deposit verification failed');
+  }
+  return intent;
+}
+
+// Serialize duplicate save requests so a paid deposit creates just one booking.
 function saveBooking(d) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try { return saveVerifiedBooking(d); }
+  finally { lock.releaseLock(); }
+}
+
+function saveVerifiedBooking(d) {
   const ss = getOrCreateSheet(BOOKINGS_SHEET, [
     'ID','Booked At','Name','Email','Phone',
     'Move Date','Time','Crew','Rate','Truck Fee',
@@ -75,17 +114,15 @@ function saveBooking(d) {
     'TimerStart','TimerEnd','FinalHours','FinalCharge'
   ]);
 
-  const id        = 'VYV-' + Date.now();
+  const payment = verifiedDeposit(d);
+  const id = 'VYV-' + payment.id;
+  const existing = findBooking(id);
+  if (existing) return { ok: true, id, moveToken: existing.MoveToken };
   const moveToken = generateToken();
-
-  let stripeCustomerId      = '';
-  let stripePaymentMethodId = d.paymentMethod || '';
-
-  if (d.paymentMethod && d.paymentMethod !== 'TEST_MODE') {
-    const sr = chargeDeposit(d, id);
-    stripeCustomerId      = sr.customerId || '';
-    stripePaymentMethodId = sr.paymentMethodId || d.paymentMethod;
-  }
+  const stripeCustomerId = payment.customer || '';
+  const stripePaymentMethodId = payment.payment_method || '';
+  d.deposit = '$' + payment.amount_received / 100;
+  d.paymentMethod = stripePaymentMethodId;
 
   ss.appendRow([
     id,
@@ -103,54 +140,12 @@ function saveBooking(d) {
   ]);
 
   const full = { ...d, id, moveToken };
-  sendConfirmationEmail(full, id);
-  sendOwnerAlert(full, id);
-  createCalendarEvent(full, id);
+  // Notification failures must not make a saved booking look like a payment failure.
+  [() => sendConfirmationEmail(full, id), () => sendOwnerAlert(full, id), () => createCalendarEvent(full, id)].forEach(send => {
+    try { send(); } catch (error) { console.error('Booking notification failed: ' + error.message); }
+  });
 
   return { ok: true, id, moveToken };
-}
-
-// ── STRIPE: CHARGE DEPOSIT ────────────────────────────────────
-function chargeDeposit(d, bookingId) {
-  const sk = PropertiesService.getScriptProperties().getProperty('STRIPE_SK');
-  if (!sk) return { customerId: '', paymentMethodId: d.paymentMethod };
-
-  try {
-    const customer = stripeRequest('POST', '/customers', {
-      email: d.email,
-      name: d.name,
-      phone: d.phone || '',
-      'metadata[bookingId]': bookingId,
-      payment_method: d.paymentMethod
-    });
-    if (!customer.id) throw new Error('Customer creation failed');
-
-    stripeRequest('POST', `/payment_methods/${d.paymentMethod}/attach`, {
-      customer: customer.id
-    });
-
-    stripeRequest('POST', `/customers/${customer.id}`, {
-      'invoice_settings[default_payment_method]': d.paymentMethod
-    });
-
-    const cents = Math.round(parseFloat((d.deposit || '').replace(/[^0-9.]/g, '') || 250) * 100);
-    stripeRequest('POST', '/payment_intents', {
-      amount: cents,
-      currency: 'usd',
-      customer: customer.id,
-      payment_method: d.paymentMethod,
-      confirm: 'true',
-      off_session: 'true',
-      'metadata[bookingId]': bookingId,
-      'metadata[type]': 'deposit',
-      description: `VYV deposit - ${d.name} - ${d.moveDate}`
-    });
-
-    return { customerId: customer.id, paymentMethodId: d.paymentMethod };
-  } catch (err) {
-    console.log('Stripe deposit error: ' + err.message);
-    return { customerId: '', paymentMethodId: d.paymentMethod };
-  }
 }
 
 // ── ON THE WAY ────────────────────────────────────────────────
@@ -459,8 +454,8 @@ body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',
 </div>
 <div class="notice"><div style="font-size:1rem;">&#128241;</div><div><strong>We'll reach out before your movers leave</strong><p>You'll receive both a text and an email when your crew is on the way.</p></div></div>
 <div class="btns">
-  <a href="sms:+15403001414?body=Hi, I need to reschedule. Booking: ${d.name}" class="btn btn-rs">Reschedule</a>
-  <a href="sms:+15403001414?body=Hi, I need to cancel. Booking: ${d.name}" class="btn btn-cn">Cancel Booking</a>
+  <a href="sms:+15403011152?body=Hi, I need to reschedule. Booking: ${d.name}" class="btn btn-rs">Reschedule</a>
+  <a href="sms:+15403011152?body=Hi, I need to cancel. Booking: ${d.name}" class="btn btn-cn">Cancel Booking</a>
 </div>
 <div class="tips">
   <div class="tips-title">Before moving day</div>
@@ -469,7 +464,7 @@ body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',
   <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Reserve parking at both locations.</strong> Parking delays come out of your time.</span></div>
   <div class="tip"><span class="tip-ck">&#10003;</span><span><strong>Pack a moving day bag.</strong> Charger, meds, snacks. Keep it with you, not on the truck.</span></div>
 </div>
-<div class="contact">Questions? Text us anytime at <a href="sms:+15403001414">(540) 300-1414</a><br>
+<div class="contact">Questions? Text us anytime at <a href="sms:+15403011152">(540) 301-1152</a><br>
 <span style="font-size:.68rem;color:#b0a0cc;">Changes? Text us at least 24 hours before your move at no charge.</span></div>
 </div>
 <div class="ftr">
@@ -530,7 +525,7 @@ function sendReceipt(b, hours, ratePerHour, totalAmount, depositPaid, finalCharg
   <div class="r-row"><span class="r-label">Deposit already paid</span><span class="r-val">-$${depositPaid.toFixed(2)}</span></div>
   <div class="r-row r-charged"><span class="r-label">&#10003; Charged to card on file</span><span class="r-val">$${finalCharge.toFixed(2)}</span></div>
 </div>
-<div class="contact">Questions about your receipt? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div>
+<div class="contact">Questions about your receipt? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div>
 </div>
 <div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; <a href="https://validateyourvision.com">validateyourvision.com</a></div>
 </div></body></html>`;
@@ -547,12 +542,12 @@ function sendReceipt(b, hours, ratePerHour, totalAmount, depositPaid, finalCharg
 // ── EMAIL TEMPLATES ───────────────────────────────────────────
 function onTheWayHtml(b) {
   const firstName = b.Name.split(' ')[0];
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#fef3c7;border:1px solid #f59e0b;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#92400e;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.truck{font-size:3rem;margin:10px 0;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">On the way</div><div class="truck">&#128666;</div><h1>Your crew is on the way, ${firstName}!</h1><p>Your VYV Moving team has left and is heading to you now. Make sure parking is clear and you're ready to go!</p></div><div class="body"><div class="contact">Questions? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#fef3c7;border:1px solid #f59e0b;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#92400e;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.truck{font-size:3rem;margin:10px 0;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">On the way</div><div class="truck">&#128666;</div><h1>Your crew is on the way, ${firstName}!</h1><p>Your VYV Moving team has left and is heading to you now. Make sure parking is clear and you're ready to go!</p></div><div class="body"><div class="contact">Questions? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
 }
 
 function arrivedHtml(b, moveLink) {
   const firstName = b.Name.split(' ')[0];
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#d4eddf;border:1px solid #9dd0b4;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.btn-wrap{text-align:center;margin:16px 0;}.btn{display:inline-block;background:#16a34a;color:#fff;font-weight:800;font-size:.9rem;padding:14px 32px;border-radius:10px;text-decoration:none;letter-spacing:.03em;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">&#10003; Arrived</div><h1>Your movers are here, ${firstName}!</h1><p>Your VYV crew has arrived. Tap the button below to sign them in and start your move clock.</p></div><div class="body"><div class="btn-wrap"><a href="${moveLink}" class="btn">Sign In My Movers</a></div><div class="contact">Questions? Text us at <a href="sms:+15403001414">(540) 300-1414</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{margin:0;padding:24px 16px;background:#f0ecf8;font-family:'Helvetica Neue',Arial,sans-serif;}.wrap{max-width:560px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(25,14,42,.10);}.hdr{background:#190E2A;padding:20px 28px;}.hdr-name{font-size:.85rem;font-weight:800;color:#ECEBEE;}.hero{padding:28px;text-align:center;border-bottom:1px solid #e6dff5;}.badge{display:inline-block;background:#d4eddf;border:1px solid #9dd0b4;border-radius:50px;padding:3px 12px;font-size:.62rem;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}.hero h1{font-size:1.25rem;font-weight:800;color:#190E2A;margin:0 0 8px;}.hero p{font-size:.8rem;color:#6b5b8a;line-height:1.6;margin:0;}.body{padding:20px 28px;}.btn-wrap{text-align:center;margin:16px 0;}.btn{display:inline-block;background:#16a34a;color:#fff;font-weight:800;font-size:.9rem;padding:14px 32px;border-radius:10px;text-decoration:none;letter-spacing:.03em;}.contact{text-align:center;font-size:.72rem;color:#6b5b8a;padding-top:12px;border-top:1px solid #e6dff5;}.contact a{color:#8B5BC7;font-weight:600;text-decoration:none;}.ftr{background:#190E2A;padding:16px 28px;text-align:center;font-size:.65rem;color:rgba(236,235,238,.4);}</style></head><body><div class="wrap"><div class="hdr"><div class="hdr-name">Validate Your Vision Moving</div></div><div class="hero"><div class="badge">&#10003; Arrived</div><h1>Your movers are here, ${firstName}!</h1><p>Your VYV crew has arrived. Tap the button below to sign them in and start your move clock.</p></div><div class="body"><div class="btn-wrap"><a href="${moveLink}" class="btn">Sign In My Movers</a></div><div class="contact">Questions? Text us at <a href="sms:+15403011152">(540) 301-1152</a></div></div><div class="ftr">Validate Your Vision Moving &middot; Fredericksburg, VA &middot; validateyourvision.com</div></div></body></html>`;
 }
 
 // ── TWILIO SMS ────────────────────────────────────────────────
@@ -578,13 +573,15 @@ function sendSMS(to, body) {
 }
 
 // ── STRIPE API ────────────────────────────────────────────────
-function stripeRequest(method, path, params) {
+function stripeRequest(method, path, params, idempotencyKey) {
   const sk = PropertiesService.getScriptProperties().getProperty('STRIPE_SK');
   const options = {
     method: method.toLowerCase(),
     headers: { Authorization: 'Bearer ' + sk },
     muteHttpExceptions: true
   };
+  if (!sk) throw new Error('Stripe is not configured on the booking server');
+  if (idempotencyKey) options.headers['Idempotency-Key'] = idempotencyKey;
   let url = 'https://api.stripe.com/v1' + path;
   if (method === 'POST') {
     options.payload     = params;
@@ -592,7 +589,9 @@ function stripeRequest(method, path, params) {
   } else if (params) {
     url += '?' + Object.entries(params).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&');
   }
-  return JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+  const result = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+  if (result.error) throw new Error(result.error.message || 'Stripe request failed');
+  return result;
 }
 
 // ── SHEET HELPERS ─────────────────────────────────────────────

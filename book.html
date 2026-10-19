@@ -336,9 +336,9 @@
     </svg>
     <span class="topbar-logo-text">Validate Your Vision</span>
   </a>
-  <a href="sms:+15403001414" class="topbar-sms">
+  <a href="sms:+15403011152" class="topbar-sms">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    (540) 300-1414
+    (540) 301-1152
   </a>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
@@ -486,7 +486,7 @@
       <div class="step" id="step2">
         <div class="step-label">Step 3 of 7: Move Date</div>
         <h1>What date would you like to move?</h1>
-        <p class="subtitle">Not sure of your move date? <a href="sms:+15403001414">We're flexible</a>, you can always change it.</p>
+        <p class="subtitle">Not sure of your move date? <a href="sms:+15403011152">We're flexible</a>, you can always change it.</p>
 
         <!-- Mobile route map (hidden on desktop where right panel shows it) -->
         <div id="mobileMapWrap" style="display:none;border-radius:14px;overflow:hidden;height:180px;margin-bottom:18px;box-shadow:0 2px 12px rgba(74,35,122,0.10);">
@@ -952,6 +952,7 @@
     s0Data = { name: first + ' ' + last, email, phone, from, to };
     sendLead(s0Data.name, email, phone, from, to);
     initStops();
+    updateMapFromStep0();
     document.getElementById('step0').classList.remove('active');
     document.getElementById('step1').classList.add('active');
     updateProgress(1);
@@ -1001,9 +1002,8 @@
     const rates = RATES[crewSize];
     const unique = [...new Set(Object.values(rates))].sort((a,b)=>a-b);
     const colors = ['#16a34a','#8B5BC7','#c2410c'];
-    const dayDesc = crewSize === 2
-      ? ['Tue/Wed','Mon/Thu','Fri/Sat/Sun']
-      : ['Tue/Wed','Mon/Thu','Fri/Sat/Sun'];
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const dayDesc = unique.map(rate => dayNames.filter((_, day) => rates[day] === rate).join('/'));
     const lg = document.getElementById('priceLegend');
     lg.innerHTML = '';
     unique.forEach((r,i) => {
@@ -1682,7 +1682,8 @@
     document.getElementById('summary-rate-display').textContent = rate ? `$${rate}/hr` : '';
     // Show initial deposit immediately, refine once distance is known
     setDepositFromMiles(0);
-    autoCalcTruckFee(null);
+    distancePricing = autoCalcTruckFee();
+    distancePricing.catch(() => {});
     document.getElementById('packingPriceLine').style.display = addPackingService ? 'block' : 'none';
     if (addPackingService && packSelectedDate) {
       document.getElementById('packRateDisplay').textContent = `$${PACK_RATES[packSelectedDate.getDay()]}/hr`;
@@ -1722,64 +1723,31 @@
     return 125;
   }
 
-  function autoCalcTruckFee(onDone) {
-    const fromAddr = (stops[0] && stops[0].address) || s0Data.from || new URLSearchParams(window.location.search).get('from') || '';
-    const toAddr   = (stops.length > 1 && stops[stops.length-1].address) || s0Data.to || new URLSearchParams(window.location.search).get('to') || '';
-    const display  = document.getElementById('summary-truck-display');
-    const note     = document.getElementById('truck-distance-note');
-
-    if (!fromAddr || typeof google === 'undefined') {
-      truckFee = 99; display.textContent = '$99'; note.textContent = '';
-      setDepositFromMiles(0);
-      if (onDone) onDone();
-      return;
+  let distancePricing = Promise.resolve();
+  async function autoCalcTruckFee() {
+    const from = stops[0]?.address || s0Data.from;
+    const to = stops[stops.length - 1]?.address || s0Data.to;
+    const display = document.getElementById('summary-truck-display');
+    const note = document.getElementById('truck-distance-note');
+    display.textContent = 'Calculating…';
+    try {
+      const [baseMiles, moveMiles] = await Promise.all([
+        window.VYVAddresses.routeMiles('Fredericksburg, VA 22401', from),
+        window.VYVAddresses.routeMiles(from, to)
+      ]);
+      setDepositFromMiles(baseMiles);
+      truckFee = calcTruckFeeFromMiles(moveMiles);
+      display.textContent = '$' + truckFee;
+      note.textContent = `${moveMiles} mi between locations · ${baseMiles} mi from Fredericksburg`;
+    } catch (error) {
+      display.textContent = 'Address check needed';
+      note.textContent = 'Please check your complete pickup and destination addresses, then return to this step.';
+      throw error;
     }
-
-    display.textContent = 'Calculating...';
-    note.textContent = '';
-
-    // Measure from Fredericksburg, VA (our base) to the pickup address for deposit tier
-    const FREDERICKSBURG = 'Fredericksburg, VA 22401';
-    const svc = new google.maps.DistanceMatrixService();
-    svc.getDistanceMatrix({
-      origins: [FREDERICKSBURG],
-      destinations: [fromAddr],
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.IMPERIAL
-    }, (res, status) => {
-      let milesFromBase = 0;
-      if (status === 'OK' && res.rows[0].elements[0].status === 'OK') {
-        milesFromBase = Math.round(res.rows[0].elements[0].distance.value / 1609.34);
-      }
-      setDepositFromMiles(milesFromBase);
-
-      // Also get move distance for truck fee (from -> to if available)
-      if (toAddr) {
-        svc.getDistanceMatrix({
-          origins: [fromAddr],
-          destinations: [toAddr],
-          travelMode: google.maps.TravelMode.DRIVING,
-          unitSystem: google.maps.UnitSystem.IMPERIAL
-        }, (res2, status2) => {
-          if (status2 === 'OK' && res2.rows[0].elements[0].status === 'OK') {
-            const moveMiles = Math.round(res2.rows[0].elements[0].distance.value / 1609.34);
-            truckFee = calcTruckFeeFromMiles(moveMiles);
-            display.textContent = `$${truckFee}`;
-            note.textContent = `${moveMiles} mi between locations · ${milesFromBase} mi from Fredericksburg`;
-          } else {
-            truckFee = 99; display.textContent = '$99';
-            note.textContent = milesFromBase ? `${milesFromBase} mi from Fredericksburg` : '';
-          }
-          if (onDone) onDone();
-        });
-      } else {
-        truckFee = 99; display.textContent = '$99';
-        note.textContent = milesFromBase ? `${milesFromBase} mi from Fredericksburg` : '';
-        if (onDone) onDone();
-      }
-    });
   }
 
+  let paidReservationIntent = null;
+  let paymentRequestId = null;
   async function submitFinalReservation() {
     const first = document.getElementById('cf-first').value.trim();
     const last  = document.getElementById('cf-last').value.trim();
@@ -1791,6 +1759,7 @@
       return;
     }
 
+    if (!document.getElementById('terms-checkbox').checked) return;
     const btn     = document.getElementById('finalSubmitBtn');
     const errDiv  = document.getElementById('stripe-card-error');
     btn.disabled  = true;
@@ -1802,11 +1771,16 @@
     const packDateStr = packSelectedDate ? packSelectedDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
 
     try {
+      if (!stripeInstance || !stripeCardNumber) throw new Error('Secure card fields are still loading. Please try again.');
+      if (!paidReservationIntent) await distancePricing;
+      let paymentIntent = paidReservationIntent;
+      if (!paymentIntent) {
       // Step 1: Ask GAS to create a PaymentIntent for the deposit amount
       const piRes = await fetch(SHEET_SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify({
           action: 'create_payment_intent',
+          requestId: paymentRequestId || (paymentRequestId = crypto.randomUUID()),
           amountCents: depositAmount * 100,
           email,
           name: `${first} ${last}`,
@@ -1820,19 +1794,26 @@
 
       // Step 2: Confirm the card payment (handles 3D Secure automatically)
       btn.textContent = 'Confirming card...';
-      const { paymentIntent, error } = await stripeInstance.confirmCardPayment(piData.clientSecret, {
+      const result = await stripeInstance.confirmCardPayment(piData.clientSecret, {
         payment_method: {
           card: stripeCardNumber,
-          billing_details: { name: `${first} ${last}`, email, phone }
+          billing_details: {
+            name: document.getElementById('billing-first').value.trim() || `${first} ${last}`, email, phone,
+            address: { line1: document.getElementById('billing-line1').value.trim(),
+              postal_code: document.getElementById('billing-zip').value.trim(),
+              city: document.getElementById('billing-city').value.trim(), country: 'US' }
+          }
         }
       });
 
-      if (error) {
-        throw new Error(error.message);
-      }
+      if (result.error) throw new Error(result.error.message);
+      paymentIntent = result.paymentIntent;
 
       if (paymentIntent.status !== 'succeeded') {
         throw new Error('Payment did not complete. Please try a different card.');
+      }
+
+      paidReservationIntent = paymentIntent;
       }
 
       // Step 3: Save the booking with the confirmed payment intent ID
@@ -1844,12 +1825,14 @@
         name: `${first} ${last}`,
         email, phone,
         moveDate: `${dateStr} ${selectedTime||''}`,
+        time: selectedTime || '',
         crew: `${crewSize} Movers`,
         rate: `$${rate}/hr`,
         truckFee: truckFee ? `$${truckFee}` : 'TBD on move day',
         from: stops[0]?.address || '',
         to: stops[stops.length-1]?.address || '',
         stops: stops.length,
+        propertyDetails: JSON.stringify(stops),
         volume: moveVolume || '',
         specialty: (specialtyItems||[]).join(', ') || 'None',
         packing: addPackingService ? `Yes - ${packDateStr}` : 'No',
@@ -1860,14 +1843,17 @@
         status: 'Upcoming'
       });
 
-      fetch(SHEET_SCRIPT_URL, { method: 'POST', body: bookingPayload, keepalive: true }).catch(() => {});
+      const savedResponse = await fetch(SHEET_SCRIPT_URL, { method: 'POST', body: bookingPayload });
+      const saved = await savedResponse.json();
+      if (!saved.ok || !saved.id) throw new Error(saved.error || 'Your deposit was paid, but booking confirmation is pending. Retry saving without another charge.');
+      paidReservationIntent = null;
 
       window.location.href = '/booking-confirmed.html?reserved=1&name=' + encodeURIComponent(first);
 
     } catch (err) {
       errDiv.textContent = err.message || 'Something went wrong. Please try again.';
       btn.disabled = false;
-      btn.textContent = 'Pay Deposit & Reserve';
+      btn.textContent = paidReservationIntent ? 'Retry Saving Paid Booking' : 'Pay Deposit & Reserve';
     }
   }
 

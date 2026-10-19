@@ -165,7 +165,7 @@
   <div id="view-error" style="display:none;" class="loading-state">
     <p style="font-size:1.8rem;">&#128683;</p>
     <p style="font-weight:600; margin: 8px 0 4px;">Link not found</p>
-    <p>This reschedule link may have expired or already been used. Call us at <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a> and we'll get you sorted out.</p>
+    <p>This reschedule link may have expired or already been used. Call us at <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a> and we'll get you sorted out.</p>
   </div>
 
   <!-- Already rescheduled / cancelled -->
@@ -173,7 +173,7 @@
     <p style="font-size:1.8rem;">&#128683;</p>
     <p style="font-weight:600; margin: 8px 0 4px;">Move unavailable</p>
     <p id="unavailable-msg">This booking can't be rescheduled in its current state.</p>
-    <p style="margin-top:12px;">Questions? Text us: <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a></p>
+    <p style="margin-top:12px;">Questions? Text us: <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a></p>
   </div>
 
   <!-- Form -->
@@ -191,7 +191,7 @@
     </div>
 
     <div class="notice">
-      Rescheduling is free with at least 12 hours notice. For last-minute changes within 12 hours, a $75 fee applies -- text us directly at <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a> to arrange.
+      Rescheduling is free with at least 12 hours notice. For last-minute changes within 12 hours, a $75 fee applies -- text us directly at <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a> to arrange.
     </div>
 
     <div class="card">
@@ -219,7 +219,7 @@
     <div class="done-icon">&#10003;</div>
     <h2>Move Rescheduled</h2>
     <p>We've updated your booking and sent a confirmation to your email. See you on <strong id="done-date"></strong>!</p>
-    <p style="margin-top:16px;">Questions? Text us: <a href="sms:+15403001414" style="color:var(--accent);">540-300-1414</a></p>
+    <p style="margin-top:16px;">Questions? Text us: <a href="sms:+15403011152" style="color:var(--accent);">540-301-1152</a></p>
   </div>
 
 </div>
@@ -293,7 +293,7 @@ async function submitReschedule() {
       show('view-done');
     } else {
       msg.className = 'error';
-      msg.textContent = data.error || 'Something went wrong. Please try again or text us at 540-300-1414.';
+      msg.textContent = data.error || 'Something went wrong. Please try again or text us at 540-301-1152.';
       msg.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Confirm New Date';

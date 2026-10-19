@@ -91,5 +91,27 @@
     });
     input.addEventListener('blur', () => { ++version; clearTimeout(timer); controller?.abort(); setTimeout(close, 150); });
   }
-  window.VYVAddresses = { attach };
+  const geocodes = new Map();
+  async function request(path, params) {
+    const response = await fetch('https://api.geoapify.com/v1/' + path + '?' + new URLSearchParams({...params, apiKey: API_KEY}), {signal: AbortSignal.timeout(15000)});
+    if (!response.ok) throw new Error('Location service unavailable');
+    return response.json();
+  }
+  async function geocode(address) {
+    if (geocodes.has(address)) return geocodes.get(address);
+    const data = await request('geocode/search', {text: address, filter: 'countrycode:us', format: 'json', limit: '1'});
+    const point = data.results?.[0];
+    if (!point) throw new Error('Please check your complete street address');
+    const value = point.lat + ',' + point.lon;
+    geocodes.set(address, value);
+    return value;
+  }
+  async function routeMiles(from, to) {
+    const points = await Promise.all([geocode(from), geocode(to)]);
+    const route = await request('routing', {waypoints: points.join('|'), mode: 'drive'});
+    const meters = route.features?.[0]?.properties?.distance;
+    if (!Number.isFinite(meters)) throw new Error('Route distance unavailable');
+    return Math.round(meters / 1609.34);
+  }
+  window.VYVAddresses = { attach, routeMiles };
 })();

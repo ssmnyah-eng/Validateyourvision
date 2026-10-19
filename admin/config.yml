@@ -39,7 +39,7 @@ collections:
         file: "_data/business.yml"
         fields:
           - { label: "Company Name",  name: "name",    widget: "string", default: "VYV Moving" }
-          - { label: "Phone (SMS)",   name: "phone",   widget: "string", default: "+15403001414", hint: "Used in SMS links. Format: +1xxxxxxxxxx" }
+          - { label: "Phone (SMS)",   name: "phone",   widget: "string", default: "+15403011152", hint: "Used in SMS links. Format: +1xxxxxxxxxx" }
           - { label: "Email",         name: "email",   widget: "string", default: "info@validateyourvision.com" }
           - label: "Service Areas"
             name: "service_areas"
