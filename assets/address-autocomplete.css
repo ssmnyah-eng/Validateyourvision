@@ -1,0 +1,6 @@
+.vyv-address-results{position:absolute;left:0;right:0;top:100%;z-index:99999;margin-top:4px;background:#fff;color:#190e2a;border:1px solid #d4c9e8;border-radius:8px;box-shadow:0 8px 24px #190e2a26;overflow:hidden;text-align:left;font:14px/1.5 Poppins,sans-serif;min-width:230px}
+.vyv-address-results[hidden]{display:none}
+.vyv-address-option{padding:11px 14px;cursor:pointer;border-bottom:1px solid #eee;white-space:normal}
+.vyv-address-option:hover,.vyv-address-option[aria-selected=true]{background:#f0e9fa}
+.vyv-address-credit{padding:6px 10px;font-size:10px;color:#6b5b8a;background:#faf8ff}
+.vyv-address-credit a{color:inherit}

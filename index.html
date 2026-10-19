@@ -1557,7 +1557,8 @@
       .form-card { padding: 22px 16px !important; }
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initLeadFormPlaces" async defer></script>
+  <link rel="stylesheet" href="/assets/address-autocomplete.css" />
+  <script src="/assets/address-autocomplete.js"></script>
 </head>
 <body>
 
@@ -2541,10 +2542,10 @@
     // ===== LEAD CAPTURE FORM =====
     // Google Places autocomplete on address fields
     function initLeadFormPlaces() {
-      const opts = { componentRestrictions: { country: 'us' }, fields: ['formatted_address'] };
-      new google.maps.places.Autocomplete(document.getElementById('lf-from'), opts);
-      new google.maps.places.Autocomplete(document.getElementById('lf-to'), opts);
+      window.VYVAddresses.attach(document.getElementById('lf-from'));
+      window.VYVAddresses.attach(document.getElementById('lf-to'));
     }
+    initLeadFormPlaces();
 
     // Reset submit button when user navigates back
     window.addEventListener('pageshow', function(e) {

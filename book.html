@@ -7,7 +7,6 @@
   <meta name="description" content="Choose your crew size and move date. VYV movers serve Fredericksburg, Stafford, Spotsylvania, and Northern Virginia." />
   <meta name="robots" content="noindex" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMmArGk6TKjdy0BqU5t49uQhZhX9jobu0&libraries=places&callback=initGooglePlaces" async defer></script>
   <script src="https://js.stripe.com/v3/"></script>
   <style>.pac-container{z-index:99999!important;font-family:'Poppins',sans-serif;}</style>
   <style>
@@ -319,6 +318,8 @@
       #s6-billing-cols { grid-template-columns: 1fr !important; }
     }
   </style>
+  <link rel="stylesheet" href="/assets/address-autocomplete.css" />
+  <script src="/assets/address-autocomplete.js"></script>
 </head>
 <body>
 
@@ -360,34 +361,26 @@
     <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:#190E2A;margin-bottom:6px;">Book Your Move Online</h2>
     <p style="font-size:0.9rem;color:#5c4a7a;margin-bottom:44px;">We made it easy so you can focus on everything else.</p>
 
-    <div class="hiw-steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
-      <!-- connector line -->
-      <div class="hiw-connector" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:repeating-linear-gradient(to right,#8B5BC7 0,#8B5BC7 6px,transparent 6px,transparent 12px);z-index:0;"></div>
-
-      <!-- Step 1 -->
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">1</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Tell us about your move</p>
+    <div class="hiw-steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative;" aria-label="Booking progress">
+      <div id="booking-milestone-0" style="text-align:center;" aria-current="step">
+        <div id="booking-circle-0" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">1</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Your info & crew</p>
       </div>
-      <!-- Step 2 -->
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">2</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review your booking details</p>
+      <div id="booking-milestone-1" style="text-align:center;">
+        <div id="booking-circle-1" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">2</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Choose your date</p>
       </div>
-      <!-- Step 3 -->
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">3</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Pick your date and secure your crew</p>
+      <div id="booking-milestone-2" style="text-align:center;">
+        <div id="booking-circle-2" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">3</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move details</p>
       </div>
-      <!-- Step 4 -->
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(74,35,122,0.3);">4</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Crew arrives on move day, fully prepared</p>
+      <div id="booking-milestone-3" style="text-align:center;">
+        <div id="booking-circle-3" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">4</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Packing options</p>
       </div>
-      <!-- Step 5 -->
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:#16a34a;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.3);">5</div>
-        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Move day: we show up, you relax</p>
+      <div id="booking-milestone-4" style="text-align:center;">
+        <div id="booking-circle-4" style="width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:#4A237A;color:#fff;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;">5</div>
+        <p style="font-size:0.82rem;font-weight:600;color:#190E2A;line-height:1.4;">Review & reserve</p>
       </div>
     </div>
   </div>
@@ -924,6 +917,13 @@
 
   function updateProgress(step) {
     document.getElementById('progressFill').style.width = (step / 6 * 100) + '%';
+    const milestone = [0, 0, 1, 2, 2, 3, 4][step];
+    for (let i = 0; i < 5; i++) {
+      const item = document.getElementById('booking-milestone-' + i);
+      document.getElementById('booking-circle-' + i).style.background = i === milestone ? '#16a34a' : '#4A237A';
+      if (i === milestone) item.setAttribute('aria-current', 'step');
+      else item.removeAttribute('aria-current');
+    }
   }
 
   function goFromStep0() {
@@ -1368,36 +1368,19 @@
     el.classList.add('active');
   }
 
-  // ── Address Autocomplete (Google Places) ───────────────
-  const _acInstances = {};
-  const PLACES_OPTS = { types: ['address'], componentRestrictions: { country: 'us' } };
-
+  // Address suggestions also attach to newly rendered stop inputs.
   function attachPlaces(inputId, stopIndex) {
-    const el = document.getElementById(inputId);
-    if (!el || !window.google?.maps?.places) return;
-    if (_acInstances[inputId]?.input === el) return;
-    const ac = new google.maps.places.Autocomplete(el, PLACES_OPTS);
-    _acInstances[inputId] = { input: el, autocomplete: ac };
-    ac.addListener('place_changed', () => {
-      const place = ac.getPlace();
-      const addr = place.formatted_address || el.value;
-      el.value = addr;
-      if (stopIndex !== null) { stops[stopIndex].address = addr; updateMap(); }
-      else { updateMapFromStep0(); }
+    window.VYVAddresses.attach(document.getElementById(inputId), (address) => {
+      if (stopIndex !== null) { stops[stopIndex].address = address; updateMap(); }
+      else updateMapFromStep0();
     });
   }
-
   function attachPlacesToStops() {
-    if (!window.google?.maps?.places) return;
     stops.forEach((_, i) => attachPlaces(`addr-${i}`, i));
   }
-
-  function initGooglePlaces() {
+  function initAddresses() {
     attachPlaces('s0-from', null);
     attachPlaces('s0-to', null);
-    attachPlacesToStops();
-    // Re-attach in case stops were initialized before Google loaded
-    setTimeout(attachPlacesToStops, 300);
   }
 
   function setMapSrc(from, to) {
@@ -1890,6 +1873,7 @@
 
   // All entry points begin at contact/address review.
   updateProgress(0);
+  initAddresses();
 
   // Crew card tap -- attach both touchstart and click for max iOS compatibility
   (function() {
