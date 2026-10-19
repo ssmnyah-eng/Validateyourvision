@@ -651,8 +651,8 @@ function getSheet(name) {
   if (!sheet) throw new Error('Missing spreadsheet tab: ' + name);
   if (name === BOOKING_TAB) {
     const header = sheet.getRange(1, 1, 1, 27).getValues()[0];
-    if (/^(Booking ID|ID)$/i.test(String(header[0] || '').trim())) {
-      throw new Error('Bookings uses an older column layout. Migrate it before enabling this backend.');
+    if (!/^Timestamp$/i.test(String(header[0] || '').trim()) || !/move.?token/i.test(String(header[1] || ''))) {
+      throw new Error('Bookings column headings do not match Backend VYB. Preserve existing records and initialize or migrate the sheet before accepting deposits.');
     }
   }
   return sheet;
