@@ -62,3 +62,32 @@ test('customer check-in does not reset a running timer',()=>{
  c.updateRowField=()=>{throw Error('Timer must not reset');};
  assert.equal(decoded(c.customerCheckin({moveToken:'audit'})).checkinAt,row[21]);
 });
+test('legacy headerless bookings are copied to the new layout without dropping the first row',()=>{
+ const c=backend();const old=Array(28).fill('');
+ old[0]='VYV-audit';old[1]='2026-07-21T19:15:27Z';old[2]='Audit';old[3]='audit@example.invalid';
+ old[5]='October 20, 2026 AM';old[7]='3 Movers';old[17]='250';old[18]='pm_audit';old[20]='Upcoming';old[23]='move-audit';
+ const snapshot=JSON.stringify(old);
+ const rows=c.convertLegacyRows([old]);
+ assert.equal(rows.length,1);assert.equal(rows[0].length,27);
+ assert.equal(rows[0][1],'move-audit');assert.equal(rows[0][2],'Audit');
+ assert.equal(rows[0][16],'250');assert.equal(rows[0][19],'Upcoming');
+ assert.equal(JSON.stringify(old),snapshot);
+ assert.throws(()=>c.convertLegacyRows([['unrecognized']]),/not recognized/);
+});
+test('setup creates an isolated tab and is safe to run twice',()=>{
+ const c=backend();const source=[Array(28).fill('')];source[0][0]='VYV-audit';source[0][23]='move-audit';
+ const original=JSON.stringify(source);const tabs={'Bookings':{getDataRange:()=>({getValues:()=>source})}};
+ let created=0;
+ c.SpreadsheetApp={openById:()=>({getSheetByName:n=>tabs[n],insertSheet:n=>{
+   created++;const rows=[];let columns=26;
+   const sheet={getMaxColumns:()=>columns,insertColumnsAfter:(_,count)=>columns+=count,setFrozenRows(){},getLastRow:()=>rows.length,getMaxRows:()=>1000,
+    getDataRange:()=>({getValues:()=>rows}),getRange:(start,col,height,width)=>({getValues:()=>rows.slice(start-1,start-1+height),setValues:values=>values.forEach((row,i)=>rows[start-1+i]=[...row])})};
+   tabs[n]=sheet;return sheet;
+ }})};
+ c.LockService={getScriptLock:()=>({waitLock(){},releaseLock(){}})};
+ c.getProp=()=> 'configured';
+ assert.equal(c.setupBackend().copied,1);
+ assert.equal(c.setupBackend().copied,0);
+ assert.equal(created,1);assert.equal(JSON.stringify(source),original);
+ assert.equal(tabs['Bookings VYV'].getDataRange().getValues().length,2);
+});

@@ -9,8 +9,8 @@ The live server returned `{"ok":false,"error":"Unauthorized"}` for both public a
 1. Open the Apps Script project that owns the web app URL configured as `SHEET_SCRIPT_URL` in `book.html`. Preserve the existing spreadsheet binding and script properties.
 2. The corrected source now follows the user-confirmed Backend VYB project supplied as Pasted text(8). It preserves that version's 27-column layout, customer check-in, cancellation, rescheduling, and final invoicing. Back up the current project before replacing its code. The similarly named older project uses a different layout and must not be substituted.
 3. Apply the payment creation/verification/save changes in `vyv-booking-backend.js`. Keep `STRIPE_SK` only in Script Properties. Never put a Stripe secret key in HTML or GitHub.
-4. Update the existing web app deployment to a new version, retaining its URL and access configuration.
-5. Request the existing web app URL with `?action=health`. Expect `version: booking-payments-v4`, `ok: true`, and `paymentsConfigured: true`.
+4. Run `setupBackend` once from the editor. It creates a separate `Bookings VYV` tab with the current headings and copies recognized legacy records without changing the old `Bookings` tab. Repeat runs do not duplicate copied tokens. Then update the existing web app deployment to a new version, retaining its URL and access configuration.
+5. Request the existing web app URL with `?action=health`. Expect `version: booking-payments-v5`, `ok: true`, and `paymentsConfigured: true`.
 6. Check public `?action=get_booked_slots` returns `ok: true`. Run successful, declined, and authentication-required card scenarios in a separate Stripe test-mode setup, including a failed booking save followed by retry. Never use test card numbers against the live key.
 7. Confirm a successful payment creates exactly one spreadsheet booking and that retrying its save neither charges again nor creates another booking. Check notifications and customer move links with a controlled test booking.
 

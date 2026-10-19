@@ -1,12 +1,13 @@
 // ═══════════════════════════════════════════════════════════════
 //  VYV Moving — Google Apps Script Backend
-//  Paste this entire file into your GAS editor and re-deploy.
+//  Replace the existing code, Save, run setupBackend once, then update the existing deployment.
 //  Script Properties required: STRIPE_SK, TWILIO_SID, TWILIO_TOKEN, TWILIO_FROM
 // ═══════════════════════════════════════════════════════════════
 
 const SHEET_ID      = '1-KEfahm-VkdVG2T_tV6GyF4kRTIUqchanSKKL-kNagM';
 const ADMIN_TOKEN   = 'vyv2026admin';
-const BOOKING_TAB   = 'Bookings';
+const BOOKING_TAB   = 'Bookings VYV';
+const LEGACY_BOOKING_TAB = 'Bookings';
 const LEADS_TAB     = 'Leads';
 const NOTIFY_EMAIL  = 'hello@validateyourvision.com';
 const BUSINESS_PHONE= '+15403011152';
@@ -80,7 +81,7 @@ function doPost(e) {
 function doGet(e) {
   try {
     const action = e.parameter.action;
-    if (action === 'health') return jsonOk({ version: 'booking-payments-v4', paymentsConfigured: !!getProp('STRIPE_SK') });
+    if (action === 'health') { getSheet(BOOKING_TAB); return jsonOk({ version: 'booking-payments-v5', paymentsConfigured: !!getProp('STRIPE_SK') }); }
     if (action === 'get_booked_slots') return getBookedSlots();
     if (action === 'get_move') return getMove({moveToken: e.parameter.moveToken});
     return jsonErr('Unknown public action');
@@ -164,6 +165,7 @@ function savePaidBooking(data) {
   if (existing) return jsonOk({ id: existing[1], moveToken: existing[1] });
   data.deposit = '$' + payment.amount_received / 100;
   data.paymentMethod = payment.payment_method;
+  if (data.propertyDetails) data.notes = (data.notes || '') + '\nLocation/property details: ' + data.propertyDetails;
   const token = generateToken();
   const row   = [
     new Date().toISOString(),   // A  Timestamp
@@ -529,7 +531,7 @@ function cancelBooking(data) {
     GmailApp.sendEmail(row[3],
       'Your VYV Moving booking has been cancelled',
       'Hi ' + row[2] + ',\n\nYour move on ' + row[5] + ' has been cancelled.' +
-      (refunded ? '\n\nYour deposit refund is on the way and should appear within 5 to 10 business days.' : '\n\nAs the cancellation was made less than 12 hours before your move, the deposit is non-refundable per our cancellation policy.') +
+      (refunded ? '\n\nYour deposit refund is on the way and should appear within 5 to 10 business days.' : refundable ? '\n\nYour cancellation is eligible for a refund, but it needs manual review. Please contact us so we can complete it.' : '\n\nAs the cancellation was made less than 12 hours before your move, the deposit is non-refundable per our cancellation policy.') +
       '\n\nQuestions? Text us at (540) 301-1152.\n\nVYV Moving Team'
     );
   } catch(e) {}
@@ -646,15 +648,86 @@ function sendSMS(to, message) {
 // ═══════════════════════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════════════════════
+const BOOKING_HEADERS = [
+  'Timestamp','Move Token','Name','Email','Phone','Move Date','Crew','Rate','Truck Fee',
+  'From','To','Stops','Volume','Specialty Items','Packing','Notes','Deposit Amount',
+  'Payment Intent ID','Payment Method ID','Status','Booked At','Checkin At',
+  'Completed At','Hours Worked','Labor Amount','Final Charge','Charge Status'
+];
+
+function validateBookingHeaders(sheet) {
+  const header = sheet.getRange(1, 1, 1, BOOKING_HEADERS.length).getValues()[0];
+  if (!BOOKING_HEADERS.every((name, i) => String(header[i] || '').trim() === name)) {
+    throw new Error('The Bookings VYV column layout is unexpected. No data was overwritten.');
+  }
+}
+
+// Run once from the editor before updating the web-app deployment.
+// Copies recognized old rows into a new tab; never edits or deletes the old tab.
+function setupBackend() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const legacy = ss.getSheetByName(LEGACY_BOOKING_TAB);
+    const oldRows = legacy ? legacy.getDataRange().getValues() : [];
+    const converted = convertLegacyRows(oldRows);
+    let sheet = ss.getSheetByName(BOOKING_TAB);
+    if (!sheet) {
+      sheet = ss.insertSheet(BOOKING_TAB);
+      if (sheet.getMaxColumns() < BOOKING_HEADERS.length) sheet.insertColumnsAfter(sheet.getMaxColumns(), BOOKING_HEADERS.length - sheet.getMaxColumns());
+      sheet.getRange(1, 1, 1, BOOKING_HEADERS.length).setValues([BOOKING_HEADERS]);
+      sheet.setFrozenRows(1);
+    } else validateBookingHeaders(sheet);
+    const existing = new Set(sheet.getDataRange().getValues().slice(1).map(row => String(row[1])));
+    const missing = converted.filter(row => {
+      if (!row[1] || existing.has(String(row[1]))) return false;
+      existing.add(String(row[1]));
+      return true;
+    });
+    if (missing.length) {
+      const next = sheet.getLastRow() + 1;
+      if (sheet.getMaxRows() < next + missing.length - 1) sheet.insertRowsAfter(sheet.getMaxRows(), next + missing.length - 1 - sheet.getMaxRows());
+      sheet.getRange(next, 1, missing.length, BOOKING_HEADERS.length).setValues(missing);
+    }
+    const result = {ok:true, bookingTab:BOOKING_TAB, copied:missing.length, stripeConfigured:!!getProp('STRIPE_SK')};
+    console.log(JSON.stringify(result));
+    return result;
+  } finally { lock.releaseLock(); }
+}
+
+function convertLegacyRows(rows) {
+  const nonempty = rows.filter(row => row.some(value => value !== '' && value !== null));
+  if (!nonempty.length) return [];
+  const first = nonempty[0];
+  if (String(first[0]).trim() === 'Timestamp' && /move.?token/i.test(String(first[1]))) {
+    return nonempty.slice(1).map(row => BOOKING_HEADERS.map((_, i) => row[i] ?? ''));
+  }
+  let layout, data;
+  if (String(first[0]).trim() === 'Booking ID' && /move.?token/i.test(String(first[1]))) {
+    layout = 21; data = nonempty.slice(1);
+  } else if (['ID','Booking ID'].includes(String(first[0]).trim())) {
+    layout = 28; data = nonempty.slice(1);
+  } else if (/^VYV-/.test(String(first[0]))) {
+    layout = first[23] ? 28 : 21; data = nonempty;
+  } else throw new Error('Old Bookings layout is not recognized. No records were changed.');
+  return data.map(row => {
+    const out = Array(27).fill('');
+    if (layout === 28) {
+      const map = [1,23,2,3,4,5,7,8,9,10,11,12,14,15,16,19,17,null,18,20,1,24,25,26,null,27,null];
+      map.forEach((old, i) => { if (old !== null) out[i] = row[old] ?? ''; });
+    } else {
+      const map = [2,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,null,18,20,2];
+      map.forEach((old, i) => { out[i] = row[old] ?? ''; });
+    }
+    return out;
+  });
+}
+
 function getSheet(name) {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(name);
-  if (!sheet) throw new Error('Missing spreadsheet tab: ' + name);
-  if (name === BOOKING_TAB) {
-    const header = sheet.getRange(1, 1, 1, 27).getValues()[0];
-    if (!/^Timestamp$/i.test(String(header[0] || '').trim()) || !/move.?token/i.test(String(header[1] || ''))) {
-      throw new Error('Bookings column headings do not match Backend VYB. Preserve existing records and initialize or migrate the sheet before accepting deposits.');
-    }
-  }
+  if (!sheet) throw new Error('Run setupBackend once in the editor before accepting bookings. Missing tab: ' + name);
+  if (name === BOOKING_TAB) validateBookingHeaders(sheet);
   return sheet;
 }
 
